@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-11-16T17:28:58 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Simple_Blue" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0b16739b-77d1-4ec8-9084-d0649d40bb31">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Onousc Adapter "/>
+	<parameter name="ReportTitle" class="java.lang.String"/>
+	<parameter name="author" class="java.lang.String"/>
+	<parameter name="realPath" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="Nom" class="java.lang.String">
+		<fieldDescription><![CDATA[nom]]></fieldDescription>
+	</field>
+	<field name="Prenom" class="java.lang.String">
+		<fieldDescription><![CDATA[prenom]]></fieldDescription>
+	</field>
+	<field name="NCIN" class="java.lang.String">
+		<fieldDescription><![CDATA[NCIN]]></fieldDescription>
+	</field>
+	<field name="CITE_ID" class="com.m2m.onousc.business.referentiel.model.Cite">
+		<fieldDescription><![CDATA[cite]]></fieldDescription>
+	</field>
+	<field name="Restaurant" class="com.m2m.onousc.business.referentiel.model.Restaurant">
+		<fieldDescription><![CDATA[restaurant]]></fieldDescription>
+	</field>
+	<field name="Boursier" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[boursier]]></fieldDescription>
+	</field>
+	<field name="Resident" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[resident]]></fieldDescription>
+	</field>
+	<field name="Statut" class="com.m2m.onousc.business.common.EntityStatus">
+		<fieldDescription><![CDATA[statut]]></fieldDescription>
+	</field>
+	<field name="Ndemande" class="java.lang.String">
+		<fieldDescription><![CDATA[ndemande]]></fieldDescription>
+	</field>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{Statut}]]></groupExpression>
+		<groupHeader>
+			<band height="7"/>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="03b0ba50-fca4-4628-8b1b-5664f24c9e41"/>
+				<staticText>
+					<reportElement x="130" y="20" width="330" height="43" forecolor="#FFFFFF" uuid="202abc85-ba64-4467-8bd0-f3085a5af05a"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="116" y="31" width="320" height="32" forecolor="#FFFFFF" uuid="3e826cfe-b9af-418a-b813-8d788f4fc5a7"/>
+					<textElement textAlignment="Center">
+						<font fontName="Cambria" size="24"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{ReportTitle}]]></textFieldExpression>
+				</textField>
+				<image>
+					<reportElement x="21" y="10" width="50" height="50" uuid="2a89e6ca-4a41-4790-b759-129a768a153e"/>
+					<imageExpression><![CDATA[$P{realPath}+"/custom/logo.png"]]></imageExpression>
+				</image>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="1109a482-f620-436f-9467-1a621e7c023d"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="69" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="3a16f5f3-a598-47f5-9de7-83db600c629f"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nom]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="69" y="0" width="69" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="29a48dd9-dbc0-4804-9319-74e70b31f909"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Prénom]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="138" y="0" width="69" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="a9ae13a4-1897-4447-bbb9-e9d9987ac12f"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° CIN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="207" y="0" width="88" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="6ea9185b-83eb-4f66-9007-5f73b04422e6"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CITE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="295" y="0" width="87" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="c3729c0f-5c34-4434-84c3-6a3349a8a367"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Restaurant]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="382" y="0" width="86" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="54d51c25-e9e7-4721-822b-6800b87455b1"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Boursier]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="468" y="0" width="86" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="6de8250f-b007-4c67-b550-6f589182ddbf"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Résident]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="43">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="700d663d-1553-4c84-ae8f-0cf66ae0f22d"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="69" height="20" uuid="ceb8a32d-ef31-4503-81f8-339cdef7c89e"/>
+				<textElement textAlignment="Center">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nom}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="69" y="0" width="69" height="20" uuid="08dd122a-206a-4b44-a323-c6cad6d3085e"/>
+				<textElement textAlignment="Center">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Prenom}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="138" y="0" width="69" height="20" uuid="ca8ac5a5-4e97-4ad0-b64a-448a901c2738"/>
+				<textElement textAlignment="Center">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NCIN}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="207" y="0" width="88" height="20" uuid="78b31814-b144-4c3b-85e4-fad099569e13"/>
+				<textElement textAlignment="Center">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CITE_ID}.getLibelle()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="295" y="0" width="84" height="20" uuid="e60a123f-41b1-4fd1-a0af-d9df10103ecc"/>
+				<textElement textAlignment="Center">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Restaurant}.getLibelle()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="382" y="0" width="85" height="20" uuid="55ce9053-a6d1-4d4a-944c-d77137c0c522"/>
+				<textElement textAlignment="Center">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Boursier} ?"Oui":"Non"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="468" y="0" width="86" height="20" uuid="f844bb41-6a40-453e-8c27-bf053e774219"/>
+				<textElement textAlignment="Center">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Resident} ?"Oui":"Non"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="27">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="12" width="515" height="13" backcolor="#E6E6E6" uuid="1bcb834b-2e72-4371-ad58-12ee79eef570"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" sur"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="12" width="40" height="13" backcolor="#E6E6E6" uuid="75ea4245-1730-4c26-bb95-18853efbe961"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="12" width="100" height="13" uuid="3359b810-2500-4648-ad4e-b89f18d387f5"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="189" y="12" width="135" height="13" uuid="1d39ce81-0b52-4569-8953-8b5abb62aa7c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{author}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-20" y="7" width="595" height="1" forecolor="#666666" uuid="ac8805df-5e37-4329-be11-6c399c9fb112"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

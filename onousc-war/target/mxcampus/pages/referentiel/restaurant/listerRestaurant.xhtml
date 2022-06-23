@@ -1,0 +1,359 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+
+
+	<ui:define name="content">
+
+		<p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;width:126%;">
+			<ul class="menuOpposition">
+				<li class="active"><h:link
+						outcome="/pages/referentiel/restaurant/listerRestaurant.xhtml">
+						<div>
+							<center>RESTAURANT</center>
+						</div>
+					</h:link></li>
+				<li><h:link
+						outcome="/pages/referentiel/caisse/listerCaisse.xhtml">
+						<div>
+							<center>CAISSE</center>
+						</div>
+					</h:link></li>
+
+				<li><h:link
+						outcome="/pages/referentiel/caissier/listerCaissier.xhtml">
+						<div>
+							<center>CAISSIER</center>
+						</div>
+					</h:link></li>
+				<!-- 					<li><h:link -->
+				<!-- 						> -->
+				<!-- 						<div> -->
+				<!-- 							<center>#{prezmsg['STOCK']}</center> -->
+				<!-- 						</div> -->
+				<!-- 					</h:link></li> -->
+			</ul>
+		</p:fieldset>
+		<p:ajaxStatus>
+			<f:facet name="start">
+				<p:graphicImage library="images" name="blueajax.gif"
+					styleClass="AjaxStatusLoader" />
+			</f:facet>
+		</p:ajaxStatus>
+
+
+		<h:form id="restaurant-form">
+
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+
+			<p:remoteCommand name="_updateCrudMenu" global="false"
+				update="crud-menu :search-overlay" />
+			<!--  -->
+
+
+
+			<center>
+				<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;"
+					styleClass="fieldsetCategories">
+
+					<!-- 					<center> -->
+					<!-- 						<p:messages autoUpdate="true" globalOnly="true" closable="true" -->
+					<!-- 							style="width:60%;" showIcon="false" /> -->
+					<!-- 					</center> -->
+
+					<script>
+						function showMessage() {
+
+							_showMessage();
+						}
+					</script>
+					<center>
+						<p:messages id="succes" globalOnly="true" closable="true"
+							styleClass="M2" />
+					</center>
+					<!-- Remote commands -->
+					<p:remoteCommand name="_errorDialog"
+						onstart="PF('error-dlg-wdg').show()" />
+					<p:remoteCommand name="_showMessage"
+						actionListener="#{restaurantMBean.showMessage}" update="succes" />
+					<p:remoteCommand name="_updateCrudMenu" global="false"
+						update="crud-menu" />
+
+
+					<div class="RefCenter">
+						<p:toolbar id="crud-menu">
+
+							<f:facet name="left">
+
+								<!--Method d'ajout, fait un reset du formulaire et affiche le dialog d'ajout -->
+								<p:commandButton id="create" widgetVar="create-wdg"
+									styleClass="ToolbarButton" value="#{prezmsg['NOUVEAU']}"
+									action="#{restaurantMBean.resetWebBeanVO}" process="@this"
+									update="@form" oncomplete="PF('create-dlg-wdg').show();"
+									icon="ui-icon-custom-nouveau"
+									rendered="#{authMbean.hasCreate('000006')}">
+									<p:resetInput target=":create-form" />
+								</p:commandButton>
+
+								<!-- 	Lié au formulaire de la recherche, type boutton car ne fait aucune action/actionListener ni update, utiliser just pour pop le searchOverlay -->
+								<p:commandButton id="search" widgetVar="search-wdg"
+									styleClass="ToolbarButton" value="#{prezmsg['CHERCHER']}"
+									type="button" icon="ui-icon-custom-chercher" />
+
+							</f:facet>
+
+						</p:toolbar>
+
+						<p:dataTable id="restaurant-dtbl" paginator="true"
+							emptyMessage="#{prezmsg['label_no_records_found']}"
+							rowStyleClass="#{restaurant.statut == 'DISABLED' ? 'is-disabled' :null }"
+							value="#{restaurantSearchMBean}" var="restaurant" lazy="true"
+							rows="10" selection="#{restaurantMBean.webBean.selectedVOs}"
+							rowKey="#{restaurant.id}" paginatorPosition="bottom"
+							selectionMode="multiple"
+							actionListener="#{restaurantMBean.resetWebBeanVO}"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="10,20,30"
+							currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+
+							<ui:include src="/pages/commun/datatableEvents.xhtml" />
+
+							<!-- 						<p:column selectionMode="multiple" styleClass="tableChkbox" -->
+							<!-- 							style="width:16px;text-align:center" /> -->
+
+							<!-- Identifiant de l'restaurant  -->
+							<p:column headerText="#{prezmsg['CODE']}" style="width:12%"
+								sortBy="#{restaurant.code}">
+								<center>
+									<h:outputText value="#{restaurant.code}" />
+								</center>
+							</p:column>
+
+							<!-- Libellé de la restaurant -->
+							<p:column headerText="#{prezmsg['RESTAURANT']}"
+								sortBy="#{restaurant.libelle}">
+								<center>
+									<h:outputText value="#{restaurant.libelle}" />
+								</center>
+							</p:column>
+
+
+							<!-- 						cite -->
+							<!-- 							<p:column headerText="#{prezmsg['CITE']}"> -->
+							<!-- 								<center> -->
+							<!-- 									<h:outputText value="#{restaurant.cite.libelle}" /> -->
+							<!-- 								</center> -->
+							<!-- 							</p:column> -->
+
+							<p:column headerText="#{prezmsg['ADRESSE']}"
+								sortBy="#{restaurant.adresse}">
+								<center>
+									<h:outputText value="#{restaurant.adresse}" />
+								</center>
+							</p:column>
+
+							<!-- Nom responsable -->
+							<p:column headerText="#{prezmsg['RESPONSABLE']}"
+								sortBy="#{restaurant.nomResponsable}">
+								<center>
+									<h:outputText
+										value="#{restaurant.nomResponsable} #{restaurant.prenomResponsable}" />
+								</center>
+							</p:column>
+
+							<!-- 						<p:column headerText="#{prezmsg['VILLE']}" sortBy="#{restaurant.ville.libelle}"> -->
+							<!-- 							<center> -->
+							<!-- 								<h:outputText value="#{restaurant.ville.libelle}" /> -->
+							<!-- 							</center> -->
+							<!-- 						</p:column> -->
+
+							<p:column headerText="#{prezmsg['TEL']}"
+								sortBy="#{restaurant.numTele}">
+								<center>
+									<h:outputText value="#{restaurant.numTele}" />
+								</center>
+							</p:column>
+
+							<p:column headerText="#{prezmsg['EMAIL']}"
+								sortBy="#{restaurant.adresseEmail}">
+								<center>
+									<h:outputText value="#{restaurant.adresseEmail}" />
+								</center>
+							</p:column>
+
+							<p:column headerText="#{prezmsg['NOMBRE_PLACE']}"
+								sortBy="#{restaurant.nbreplace}">
+								<center>
+									<h:outputText value="#{restaurant.nbreplace}" />
+								</center>
+							</p:column>
+
+							<p:column headerText="Appliquer Ratio"
+								sortBy="#{restaurant.etatr}">
+								<center>
+
+									<h:outputText rendered="#{restaurant.etatr == false }"
+										value="Non" />
+									<h:outputText rendered="#{restaurant.etatr == true }"
+										value="Oui" />
+
+								</center>
+							</p:column>
+
+							<p:column exportable="false" style="width:10%;text-align:center;"
+								headerText="">
+
+								<p:commandButton icon="ui-icon-custom-modifier"
+									styleClass="CrudButton" update=":edit-form"
+									title="Modifier restaurant"
+									rendered="#{authMbean.hasUpdate('000006')}"
+									oncomplete="PF('edit-dlg-wdg').show();">
+									<f:setPropertyActionListener value="#{restaurant}"
+										target="#{restaurantMBean.webBean.vo}" />
+								</p:commandButton>
+
+								<p:commandButton icon="ui-icon-custom-supprimer"
+									styleClass="CrudButton" action="#{restaurantMBean.supprimer}"
+									update="restaurant-dtbl :error-messages"
+									rendered="#{authMbean.hasDelete('000006')}"
+									title="Supprimer restaurant">
+									<p:confirm header="#{prezmsg['CONFIRMATION_DELETE']}"
+										message="#{prezmsg['MESSAGE_CONFIRMATION_DELETE']}"
+										icon="ui-icon-alert" />
+									<f:setPropertyActionListener value="#{restaurant}"
+										target="#{restaurantMBean.webBean.vo}"></f:setPropertyActionListener>
+								</p:commandButton>
+
+							</p:column>
+
+						</p:dataTable>
+
+					</div>
+
+
+				</p:fieldset>
+			</center>
+
+		</h:form>
+
+
+
+		<p:overlayPanel id="search-overlay" for=":restaurant-form:search"
+			hideEffect="slide" showEffect="slide" widgetVar="searchOverlay"
+			dismissable="false" appendToBody="true">
+
+			<h:form id="search-form">
+
+				<h:panelGrid columns="4" styleClass="FormGrid">
+
+
+
+					<h:outputLabel value="#{prezmsg['SITE']}" />
+					<p:inputText value="#{restaurantMBean.user.siteVO.libelle}"
+						rendered="#{restaurantMBean.user.siteVO !=null }" disabled="true" />
+					<p:selectOneMenu id="site"
+						rendered="#{restaurantMBean.user.siteVO ==null }"
+						value="#{restaurantSearchMBean.restaurantCriteria.idSite}">
+						<f:selectItem itemLabel="#{prezmsg['SELECTIONNER']}" />
+						<f:selectItems value="#{restaurantMBean.webBean.listSiteForCombo}"
+							var="site" itemLabel="#{site.libelle}" itemValue="#{site.id}" />
+					</p:selectOneMenu>
+					<!-- Code   -->
+					<h:outputLabel value="#{prezmsg['CODE']}" />
+					<p:inputText id="code-search"
+						value="#{restaurantSearchMBean.restaurantCriteria.code}" />
+
+					<!-- Libellé   -->
+					<h:outputLabel value="#{prezmsg['LIBELLE']}" />
+					<p:inputText id="lib-search"
+						value="#{restaurantSearchMBean.restaurantCriteria.libelle}" />
+
+					<!-- Cité -->
+					<!-- 					<h:outputLabel value="Cité" /> -->
+					<!-- 					<p:selectOneMenu id="cite_search" -->
+					<!-- 						value="#{restaurantSearchMBean.restaurantCriteria.libcite}" -->
+					<!-- 						style="width:125px"> -->
+					<!-- 						<f:selectItem itemLabel="choisir une cité" itemValue="" /> -->
+					<!-- 						<f:selectItems value="#{restaurantMBean.webBean.citeVOs}" var="u" -->
+					<!-- 							itemLabel="#{u.libelle}" itemValue="#{u.libelle}" /> -->
+					<!-- 					</p:selectOneMenu> -->
+
+					<!-- Nom responsable -->
+					<h:outputLabel value="#{prezmsg['NOM_RESPONSABLE']}" />
+					<p:inputText id="nom-search"
+						value="#{restaurantSearchMBean.restaurantCriteria.nomResponsable}" />
+
+					<!-- Prenom responsable -->
+					<h:outputLabel value="#{prezmsg['PRENOM_RESPONSABLE']}" />
+					<p:inputText id="pre-search"
+						value="#{restaurantSearchMBean.restaurantCriteria.prenomResponsable}" />
+
+					<!-- N° tele -->
+					<h:outputLabel value="#{prezmsg['TEL']}" />
+					<p:inputText id="tel-search"
+						value="#{restaurantSearchMBean.restaurantCriteria.numTele}" />
+
+					<!-- email -->
+					<h:outputLabel value="#{prezmsg['EMAIL']}" />
+					<p:inputText id="email-search"
+						value="#{restaurantSearchMBean.restaurantCriteria.adresseEmail}" />
+
+					<!-- ville -->
+					<!-- 					<h:outputLabel value="#{prezmsg['VILLE']}" /> -->
+					<!-- 					<p:selectOneMenu id="ville_search" -->
+					<!-- 						value="#{restaurantSearchMBean.restaurantCriteria.libelleville}" -->
+					<!-- 						style="width:125px"> -->
+					<!-- 						<f:selectItem itemLabel="choisir une ville" itemValue="" /> -->
+					<!-- 						<f:selectItems value="#{restaurantMBean.webBean.villeVOs}" var="u" -->
+					<!-- 							itemLabel="#{u.libelle}" itemValue="#{u.libelle}" /> -->
+					<!-- 					</p:selectOneMenu> -->
+				</h:panelGrid>
+
+				<p:toolbar>
+					<f:facet name="right">
+						<!-- 	Lance la recherche, revien toujours à la premiere page: backToFirstPage()  -->
+						<p:commandButton id="searchOk" styleClass="OpButton"
+							widgetVar="searchOk-wdg" value="#{prezmsg['OK']}"
+							action="#{restaurantSearchMBean.run}"
+							update=":restaurant-form:restaurant-dtbl"
+							onstart="backToFirstPage(); block()"
+							oncomplete="PF('searchOverlay').hide(); unblock(); initCrudMenu();" />
+
+						<!-- clear du formulaire  -->
+						<p:commandButton id="searchReset" styleClass="OpButton"
+							widgetVar="searchReset-wdg" icon="ui-icon-custom-undo"
+							value="#{prezmsg['RESET']}"
+							action="#{restaurantSearchMBean.resetSearchCriteria()}"
+							update="search-form" tabindex="-1">
+							<p:resetInput target="search-form" />
+						</p:commandButton>
+					</f:facet>
+				</p:toolbar>
+
+
+			</h:form>
+
+		</p:overlayPanel>
+
+
+
+		<ui:include src="editerRestaurant.xhtml"></ui:include>
+		<ui:include src="creeRestaurant.xhtml"></ui:include>
+
+	</ui:define>
+</ui:composition>
+

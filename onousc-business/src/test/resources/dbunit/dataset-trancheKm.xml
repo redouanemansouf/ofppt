@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<REF_TRANCHE_KM TKM_ID="1" TKM_LIBELLE="tranche 1"
+		TKM_DESCRIPTION="tranche 1" TKM_VALEUR_INF="0.0" TKM_VALEUR_SUP="100.0" TKM_STATUT="ENABLED" />
+
+	<REF_TRANCHE_KM TKM_ID="2" TKM_LIBELLE="tranche 2"
+		TKM_DESCRIPTION="tranche 2" TKM_VALEUR_INF="100.0" TKM_VALEUR_SUP="250.0" TKM_STATUT="DISABLED" />
+
+</dataset>

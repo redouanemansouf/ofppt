@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<REF_MODE_REGLEMENT MR_ID="1" MR_LIBELLE="espece"
+		MR_DESCRIPTION="reglement en espece" MR_STATUT="ENABLED" />
+	<REF_MODE_REGLEMENT MR_ID="2" MR_LIBELLE="CHEQUE"
+		MR_DESCRIPTION="reglement par cheque"  MR_STATUT="ENABLED"/>
+
+	<!-- <SEQUENCE_GENERATOR GEN_NAME="ModeReglement_Gen"
+		GEN_VALUE="3" /> -->
+	
+</dataset>

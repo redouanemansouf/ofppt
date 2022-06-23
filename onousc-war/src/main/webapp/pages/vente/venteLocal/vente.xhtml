@@ -1,0 +1,442 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutRes.xhtml">
+
+
+
+	<ui:define name="content">
+
+		<applet id="appid" name="appid" permissions="all-permissions"
+			scriptable="true" archive="AppletMX.jar"
+			code="applet_mxcampus.AppletMX.class" width="0" height="0">
+		</applet>
+
+
+		<script type="text/javascript">
+			function lecture_data() {
+
+				try {
+
+					var version = "null";
+
+					// 	 version = appid.GetVersion(); 
+					appid.CheminFichierServer="C:\\Carte_OCP\\Divers\\Params.txt";
+					appid.cheminexeimpression = "C:\\Carte_OCP\\Exe_Impression\\OCP\\ExeLecture";
+					//alert(appid.CheminFichierServer);
+					version = appid.LectureElectriqueCrazy(4);
+					_lecturePersonnel();
+					
+					
+				} catch (err) {
+
+					alert("Erreur de Lecture Carte Personnel : " + err);
+
+				}
+
+			}
+			
+			function recharge_carte() {
+
+				try {
+					
+					
+					var mont="";
+					var version = "null";
+					if (document.getElementById("mntant").firstChild.data == "") {
+						var mont = "0.0";
+					} else {
+						mont = document
+								.getElementById("mntant").firstChild.data;
+					}
+					
+					document.getElementById("matric").value = appid.matrPersonnel;
+					document.getElementById("solde").value = appid.SoldePersonnel;
+				//	document.getElementById("mntant").value=document.getElementById("j_montant").value;
+				
+				    document.getElementById("mnt").value=mont;
+				    appid.cheminexeimpression="C:\\Carte_OCP\\Exe_Impression\\OCP\\ExeVente";
+				   // version=appid.gererSolde(mont, 2, 0);
+				   appid.LancerExe("cmd /c " + appid.cheminexeimpression + "\\Vente.exe "+" "+  mont);
+					//version = appid.gererSoldeSolde(mont,2);
+				//	lister_prods();
+
+
+				} catch (err) {
+
+					alert("Erreur de Lecture Carte Personnel : " + err);
+
+				}
+
+			}
+			
+			
+			function lister_prods() {
+				
+				 
+				try {
+					var selectedIds = [];
+					var impression=null;
+					var montant="0.0";
+					var lib="";
+					var qte=1;
+				    var chaine="";
+				    var size=0;
+
+					$(":checked").each(function() {
+					    selectedIds.push($(this).parent().parent().parent().parent().attr('data-ri'));
+					});
+				
+					for(var i in selectedIds )
+					{
+						
+						if(selectedIds[i]!=undefined){
+						
+						//
+						
+	                       alert($("#critere-dtbl\\:" + selectedIds[i] + "\\:mont_tbl")
+									.text());
+						if ($("#critere-dtbl\\:" + selectedIds[i] + "\\:mont_tbl")
+								.text() == "") {
+							montant = "0.0";
+						} else {
+							montant = $(
+									"#critere-dtbl\\:" + selectedIds[i]
+											+ "\\:mont_tbl").text();
+						}
+						if ($("#critere-dtbl\\:" + selectedIds[i] + "\\:lib_tbl")
+								.text() == "") {
+							lib = " ";
+						} else {
+							lib = $(
+									"#critere-dtbl\\:" + selectedIds[i]
+											+ "\\:lib_tbl").text();
+						}
+						
+						if ($("#critere-dtbl\\:" + selectedIds[i] + "\\:quantite_tlb")
+								.val() == "") {
+							qte = " ";
+						} else {
+							qte = $(
+									"#critere-dtbl\\:" + selectedIds[i]
+											+ "\\:quantite_tlb").val();
+						}
+						alert("quantite"+qte);
+						
+						ch='"';
+					    size++;
+						chaine+=ch+"-"+lib +"                            :......................                   "+montant+"DHS                    / "+qte+ch+" "
+						
+						}
+						
+						
+					}
+					var matr= appid.matrPersonnel;
+					var mont= document.getElementById("mntant").firstChild.data;
+				
+						
+					
+					cheminexeimpression="C:\\Carte_OCP\\Exe_Impression\\Exe";
+					version = appid.LancerExe("cmd /c " + cheminexeimpression + "\\ImprimTicketVente.exe "+" "+matr+" "+mont+" "+" "+size+" "+chaine);
+					
+				} catch (err) {
+   
+					
+					
+					alert("Error JS ETUDIANT : " + err + "\nresultat catch : "
+							+ app.resultat);
+
+				}
+				
+
+			}
+			
+		
+	function addDouchette(elementId)
+			{
+				
+				$(document).keydown(
+						function(e)
+						{
+							$('#'+elementId).focus();
+						}
+				)
+			}
+			
+		</script>
+		<p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;width:193%;">
+			<ul class="menuOpposition">
+		<!-- 		<li><h:link
+						outcome="/pages/vente/famille_produit/listerFamProduit.xhtml">
+						<div>
+							<center>#{prezmsg['FAMILLE_PRODUIT']}</center>
+						</div>
+					</h:link></li>
+				<li><h:link outcome="/pages/vente/produit/listerProduit.xhtml">
+						<div>
+							<center>#{prezmsg['PRODUIT']}</center>
+						</div>
+					</h:link></li> -->
+<!-- 				<li><h:link -->
+<!-- 						outcome="/pages/controlAcces/categorieporteur/listerCategoriePorteur.xhtml"> -->
+<!-- 						<div> -->
+<!-- 							<center>#{prezmsg['CATEGORIE_POPTEUR_CARTE']}</center> -->
+<!-- 						</div> -->
+<!-- 					</h:link></li> -->
+				<li><h:link
+						outcome="/pages/vente/venteLocal/venteMifare.xhtml">
+						<div>
+							<center>#{prezmsg['VENTE_PERS']}</center>
+						</div>
+					</h:link></li>
+				<li class="active"><h:link
+						outcome="/pages/vente/venteLocal/vente.xhtml">
+						<div>
+							<center>#{prezmsg['VENTE']}</center>
+						</div>
+					</h:link></li>
+			</ul>
+		</p:fieldset>
+
+		<!--         <p:fieldset legend="#{prezmsg['LECTURE_CARTE']}"> -->
+		<center>
+			<p:ajaxStatus>
+				<f:facet name="start">
+					<p:graphicImage library="images" name="blueajax.gif"
+						styleClass="AjaxStatusLoader" />
+				</f:facet>
+			</p:ajaxStatus>
+		</center>
+
+		<h:form id="recharge" prependId="false">
+			<center>
+				<p:messages autoUpdate="true" globalOnly="true" closable="true"
+					styleClass="M1" />
+				<div id="f1" style="padding: 2.6 em 1em"></div>
+			</center>
+<p:remoteCommand name="_calculTotal" action="#{produitMBean.onChangeMontant}" process="@this"></p:remoteCommand>
+			<center>
+				<p:fieldset styleClass="fieldsetCategories">
+					<h:panelGrid columns="4" id="informations" cellspacing="8">
+
+
+
+						<h:outputLabel value="#{prezmsg['MATRICULE']}" />
+
+						<p:inputText id="j_matr" value="#{personnelMBean.webBean.vo.matr}" />
+						<h:outputLabel value="#{prezmsg['NOM']}" />
+
+						<p:inputText id="j_nom" value="#{personnelMBean.webBean.vo.nom}" />
+
+						<h:outputLabel value="#{prezmsg['PRENOM']}" />
+						<p:inputText id="j_prenom"  value="#{personnelMBean.webBean.vo.prenom}" />
+
+						<h:outputLabel value="#{prezmsg['SOLDE']}" />
+						<p:inputText id="j_solde" value="#{personnelMBean.solde}" />
+<!-- 						<p:commandButton value="Activer Codebar" onclick="addDouchette('j_codebar')" action="#{produitMBean.selectCBarProduit}" process="@this codeBar" update="codeBar critere-dtbl multiProdDetail" styleClass="Val" ></p:commandButton> -->
+								
+						<p:panel id="codeBar">
+						<p:inputText id="j_codebar" value="#{produitMBean.webBean.vo.codeBar}" style="position:absolute;top:-100px"/>
+						
+						</p:panel>
+
+					</h:panelGrid>
+
+					<p:commandButton id="lecture" onclick="lecture_data()"
+						icon="ui-icon-custom-detailsOsc"
+						value="#{prezmsg['LECTURE_CARTEPERSO']}" styleClass="Val"
+						update="informations" style="width:200px;" />
+						
+						<p:commandButton value="Activer Codebar" onclick="addDouchette('j_codebar')" action="#{produitMBean.selectCBarProduit}" process="@this codeBar" update="codeBar critere-dtbl multiProdDetail" styleClass="Val" ></p:commandButton>
+
+				</p:fieldset>
+			</center>
+
+<p:remoteCommand name="_lecturePersonnel"
+				action="#{personnelMBean.lecture_Card}" process="@this"
+				update="recharge"></p:remoteCommand>
+
+			<center>
+				<p:fieldset styleClass="fieldsetCategories">
+				<h:panelGrid columns="3">
+					<h:panelGrid columns="2" id="information" cellspacing="8">
+
+
+						<h:outputLabel value="#{prezmsg['FAMILLE_PRODUIT']}" />
+
+						<p:selectOneMenu id="famp_search"
+							value="#{produitMBean.webBean.vo.familleProd}"
+							style="width:220px" converter="canalVenteConverter">
+							<p:ajax listener="#{produitMBean.onproduitChange}"
+								update="critere-dtbl" />
+							<f:selectItem itemLabel="Choisissez" />
+							<f:selectItems value="#{produitMBean.webBean.famProduitvos}"
+								var="fp" itemLabel="#{fp.code} | #{fp.libelle} "
+								itemValue="#{fp}" />
+						</p:selectOneMenu>
+
+<!-- 						<h:outputLabel value="#{prezmsg['PRODUIT']}" /> -->
+
+<!-- 						<p:selectOneMenu id="produit_vente" -->
+<!-- 							value="#{produitSearchMBean.produitCriteria.familleProd}" -->
+<!-- 							style="width:220px"> -->
+<!-- 							<f:selectItem itemLabel="Choisissez" /> -->
+<!-- 							<f:selectItems value="#{produitMBean.webBean.vos}" var="fp" -->
+<!-- 								itemLabel="#{fp.code} | #{fp.libelle} " itemValue="#{fp.id}" /> -->
+<!-- 						</p:selectOneMenu> -->
+					</h:panelGrid>
+
+				
+						<p:dataTable id="critere-dtbl" paginator="true"
+							emptyMessage="#{prezmsg['label_no_records_found']}"
+							value="#{produitMBean.webBean.vos}" var="prod" lazy="true"
+							rows="10" selection="#{produitMBean.webBean.selectedVOs}"
+							rowKey="#{prod.id}" paginatorPosition="bottom" style="width:75%"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="10,20,30"
+							currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      													{totalRecords}, Page: {currentPage}/{totalPages}">
+
+							<!-- 							<ui:include src="/pages/commun/datatableEvents.xhtml" /> -->
+
+							<!-- 							    <p:ajax event="rowSelect" update=":recharge:multiProdDetail" listener="#{produitMBean.onRowSelect}" ></p:ajax> -->
+							<!--                                    <p:ajax event="rowUnselect"></p:ajax> -->
+
+							<p:ajax event="rowSelectCheckbox"
+								update=":recharge:multiProdDetail" process="critere-dtbl" listener="#{produitMBean.onChangeMontant}"
+								global="false" />
+							<p:ajax event="rowUnselectCheckbox"
+								update=":recharge:multiProdDetail" process="critere-dtbl" listener="#{produitMBean.onChangeMontant}"
+								global="false" />
+								
+								<p:ajax event="toggleSelect" listener="#{produitMBean.onChangeMontant}" update=":recharge:multiProdDetail"
+		                                  process="critere-dtbl" global="false" />
+
+							<p:column selectionMode="multiple" styleClass="tableChkbox"
+								style="width:16px;text-align:center" />
+								
+
+							<!-- Identifiant du'critere  -->
+							<p:column headerText="#{prezmsg['CODE']}" style="width:18%">
+								<center>
+									<h:outputText id="code_tbl" value="#{prod.code}" />
+								</center>
+							</p:column>
+
+							<!-- Libellé -->
+							<p:column headerText="#{prezmsg['LIBELLE']}">
+								<center>
+									<h:outputText id="lib_tbl" value="#{prod.libelle}" />
+								</center>
+							</p:column>
+								<p:column headerText="#{prezmsg['QUANTITE']}">
+								<center>
+									<h:inputText id="quantite_tlb" value="#{prod.quantite}" />
+								</center>
+							</p:column>
+							
+<!-- 							<p:column headerText="#{prezmsg['CODEBAR']}"> -->
+<!-- 								<center> -->
+<!-- 									<h:outputText value="#{prod.codeBar}" /> -->
+<!-- 								</center> -->
+<!-- 							</p:column> -->
+
+							<!-- 							<p:column headerText="#{prezmsg['DESCRIPTION']}"> -->
+							<!-- 								<center> -->
+							<!-- 									<h:outputText value="#{prod.description}" /> -->
+							<!-- 								</center> -->
+							<!-- 							</p:column> -->
+
+							<p:column headerText="#{prezmsg['MONTANT']}">
+								<center>
+									<h:outputText id="mont_tbl" value="#{prod.montant}" />
+								</center>
+							</p:column>
+							<p:column headerText="#{prezmsg['TVA']}">
+								<center>
+									<h:outputText value="#{prod.tva}" />
+								</center>
+							</p:column>
+							
+						
+
+
+							<!-- 							<p:column headerText="#{prezmsg['FAMILLE_PRODUIT']}"> -->
+							<!-- 								<center> -->
+							<!-- 									<h:outputText value="#{prod.familleProd.libelle}" /> -->
+							<!-- 								</center> -->
+							<!-- 							</p:column> -->
+
+
+
+						</p:dataTable>
+
+						<p:panel id="multiProdDetail"
+							style="text-align:center;width :250%;margin-left: -150%;">
+
+							<p:dataList value="#{produitMBean.webBean.selectedVOs}" var="pro" emptyMessage="aucun produit séléctionner"
+								type="definition">
+								<f:facet name="header">
+            DETAIL Produit
+        </f:facet>
+              #{pro.quantite} *  #{pro.libelle}        :        #{pro.totalMont} DHS    
+          
+          <f:facet name="footer">
+          TOTAL   :        	<h:outputText id="mntantt" value="#{produitMBean.montTotal}" />    DHS
+        </f:facet>
+        
+							</p:dataList>
+
+	<h:outputText id="mntant" value="#{produitMBean.montTotal}" style="display:none;" />
+
+							
+							
+							<h:inputHidden id="mnt"
+							value="#{personnelMBean.webBean.vo.montant}"></h:inputHidden>
+							
+							<h:inputHidden id="matric"
+							value="#{personnelMBean.webBean.vo.matricule}"></h:inputHidden>
+						<h:inputHidden id="solde"
+							value="#{personnelMBean.webBean.vo.solde}"></h:inputHidden>
+						
+						</p:panel>
+						
+					</h:panelGrid>
+
+
+					
+
+						
+					
+					
+
+					<p:commandButton id="recharger" onclick="recharge_carte()" action="#{personnelMBean.decharger}"
+						icon="ui-icon-custom-validerOsc" process="@this multiProdDetail"
+						
+						value="#{prezmsg['VALIDER']}" styleClass="Val"
+						update="recharge" style="width:200px;" />
+
+
+					<p:commandButton id="imprim" onclick="lister_prods()"
+						icon="ui-icon-custom-printOsc"
+						value="#{prezmsg['IMPRIMER_TiCKET']}" styleClass="Val"
+						update="recharge" style="width:200px;" />
+
+<!-- 					<p:commandButton id="search" onclick="lecture_data()" -->
+<!-- 						icon="ui-icon-custom-detailsOsc" -->
+<!-- 						value="#{prezmsg['CONSULET_TRANSACT']}" styleClass="Val" -->
+<!-- 						update="recharge" style="width:200px;" /> -->
+
+
+				</p:fieldset>
+			</center>
+		</h:form>
+	</ui:define>
+</ui:composition>
+

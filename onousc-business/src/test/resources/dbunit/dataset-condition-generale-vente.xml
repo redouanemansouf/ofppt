@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<REF_CONDITION_GEN_VENTE CGV_ID="1" CGV_CLAUSE="Clause 01"
+		CGV_INTITULE_COURT="intitule " CGV_INTITULE_DETAILLE="intitule detaille"
+		CGV_DESCRIPTION="desc" CGV_STATUT="ENABLED" />
+	<REF_CONDITION_GEN_VENTE CGV_ID="2" CGV_CLAUSE="Clause 01"
+		CGV_INTITULE_COURT="intitule" CGV_INTITULE_DETAILLE="intitule detaille"
+		CGV_DESCRIPTION=" desc" CGV_STATUT="ENABLED" />
+</dataset>

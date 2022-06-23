@@ -1,0 +1,47 @@
+@CHARSET "ISO-8859-1";
+
+/**Abdelaziz modif*******/
+.chart-pnl {
+	border: none;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+.ui-icon-custom-validate {
+	background-image: url("#{resource['images/icons/valide-icon.png']}")
+		no-repeat center center !important;
+}
+
+#statistique-form:NbreJours_header {
+	background: none repeat scroll 0 0 #c12358 !important;
+}
+
+.StatRecherche {
+	float: left;
+	border: 1px solid;
+	border-color: #c12358 !important;
+}
+
+.Dashboard {
+	float: right;
+	width: 20%
+}
+
+.StatTransaction {
+	border: 1px solid;
+	border-color: #c12358 !important;
+	width: 60%;
+	margin: auto;
+}
+
+.RechercheCycle {
+	border: 1px solid;
+	width: 60%;
+	margin: auto;
+}
+
+.RechercheCyclee {
+	width: 91%;
+	margin: auto;
+}
+

@@ -1,0 +1,144 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:b="http://bootsfaces.net/ui">
+
+	<p:panel id="reservationParJour-pnl"
+		rendered="#{reservationMBean.typeReservation == 'JOUR'}"
+		styleClass="MarginAuto">
+
+		<h:panelGrid id="reservationParJour-grid" columns="2"
+			styleClass="FormGrid AlignCenter"
+			columnClasses="AlignRight,AlignLeft">
+
+			<!-- DATE RÉSERVATION-->
+			<p:outputLabel value="Date service" />
+			<p:calendar id="dateReservation"
+				value="#{reservationMBean.webBean.reservationParJourVO.dateReservation}">
+				<p:ajax event="dateSelect" update="btn_add" />
+			</p:calendar>
+
+			<!-- LISTES DES SERVICES -->
+			<p:outputLabel value="Services" />
+			<p:selectManyCheckbox id="services-res-jour"
+				value="#{reservationMBean.webBean.checkedServices}" layout="grid"
+				columns="1" styleClass="FormGrid">
+				<f:selectItems
+					value="#{reservationMBean.webBean.serviceListForCombo}" var="s"
+					itemLabel="#{s.libelle}" itemValue="#{s.code}" />
+				<p:ajax event="change" update="btn_add" />
+			</p:selectManyCheckbox>
+
+			<!-- SERVICE MIDI-->
+			<!-- 			<p:outputLabel value="Service midi" /> -->
+			<!-- 			<p:selectBooleanButton id="serviceMidi" -->
+			<!-- 				value="#{reservationMBean.webBean.reservationParJourVO.serviceMidi}" -->
+			<!-- 				onLabel="OUI" offLabel="NON" onIcon="ui-icon-check" -->
+			<!-- 				offIcon="ui-icon-close" style="width:60px"> -->
+			<!-- 				<p:ajax event="change" update=" btn_add" /> -->
+			<!-- 			</p:selectBooleanButton> -->
+
+			<!-- SERVICE SOIR -->
+			<!-- 			<p:outputLabel value="Service soir" /> -->
+			<!-- 			<p:selectBooleanButton id="serviceSoir" -->
+			<!-- 				value="#{reservationMBean.webBean.reservationParJourVO.serviceSoir}" -->
+			<!-- 				onLabel="OUI" offLabel="NON" onIcon="ui-icon-check" -->
+			<!-- 				offIcon="ui-icon-close" style="width:60px"> -->
+			<!-- 				<p:ajax event="change" update="btn_add" /> -->
+			<!-- 			</p:selectBooleanButton> -->
+
+			<!-- or (reservationMBean.webBean.reservationParJourVO.serviceMidi == false and reservationMBean.webBean.reservationParJourVO.serviceSoir == false) -->
+
+			<p:commandButton id="btn_add" value="Ajouter la réservation"
+				disabled="#{reservationMBean.webBean.reservationParJourVO.dateReservation == null }"
+				process="@parent" action="#{reservationMBean.addJourReserve()}"
+				update="@this jourReserves-dtbl reservationParJour-grid" />
+
+			<p:commandButton value="Valider la réservation" process="@this"
+				update="validationReservationParJour-pnl"
+				action="#{reservationMBean.reserverParJour()}"
+				oncomplete="toggle_visibility('reservationParJour-pnl','validationReservationParJour-pnl')" />
+
+		</h:panelGrid>
+
+		<br />
+
+		<p:dataTable id="jourReserves-dtbl"
+			value="#{reservationMBean.webBean.reservationParJourVOs}" var="rj"
+			paginator="true" paginatorPosition="bottom" rows="5"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5">
+
+			<p:column headerText="Date service" styleClass="AlignCenter">
+				<h:outputText value="#{rj.dateReservation}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+
+			<p:column headerText="Service midi" styleClass="AlignCenter">
+				<p:graphicImage library="images/icons" name="x-icon.png"
+					rendered="#{ rj.services.contains('SERVICE_MIDI') != true}" />
+				<p:graphicImage library="images/icons" name="c-icon.png"
+					rendered="#{ rj.services.contains('SERVICE_MIDI')}" />
+			</p:column>
+
+			<p:column headerText="Service soir" styleClass="AlignCenter">
+				<p:graphicImage library="images/icons" name="x-icon.png"
+					rendered="#{ rj.services.contains('SERVICE_SOIR') != true}" />
+				<p:graphicImage library="images/icons" name="c-icon.png"
+					rendered="#{ rj.services.contains('SERVICE_SOIR')}" />
+			</p:column>
+
+			<p:column styleClass="AlignCenter" width="48">
+				<p:commandButton action="#{reservationMBean.removeJourReserve(rj)}"
+					process="@this" update="jourReserves-dtbl"
+					icon="ui-icon-custom-delete" />
+			</p:column>
+
+		</p:dataTable>
+
+	</p:panel>
+
+	<p:panel id="validationReservationParJour-pnl" visible="false"
+		styleClass="MarginAuto AlignCenter">
+
+		<center>
+
+			<h:panelGrid columns="2" styleClass="FormGrid">
+
+				<h3>Date réservation :</h3>
+				<h:outputText value="#{reservationMBean.webBean.vo.dateOperation}"
+					style="font-size:15px;">
+					<f:convertDateTime pattern="dd/MM/YYYY" />
+				</h:outputText>
+
+				<h3>Type réservation :</h3>
+				<h:outputText value="#{reservationMBean.webBean.vo.typeReservation}"
+					style="font-size:15px;" />
+
+				<h3>Montant :</h3>
+				<h:outputText value="#{reservationMBean.webBean.vo.montant}"
+					style="font-size:15px;" />
+
+			</h:panelGrid>
+
+			<br />
+
+			<p:commandButton value="Valider" action="#{reservationMBean.creer()}"
+				process="@this" update="reservation-outputPanel">
+				<f:setPropertyActionListener
+					target="#{reservationMBean.typeReservation}" value="null" />
+				<f:setPropertyActionListener target="#{reservationMBean.action}"
+					value="null" />
+			</p:commandButton>
+
+		</center>
+
+	</p:panel>
+
+
+</ui:composition>

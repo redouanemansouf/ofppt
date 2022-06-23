@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:b="http://bootsfaces.net/ui">
+
+	<h:panelGrid columns="4">
+
+		<h:outputText styleClass="RecapReservation StrongFont"
+			value="BIENVENUE M."  />
+
+		<h:outputText id="nomUsager-output"
+			styleClass="RecapReservations StrongFont"
+			value="#{reservationMBean.nomUsager}"    />
+
+		<p:spacer width="10" />
+
+		<h:outputText id="prenomUsager-output"
+			styleClass="RecapReservations StrongFont"
+			value="#{reservationMBean.prenomUsager}" 
+ />
+
+	</h:panelGrid>
+
+	<!-- 	<h:panelGrid columns="4"> -->
+
+	<!-- 		<h:outputText styleClass="RecapReservation StrongFont" -->
+	<!-- 			value="DATE DERNIÈRE CONNEXION :" /> -->
+	<!-- 		<h:outputText id="dateDerniereConnexion-output" -->
+	<!-- 			styleClass="RecapReservation StrongFont" -->
+	<!-- 			value="#{reservationMBean.dateDerniereConnexion}" /> -->
+
+	<!-- 	</h:panelGrid> -->
+
+	<p:separator />
+
+</ui:composition>

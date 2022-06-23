@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- The icon can be used freely in both personal and commercial projects with no attribution required, but always appreciated. 
+You may NOT sub-license, resell, rent, redistribute or otherwise transfer the icon without express written permission from iconmonstr.com -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   x="0px"
+   y="0px"
+   width="17"
+   height="17"
+   viewBox="0 0 17 17"
+   enable-background="new 0 0 512 512"
+   xml:space="preserve"
+   id="svg2"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="clock_w.svg"><metadata
+   id="metadata9"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata><defs
+   id="defs7" /><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="964"
+   inkscape:window-height="480"
+   id="namedview5"
+   showgrid="false"
+   fit-margin-top="0"
+   fit-margin-left="0"
+   fit-margin-right="0"
+   fit-margin-bottom="0"
+   inkscape:zoom="5.2149125"
+   inkscape:cx="20.35018"
+   inkscape:cy="-3.5554558"
+   inkscape:window-x="0"
+   inkscape:window-y="0"
+   inkscape:window-maximized="0"
+   inkscape:current-layer="svg2" />
+<path
+   id="time-3-icon"
+   d="M 8.5,0 C 3.8055652,0 0,3.8055633 0,8.5 0,13.194389 3.8055652,17 8.5,17 13.194393,17 17,13.194389 17,8.5 17,3.8055633 13.194393,0 8.5,0 z m 0,15.143203 C 4.8286186,15.143203 1.8567957,12.172 1.8567957,8.5 1.8567957,4.8285383 4.828,1.8567967 8.5,1.8567967 c 3.671381,0 6.643204,2.9711655 6.643204,6.6432033 0,3.671377 -2.971204,6.643203 -6.643204,6.643203 z M 13.732699,8.90375 c 0.0706,0.012278 0.122177,0.073478 0.122177,0.145161 v 0.0038 c 0,0.07102 -0.05046,0.131542 -0.120238,0.144623 -1.530536,0.28628 -5.1565287,0.880949 -5.5544193,0.880949 -0.5697475,0 -1.0315534,-0.461805 -1.0315534,-1.03155 0,-0.405696 0.6102669,-4.3191149 0.8920041,-5.9038266 0.011305,-0.063655 0.06664,-0.1101316 0.1312552,-0.1101316 h 3.305e-4 c 0.070512,0 0.1305534,0.051283 0.1415703,0.1209833 l 0.7812162,4.9474911 4.6376574,0.8024661 z"
+   style="fill:#009991;fill-opacity:1"
+   inkscape:connector-curvature="0" />
+</svg>

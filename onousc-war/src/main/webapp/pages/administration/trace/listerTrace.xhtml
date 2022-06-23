@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+	<ui:define name="content">
+
+
+		<p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;width:96%;">
+			<ul class="menuOpposition">
+				<li ><h:link
+						outcome="/pages/administration/userEntity/listerUserEntity.xhtml">
+						<div>
+							<center>#{prezmsg['GEST_USER']}</center>
+						</div>
+					</h:link></li>
+					<li><h:link
+						outcome="/pages/listerGroup.xhtml">
+						<div>
+							<center>Gestion des groupes administrateurs</center>
+						</div>
+					</h:link></li>
+				<li ><h:link
+						outcome="/pages/administration/winMenu/listerWinMenuG.xhtml">
+						<div>
+							<center>Gestion droit d'accès des groupes</center>
+						</div>
+					</h:link></li>
+					<li  ><h:link
+						outcome="/pages/administration/winMenu/listerWinMenu.xhtml">
+						<div>
+							<center>Gestion droit d'accès des utilisateurs</center>
+						</div>
+					</h:link></li>
+				<li class="active" ><h:link
+						outcome="/pages/administration/trace/listerTrace.xhtml">
+						<div>
+							<center>#{prezmsg['TRACE_LOG']}</center>
+						</div>
+					</h:link></li>
+					
+			</ul>
+		</p:fieldset>
+
+		<p:ajaxStatus>
+			<f:facet name="start">
+				<p:graphicImage library="images" name="blueajax.gif"
+					styleClass="AjaxStatusLoader" />
+			</f:facet>
+		</p:ajaxStatus>
+
+
+
+		<h:form id="traceEntity-form">
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+
+			<p:remoteCommand name="_updateCrudMenu" global="false"
+				update="crud-menu :search-overlay" />
+
+			<!--  -->
+
+
+
+			<center>
+				<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;"
+					styleClass="fieldsetCategories">
+
+					<center>
+						<p:messages autoUpdate="true" globalOnly="true" closable="true"
+							style="width:60%;" showIcon="false" />
+					</center>
+
+					<div class="RefCenter">
+						<p:messages id="msg" globalOnly="true" closable="true"
+							showIcon="false" />
+						<p:menubar id="crud-menu" styleClass="CrudMenu"
+							style="margin-left:0%!important;padding: 10px 0px 0px !important;">
+							<p:menuitem id="search" value="#{prezmsg['CHERCHER']}"
+								icon="ui-icon-custom-chercher" styleClass="ToolbarButton" />
+
+						</p:menubar>
+
+
+
+
+						<p:dataTable id="traceEntity-dtbl" paginator="true"
+							rowStyleClass="null" value="#{traceEntitySearchMBean}"
+							var="trace" lazy="true" rows="50"
+							selection="#{traceEntityMBean.webBean.selectedVOs}"
+							rowKey="#{trace.actionWhen}" paginatorPosition="bottom"
+							emptyMessage="#{prezmsg['label_no_records_found']}"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="50,100"
+							currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+
+							<ui:include src="/pages/commun/datatableEvents.xhtml" />
+							<!-- 						<p:column selectionMode="multiple" styleClass="tableChkbox"  -->
+							<!-- 							style="width:16px;text-align:center" /> -->
+
+
+							<!-- USERnAME -->
+							<p:column headerText="#{prezmsg['UTILISATEUR']}"
+								style="width:15%">
+								<center>
+									<h:outputText value="#{trace.userID}" />
+								</center>
+							</p:column>
+							<p:column headerText="#{prezmsg['ACTION']}" style="width:20%">
+								<center>
+									<h:outputText value="#{trace.actionName}" />
+								</center>
+							</p:column>
+							<p:column headerText="#{prezmsg['ENTITE']}" style="width:40%">
+								<center>
+									<h:outputText value="#{trace.nameEntity}" />
+								</center>
+							</p:column>
+							<p:column headerText="#{prezmsg['DATEACTION']}" style="width:20%">
+								<center>
+									<h:outputText value="#{trace.actionWhen}" />
+								</center>
+							</p:column>
+
+						</p:dataTable>
+
+					</div>
+					</p:fieldset>
+					</center>
+					
+		</h:form>
+
+		<p:overlayPanel id="search-overlay" for=":traceEntity-form:search"
+			hideEffect="slide" showEffect="slide" widgetVar="searchOverlay"
+			dismissable="false" appendToBody="true">
+
+			<h:form id="search-form">
+
+				<h:panelGrid columns="4" styleClass="FormGrid">
+					<!-- Code   -->
+					<h:outputLabel value="#{prezmsg['UTILISATEUR']}" />
+					<p:inputText id="code-search"
+						value="#{traceEntitySearchMBean.traceEntityCriteria.user}" />
+					<!-- Libellé   -->
+					<h:outputLabel value="#{prezmsg['ACTION']}" />
+					<p:selectOneMenu id="lib-search"
+						value="#{traceEntitySearchMBean.traceEntityCriteria.action}">
+						<f:selectItem itemLabel="Choisir une action" itemValue="" />
+						<f:selectItem itemLabel="Insertion" itemValue="0" />
+						<f:selectItem itemLabel="Modification" itemValue="1" />
+						<f:selectItem itemLabel="Suppression" itemValue="2" />
+					</p:selectOneMenu>
+
+
+					<h:outputLabel value="#{prezmsg['DE']}" />
+					<p:calendar id="date-search" pattern="MM/dd/yyyy HH:mm:ss"
+						value="#{traceEntitySearchMBean.traceEntityCriteria.dateDebaction}">
+					</p:calendar>
+
+					<h:outputLabel value="#{prezmsg['A']}" />
+					<p:calendar id="date-search2" pattern="MM/dd/yyyy HH:mm:ss"
+						value="#{traceEntitySearchMBean.traceEntityCriteria.dateFinaction}">
+					</p:calendar>
+
+				</h:panelGrid>
+
+				<p:commandButton value="#{prezmsg['OK']}" styleClass="OpButton"
+					action="#{traceEntitySearchMBean.run}" ajax="true"
+					style="margin-left:66%" update=":traceEntity-form:traceEntity-dtbl"
+					onclick="PF('searchOverlay').hide();" />
+				<p:commandButton id="searchReset" styleClass="OpButton"
+					widgetVar="searchReset-wdg" value="#{prezmsg['RESET']}"
+					icon="ui-icon-custom-undo"
+					action="#{traceEntitySearchMBean.resetSearchCriteria()}"
+					update="search-form">
+					<p:resetInput target="search-form" />
+				</p:commandButton>
+
+
+			</h:form>
+
+		</p:overlayPanel>
+
+
+
+	</ui:define>
+</ui:composition>
+

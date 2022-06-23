@@ -1,0 +1,98 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+	<p:dialog id="edit-dlg" widgetVar="edit-dlg-wdg" closable="true"
+		closeOnEscape="true" header="Modifier Evénement" hideEffect="fade"
+		showEffect="fade" modal="true" dynamic="true">
+
+
+		<h:form id="edit-form">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+				
+				<pe:tooltip for="update_priorite" myPosition="left center"
+				showEvent="click" hideEvent="unfocus" atPosition="right center">
+				<h:message for="update_priorite" />
+			</pe:tooltip>
+			<pe:tooltip for="update_etat" myPosition="left center"
+				showEvent="click" hideEvent="unfocus" atPosition="right center">
+				<h:message for="update_etat" />
+			</pe:tooltip>
+
+
+			<h:panelGrid columns="2" styleClass="FormGrid">
+
+					<!--      Code critere     -->
+				<h:outputLabel value="#{prezmsg['CODE']}" />
+
+				<p:inputText id="update_code"
+					value="#{evenementMBean.webBean.vo.code}" required="true"
+					title="#{component.valid ? '' : evenementMBean.getErrorMessage(component.clientId)}" />
+
+
+				<!--      Nom critere     -->
+
+
+				<h:outputLabel value="#{prezmsg['DESCRIPTION']}" />
+
+				<p:inputTextarea id="update_desc"
+					value="#{evenementMBean.webBean.vo.description}" required="true"
+					title="#{component.valid ? '' : evenementMBean.getErrorMessage(component.clientId)}" />
+
+				<h:outputLabel value="#{prezmsg['ETAT']}" />
+				<p:selectOneMenu id="update_etat"
+					value="#{evenementMBean.webBean.vo.etat}">
+					<f:selectItem itemLabel="Choisissez" />
+					<f:selectItem itemLabel="Actif" itemValue="A" />
+					<f:selectItem itemLabel="Non Actif" itemValue="N" />
+
+				</p:selectOneMenu>
+
+				<h:outputLabel value="#{prezmsg['DATE-DEB']}" />
+				<p:calendar id="update_date_deb"
+					value="#{evenementMBean.webBean.vo.dateDebut}"
+					pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true" />
+
+				<h:outputLabel value="#{prezmsg['DATE_FIN']}" />
+				<p:calendar id="update_date_Fin"
+					value="#{evenementMBean.webBean.vo.dateFin}"
+					pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true" />
+					
+					<h:outputLabel value="#{prezmsg['PRIORITE']}" />
+				<p:selectOneMenu id="update_priorite"
+					value="#{evenementMBean.webBean.vo.priorite}">
+					<f:selectItem itemLabel="Choisissez" />
+					<f:selectItem itemLabel="OUI" itemValue="Oui" />
+					<f:selectItem itemLabel="NON" itemValue="Non" />
+					</p:selectOneMenu>
+
+
+			</h:panelGrid>
+			<p:toolbar>
+				<f:facet name="right">
+					<p:commandButton id="validate-edit" value="#{prezmsg['VALIDER']}" icon="ui-icon-custom-validerOsc"
+						process="@form" update="edit-form"
+						action="#{evenementMBean.modifier}" styleClass="Val"  style="width:50%"/>
+					<p:commandButton value="#{prezmsg['ANNULER']}" global="false" icon="ui-icon-custom-cancelOsc"
+						process="@none" onclick="PF('edit-dlg-wdg').hide()"
+						styleClass="Val" style="width:48%"/>
+				</f:facet>
+			</p:toolbar>
+
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('edit-dlg-wdg').hide()"
+				update=":critere-form:critere-dtbl" />
+
+		</h:form>
+	</p:dialog>
+</ui:composition>

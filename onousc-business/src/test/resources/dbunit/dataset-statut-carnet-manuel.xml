@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<REF_STATUT_CARNET_MANUEL SCM_ID="1"
+		SCM_LIBELLE="En stock" SCM_DESCRIPTION="Carnet en stock" SCM_STATUT="ENABLED" />
+	
+	<REF_STATUT_CARNET_MANUEL SCM_ID="2"
+		SCM_LIBELLE="En attente de réception" SCM_DESCRIPTION="Carnet en utilisation"
+		SCM_STATUT="ENABLED" />
+	<REF_STATUT_CARNET_MANUEL SCM_ID="3"
+		SCM_LIBELLE="Réceptionné" SCM_DESCRIPTION="Carnet en utilisation"
+		SCM_STATUT="ENABLED" />
+	<REF_STATUT_CARNET_MANUEL SCM_ID="4"
+		SCM_LIBELLE="En utilisation" SCM_DESCRIPTION="Carnet en utilisation"
+		SCM_STATUT="ENABLED" />
+	<REF_STATUT_CARNET_MANUEL SCM_ID="5"
+		SCM_LIBELLE="Consommé" SCM_DESCRIPTION="Carnet en utilisation"
+		SCM_STATUT="ENABLED" />
+	<REF_STATUT_CARNET_MANUEL SCM_ID="6"
+		SCM_LIBELLE="Non valide" SCM_DESCRIPTION="Carnet en utilisation"
+		SCM_STATUT="ENABLED" />
+	<REF_STATUT_CARNET_MANUEL SCM_ID="7"
+		SCM_LIBELLE="Rejeté" SCM_DESCRIPTION="Carnet en utilisation"
+		SCM_STATUT="ENABLED" />
+</dataset>

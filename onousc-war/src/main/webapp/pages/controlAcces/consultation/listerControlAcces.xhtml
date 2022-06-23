@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+	<ui:define name="content">
+
+
+		<p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;width:96%;">
+			<ul class="menuOpposition">
+				<li><h:link
+						outcome="/pages/referentiel/tourniquet/listerTourniquet.xhtml">
+						<div>
+							<center>#{prezmsg['PARAM_TOUR_PMR']}</center>
+						</div>
+					</h:link></li>
+				<li><h:link
+						outcome="/pages/controlAcces/critere/listerCritere.xhtml">
+						<div>
+							<center>#{prezmsg['PARAMETRAGE_PROFIL']}</center>
+						</div>
+					</h:link></li>
+				<li><h:link
+						outcome="/pages/controlAcces/detailProfil/listerDetailProfil.xhtml">
+						<div>
+							<center>#{prezmsg['DETAIL_PROFIL']}</center>
+						</div>
+					</h:link></li>
+
+				<li class="active"><h:link
+						outcome="/pages/controlAcces/consultation/listerControlAcces.xhtml">
+						<div>
+							<center>#{prezmsg['CONSULTATION']}</center>
+						</div>
+					</h:link></li>
+			</ul>
+		</p:fieldset>
+
+		<p:ajaxStatus>
+			<f:facet name="start">
+				<p:graphicImage library="images" name="blueajax.gif"
+					styleClass="AjaxStatusLoader" />
+			</f:facet>
+		</p:ajaxStatus>
+
+
+
+		<h:form id="critere-form">
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+
+			<!-- 			<p:remoteCommand name="_updateCrudMenu" global="false" -->
+			<!-- 				update="crud-menu :search-overlay" /> -->
+			<!--  -->
+
+
+
+			<center>
+				<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;margin-left :0%;"
+					styleClass="fieldsetCategories">
+
+					<center>
+						<p:messages autoUpdate="true" globalOnly="true" closable="true"
+							style="width:60%;" showIcon="false" />
+					</center>
+
+					<!-- Breadcrumb -->
+					<!-- 				<div class="BreadCrumbCust"> -->
+					<!-- 					<h:panelGrid columns="5" cellpadding="3"> -->
+					<!-- 						<h:outputLabel value="Référentiel" style="color:#419edd" /> -->
+					<!-- 						<span class="ui-icon ui-icon-carat-1-e"></span> -->
+					<!-- 						<h:outputLabel value="Critère" /> -->
+					<!-- 					</h:panelGrid> -->
+					<!-- 				</div> -->
+					
+					
+
+					
+
+<div class="RefCenter">
+						<p:toolbar id="crud-menu">
+
+							<f:facet name="left">
+
+
+								<!-- 	Lié au formulaire de la recherche, type boutton car ne fait aucune action/actionListener ni update, utiliser just pour pop le searchOverlay -->
+								<p:commandButton id="search" widgetVar="search-wdg"
+									styleClass="ToolbarButton" value="#{prezmsg['CHERCHER']}"
+									type="button" icon="ui-icon-custom-chercher" />
+
+							</f:facet>
+							<f:facet name="right">
+							 <p:commandButton id="excel" styleClass="ToolbarButton"  icon="ui-icon-custom-excel"  
+							 value="Etat d'accés" action="#{etatAcces.executeExcel}"
+							 oncomplete="alert('Export terminé avec succès')"></p:commandButton>
+							<p:commandButton  icon="ui-icon-custom-excel"  value="liste personnel" 
+							action="#{etatPersonnel.writePersonnelToFile}"
+							oncomplete="alert('Export terminé avec succès')"></p:commandButton>
+							<p:commandButton  icon="ui-icon-custom-excel"  value="Acces Principal" 
+							action="#{etatAccesPrincipal.writeAccesListToFile}"
+							oncomplete="alert('Export terminé avec succès')"></p:commandButton>
+							
+							</f:facet>
+							</p:toolbar>
+						<center>
+						
+
+								
+
+							<!-- 	<p:commandButton id="searchOk" styleClass="Val"
+									icon="ui-icon-custom-rechercheOsc" value="#{prezmsg['OK']}"
+									action="#{controlAccesSearchMBean.run}"
+									update="detailprofil-dtbl" />
+
+							
+							 
+								<p:commandButton id="searchReset" styleClass="Val"
+									widgetVar="searchReset-wdg" icon="ui-icon-custom-cancelOsc"
+									value="#{prezmsg['RESET']}"
+									action="#{controlAccesSearchMBean.resetSearchCriteria()}"
+									update=":critere-form:search-form">
+									<p:resetInput target="search-form" />
+								</p:commandButton>
+ -->
+						</center>
+
+  													
+      													
+				<p:dataTable id="critere-dtbl" paginator="true"
+						emptyMessage="#{prezmsg['label_no_records_found']}"
+						rowStyleClass="#{det.statut == 'DISABLED' ? 'is-disabled' :null }"
+						value="#{controlAccesSearchMBean}" var="det" lazy="true"
+						rows="10" 
+						rowKey="#{det.id}" paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="10,20,30"
+						currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+      													
+
+<!-- 							<ui:include src="/pages/commun/datatableEvents.xhtml" /> -->
+
+							<!-- 						<p:column selectionMode="multiple" styleClass="tableChkbox" -->
+							<!-- 							style="width:16px;text-align:center" /> -->
+
+							<!-- Identifiant du'critere  -->
+							
+								<p:column headerText="#{prezmsg['TOURNIQUET']}">
+								<center>
+									<h:outputText value="#{det.tourniquet.libelle
+									}" />
+								</center>
+							</p:column>
+
+							<p:column headerText="#{prezmsg['MATRICULE']}">
+								<center>
+									<h:outputText value="#{det.matricule}" />
+								</center>
+							</p:column>
+							<p:column headerText="#{prezmsg['DATE_ACCES']}">
+								<center>
+									<h:outputText value="#{det.dateAcces}">
+										<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+									</h:outputText>
+
+								</center>
+							</p:column>
+
+
+							<p:column headerText="#{prezmsg['HEURE_ACCES']}">
+								<center>
+									<h:outputText value="#{det.heureAcces}">
+										<f:convertDateTime pattern="HH:mm:ss"></f:convertDateTime>
+									</h:outputText>
+								</center>
+							</p:column>
+
+						</p:dataTable>
+
+					</div>
+
+				</p:fieldset>
+			</center>
+		</h:form>
+
+<p:overlayPanel id="search-overlay" for=":critere-form:search"
+			style="width:600px;" hideEffect="slide" showEffect="slide"
+			widgetVar="searchOverlay" dismissable="false" appendToBody="true">
+
+			<h:form id="search-form">
+
+				
+										<h:panelGrid columns="4" styleClass="FormGrid">
+
+											<h:outputLabel value="#{prezmsg['MATRICULE']}" />
+
+											<p:inputText id="matr-search"
+												value="#{controlAccesSearchMBean.criteria.matricule}" />
+
+											<h:outputLabel value="#{prezmsg['DATE_DEBUT']}" />
+											<p:calendar id="date_deb"
+												value="#{controlAccesSearchMBean.criteria.dateDebut}"
+												pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true" />
+
+											<h:outputLabel value="#{prezmsg['DATE_FIN']}" />
+											<p:calendar id="date_Fin"
+												value="#{controlAccesSearchMBean.criteria.dateFin}"
+												pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true" />
+
+
+											<h:outputLabel value="#{prezmsg['TOURNIQUET']}" />
+											<p:selectOneMenu id="tourniquet_search"
+												value="#{controlAccesSearchMBean.criteria.tourniquet}"
+												 style="width:220px">
+												<f:selectItem itemLabel="Choisissez" />
+												<f:selectItems
+													value="#{detailProfilMBean.webBean.tourniquetVOs}" var="u"
+													itemLabel="#{u.libelle}" itemValue="#{u.id}" />
+											</p:selectOneMenu>
+
+
+
+										</h:panelGrid>
+
+				<!-- 	Lance la recherche, revien toujours à la premiere page: backToFirstPage()  -->
+				<p:commandButton id="searchOk" styleClass="Val"
+					icon="ui-icon-custom-validerOsc" style="width:10%"
+					widgetVar="searchOk-wdg" value="#{prezmsg['OK']}"
+					action="#{controlAccesSearchMBean.run}"
+					update=":critere-form:critere-dtbl"
+					onstart="backToFirstPage(); block()"
+					oncomplete="PF('searchOverlay').hide(); unblock(); initCrudMenu();" />
+
+				<p:commandButton id="searchReset" styleClass="Val" style="width:25%"
+					widgetVar="searchReset-wdg" icon="ui-icon-custom-cancelOsc"
+					value="#{prezmsg['RESET']}"
+					action="#{controlAccesSearchMBean.resetSearchCriteria}"
+					update="search-form" tabindex="-1">
+					<p:resetInput target="search-form" />
+				</p:commandButton>
+
+                <p:commandButton id="editExcel" styleClass="Val" style="width:15%" 
+					 icon="ui-icon-custom-excel" 
+ 					value="EXCEL" 
+ 					action="#{controlAccesSearchMBean.executeExcel}" 
+ 					 > 
+				
+				</p:commandButton> 
+    
+			</h:form>
+
+		</p:overlayPanel>
+<!--  <p:commandButton action="#{etatAcces.executeExcel}"></p:commandButton> -->
+<!--   <p:commandButton id="edit" styleClass="ToolbarButton"  icon="ui-icon-custom-excel"  value="Etat d'accés" action="#{etatAcces.executeExcel}"></p:commandButton> -->
+
+	</ui:define>
+</ui:composition>
+

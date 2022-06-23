@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+	<ui:define name="content">
+
+		<p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;">
+			<ul class="menuCycleDeVie">
+				<li class="active"><h:link>
+						<div>
+							<center>CYCLE DE VIE CARTE</center>
+						</div>
+					</h:link></li>
+			</ul>
+		</p:fieldset>
+		<p:ajaxStatus>
+			<f:facet name="start">
+				<p:graphicImage library="images" name="blueajax.gif"
+					styleClass="AjaxStatusLoader" />
+			</f:facet>
+		</p:ajaxStatus>
+
+		<h:form id="nationalite-form">
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+			<p:remoteCommand name="_updateCrudMenu" global="false" update="" />
+
+			<!-- 			<p:remoteCommand name="_updateCrudMenu" global="false" -->
+			<!-- 				update="crud-menu :search-overlay" /> -->
+
+			<center>
+				<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;"
+					styleClass="fieldsetCategories">
+
+					<center>
+						<p:messages autoUpdate="true" globalOnly="true" closable="true"
+							style="width:60%;" showIcon="false" />
+					</center>
+
+					<div class="BackgroundGray">
+
+						<div class="RefCenter">
+							<p:fieldset
+								style="padding-left: 0px !important; padding-right: 0% !important;margin-left: 0%;"
+								styleClass="fieldsetSearch" id="searchField">
+
+								<center>
+									<h:panelGrid columns="4" styleClass="FormGrid">
+										<h:outputLabel value="#{prezmsg['SITE']}" />
+
+										<p:inputText value="#{cycleVieMBean.user.siteVO.libelle}"
+											rendered="#{cycleVieMBean.user.siteVO !=null }"
+											disabled="true" />
+										<p:selectOneMenu id="site"
+											rendered="#{cycleVieMBean.user.siteVO ==null }"
+											value="#{cycleVieSearchMBean.cycleVieCriteria.idSite}">
+											<f:selectItem itemLabel="#{prezmsg['SELECTIONNER']}" />
+											<f:selectItems
+												value="#{cycleVieMBean.webBean.listSiteForCombo}" var="site"
+												itemLabel="#{site.libelle}" itemValue="#{site.id}" />
+										</p:selectOneMenu>
+
+
+										<p:outputLabel id="anne" value="#{prezmsg['NSERIE']}" />
+										<p:inputText id="serie_create"
+											value="#{cycleVieSearchMBean.cycleVieCriteria.numSerie}">
+										</p:inputText>
+
+										<p:outputLabel id="numCarte" value="N° Carte" />
+										<p:inputText id="ncarte_create"
+											value="#{cycleVieSearchMBean.cycleVieCriteria.operateur}">
+										</p:inputText>
+
+
+										<p:outputLabel value="#{prezmsg['PORTEUR']}" />
+										<p:selectOneMenu id="Porteur-create" filter="true"
+											filterMatchMode="startsWith"
+											value="#{cycleVieSearchMBean.cycleVieCriteria.numPorteur}">
+											<f:selectItem itemLabel="Porteur....."
+												noSelectionOption="true" />
+											<f:selectItems value="#{cycleVieMBean.webBean.etudiantVOs}"
+												var="e" itemLabel="#{e.nom} #{e.prenom}" itemValue="#{e.id}" />
+										</p:selectOneMenu>
+
+
+
+										<p:outputLabel value="#{prezmsg['ETAT']}" />
+										<p:selectOneMenu id="oper-create" filter="true"
+											filterMatchMode="startsWith"
+											value="#{cycleVieSearchMBean.cycleVieCriteria.operation}">
+											<f:selectItem itemLabel="#{prezmsg['TOUS']}" />
+											<f:selectItem itemLabel="Demande nouvelle carte"
+												itemValue="Demande nouvelle carte" />
+											<f:selectItem itemLabel="Fabrication" itemValue="Fabrication" />
+											<f:selectItem itemLabel="Re-Fabrication"
+												itemValue="Re-Fabrication" />
+											<f:selectItem itemLabel="Mise en opposition"
+												itemValue="Mise en opposition" />
+											<f:selectItem itemLabel="Délivrance" itemValue="Delivrance" />
+
+
+										</p:selectOneMenu>
+										<p:outputLabel id="numCIN" value="N° Cin" />
+										<p:inputText id="ncin_create"
+											value="#{cycleVieSearchMBean.cycleVieCriteria.cin}">
+										</p:inputText>
+
+										<p:outputLabel id="codeMassar"
+											value="#{prezmsg['CODE_MASSAR']}" />
+										<p:inputText id="codeMassar_create"
+											value="#{cycleVieSearchMBean.cycleVieCriteria.codeMassar}">
+										</p:inputText>
+									</h:panelGrid>
+
+									<p:commandButton id="searchOkk" styleClass="OpButton"
+										widgetVar="searchOk-wdg" value="#{prezmsg['CHERCHER']}"
+										action="#{cycleVieSearchMBean.run}"
+										update=":nationalite-form:nationalite-dtbl"
+										icon="ui-icon-custom-chercher" />
+
+									<!-- clear du formulaire  -->
+									<p:commandButton id="searchReset" styleClass="OpButton"
+										widgetVar="searchReset-wdg" value="#{prezmsg['RESET']}"
+										icon="ui-icon-custom-undo"
+										action="#{cycleVieSearchMBean.resetSearchCriteria()}"
+										update="nationalite-form" tabindex="-1">
+									</p:commandButton>
+								</center>
+								<br />
+							</p:fieldset>
+							<br />
+
+							<p:dataTable id="nationalite-dtbl" paginator="true"
+								value="#{cycleVieSearchMBean}" var="nat" lazy="true" rows="100"
+								emptyMessage="#{prezmsg['label_no_records_found']}"
+								selection="#{cycleVieMBean.webBean.selectedVO}"
+								selectionMode="single" rowKey="#{nat.id}"
+								paginatorPosition="bottom"
+								actionListener="#{cycleVieMBean.resetWebBeanVO}"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="100,200,300"
+								currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+
+								<p:column headerText="#{prezmsg['NSERIE']}">
+									<h:outputText value="#{nat.numSerie}">
+										<f:convertNumber pattern="00000000" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="N° Carte">
+									<h:outputText value="#{nat.operateur}">
+
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="#{prezmsg['OPERATION']}">
+									<h:outputText value="#{nat.operation}" />
+								</p:column>
+
+								<p:column headerText="#{prezmsg['NPORTEUR']}">
+									<h:outputText value="#{nat.etudvo.id}" />
+								</p:column>
+
+								<p:column headerText="N° Cin">
+									<h:outputText value="#{nat.etudvo.NCIN}" />
+								</p:column>
+
+								<p:column headerText="#{prezmsg['CODE_MASSAR']}">
+									<h:outputText value="#{nat.etudvo.codeMassar}" />
+								</p:column>
+
+								<p:column headerText="#{prezmsg['PORTEUR']}">
+									<h:outputText value="#{nat.etudvo.nom} #{nat.etudvo.prenom}" />
+								</p:column>
+
+								<p:column headerText="#{prezmsg['SITE']}">
+									<h:outputText value="#{nat.etudvo.siteVO.libelle}" />
+								</p:column>
+								<p:column headerText="#{prezmsg['DATE_OPERATION_ENR']}"
+									styleClass="AlignCenter">
+									<h:outputText value="#{nat.dateOperation}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</p:column>
+
+							</p:dataTable>
+						</div>
+					</div>
+				</p:fieldset>
+			</center>
+		</h:form>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<h:panelGrid columns="2" styleClass="AlignCenter Width100pct">
+				<p:commandButton value="#{prezmsg['OUI']}" type="button"
+					styleClass="OpButton" icon="ui-icon-check" />
+				<p:commandButton value="#{prezmsg['NON']}" type="button"
+					styleClass="OpButton" icon="ui-icon-close" />
+			</h:panelGrid>
+		</p:confirmDialog>
+
+		<ui:include src="DeclarerOpposition.xhtml"></ui:include>
+		<ui:include src="MainLevee.xhtml"></ui:include>
+	</ui:define>
+</ui:composition>
+

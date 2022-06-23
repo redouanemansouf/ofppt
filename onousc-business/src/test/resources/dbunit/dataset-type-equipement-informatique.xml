@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<REF_TYPE_EQUIP_INFO TEQI_ID="1" TEQI_LIBELLE="lib"
+		TEQI_DESCRIPTION="teqi123" TEQI_STATUT="ENABLED" />
+
+	<REF_TYPE_EQUIP_INFO TEQI_ID="2" TEQI_LIBELLE="teqi2"
+		TEQI_DESCRIPTION="teqi123" TEQI_STATUT="ENABLED" />
+
+</dataset>

@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	>
+
+	<ui:define name="header">
+		<ui:include src="/pages/commun/menu.xhtml" />
+		
+	</ui:define>
+
+	<ui:define name="content">
+
+		<h:form id="nationalite-form">
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+
+			<p:remoteCommand name="_updateCrudMenu" global="false"
+				update="crud-menu :search-overlay" />
+			<!--  -->
+
+			<div class="BackgroundGray">
+
+				<div class="RefCenter">
+
+					<p:menubar id="crud-menu" styleClass="CrudMenu">
+
+						<p:menuitem id="create" value="#{prezmsg['NOUVEAU']}"
+							icon="ui-icon-custom-nouveau"
+							oncomplete="PF('create-dlg-wdg').show();"
+							action="#{nationaliteMBean.resetWebBeanVO}">
+						</p:menuitem>
+
+						<p:menuitem id="search" value="#{prezmsg['CHERCHER']}"
+							icon="ui-icon-custom-chercher" />
+
+						<p:menuitem id="print" value="#{prezmsg['IMPRIMER']}"
+							icon="ui-icon-custom-imprimer" />
+
+						<p:menuitem id="delete" value="#{prezmsg['SUPPRIMER']}"
+							icon="ui-icon-custom-supprimer-min" 
+							disabled="#{empty nationaliteMBean.webBean.selectedVOs}"
+							onclick="PF('widget_delete-dlg').show();" />
+
+						<f:facet name="options">
+							<p:commandButton id="import" value="#{prezmsg['IMPORTER']}"
+								styleClass="ImportButton" type="button" />
+
+							<p:commandButton id="export" value="#{prezmsg['EXPORTER']}"
+								styleClass="ExportButton" type="button" />
+
+							<p:commandButton id="enable" value="#{prezmsg['ACTIVER']}"
+								styleClass="ActivateButton" action="#{nationaliteMBean.activer}"
+								disabled="#{empty nationaliteMBean.webBean.selectedVOs}"
+								update="nationalite-dtbl" />
+
+							<p:commandButton id="disable" value="#{prezmsg['DESACTIVER']}"
+								styleClass="DisableButton"
+								action="#{nationaliteMBean.desactiver}"
+								disabled="#{empty nationaliteMBean.webBean.selectedVOs}"
+								update="nationalite-dtbl">
+								<p:confirm header="#{prezmsg['CONFIRMATION_DESACTIVER']}"
+									message="#{prezmsg['CONFIRMATION_DESACTIVER_MESSAGE']}"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+						</f:facet>
+
+					</p:menubar>
+
+					<p:dataTable id="nationalite-dtbl" paginator="true"
+						rowStyleClass="#{nat.statut == 'DISABLED' ? 'is-disabled' :null }"
+						value="#{nationaliteSearchMBean}" var="nat" lazy="true" rows="5"
+						selection="#{nationaliteMBean.webBean.selectedVOs}"
+						rowKey="#{nat.id}" paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="5,10,20"
+						currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+      				
+      				<ui:include src="/pages/commun/datatableEvents.xhtml" />
+
+						<p:column selectionMode="multiple" styleClass="tableChkbox"
+							style="width:16px;text-align:center" />
+
+						<!-- Identifiant de la nationalite  -->
+						<p:column headerText="#{prezmsg['CODE']}">
+							<h:outputText value="#{nat.code}" />
+						</p:column>
+
+						<!-- Libellé de la nationalité -->
+						<p:column headerText="#{prezmsg['LIBELLE']}">
+							<h:outputText value="#{nat.libelle}" />
+						</p:column>
+
+						<!-- Langue parlé par la nationalité   -->
+						<p:column headerText="#{prezmsg['LANGUE']}">
+							<h:outputText value="#{nat.langue}" />
+						</p:column>
+
+						<p:column exportable="false" style="text-align:right;">
+
+							<p:commandButton icon="ui-icon-custom-modifier"
+								styleClass="CrudButton" update=":edit-dlg"
+								oncomplete="PF('edit-dlg-wdg').show();">
+								<f:setPropertyActionListener value="#{nat}"
+									target="#{nationaliteMBean.webBean.vo}" />
+							</p:commandButton>
+
+							<p:commandButton icon="ui-icon-custom-supprimer"
+								styleClass="CrudButton" onclick="PF('widget_deletedlg').show();" />
+
+						</p:column>
+
+					</p:dataTable>
+
+				</div>
+
+			</div>
+		</h:form>
+
+		<p:overlayPanel id="search-overlay" for=":nationalite-form:search" hideEffect="slide"
+			showEffect="slide" widgetVar="searchOverlay" dismissable="false"
+			appendToBody="true">
+
+			<h:form>
+
+				<h:panelGrid columns="4">
+
+					<!-- Identifiant de la nationalite  -->
+					<h:outputLabel value="#{prezmsg['CODE']}" />
+					<p:inputText id="code-search"
+						value="#{nationaliteSearchMBean.nationaliteCriteria.code}" />
+
+					<!-- Libellé de la nationalite  -->
+					<h:outputLabel value="#{prezmsg['LIBELLE']}" />
+					<p:inputText id="libelle-search"
+						value="#{nationaliteSearchMBean.nationaliteCriteria.libelle}" />
+
+					<!-- Langue parlé par la nationalite -->
+					<h:outputLabel value="#{prezmsg['LANGUE']}" />
+					<p:inputText id="langue-search"
+						value="#{nationaliteSearchMBean.nationaliteCriteria.langue}" />
+
+					<!-- Statut  -->
+					<h:outputLabel value="#{prezmsg['STATUT']}" />
+					<p:selectOneMenu id="statut"
+						value="#{nationaliteSearchMBean.nationaliteCriteria.statut}">
+						<f:selectItem itemLabel="#{prezmsg['TOUS']}" />
+						<f:selectItem itemLabel="#{prezmsg['ACTIVE']}" itemValue="A" />
+						<f:selectItem itemLabel="#{prezmsg['DESACTIVE']}" itemValue="I" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+
+				<p:commandButton value="#{prezmsg['OK']}"
+					action="#{nationaliteSearchMBean.run}" ajax="true"
+					update=":nationalite-form:nationalite-dtbl"
+					onclick="PF('searchOverlay').hide();" styleClass="editButtons" />
+
+			</h:form>
+
+		</p:overlayPanel>
+
+		<ui:include
+			src="/pages/referentiel/ref_region/nationalite/creerNationalite.xhtml"></ui:include>
+		<ui:include
+			src="/pages/referentiel/ref_region/nationalite/editerNationalite.xhtml"></ui:include>
+	</ui:define>
+</ui:composition>
+

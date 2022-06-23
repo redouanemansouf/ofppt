@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<f:view locale="#{facesContext.externalContext.requestLocale}"
+	contentType="text/html">
+
+	<h:head>
+		<title>MXCAMPUS</title>
+		<link rel="shortcut icon" type="image/ico" href="#{request.contextPath}/resources/images/favicon.ico" />
+		<h:outputScript id="idCommunJS" library="js" name="scripte.js"
+			target="body" />
+			
+	</h:head>
+	<h:body styleClass="LoginBackground">
+		<h:form id="session-monitor"> 
+			<p:idleMonitor timeout="800000">
+				<p:ajax event="idle" listener="#{webUtilsMBean.onSessionExpire}"
+					oncomplete="PF('session-dlg-wdg').show()" update="session-messages" />
+			</p:idleMonitor>
+
+			<p:dialog id="session-dlg" header="Session expirée" closable="false"
+				widgetVar="session-dlg-wdg" modal="true" styleClass="WarningDialog">
+				<h:messages id="session-messages" globalOnly="true"
+					showDetail="true" styleClass="ErrorMessages" />
+				<div class="AlignCenter">
+					<p:commandButton ajax="false" id="error-ok" value="OK"
+						styleClass="OpButton"
+						action="/public/login.xhtml?faces-redirect=true" />
+				</div>
+			</p:dialog>
+		</h:form> 
+		
+
+		<f:facet name="last">
+
+			<h:outputStylesheet id="idCommunStyle" library="css"
+				name="style.css" />
+
+			<h:outputStylesheet id="idUiStyle" library="css" name="ui.css" />
+
+			<h:outputStylesheet id="idImagesStyle" library="css"
+				name="images.css" />
+
+		
+			<h:outputStylesheet id="idTopMenuStyle" library="css"
+				name="topMenu.css" />
+			<h:outputStylesheet id="idMediaStyle" library="css" name="media.css" />
+
+		</f:facet>
+
+<!-- 		<p:graphicImage id="bg" library="images" -->
+<!-- 			name="bg.jpg" /> -->
+
+<!-- 		<p:graphicImage library="images" name="custom/logo.png" -->
+<!-- 			styleClass="LogoContainer MainUpperLogo " /> -->
+
+		<p:graphicImage library="images" name="M2M-Group.png"
+			styleClass="M2MLogo" />
+
+		<p:ajaxStatus>
+			<f:facet name="start">
+				<p:graphicImage id="ajaxLoader" name="images/ajaxLoader.gif"
+					styleClass="AjaxStatusLoader" />
+			</f:facet>
+		</p:ajaxStatus>
+
+		<ui:insert name="content" />
+	
+
+	</h:body>
+</f:view>
+</html>

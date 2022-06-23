@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<REF_TAUX_ENCOMBREMENT TENC_ID="1" TENC_LIBELLE="taux 1"
+		TENC_DESCRIPTION="taux 1" TENC_STATUT="ENABLED" />
+
+	<REF_TAUX_ENCOMBREMENT TENC_ID="2" TENC_LIBELLE="taux 2"
+		TENC_DESCRIPTION="taux" TENC_STATUT="DISABLED" />
+
+</dataset>

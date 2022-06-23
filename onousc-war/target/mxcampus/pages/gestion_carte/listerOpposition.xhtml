@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+	<ui:define name="content">
+
+		<p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;">
+			<ul class="menuCycleDeVie">
+				<li class="active"><h:link>
+						<div>
+							<center>METTRE EN OPPOSITION</center>
+						</div>
+					</h:link></li>
+			</ul>
+		</p:fieldset>
+		<p:ajaxStatus>
+			<f:facet name="start">
+				<p:graphicImage library="images" name="blueajax.gif"
+					styleClass="AjaxStatusLoader" />
+			</f:facet>
+		</p:ajaxStatus>
+
+		<h:form id="oppo-form">
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+			<p:remoteCommand name="_updateCrudMenu" global="false"
+				update="crud-menu" />
+
+			<!-- 			<p:remoteCommand name="_updateCrudMenu" global="false" -->
+			<!-- 				update="crud-menu :search-overlay" /> -->
+
+			<center>
+				<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;"
+					styleClass="fieldsetCategories">
+
+					<center>
+						<p:messages autoUpdate="true" globalOnly="true" closable="true"
+							style="width:60%;" showIcon="false" />
+					</center>
+
+					<div class="BackgroundGray">
+
+						<div class="RefCenter">
+							<p:fieldset
+								style="padding-left: 0px !important; padding-right: 0% !important;margin-left: 0%;"
+								styleClass="fieldsetSearch" id="searchField">
+
+								<center>
+									<h:panelGrid columns="4" styleClass="FormGrid">
+
+										<h:outputLabel value="#{prezmsg['SITE']}" />
+
+										<p:inputText value="#{oppositionMBean.user.siteVO.libelle}"
+											rendered="#{oppositionMBean.user.siteVO !=null }"
+											disabled="true" />
+										<p:selectOneMenu id="site"
+											rendered="#{oppositionMBean.user.siteVO ==null }"
+											value="#{oppositionSearchMbean.criteria.idSite}">
+											<f:selectItem itemLabel="#{prezmsg['SELECTIONNER']}" />
+											<f:selectItems
+												value="#{oppositionMBean.webBean.listSiteForCombo}"
+												var="site" itemLabel="#{site.libelle}"
+												itemValue="#{site.id}" />
+										</p:selectOneMenu>
+
+										<p:outputLabel id="cin" value="CIN" />
+										<p:inputText id="cin_create"
+											value="#{oppositionSearchMbean.criteria.cin}">
+										</p:inputText>
+										<p:outputLabel value="#{prezmsg['PORTEUR']}" />
+										<p:selectOneMenu id="Porteur-create" filter="true"
+											filterMatchMode="startsWith"
+											value="#{oppositionSearchMbean.criteria.numPorteur}">
+											<f:selectItem itemLabel="Porteur....."
+												noSelectionOption="true" />
+											<f:selectItems value="#{oppositionMBean.webBean.etudiantVOs}"
+												var="e" itemLabel="#{e.nom} #{e.prenom}" itemValue="#{e.id}" />
+										</p:selectOneMenu>
+
+
+
+										<p:outputLabel value="#{prezmsg['ETAT']}" />
+										<p:selectOneMenu id="oper-create" filter="true"
+											filterMatchMode="startsWith"
+											value="#{oppositionSearchMbean.criteria.statut}">
+											<f:selectItem itemLabel="#{prezmsg['TOUS']}" />
+											<!-- 									<f:selectItem itemLabel="#{prezmsg['ENCOURS']}" -->
+											<!-- 										itemValue="ENCOURS" /> -->
+											<f:selectItem itemLabel="#{prezmsg['PERSONALIZED']}"
+												itemValue="PERSONALIZED" />
+											<f:selectItem itemLabel="#{prezmsg['DELIVRED']}"
+												itemValue="DELIVRED" />
+											<f:selectItem itemLabel="#{prezmsg['ACTIVATED']}"
+												itemValue="ACTIVATED" />
+											<f:selectItem itemLabel="#{prezmsg['PERSONALIZEDOPPO']}"
+												itemValue="PERSONALIZEDOPPO" />
+											<f:selectItem itemLabel="#{prezmsg['DELIVREDOPPO']}"
+												itemValue="DELIVREDOPPO" />
+											<f:selectItem itemLabel="#{prezmsg['ACTIVATEDOPPO']}"
+												itemValue="ACTIVATEDOPPO" />
+										</p:selectOneMenu>
+
+										<p:outputLabel id="codeMassar" value="codeMassar" />
+										<p:inputText id="codeMassar_create"
+											value="#{oppositionSearchMbean.criteria.codeMassar}">
+										</p:inputText>
+
+									</h:panelGrid>
+
+
+
+									<p:commandButton id="searchOkk" styleClass="OpButton"
+										widgetVar="searchOk-wdg" value="#{prezmsg['CHERCHER']}"
+										action="#{oppositionSearchMbean.run}"
+										update="oppo-form:nationalite-dtbl"
+										icon="ui-icon-custom-chercher" />
+
+									<!-- clear du formulaire  -->
+									<p:commandButton id="searchReset" styleClass="OpButton"
+										widgetVar="searchReset-wdg" value="#{prezmsg['RESET']}"
+										icon="ui-icon-custom-undo"
+										action="#{oppositionSearchMbean.resetSearchCriteria()}"
+										update="searchField oppo-form:nationalite-dtbl">
+									</p:commandButton>
+								</center>
+								<br />
+							</p:fieldset>
+							<br />
+							<p:toolbar id="crud-menu">
+
+								<f:facet name="right">
+									<p:commandButton id="create2" widgetVar="create-wdg2"
+										styleClass="ToolbarButton"
+										value="#{prezmsg['METTRE_MAIN_LEVEE']}" update=":create-form"
+										disabled="#{ oppositionMBean.webBean.selectedVO == null
+								or oppositionMBean.webBean.selectedVO.statut.statusCode == 'PERSONALIZED'
+								or oppositionMBean.webBean.selectedVO.statut.statusCode == 'DELIVRED'
+								or oppositionMBean.webBean.selectedVO.statut.statusCode == 'ACTIVATED'}"
+										onclick="PF('create-dlg-wdg2').show();"
+										icon="ui-icon-custom-nouveau">
+									</p:commandButton>
+									<p:commandButton id="create" widgetVar="create-wdg"
+										styleClass="ToolbarButton"
+										value="#{prezmsg['METTRE_OPPOSITION']}" update=":create-form "
+										disabled="#{oppositionMBean.webBean.selectedVO == null
+								or oppositionMBean.webBean.selectedVO.statut.statusCode == 'PERSONALIZEDOPPO'
+								or oppositionMBean.webBean.selectedVO.statut.statusCode == 'DELIVREDOPPO'
+								or oppositionMBean.webBean.selectedVO.statut.statusCode == 'ACTIVATEDOPPO'}"
+										action="#{oppositionMBean.resetWebBeanVO}" process="@this"
+										oncomplete="PF('create-dlg-wdg').show();"
+										icon="ui-icon-custom-nouveau">
+									</p:commandButton>
+
+								</f:facet>
+
+							</p:toolbar>
+							<p:dataTable id="nationalite-dtbl" 
+							   paginator="true"
+								value="#{oppositionSearchMbean}" 
+								var="nat" 
+								lazy="true"
+								rows="100" 
+								emptyMessage="#{prezmsg['label_no_records_found']}"
+								selection="#{oppositionMBean.webBean.selectedVO}"
+								selectionMode="single" 
+								rowKey="#{nat.id}"
+								paginatorPosition="bottom"
+								actionListener="#{oppositionMBean.resetWebBeanVO}"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="100,200,300"
+								currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      					{totalRecords}, Page: {currentPage}/{totalPages}">
+
+								<p:ajax event="rowSelect"
+									listener="#{oppositionMBean.refreshSelection}"
+									update="@form :create-form :create-form2" />
+
+
+								<p:column selectionMode="multiple" styleClass="tableChkbox"
+									style="width:16px;text-align:center" />
+
+								<!-- Libellé de la nationalité -->
+								<p:column headerText="#{prezmsg['NUMCARTE']}">
+									<h:outputText value="#{nat.numeroCarte}">
+										<f:convertNumber pattern="00000000" />
+									</h:outputText>
+								</p:column>
+
+								<!-- 						<p:column headerText="N° Carte"> -->
+								<!-- 							<h:outputText value="#{nat.operateur}"> -->
+								<!-- 							</h:outputText> -->
+								<!-- 						</p:column> -->
+
+								<p:column headerText="#{prezmsg['ETAT_CARTE']}">
+									<h:outputText value="#{prezmsg[nat.statut]}" />
+								</p:column>
+
+								<p:column headerText="#{prezmsg['MOTIF']}">
+									<h:outputText value="#{nat.operation}" />
+								</p:column>
+
+								<p:column headerText="CIN">
+									<h:outputText value="#{nat.etudiantvo.NCIN}">
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="#{prezmsg['CODE_MASSAR']}">
+									<h:outputText value="#{nat.etudiantvo.codeMassar}">
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="#{prezmsg['NPORTEUR']}">
+									<h:outputText value="#{nat.etudiantvo.id}" />
+								</p:column>
+
+								<p:column headerText="#{prezmsg['PORTEUR']}">
+									<h:outputText
+										value="#{nat.etudiantvo.nom} #{nat.etudiantvo.prenom}" />
+								</p:column>
+
+								<p:column headerText="SITE">
+									<h:outputText value="#{nat.etudiantvo.siteVO.libelle}" />
+								</p:column>
+
+
+							</p:dataTable>
+
+
+
+						</div>
+					</div>
+				</p:fieldset>
+			</center>
+		</h:form>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<h:panelGrid columns="2" styleClass="AlignCenter Width100pct">
+				<p:commandButton value="#{prezmsg['OUI']}" type="button"
+					styleClass="OpButton" icon="ui-icon-check" />
+				<p:commandButton value="#{prezmsg['NON']}" type="button"
+					styleClass="OpButton" icon="ui-icon-close" />
+			</h:panelGrid>
+		</p:confirmDialog>
+
+		<ui:include src="DeclarerOpposition.xhtml"></ui:include>
+		<ui:include src="MainLevee.xhtml"></ui:include>
+	</ui:define>
+</ui:composition>
+

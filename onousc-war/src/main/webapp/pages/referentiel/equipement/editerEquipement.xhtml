@@ -1,0 +1,129 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<p:dialog id="edit-dlg" widgetVar="edit-dlg-wdg" closable="true"
+		closeOnEscape="true" header="Modifier équipement" hideEffect="fade"
+		showEffect="fade" modal="true" dynamic="true">
+
+		<h:form id="edit-form">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+			<pe:tooltip for="cite_univ" myPosition="left center"
+				showEvent="click" hideEvent="unfocus" atPosition="right center">
+				<h:message for="cite_univ" />
+			</pe:tooltip>
+
+			<pe:tooltip for="resto_univ" myPosition="left center"
+				showEvent="click" hideEvent="unfocus" atPosition="right center">
+				<h:message for="resto_univ" />
+			</pe:tooltip>
+
+			<h:panelGrid columns="2" styleClass="FormGrid">
+
+				<!--      Code equipement     -->
+				<h:outputLabel value="#{prezmsg['CODE']}" />
+				<p:inputText id="equipement_code"
+					value="#{equipementMBean.webBean.vo.code}" disabled="true" />
+
+				<!--      Libellé equipement     -->
+
+				<h:outputLabel value="#{prezmsg['MARQUE']}" />
+				<p:inputText id="equipement_libelle"
+					value="#{equipementMBean.webBean.vo.marque}" required="true"
+					title="#{component.valid ? '' : equipementMBean.getErrorMessage(component.clientId)}" />
+
+				<h:outputLabel value="#{prezmsg['FOURNISSEUR']}" />
+				<p:inputText id="equipement_four"
+					value="#{equipementMBean.webBean.vo.fournisseur}" required="true"
+					title="#{component.valid ? '' : equipementMBean.getErrorMessage(component.clientId)}" />
+
+				<h:outputLabel value="#{prezmsg['NSERIE']}" />
+				<p:inputText id="equipement_nserie"
+					value="#{equipementMBean.webBean.vo.numSerie}" required="true"
+					title="#{component.valid ? '' : equipementMBean.getErrorMessage(component.clientId)}" />
+
+				<!--     Reference     -->
+				<h:outputLabel value="#{prezmsg['REFERENCE']}" />
+				<p:inputText id="equipement_ref"
+					value="#{equipementMBean.webBean.vo.reference}" required="true"
+					title="#{component.valid ? '' : equipementMBean.getErrorMessage(component.clientId)}" />
+
+				<h:outputLabel value="#{prezmsg['PRIXACHAT']}" />
+				<p:inputText id="equipement_prix"
+					value="#{equipementMBean.webBean.vo.prixAchat}" required="true"
+					title="#{component.valid ? '' : equipementMBean.getErrorMessage(component.clientId)}" />
+
+				<!-- date d'achat -->
+				<h:outputLabel value="#{prezmsg['DATE_ACHAT']}" />
+				<p:calendar id="date_achat" styleClass="InscrInput"
+					value="#{equipementMBean.webBean.vo.dateAchat}" required="true"
+					title="#{component.valid ? '' : utilsMBean.getErrorMessage(component.clientId)}"
+					pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true">
+				</p:calendar>
+
+				<h:outputLabel value="#{prezmsg['TYPE']}" />
+				<p:selectOneMenu id="equi_type"
+					value="#{equipementMBean.webBean.vo.type}" cstyle="width:125px"
+					required="true"
+					title="#{component.valid ? '' : equipementMBean.getErrorMessage(component.clientId)}">
+					<f:selectItem itemLabel="choisir un type" />
+					<f:selectItem itemLabel="Terminale caisse"
+						itemValue="terminale caisse" />
+					<f:selectItem itemLabel="caisse" itemValue="caisse" />
+					<f:selectItem itemLabel="lecteur" itemValue="lecteur" />
+				</p:selectOneMenu>
+
+				<h:outputLabel value="#{prezmsg['CITE']}" />
+				<p:selectOneMenu id="cite_univ"
+					value="#{equipementMBean.webBean.vo.citeVO}"
+					converter="citeConverter" style="width:125px" required="true"
+					title="#{component.valid ? '' : equipementMBean.getErrorMessage(component.clientId)}">
+					<p:ajax
+						listener="#{equipementMBean.onCiteChange(equipementMBean.webBean.vo.citeVO.libelle)}"
+						update="resto_univ" />
+					<f:selectItem itemLabel="choisir une cité" />
+					<f:selectItems value="#{equipementMBean.webBean.citeVOs}" var="u"
+						itemLabel="#{u.libelle}" itemValue="#{u}" />
+				</p:selectOneMenu>
+
+				<!-- 	  equipementresto       -->
+				<h:outputLabel value="#{prezmsg['RESTAURANT']}" />
+				<p:selectOneMenu id="resto_univ"
+					value="#{equipementMBean.webBean.vo.restaurantVO}"
+					converter="restaurantConverter" style="width:125px" required="true"
+					title="#{component.valid ? '' : equipementMBean.getErrorMessage(component.clientId)}">
+					<f:selectItem itemLabel="choisir un restaurant" />
+					<f:selectItems value="#{equipementMBean.webBean.restaurantVOs}"
+						var="u" itemLabel="#{u.libelle}" itemValue="#{u}" />
+				</p:selectOneMenu>
+
+
+			</h:panelGrid>
+
+			<p:toolbar>
+				<f:facet name="right">
+					<p:commandButton id="validate-edit" value="#{prezmsg['VALIDER']}"
+						process="@form" update="edit-form :succes"
+						action="#{equipementMBean.modifier}" styleClass="ValidateButton" />
+					<p:commandButton value="#{prezmsg['ANNULER']}" global="false"
+						process="@none" onclick="PF('edit-dlg-wdg').hide()"
+						styleClass="CancelButton" />
+
+				</f:facet>
+			</p:toolbar>
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('edit-dlg-wdg').hide()"
+				update=":equipement-form:equipement-dtbl" />
+		</h:form>
+	</p:dialog>
+</ui:composition>

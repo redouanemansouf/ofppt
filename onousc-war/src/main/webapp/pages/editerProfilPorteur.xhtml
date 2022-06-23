@@ -1,0 +1,124 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+	<p:dialog id="edit-dlg" widgetVar="edit-dlg-wdg" closable="true"
+		closeOnEscape="true" header="Modifier Profil Porteur"
+		hideEffect="fade" showEffect="fade" modal="true" dynamic="true">
+
+
+		<h:form id="edit-form">
+
+			<h:panelGrid columns="2" styleClass="FormGrid">
+
+				<!--      Code critere     -->
+				<h:outputLabel value="Code" />
+
+				<p:inputText id="update_code"
+					value="#{categoriePorteurMBean.webBean.vo.code}" required="true"
+					disabled="true"
+					title="#{component.valid ? '' : categoriePorteurMBean.getErrorMessage(component.clientId)}">
+					<pe:keyFilter regEx="/[0-9_]/i" preventPaste="false" />
+				</p:inputText>
+
+				<h:outputLabel value="#{prezmsg['SITE']}" />
+				<p:inputText value="#{categoriePorteurMBean.user.siteVO.libelle}"
+					rendered="#{categoriePorteurMBean.user.siteVO !=null }"
+					disabled="true" />
+				<p:selectOneMenu id="site"
+					value="#{categoriePorteurMBean.webBean.vo.siteVO}"
+					style="width:170px" required="true" converter="siteConverter"
+					rendered="#{categoriePorteurMBean.user.siteVO ==null }">
+					<f:selectItem itemLabel="#{prezmsg['SELECTIONNER']}" />
+					<f:selectItems
+						value="#{categoriePorteurMBean.webBean.listSiteForCombo}"
+						var="site" itemLabel="#{site.libelle}" itemValue="#{site}" />
+				</p:selectOneMenu>	
+
+				<h:outputLabel value="Libelle" />
+
+				<p:inputText id="update_libelle"
+					value="#{categoriePorteurMBean.webBean.vo.libelle}" required="true"
+					title="#{component.valid ? '' : categoriePorteurMBean.getErrorMessage(component.clientId)}" />
+
+				<!-- 					<h:outputLabel value="Categorie" /> -->
+
+				<!-- 				<p:inputText id="update_categorie" -->
+				<!-- 					value="#{profilPorteurMBean.webBean.vo.categorie}" required="true" -->
+				<!-- 					title="#{component.valid ? '' : evenementMBean.getErrorMessage(component.clientId)}" /> -->
+
+				<!-- <h:outputLabel value="Categorie" /> -->
+				<!-- 					<p:selectOneMenu id="update_categorie" -->
+				<!-- 						value="#{categoriePorteurMBean.webBean.vo.categorie}"> -->
+				<!-- 						<f:selectItem itemLabel="Choisir la categorie" /> -->
+				<!-- 						<f:selectItem itemLabel="Etudiant" itemValue="etudiant" /> -->
+				<!-- 						<f:selectItem itemLabel="Personnel" itemValue="personnel" /> -->
+				<!-- 						<f:selectItem itemLabel="Visiteur" itemValue="visiteur" /> -->
+				<!-- 					</p:selectOneMenu> -->
+
+				<h:outputLabel value="Categorie" />
+				<p:selectOneMenu id="update_categorie"
+					value="#{categoriePorteurMBean.webBean.vo.categorie}">
+					<p:ajax listener="#{categoriePorteurMBean.onCycleChange}"
+						update="update_plafondjournalier" />
+					<f:selectItem itemLabel="Choisir la categorie" />
+					<f:selectItem itemLabel="Etudiant" itemValue="etudiant" />
+					<f:selectItem itemLabel="Personnel" itemValue="personnel" />
+					<f:selectItem itemLabel="Visiteur" itemValue="visiteur" />
+				</p:selectOneMenu>
+
+				<h:outputLabel value="Ratio" />
+
+				<p:inputText id="update_ratio"
+					value="#{categoriePorteurMBean.webBean.vo.ratio}" required="true"
+					maxlength="5"
+					title="#{component.valid ? '' : categoriePorteurMBean.getErrorMessage(component.clientId)}">
+					<pe:keyFilter regEx="/[\d\-\.]/" preventPaste="false" />
+					<!-- 					<pe:keyFilter regEx="/[0-9_]/i" preventPaste="false" /> -->
+				</p:inputText>
+
+
+				<h:outputLabel value="Plafond Journalier" />
+				<p:inputText id="update_plafondjournalier"
+					value="#{categoriePorteurMBean.webBean.vo.plafJour}"
+					disabled="#{categoriePorteurMBean.cat != 'etudiant'}"
+					title="#{component.valid ? '' : categoriePorteurMBean.getErrorMessage(component.clientId)}">
+				</p:inputText>
+
+				<h:outputLabel value="Date Debut" />
+				<p:calendar id="date_deb"
+					value="#{categoriePorteurMBean.webBean.vo.dated}" pattern="dd/MM"
+					pages="2" navigator="true" mask="true" dateFormat="dd.mm"
+					title="#{component.valid ? '' : categoriePorteurMBean.getErrorMessage(component.clientId)}" />
+
+				<h:outputLabel value="Date Fin" />
+				<p:calendar id="date_fin"
+					value="#{categoriePorteurMBean.webBean.vo.datef}" pattern="dd/MM"
+					pages="2" navigator="true" mask="true"
+					title="#{component.valid ? '' : categoriePorteurMBean.getErrorMessage(component.clientId)}" />
+
+			</h:panelGrid>
+			<p:toolbar>
+				<f:facet name="right">
+					<p:commandButton id="validate-edit" value="#{prezmsg['VALIDER']}"
+						icon="ui-icon-custom-validerOsc" process="@form"
+						update="edit-form" action="#{categoriePorteurMBean.modifier}"
+						styleClass="Val" style="width:50%" />
+					<p:commandButton value="#{prezmsg['ANNULER']}" global="false"
+						icon="ui-icon-custom-cancelOsc" process="@none"
+						onclick="PF('edit-dlg-wdg').hide()" styleClass="Val"
+						style="width:48%" />
+				</f:facet>
+			</p:toolbar>
+
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('edit-dlg-wdg').hide()"
+				update=":critere-form:critere-dtbl" />
+
+		</h:form>
+	</p:dialog>
+</ui:composition>

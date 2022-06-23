@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+	<ui:define name="content">
+
+<!-- 
+
+-->
+		<p:ajaxStatus>
+			<f:facet name="start">
+				<p:graphicImage library="images" name="blueajax.gif"
+					styleClass="AjaxStatusLoader" />
+			</f:facet>
+		</p:ajaxStatus>
+
+
+
+		<h:form id="critere-form">
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+
+		
+			<!--  -->
+
+			
+
+			<center>
+				<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;"
+					styleClass="fieldsetCategories">
+					
+					<center>
+				<p:messages autoUpdate="true" globalOnly="true" closable="true" style="width:60%;"
+					showIcon="false" />
+			</center>
+
+
+					<p:commandLink ajax="false">
+								<h:graphicImage url="./../../../resources/images/pdf.png"></h:graphicImage>
+								<p:dataExporter target="statistique-dtbl" type="pdf" fileName="CaissePDF"></p:dataExporter>
+					</p:commandLink>
+					<p:commandLink ajax="false">
+								<h:graphicImage url="./../../../resources/images/excel.png"></h:graphicImage>
+								<p:dataExporter target="statistique-dtbl" type="xls" fileName="CaisseExcel"></p:dataExporter>
+					</p:commandLink>					
+					<p:commandLink ajax="false">
+								<h:graphicImage url="./../../../resources/images/csv.png"></h:graphicImage>
+								<p:dataExporter target="statistique-dtbl" type="csv" fileName="CaisseCSV"></p:dataExporter>
+					</p:commandLink>
+
+				<div class="RefCenter">
+					<center>
+							<p:fieldset
+								style="padding-left: 0px !important; padding-right: 0% !important;margin-left: 0%;"
+								styleClass="fieldsetSearch">
+								
+								
+
+								<h:panelGrid columns="3">
+									<h:form id="search-form">
+									
+									
+
+										<h:panelGrid columns="4" styleClass="FormGrid">
+
+											<h:outputLabel value="#{prezmsg['MATRICULE']}" />
+
+											<p:inputText id="matr-search"
+												value="#{consultCaisseSearchMBean.consultCaisseCriteria.matricule}" />
+
+											<h:outputLabel value="#{prezmsg['DATE_DEBUT']}" />
+											<p:calendar id="date_deb"
+												value="#{consultCaisseSearchMBean.consultCaisseCriteria.dateDebut}"
+												pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true" />
+
+
+											<h:outputLabel value="#{prezmsg['DATE_FIN']}" />
+											<p:calendar id="date_Fin"
+												value="#{consultCaisseSearchMBean.consultCaisseCriteria.dateFin}"
+												pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true" />
+
+
+											<h:outputLabel value="#{prezmsg['TYPEOPER']}" />
+											<p:selectOneMenu id="tourniquet_search" 
+												value="#{consultCaisseSearchMBean.consultCaisseCriteria.typeOperation}"
+												 style="width:220px">
+												<f:selectItem itemLabel="Choisissez" />
+												
+													<f:selectItem itemLabel="Annulation"  itemValue="A"/>
+														<f:selectItem itemLabel="Vente" itemValue="V" />
+												
+											</p:selectOneMenu>
+											
+											<h:outputLabel value="#{prezmsg['CAISSE']}" />
+											<p:selectOneMenu id="caisse_search"
+												value="#{consultCaisseSearchMBean.consultCaisseCriteria.idcaisse}"
+												 style="width:220px" 
+										>
+
+											</p:selectOneMenu>
+
+
+
+										</h:panelGrid>
+
+
+
+
+
+									</h:form>
+
+
+
+								</h:panelGrid>
+								<p:commandButton id="searchOk" styleClass="Val"
+									icon="ui-icon-custom-rechercheOsc" value="#{prezmsg['OK']}"
+									action="#{consultCaisseSearchMBean.run}"
+									update=":critere-form:statistique-dtbl" />
+
+								<!-- clear du formulaire  -->
+								<p:commandButton id="searchReset" styleClass="Val"
+									widgetVar="searchReset-wdg" icon="ui-icon-custom-cancelOsc"
+									value="#{prezmsg['RESET']}"
+									action="#{consultCaisseSearchMBean.resetSearchCriteria}"
+									update=":critere-form:search-form">
+									<p:resetInput target="search-form" />
+								</p:commandButton>
+
+							</p:fieldset>
+						</center>
+						
+						<br/>
+
+					<p:dataTable id="statistique-dtbl" paginator="true"
+						value="#{consultCaisseSearchMBean}" var="univ" rows="10"
+						lazy="true" paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="10,20,30"
+						currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+
+
+
+
+                          <p:column headerText="#{prezmsg['MATRICULE']}"
+							style="width:12%">
+							<center>
+								<h:outputText value="#{univ.matricule}" />
+							</center>
+							</p:column>
+						<!-- Identifiant de l'universite  -->
+						<p:column headerText="#{prezmsg['DATE_TRANSACTION']}"
+							style="width:12%">
+							<center>
+								<h:outputText value="#{univ.dateOperation}" >
+								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+								</h:outputText>
+							</center>
+						</p:column>
+						<p:column headerText="#{prezmsg['TYPE_OPERATION']} "
+							style="width: 10%;">
+							<center>
+								<h:outputText value="Annulation"
+									rendered="#{univ.typeOperation == 'A' }" />
+								<h:outputText value="Vente"
+									rendered="#{univ.typeOperation == 'V' }" />
+							</center>
+						</p:column>
+						<p:column headerText="#{prezmsg['MONTANT']} (DH)" style="width:12%">
+							<center>
+								<h:outputText value="#{univ.solde}" >
+								<f:convertNumber  maxFractionDigits="3"></f:convertNumber>
+								
+								</h:outputText>
+							</center>
+						</p:column>
+						
+						   <p:column headerText="#{prezmsg['PRODUIT']}"
+							style="width:12%">
+							<center>
+								<h:outputText value="#{univ.id_produit}" />
+							</center>
+							</p:column>
+
+
+
+
+					</p:dataTable>
+
+				</div>
+
+			</p:fieldset>
+			</center>
+		</h:form>
+
+		
+
+		
+
+	</ui:define>
+</ui:composition>
+

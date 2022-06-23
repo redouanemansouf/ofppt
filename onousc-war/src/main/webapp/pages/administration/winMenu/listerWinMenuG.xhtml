@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+	<ui:define name="content">
+
+
+	
+
+
+	<p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;width:96%;">
+			<ul class="menuOpposition">
+				<li><h:link
+						outcome="/pages/administration/userEntity/listerUserEntity.xhtml">
+						<div>
+							<center>#{prezmsg['GEST_USER']}</center>
+						</div>
+					</h:link></li>
+					<li><h:link
+						outcome="/pages/listerGroup.xhtml">
+						<div>
+							<center>Gestion des groupes administrateurs</center>
+						</div>
+					</h:link></li>
+				<li class="active"><h:link
+						outcome="/pages/administration/winMenu/listerWinMenuG.xhtml">
+						<div>
+							<center>Gestion droit d'accès des groupes</center>
+						</div>
+					</h:link></li>
+					<li ><h:link
+						outcome="/pages/administration/winMenu/listerWinMenu.xhtml">
+						<div>
+							<center>Gestion droit d'accès des utilisateurs</center>
+						</div>
+					</h:link></li>
+				<li><h:link
+						outcome="/pages/administration/trace/listerTrace.xhtml">
+						<div>
+							<center>#{prezmsg['TRACE_LOG']}</center>
+						</div>
+					</h:link></li>
+					
+			</ul>
+		</p:fieldset>
+
+
+	<p:ajaxStatus>
+			<f:facet name="start">
+				<p:graphicImage library="images" name="blueajax.gif"
+					styleClass="AjaxStatusLoader" />
+			</f:facet>
+		</p:ajaxStatus>
+
+
+
+	
+		<h:form id="winMenu-form">
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+
+			<p:remoteCommand name="_updateCrudMenu" global="false"
+				update="crud-menu :search-overlay" />
+			<!--  -->
+			<center>
+			<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;"
+					styleClass="fieldsetCategories">
+			
+			<center>
+						<p:messages autoUpdate="true" globalOnly="true" closable="true"
+							style="width:60%;" showIcon="false" />
+					</center>
+
+				
+				<div class="RefCenter">
+				
+					<p:toolbar id="crud-menu">
+
+							<f:facet name="left">
+
+<!-- 						<p:commandButton id="create" value="#{prezmsg['NOUVEAU']}" -->
+<!-- 							icon="ui-icon-custom-nouveau" styleClass="ToolbarButton" -->
+<!-- 							action="#{winMenuMBean.resetWebBeanVO}" process="@this" update=":editeranneeUniversitaire-form" -->
+<!-- 							oncomplete="PF('editer-anneeuniversitaire-profil').show();"> -->
+<!-- 							<p:resetInput target=":editeranneeUniversitaire-form" />    -->
+<!-- 						</p:commandButton>  -->
+
+							<p:commandButton id="search" value="#{prezmsg['CHERCHER']}" widgetVar="search-wdg"
+							styleClass="ToolbarButton"
+							icon="ui-icon-custom-chercher" />
+
+					</f:facet>
+					</p:toolbar>
+
+					<p:dataTable id="winMenu-dtbl" paginator="true"
+						widgetVar="wgv-winG-dtbl"
+						rowStyleClass="#{winMenu.menuLevel}"
+						value="#{winMenuGSearchMBean}" var="winMenu" lazy="true" rows="20"
+						emptyMessage="#{prezmsg['label_no_records_found']}"
+						rowKey="#{winMenu.code}" paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="20,30,50"
+						currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+
+						<!-- 						<ui:include src="/pages/commun/datatableEvents.xhtml" /> -->
+
+						<!-- 						<p:column selectionMode="multiple" styleClass="tableChkbox" -->
+						<!-- 							style="width:16px;text-align:center" /> -->
+
+						<p:column headerText="#{prezmsg['CODE']}" style="width:10%">
+							<center>
+								<h:outputText value="#{winMenu.code}" />
+							</center>
+						</p:column>
+						<p:column headerText="Module" style="width:25%">
+							<center>
+								<h:outputText value="#{winMenu.libelle}" />
+							</center>
+						</p:column>
+						<p:column headerText="#{prezmsg['ABBREV']}" style="width:15%">
+							<center>
+								<h:outputText value="#{winMenu.abbrev}" />
+							</center>
+						</p:column>
+						<p:column headerText="#{prezmsg['GROUPENAME']}" style="width:20%">
+							<center>
+								<h:outputText value="#{winMenu.operateur}" />
+							</center>
+						</p:column>
+						<p:column headerText="#{prezmsg['ACTIF']}" style="width:10%">
+							<h:panelGroup id="panel_actif">
+								<h:graphicImage library="images"
+									name="#{winMenu.actif ? 'icons/c-icon.png' :'icons/x-icon.png' }">
+									<p:ajax event="click"
+										listener="#{winMenuMBean.togleState(1,winMenu)}"
+										update="panel_actif " process="@this" global="true">
+									</p:ajax>
+								</h:graphicImage>
+							</h:panelGroup>
+						</p:column>
+						<p:column headerText="#{prezmsg['CONSULTATION']}" style="width:10%">
+							<h:panelGroup id="panel_conult">
+								<h:graphicImage library="images"
+									name="#{winMenu.droitConsult ? 'icons/c-icon.png' :'icons/x-icon.png' }">
+									<p:ajax event="click"
+										listener="#{winMenuMBean.togleState(2,winMenu)}"
+										update="panel_conult " process="@this" global="true">
+									</p:ajax>
+								</h:graphicImage>
+							</h:panelGroup>
+						</p:column>
+						<p:column headerText="#{prezmsg['CREATION']}" style="width:10%">
+							<h:panelGroup id="panel_creation">
+								<h:graphicImage library="images"
+									name="#{winMenu.droitCreat ? 'icons/c-icon.png' :'icons/x-icon.png' }">
+									<p:ajax event="click"
+										listener="#{winMenuMBean.togleState(3,winMenu)}"
+										update="panel_creation panel_actif panel_conult " process="@this" global="true">
+									</p:ajax>
+								</h:graphicImage>
+							</h:panelGroup>
+						</p:column>
+						<p:column headerText="#{prezmsg['MODIFICATION']}" style="width:10%">
+							<h:panelGroup id="panel_modification">
+								<h:graphicImage library="images"
+									name="#{winMenu.droitModif ? 'icons/c-icon.png' :'icons/x-icon.png' }">
+									<p:ajax event="click"
+										listener="#{winMenuMBean.togleState(4,winMenu)}"
+										update="panel_modification panel_actif panel_conult " process="@this"
+										global="true">
+									</p:ajax>
+								</h:graphicImage>
+							</h:panelGroup>
+						</p:column>
+						<p:column headerText="#{prezmsg['SUPPRESSION']}" style="width:10%">
+							<h:panelGroup id="panel_supression">
+								<h:graphicImage library="images"
+									name="#{winMenu.droitSuppr ? 'icons/c-icon.png' :'icons/x-icon.png' }">
+									<p:ajax event="click"
+										listener="#{winMenuMBean.togleState(5,winMenu)}"
+										update="panel_supression panel_actif panel_conult " process="@this"
+										global="true">
+									</p:ajax>
+								</h:graphicImage>
+							</h:panelGroup>
+						</p:column>
+
+						<p:column exportable="false" style="width:7%;text-align:center;"
+							headerText="" rendered="false">
+
+							<p:commandButton icon="ui-icon-custom-modifier"
+								styleClass="CrudButton" update=":editer-anneeuniversitaire"
+								rendered="#{authMbean.hasUpdate('000062')}"
+								oncomplete="PF('editer-anneeuniversitaire-profil').show();">
+								<f:setPropertyActionListener value="#{winMenu}"
+									target="#{winMenuMBean.webBean.vo}" />
+							</p:commandButton>
+
+
+						</p:column>
+
+					</p:dataTable>
+
+				</div>
+
+			
+			</p:fieldset>
+			</center>
+		</h:form>
+
+		
+		<p:overlayPanel id="search-overlay" for=":winMenu-form:search"
+			hideEffect="slide" showEffect="slide" widgetVar="searchOverlay"
+			dismissable="false" appendToBody="true" showCloseIcon="true">
+
+			<h:form id="search-form">
+
+				<h:panelGrid columns="4" styleClass="FormGrid">
+					<!-- Code   -->
+					<h:outputLabel value="#{prezmsg['ECRAN']}" />
+					<p:selectOneMenu id="code-search" filter="true"
+						filterMatchMode="startsWith"
+						value="#{winMenuGSearchMBean.winMenuCriteria.code}">
+						<f:selectItem itemLabel="Choisir un écran" itemValue="" />
+						<f:selectItems value="#{winMenuMBean.webBean.winMenuModules}"
+							var="w" itemLabel="#{w.libelle}" itemValue="#{w.code}" />
+					</p:selectOneMenu>
+
+					<h:outputLabel value="#{prezmsg['GROUPE']}" />
+					<p:selectOneMenu id="oper-search" filter="true"
+						filterMatchMode="startsWith"
+						value="#{winMenuGSearchMBean.winMenuCriteria.operateur}">
+						<f:selectItem itemLabel="Choisir un groupe" itemValue="" />
+						<f:selectItems value="#{winMenuMBean.webBean.groups}" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+
+				<p:commandButton value="#{prezmsg['OK']}" styleClass="OpButton"
+					action="#{winMenuSearchMBean.run}" ajax="true"
+					style="margin-left:64%" update=":winMenu-form:winMenu-dtbl"
+					onclick="PF('searchOverlay').hide();"
+					onstart="PF('wgv-winG-dtbl').getPaginator().setPage(0);" />
+				<p:commandButton id="searchReset" styleClass="OpButton"
+					widgetVar="searchReset-wdg" value="#{prezmsg['RESET']}"
+					icon="ui-icon-custom-undo"
+					action="#{winMenuGSearchMBean.resetSearchCriteria()}"
+					update="search-form">
+					<p:resetInput target="search-form" />
+				</p:commandButton>
+
+			</h:form>
+
+		</p:overlayPanel>
+
+
+
+<!-- 		<ui:include src="creeWinMenuG.xhtml"></ui:include> -->
+<!-- 		<ui:include src="editerWinMenuG.xhtml"></ui:include> -->
+
+	</ui:define>
+</ui:composition>

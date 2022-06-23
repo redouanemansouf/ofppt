@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<REF_CONDITION_PAIEMENT CPA_ID="1" CPA_LIBELLE="CPA1 libellé"
+		CPA_DESCRIPTION="CPA1 desc" CPA_CONDITION="CPA1 conditon" CPA_UNITE="CPA1 unité"
+		CPA_STATUT="ENABLED" />
+	<REF_CONDITION_PAIEMENT CPA_ID="2" CPA_LIBELLE="CPA2 libellé"
+		CPA_DESCRIPTION="CPA2 desc" CPA_CONDITION="CPA2 conditon" CPA_UNITE="CPA2 unité"
+		CPA_STATUT="ENABLED" />
+</dataset>

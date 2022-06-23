@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<!--  not working for some reason -->
+<!-- <f:view locale="#{facesContext.externalContext.requestLocale}" -->
+<!-- 	contentType="text/html"> -->
+
+<f:view locale="fr" contentType="text/html">
+
+	<h:head>
+		<title>EPINAT</title>
+		<h:outputScript id="idCommunJS" library="js" name="script.js" />
+		<h:outputScript id="idPFWidgetsJS" library="js" name="PFWidgets.js"
+			target="body" />
+		<h:outputScript id="idPFWidgetsJS_depart" library="js"
+			name="spec/transport/international/PFWidgets_departIN.js"
+			target="body" />
+
+	</h:head>
+	<h:body styleClass="LoginBackground">
+
+	<f:facet name="last">
+			<h:outputStylesheet id="idCommunStyle" library="css" name="style.css" />
+			<h:outputStylesheet id="idTopMenuStyle" library="css"
+				name="topMenu.css" />
+			<h:outputStylesheet id="idMediaStyle" library="css" name="media.css" />
+		</f:facet>
+
+
+
+		<h:form id="session-monitor">
+			<p:idleMonitor timeout="850000">
+				<p:ajax event="idle" listener="#{webUtilsMBean.onSessionExpire}"
+					oncomplete="PF('session-dlg-wdg').show()" update="session-messages" />
+			</p:idleMonitor>
+
+			<p:dialog id="session-dlg" header="Session expirée" closable="false"
+				widgetVar="session-dlg-wdg" modal="true" styleClass="WarningDialog">
+				<h:messages id="session-messages" globalOnly="true"
+					showDetail="true" styleClass="ErrorMessages" />
+				<div class="AlignCenter">
+					<p:commandButton ajax="false" id="error-ok" value="OK"
+						styleClass="OpButton"
+						action="/pages/login.xhtml?faces-redirect=true" />
+				</div>
+			</p:dialog>
+		</h:form>
+
+		<ui:include src="/pages/commun/header.xhtml" />
+
+		<p:outputPanel id="block_header" style="height:50px;">
+			<ui:include src="/pages/commun/menu.xhtml" />
+		</p:outputPanel>
+		<div class="loadedPage">
+			<div class="Theatre ">
+				<p:outputPanel styleClass="CaisseFlag hide "
+					rendered="#{view.viewId.contains('/pages/vente/inter')}">
+
+					<p:outputPanel styleClass="CaisseContainer  ">
+						<p:spacer width="3" />
+						<p:graphicImage library="images" name="svg/coins.svg"
+							styleClass="CaisseFlagOperator" style="margin:3px;" />
+						<h:panelGrid columns="12" id="CaisseGrid">
+
+							<!-- 						<p:outputLabel value="Solde prépayé" /> -->
+							<!-- 						<h:outputText value="20000.00" /> -->
+
+
+							<!-- 						<p:outputLabel value="Solde restant" /> -->
+							<!-- 						<h:outputText value="10200.00" /> -->
+
+
+							<!-- 						<p:outputLabel value="Commission" style="font-weight: bold;" /> -->
+							<!-- 						<h:outputText value="200" /> -->
+
+							<p:outputLabel value="Solde total " />
+							<h:outputText value="1000.00 (MAD)" />
+
+							<p:outputLabel value="Espèce " />
+							<h:outputText value="500.00 (MAD)" />
+
+							<p:outputLabel value="Autres #{utilsMBean.validationTempFix}" />
+							<h:outputText value="500.00 (MAD)" />
+
+						</h:panelGrid>
+
+					</p:outputPanel>
+				</p:outputPanel>
+
+			</div>
+			<div class="Theatre ">
+
+				<p:outputPanel styleClass="MainContainer">
+					<p:ajaxStatus styleClass="ref-ajaxloading">
+						<f:facet name="start">
+							<p:graphicImage library="images" name="loadingbar.gif" width="80"
+								height="10" />
+						</f:facet>
+					</p:ajaxStatus>
+					<pe:tooltip global="true" atPosition="top center"
+						myPosition="bottom center" />
+					<p:outputPanel autoUpdate="true">
+						<pe:tooltip for="@(.ui-row-toggler)" value="Détail"
+							atPosition="top center" myPosition="bottom center" />
+					</p:outputPanel>
+					<p:outputPanel id="block_content">
+						<ui:insert name="content" />
+						<p:growl id="success" life="10000" globalOnly="true"
+							severity="info,error" />
+					</p:outputPanel>
+					<!-- Dialog de confirmation  -->
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+						closable="false" closeOnEscape="true" widgetVar="confirm-wdg">
+						<h:panelGrid columns="2" styleClass="AlignCenter Width100pct">
+							<p:commandButton value="Oui" type="button" tabindex="1002"
+								styleClass="ui-confirmdialog-yes OpButton"
+								icon="ui-icon-custom-check" />
+							<p:commandButton value="Non" type="button" tabindex="1001"
+								styleClass="ui-confirmdialog-no OpButton"
+								icon="ui-icon-custom-close" />
+						</h:panelGrid>
+					</p:confirmDialog>
+
+					<!--  Dialog d'erreur -->
+					<p:dialog id="error-dlg" widgetVar="error-dlg-wdg"
+						header="#{prezmsg['CONTRAINE_INTEGRITE']}"
+						styleClass="WarningDialog" modal="true">
+						<h:messages id="error-messages" globalOnly="true"
+							styleClass="ErrorMessages" />
+						<h:form>
+							<div class="AlignCenter">
+								<p:commandButton type="button" id="error-ok" value="OK"
+									styleClass="OpButton" onclick="PF('error-dlg-wdg').hide()" />
+							</div>
+						</h:form>
+					</p:dialog>
+
+					<!--  Dialog d'erreur globale -->
+					<p:dialog id="error-global-dlg" widgetVar="error-global-dlg-wdg"
+						header="#{prezmsg['ERROR']}" styleClass="ErrorDialog" modal="true">
+						<h:messages id="error-global-messages" globalOnly="true"
+							styleClass="ErrorMessages" />
+						<h:form>
+							<div class="AlignCenter">
+								<p:commandButton type="button" id="error-global-ok" value="OK"
+									styleClass="OpButton"
+									onclick="PF('error-global-dlg-wdg').hide()" />
+							</div>
+						</h:form>
+					</p:dialog>
+
+				</p:outputPanel>
+			</div>
+		</div>
+		<ui:include src="/pages/commun/side_menu.xhtml" />
+		<!-- 		<ui:include src="/pages/commun/notification_depart.xhtml" /> -->
+
+		<!-- 		<p:outputPanel styleClass="Version_container"> -->
+		<!-- 			<h:outputLabel value="EPINAT version 1.0 (Maquette) 2014-2015" /> -->
+		<!-- 		</p:outputPanel> -->
+	</h:body>
+</f:view>
+</html>

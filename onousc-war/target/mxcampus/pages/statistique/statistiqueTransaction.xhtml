@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layout.xhtml">
+
+	<ui:define name="content">
+		<h:form id="transaction-form">
+
+			<div class="BackgroundGray">
+
+				<!-- Breadcrumb -->
+				<div class="BreadCrumbCust">
+					<h:panelGrid columns="5" cellpadding="3">
+						<h:outputLabel value="Suivi des activités" style="color:#419edd" />
+						<span class="ui-icon ui-icon-carat-1-e"></span>
+						<h:outputLabel value="Tableau de bord transaction" />
+					</h:panelGrid>
+				</div>
+				<div class="RefCenter">
+					<div class="StatTransaction">
+						<center>
+							<h:panelGrid columns="4" styleClass="FormGrid">
+
+								<h:outputLabel value="#{prezmsg['DATE_DEBUT']}" />
+								<p:calendar id="st_datedebut" styleClass="InscrInput"
+									value="#{transactionMBean.transactionCriteria.dateDebut}"
+									pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true">
+								</p:calendar>
+
+								<h:outputLabel value="#{prezmsg['DATE_FIN']}" />
+								<p:calendar id="st_datefin" styleClass="InscrInput"
+									value="#{transactionMBean.transactionCriteria.dateFin}"
+									pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true">
+								</p:calendar>
+
+
+								<h:outputLabel value="#{prezmsg['CITE']}" />
+								<p:selectOneMenu id="cite_search"
+									value="#{transactionMBean.transactionCriteria.libcite}"
+									style="width:125px">
+									<p:ajax listener="#{transactionMBean.onCountryChange}"
+										update="rest_search" />
+									<f:selectItem itemLabel="choisir une cité" />
+									<f:selectItems value="#{transactionMBean.webBean.citeVO}"
+										var="u" itemLabel="#{u.libelle}" itemValue="#{u.libelle}" />
+								</p:selectOneMenu>
+
+								<h:outputLabel value="Restaurant" />
+								<p:selectOneMenu id="rest_search"
+									value="#{transactionMBean.transactionCriteria.librestaurant}"
+									style="width:125px">
+									<p:ajax listener="#{transactionMBean.onRestaurantChange}"
+										update="etu_search" />
+									<f:selectItem itemLabel="choisir un rstaurant" />
+									<f:selectItems value="#{transactionMBean.webBean.restaurantVO}"
+										var="u" itemLabel="#{u.libelle}" itemValue="#{u.libelle}" />
+								</p:selectOneMenu>
+
+								<h:outputLabel value="Etudiant" />
+								<p:selectOneMenu id="etu_search"
+									value="#{transactionMBean.transactionCriteria.codeetu}"
+									style="width:125px">
+
+									<f:selectItem itemLabel="choisir un etudiant" />
+									<f:selectItems value="#{transactionMBean.webBean.etudiantVO}"
+										var="u" itemLabel="#{u.nom} #{u.prenom}" itemValue="#{u.id}" />
+								</p:selectOneMenu>
+
+								<h:outputLabel value="Type transaction" />
+								<p:selectOneMenu id="type_search"
+									value="#{transactionMBean.transactionCriteria.typeOperation}"
+									style="width:125px">
+									<f:selectItem itemLabel="choisir type" />
+									<f:selectItem itemLabel="Recharge" itemValue="R" />
+									<f:selectItem itemLabel="Décharge" itemValue="D" />
+								</p:selectOneMenu>
+
+								<p:outputLabel for="type" value="Type" />
+								<p:selectOneRadio id="type"
+									value="#{transactionMBean.transactionCriteria.type}">
+									<f:selectItem itemLabel="Jour" itemValue="0" />
+									<f:selectItem itemLabel="Semaine" itemValue="1" />
+									<f:selectItem itemLabel="Mois" itemValue="2" />
+									<f:selectItem itemLabel="Année" itemValue="3" />
+								</p:selectOneRadio>
+
+							</h:panelGrid>
+
+							<br />
+							<p:commandButton id="searchOk" styleClass="ToolbarButton"
+								widgetVar="searchOk-wdg" value="#{prezmsg['CHERCHER']}"
+								action="#{transactionMBean.chercher}"
+								icon="ui-icon-custom-chercher"
+								update=":transaction-form:transaction-dtbl :transaction-form:chart-div"
+								rendered="#{authMbean.hasEcran('000084')}" />
+
+							<!-- clear du formulaire  -->
+							<p:commandButton id="searchReset" styleClass="ToolbarButton"
+								icon="ui-icon-custom-undo" value="#{prezmsg['RESET']}"
+								widgetVar="searchReset-wdg"
+								action="#{transactionMBean.resetSearchCriteria()}"
+								update="transaction-form" tabindex="-1">
+							</p:commandButton>
+						</center>
+					</div>
+					<!--  <p:toolbar id="crud-menu">
+
+						<f:facet name="left">
+							<p:commandButton id="search" widgetVar="search-wdg"
+								styleClass="ToolbarButton" value="#{prezmsg['CHERCHER']}"
+								type="button" icon="ui-icon-custom-chercher" />
+						</f:facet>
+					</p:toolbar>-->
+					<br />
+					<p:dataTable id="transaction-dtbl" paginator="true"
+						emptyMessage="#{prezmsg['label_no_records_found']}"
+						value="#{transactionMBean.webBean.transactionVO}" var="univ"
+						rows="5" lazy="true" paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="10,20,30"
+						currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+
+						<!-- Identifiant de l'universite  -->
+						<p:column headerText="#{prezmsg['DATE_OPERATION']}"
+							style="width:12%"
+							rendered="${ transactionMBean.transactionCriteria.type == 0}">
+							<center>
+								<h:outputText value="#{univ.date}" />
+							</center>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['MOIS']}" style="width:12%"
+							rendered="${ transactionMBean.transactionCriteria.type == 2}">
+							<center>
+								<h:outputText value="#{univ.mois} - #{univ.annee}" />
+							</center>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['SEMAINE']}" style="width:12%"
+							rendered="${ transactionMBean.transactionCriteria.type == 1}">
+							<center>
+								<h:outputText value="#{univ.semaine} - #{univ.annee}" />
+							</center>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['ANNEE']}" style="width:12%"
+							rendered="${ transactionMBean.transactionCriteria.type == 3}">
+							<center>
+								<h:outputText value="#{univ.annee}" />
+							</center>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['TYPE_OPERATION']} "
+							style="width: 10%;">
+							<center>
+								<h:outputText value="Recharge"
+									rendered="${ univ.typeOperation == 'R' }" />
+								<h:outputText value="Decharge"
+									rendered="${ univ.typeOperation == 'D' }" />
+							</center>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['MONTANT']}">
+							<center>
+								<h:outputText value="#{univ.total} DH" />
+							</center>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['CITE']}">
+							<center>
+								<h:outputText value="#{univ.cite}" />
+							</center>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['RESTAURANT']}">
+							<center>
+								<h:outputText value="#{univ.resto}" />
+							</center>
+						</p:column>
+
+						<p:columnGroup type="footer">
+
+							<p:row>
+								<p:column style="text-align:right" footerText="Total:" />
+								<p:column />
+								<p:column
+									footerText="${transactionMBean.someR - transactionMBean.someD} DH"
+									rendered="${ empty transactionMBean.transactionCriteria.typeOperation }" />
+								<p:column footerText="#{transactionMBean.someR} DH"
+									rendered="${ transactionMBean.transactionCriteria.typeOperation eq 'R'}" />
+								<p:column footerText="#{transactionMBean.someD} DH"
+									rendered="${ transactionMBean.transactionCriteria.typeOperation eq 'D'}" />
+							</p:row>
+						</p:columnGroup>
+					</p:dataTable>
+				</div>
+			</div>
+
+			<p:panel id="chart-div" styleClass="chart-pnl">
+				<!--<p:panel rendered="#{transactionMBean.vide }" id="chart-pnl"
+					styleClass="chart-pnl">
+					<p:chart id="evolution-chart" type="line"
+						model="#{transactionMBean.chartModelWebBean.dateModel}"
+						style="height:400px;margin-left:0;" />
+				</p:panel>-->
+			</p:panel>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

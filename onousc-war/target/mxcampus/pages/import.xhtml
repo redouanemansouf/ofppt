@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+
+
+	<ui:define name="content">
+	
+	<center>
+	<p:messages autoUpdate="true" globalOnly="true" closable="true" style="width:59%;"
+					showIcon="false" />
+					</center>
+<!-- 	<p:messages id="messages" showDetail="true" closable="true"> -->
+<!--         <p:autoUpdate /> -->
+<!--     </p:messages> -->
+    
+<!--      <p:commandButton value="Info" action="#{carteNapsMBean.info}" /> -->
+
+<!-- 		<applet id="appid" name="appid" permissions="all-permissions" -->
+<!-- 			scriptable="true" archive="AppletMX.jar" -->
+<!-- 			code="applet_mxcampus.AppletMX.class" width="0" height="0"> -->
+<!-- 		</applet> -->
+
+		<p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;width:128%;">
+			<ul class="menuOpposition">
+				<li class="active"><h:link
+						outcome="/pages/import.xhtml">
+						<div>
+							<center>Import</center>
+						</div>
+					</h:link></li>
+				<li><h:link outcome="/pages/liste.xhtml">
+						<div>
+							<center>Liste</center>
+						</div>
+					</h:link></li>
+					<li  ><h:link outcome="/pages/browse.xhtml">
+						<div>
+							<center>Fichier Rejet</center>
+						</div>
+					</h:link></li>
+			</ul>
+		</p:fieldset>
+		
+		<p:fieldset styleClass="fieldsetCategories">
+			<center>
+				<p:ajaxStatus>
+					<f:facet name="start">
+						<p:graphicImage library="images" name="ajax-loader-1.gif" style="" />
+					</f:facet>
+				</p:ajaxStatus>
+			</center>
+			<h:form id="formGLobal">
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+				<center>
+<!-- 					<p:messages autoUpdate="true" globalOnly="true" closable="true" -->
+<!-- 						styleClass="M2" /> -->
+
+				</center>
+
+
+				<div class="BackgroundGray">
+					<div class="RefCenter">
+
+						<fieldset>
+							<center>
+								<h:panelGrid columns="3">
+									<h:outputLabel value="Fichier CSV du Personnel" />
+									<p:fileUpload mode="advanced" dragDropSupport="false"
+										id="btn-import"
+										
+										fileUploadListener="#{carteNapsMBean.importFichierMXListener}"
+										fileLimit="1" label="Importer" uploadLabel="Importer"
+										cancelLabel="Annuler" allowTypes="/(\.|\/)(csv)$/"
+										multiple="false" update=""
+										onstart="PF('blockUIWidget1').block()"
+										oncomplete="PF('blockUIWidget1').unblock()"
+										fileLimitMessage="Le Nombre maximum de fichier à importer est atteint" />
+
+								</h:panelGrid>
+							</center>
+
+							<pe:blockUI target="btn-import" widgetVar="blockUIWidget1">
+								<h:panelGrid columns="2">
+									<h:graphicImage library="images" name="ajax-loader-1.gif"
+										style="margin-right: 12px; vertical-align: middle;" />
+									<h:outputText value="Lancement de l'import de Fichier"
+										style="white-space: nowrap;" />
+								</h:panelGrid>
+							</pe:blockUI>
+						</fieldset>
+						<br /> <br /> <br />
+
+
+					</div>
+				</div>
+
+			</h:form>
+			<center>
+<!-- 			<h:panelGrid columns="3"> -->
+<!-- 									<h:outputLabel value="Repertoire imports" /> -->
+<!-- 									<p:commandButton icon="ui-icon-custom-modifier" -->
+<!-- 									action="#{carteNapsMBean.readrep}" update=":browse-dlg" oncomplete="PF('browse-dlg-wdg').show();" -->
+<!-- 									styleClass="CrudButton"> -->
+<!-- 									</p:commandButton> -->
+
+<!-- 			</h:panelGrid> -->
+
+			</center>
+			
+<!-- 			<ui:include -->
+<!-- 				src="/pages/importmsgwdg.xhtml"></ui:include> -->
+		</p:fieldset>
+		
+		
+
+	</ui:define>
+</ui:composition>
+
+

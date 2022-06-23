@@ -1,0 +1,351 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<f:view locale="fr" contentType="text/html">
+
+	<h:head>
+		<title>MXCAMPUS</title>
+		<h:outputScript id="idCommunJS" library="js" name="script.js"
+			target="body" />
+	</h:head>
+	<h:body styleClass="AppBackground">
+	
+	<div style="margin: auto; width: 45%; padding: 10px;">
+			<p:messages autoUpdate="true" globalOnly="true" closable="true"
+				showIcon="false" />
+		</div>
+
+		<f:facet name="last">
+
+			<h:outputStylesheet id="idCommunStyle" library="css" name="style.css" />
+
+			<!-- 			<h:outputStylesheet id="idCommunStyle" library="css" name="StyleStatistique.css" /> -->
+
+			<h:outputStylesheet id="idUiStyle" library="css" name="ui.css" />
+
+			<h:outputStylesheet id="idImagesStyle" library="css"
+				name="images.css" />
+
+			<h:outputStylesheet id="idFontAwsome" library="css"
+				name="font-awesome.css" />
+
+			<h:outputStylesheet id="idTopMenuStyle" library="css"
+				name="topMenu.css" />
+			<h:outputStylesheet id="idMediaStyle" library="css" name="media.css" />
+
+		</f:facet>
+	<div style="margin: auto; width: 50%; padding: 10px;">
+	      <p:ajaxStatus>
+			<f:facet name="start">
+				<p:graphicImage id="ajaxLoader" name="images/blueajax.gif"
+					styleClass="AjaxStatusLoader" />
+			</f:facet>
+		    </p:ajaxStatus>
+	</div>
+
+
+
+		
+
+		
+		<h:form id="inscription" prependId="false">
+
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+
+			<pe:tooltip for="ville-create" showEvent="click" hideEvent="unfocus"
+				myPosition="left center" atPosition="right center">
+				<h:message for="ville-create" />
+			</pe:tooltip>
+
+			<pe:tooltip for="cite-create" showEvent="click" hideEvent="unfocus"
+				myPosition="left center" atPosition="right center">
+				<h:message for="cite-create" />
+			</pe:tooltip>
+
+			<pe:tooltip for="restaurant-create" showEvent="click"
+				hideEvent="unfocus" myPosition="left center"
+				atPosition="right center">
+				<h:message for="restaurant-create" />
+			</pe:tooltip>
+
+
+
+
+			<h:panelGrid columns="2" styleClass="LoginGrid" cellpadding="10">
+
+
+
+				<!-- 				<p:outputPanel> -->
+
+				<!-- 					<p:outputLabel id="num_dem" value="N° Demande :" /> -->
+				<!-- 					<p:inputText id="numDem_create" -->
+				<!-- 						value="#{etudiantMBean.webBean.vo.ndemande}" required="true"> -->
+				<!-- 						<f:validateLength minimum="8" maximum="8" /> -->
+				<!-- 						<p:message for="numDem_create" /> -->
+				<!-- 					</p:inputText> -->
+				<!-- 				</p:outputPanel> -->
+				<p:outputPanel>
+					<p:outputLabel id="anne" value="Année Universitaire :"
+						styleClass="LabelIns" />
+					<p:inputText id="anneee_create" style="width:80px;" readonly="true"
+						value="#{etudiantMBean.webBean.anneUniversitaireVO.libelle}">
+					</p:inputText>
+					<p:message for="anneee_create" />
+				</p:outputPanel>
+
+
+				<p:outputPanel>
+					<p:outputLabel for="nom_create" id="nom" value="Nom (*)"
+						indicateRequired="false" styleClass="LabelIns" />
+					<p:inputText id="nom_create"
+						title="#{component.valid ? '' : utilsMBean.getErrorMessage(component.clientId)}"
+						value="#{etudiantMBean.webBean.vo.nom}" required="true">
+
+					</p:inputText>
+
+				</p:outputPanel>
+
+				<p:outputPanel>
+					<p:outputLabel for="prenom_create" id="prenom" value="Prénom (*)"
+						styleClass="LabelIns" indicateRequired="false" />
+					<p:inputText id="prenom_create" styleClass="InscrInput"
+						title="#{component.valid ? '' : utilsMBean.getErrorMessage(component.clientId)}"
+						value="#{etudiantMBean.webBean.vo.prenom}" required="true">
+					</p:inputText>
+
+				</p:outputPanel>
+
+				<p:outputPanel>
+					<p:outputLabel id="Sexe" value="Sexe (*)" styleClass="LabelIns" />
+					<p:selectOneRadio id="sexe_create"
+						value="#{etudiantMBean.webBean.vo.sexe}" required="true">
+						<f:selectItem itemLabel="Masculin" itemValue="M" />
+						<f:selectItem itemLabel="Féminin" itemValue="F" />
+					</p:selectOneRadio>
+					<p:message for="sexe_create" />
+				</p:outputPanel>
+
+				<p:outputPanel>
+					<p:outputLabel  id="dat_nais"
+						value="Date de naissance (*)" styleClass="LabelIns" />
+					<p:calendar id="dat_nais_create" styleClass="InscrInput" required="true"
+						yearRange="1970:2050"
+						value="#{etudiantMBean.webBean.vo.date_naissance}" maxdate="#{etudiantMBean.currentDate()}"
+						pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true"></p:calendar>
+						<p:message for="dat_nais_create" />
+				</p:outputPanel>
+
+				<p:outputPanel>
+					<p:outputLabel value="Ville (*)" styleClass="LabelIns"
+						for="ville-create" indicateRequired="false" />
+					<p:selectOneMenu id="ville-create" filter="true"
+						title="#{component.valid ? '' : utilsMBean.getErrorMessage(component.clientId)}"
+						filterMatchMode="startsWith" required="true"
+						value="#{etudiantMBean.webBean.vo.ville}">
+						<f:selectItem itemLabel="Ville...." noSelectionOption="true" />
+						<f:selectItems value="#{etudiantMBean.webBean.villeVOs}" var="v"
+							itemLabel="#{v.libelle}" itemValue="#{v.libelle}" />
+					</p:selectOneMenu>
+
+				</p:outputPanel>
+				<p:outputPanel>
+					<p:outputLabel for="NCIN_create" id="NCIN" value="N° CIN (*)"
+						styleClass="LabelIns" indicateRequired="false" />
+					<p:inputText id="NCIN_create"
+						title="#{component.valid ? '' : utilsMBean.getErrorMessage(component.clientId)}"
+						value="#{etudiantMBean.webBean.vo.NCIN}" required="true">
+					</p:inputText>
+
+				</p:outputPanel>
+
+
+				<p:outputPanel>
+					<p:outputLabel id="Boursier" value=" Boursier (*)"
+						styleClass="LabelIns" />
+					<p:selectOneRadio id="Boursier_create"
+						value="#{etudiantMBean.webBean.vo.boursier}" required="true">
+						<f:selectItem itemLabel="Bourse complète" itemValue="Complete" />
+						<f:selectItem itemLabel="Demi-bourse" itemValue="Demi" />
+						<f:selectItem itemLabel="Aucune" itemValue="Aucune" />
+
+					</p:selectOneRadio>
+					<p:message for="Boursier_create" />
+				</p:outputPanel>
+
+				<p:outputPanel>
+					<p:outputLabel id="Resident" value=" Résident (*)"
+						styleClass="LabelIns" />
+					<p:selectOneRadio id="Resident_create"
+						value="#{etudiantMBean.webBean.vo.resident}" required="true">
+						<f:selectItem itemLabel="Oui" itemValue="#{true}" />
+						<f:selectItem itemLabel="Non" itemValue="#{false}" />
+						<p:ajax update="criteres"></p:ajax>
+					</p:selectOneRadio>
+					<p:message for="Resident_create" />
+				</p:outputPanel>
+				<p:outputPanel>
+					<p:outputLabel value="Cité (*)" styleClass="LabelIns"
+						indicateRequired="false" for="cite-create" />
+					<p:selectOneMenu id="cite-create" filter="true" required="true"
+						filterMatchMode="startsWith" converter="citeConverter"
+						title="#{component.valid ? '' : utilsMBean.getErrorMessage(component.clientId)}"
+						value="#{etudiantMBean.webBean.vo.citovo}">
+						<p:ajax listener="#{etudiantMBean.onCiteChange}"
+							update="restaurant-create" />
+						<f:selectItem itemLabel="Cité....." noSelectionOption="true" />
+						<f:selectItems value="#{etudiantMBean.webBean.citeVOs}" var="c"
+							itemLabel="#{c.libelle}" itemValue="#{c}" />
+					</p:selectOneMenu>
+
+				</p:outputPanel>
+
+				<p:outputPanel>
+					<p:outputLabel value="Restaurant (*)" styleClass="LabelIns"
+						indicateRequired="false" for="restaurant-create" />
+					<p:selectOneMenu id="restaurant-create" filter="true"
+						required="true" filterMatchMode="startsWith"
+						converter="restaurantConverter"
+						title="#{component.valid ? '' : utilsMBean.getErrorMessage(component.clientId)}"
+						value="#{etudiantMBean.webBean.vo.restaurantVO}">
+						<f:selectItem itemLabel="Ville/Restaurant....."
+							noSelectionOption="true" />
+						<f:selectItems value="#{etudiantMBean.webBean.restaurantVOs}"
+							var="r" itemLabel="#{r.villeVO.libelle} /  #{r.libelle}"
+							itemValue="#{r}" />
+					</p:selectOneMenu>
+
+				</p:outputPanel>
+
+
+				<p:outputPanel>
+					<p:outputLabel for="etab_create" id="etab"
+						value="Etablissement d’étude (*)" styleClass="LabelIns"
+						indicateRequired="false" />
+					<p:inputText id="etab_create"
+						title="#{component.valid ? '' : utilsMBean.getErrorMessage(component.clientId)}"
+						value="#{etudiantMBean.webBean.vo.etablissement}" required="true">
+					</p:inputText>
+
+				</p:outputPanel>
+
+
+				<p:outputPanel>
+					<p:outputLabel for="email_create" id="email" value="Email (*)"
+						styleClass="LabelIns" indicateRequired="false" />
+					<p:inputText id="email_create"
+						title="#{component.valid ? '' : utilsMBean.getErrorMessage(component.clientId)}"
+						value="#{etudiantMBean.webBean.vo.email}" required="true">
+					</p:inputText>
+
+				</p:outputPanel>
+
+
+
+				<p:panel id="criteres">
+					<p:outputPanel
+						rendered="#{etudiantMBean.webBean.vo.resident==false}">
+
+						<p:outputLabel id="revenu" value="Revenu des parents (*)"
+							styleClass="LabelIns" />
+						<p:selectOneMenu id="revenu_create"
+							value="#{etudiantMBean.webBean.vo.noteCritereVO}" required="true"
+							converter="noteCritereConverter">
+							<f:selectItem itemLabel="Sélectionner" />
+							<f:selectItems value="#{etudiantMBean.webBean.revenuVO}" var="u"
+								itemLabel="#{u.libelle}" itemValue="#{u}" />
+						</p:selectOneMenu>
+						<p:message for="revenu_create" />
+					</p:outputPanel>
+					<p:outputPanel
+						rendered="#{etudiantMBean.webBean.vo.resident==false}">
+						<p:outputLabel id="freSour" value="Nbr fréres/soeurs (*)"
+							styleClass="LabelIns" />
+						<p:selectOneMenu id="nbr_create"
+							value="#{etudiantMBean.webBean.vo.noteCritereVO}" required="true"
+							converter="noteCritereConverter">
+							<f:selectItem itemLabel="Sélectionner" />
+							<f:selectItems value="#{etudiantMBean.webBean.nbreEnfentsVO}"
+								var="u" itemLabel="#{u.libelle}" itemValue="#{u}" />
+
+						</p:selectOneMenu>
+						<p:message for="nbr_create" />
+					</p:outputPanel>
+				</p:panel>
+				<p:outputPanel>
+				</p:outputPanel>
+				<p:outputPanel>
+				</p:outputPanel>
+
+				<p:outputPanel>
+					<p:outputLabel id="Photo" value="Image :" styleClass="LabelIns" />
+					<p:fileUpload fileUploadListener="#{etudiantMBean.upload}"
+						cancelLabel="annuler" uploadLabel="télécharger" label="parcourir"
+						allowTypes="/(\.|\/)(gif|jpe?g|png)$/" description="Select Images"
+						styleClass="inputField" />
+
+				</p:outputPanel>
+
+				<p:outputPanel>
+
+				</p:outputPanel>
+
+
+
+
+
+
+				<p:outputPanel>
+
+					<p:commandButton id="retour" styleClass="LoginButton"
+						process="@this" style="float:center;"
+						action="/public/login.xhtml?faces-redirect=true" value="Retour" />
+
+				</p:outputPanel>
+				<p:outputPanel>
+					<p:commandButton id="valid" styleClass="LoginButton" update="@form"
+						style="float: left;" action="#{etudiantMBean.creer}"
+						value="Valider" />
+					<!-- 						<p:commandButton id="imprimer" styleClass="LoginButton" oncomplete="$('#idC').click()"                            -->
+					<!-- 						style="float: left;"  update="idC"     action="#{etudiantMBean.generateReport}"     -->
+					<!-- 						value="Imprimer" > -->
+					<!-- 						</p:commandButton> -->
+					<p:commandButton value="Imprimer" id="imprimer" style="float:left"
+						styleClass="LoginButton" ajax="false"
+						action="#{etudiantMBean.generateReport}">
+					</p:commandButton>
+
+				</p:outputPanel>
+
+				<p:outputPanel>
+					<!-- 				<p:commandButton id="idC" value="show" ajax="false" -->
+					<!-- 					style="display:none"> -->
+					<!-- 					<p:fileDownload value="#{etudiantMBean.streamedContent}" /> -->
+					<!-- 				</p:commandButton> -->
+
+				</p:outputPanel>
+
+
+
+
+
+
+
+
+
+				<!-- 				<p:growl id="messages" showDetail="false" autoUpdate="true" -->
+				<!-- 					closable="true" /> -->
+
+			</h:panelGrid>
+
+		</h:form>
+	</h:body>
+</f:view>
+</html>

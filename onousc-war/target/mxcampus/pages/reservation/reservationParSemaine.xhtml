@@ -1,0 +1,212 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:b="http://bootsfaces.net/ui">
+
+	<p:panel id="reservationParSemaine-pnl"
+		rendered="#{reservationMBean.typeReservation == 'SEMAINE'}"
+		styleClass="MarginAuto">
+
+		<h:panelGrid id="reservationParSemaine-grid" columns="2"
+			styleClass="FormGrid AlignCenter"
+			columnClasses="AlignRight,AlignLeft">
+
+			<!-- 	SEMAINE DE L'ANNÉE UNIVERSITAIRE -->
+			<p:outputLabel value="Semaine de l'année" />
+			<p:selectOneMenu id="semaineUniversitaire"
+				value="#{reservationMBean.webBean.semaineUniversitaireVO.id}">
+				<f:selectItem itemLabel="Sélectionner" />
+				<f:selectItems
+					value="#{reservationMBean.webBean.semaineUniversitaireVOs}"
+					var="semaine" itemLabel="#{semaine.libelle}"
+					itemValue="#{semaine.id}">
+				</f:selectItems>
+				<p:ajax event="change"
+					listener="#{reservationMBean.onSelectSemaineUniversitaire()}"
+					update="debutSemaineUniversitaire finSemaineUniversitaire" />
+			</p:selectOneMenu>
+
+			<!-- DÉBUT DE SEMAINE DE L'ANNÉE UNIVERSITAIRE-->
+			<p:outputLabel value="Du" />
+			<p:calendar id="debutSemaineUniversitaire" readonly="true"
+				value="#{reservationMBean.webBean.reservationParSemaineVO.dateDebut}">
+			</p:calendar>
+
+			<!-- FIN DE SEMAINE DE L'ANNÉE UNIVERSITAIRE-->
+			<p:outputLabel value="Au" />
+			<p:calendar id="finSemaineUniversitaire"
+				value="#{reservationMBean.webBean.reservationParSemaineVO.dateFin}">
+			</p:calendar>
+
+			<p:outputLabel value="Services" />
+			<p:selectManyCheckbox id="services"
+				value="#{reservationMBean.webBean.reservationParSemaineVO.services}"
+				layout="grid" columns="1" styleClass="FormGrid">
+				<f:selectItems value="#{reservationMBean.webBean.services}"
+					var="service" itemLabel="#{service}" />
+			</p:selectManyCheckbox>
+
+			<!-- SERVICE MIDI-->
+			<!-- 			<p:outputLabel value="Service midi" /> -->
+			<!-- 			<p:selectBooleanButton id="serviceMidi__" -->
+			<!-- 				value="#{reservationMBean.webBean.reservationParJourVO.serviceMidi}" -->
+			<!-- 				onLabel="OUI" offLabel="NON" onIcon="ui-icon-check" -->
+			<!-- 				offIcon="ui-icon-close" style="width:60px"> -->
+			<!-- 				<p:ajax event="change" update=" btn_add" /> -->
+			<!-- 			</p:selectBooleanButton> -->
+
+			<!-- SERVICE SOIR -->
+			<!-- 			<p:outputLabel value="Service soir" /> -->
+			<!-- 			<p:selectBooleanButton id="serviceSoir__" -->
+			<!-- 				value="#{reservationMBean.webBean.reservationParJourVO.serviceSoir}" -->
+			<!-- 				onLabel="OUI" offLabel="NON" onIcon="ui-icon-check" -->
+			<!-- 				offIcon="ui-icon-close" style="width:60px"> -->
+			<!-- 				<p:ajax event="change" update="btn_add" /> -->
+			<!-- 			</p:selectBooleanButton> -->
+			<p:commandButton id="addSemaine" value="Ajouter à la liste"
+				process="@parent" action="#{reservationMBean.addSemaineReservee()}"
+				update="semainesReservees-dtbl reservationParSemaine-grid" />
+
+			<!-- PASSER À LA CONFIRMATION DE LA RÉSERVATION -->
+			<p:commandButton value="Valider la réservation" process="@parent"
+				update="validationReservationParSemaine-pnl"
+				action="#{reservationMBean.reserverParSemaine()}"
+				oncomplete="toggle_visibility('reservationParSemaine-pnl','validationReservationParSemaine-pnl')" />
+		</h:panelGrid>
+
+		<br />
+
+		<p:dataTable id="semainesReservees-dtbl"
+			value="#{reservationMBean.webBean.reservationParSemaineVOs}" var="rs">
+
+			<!-- SEMAINE DE L'ANNÉE UNIVERSITAIRE-->
+			<p:column headerText="Semaine de l'année" styleClass="AlignCenter">
+				<h:outputText value="#{rs.semaine}" />
+			</p:column>
+
+			<!-- DATE DÉBUT DE LA SEMAINE -->
+			<p:column headerText="Début de semaine" styleClass="AlignCenter">
+				<h:outputText value="#{rs.dateDebut}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+
+			<!-- DATE FIN DE LA SEMAINE -->
+			<p:column headerText="Fin de semaine" styleClass="AlignCenter">
+				<h:outputText value="#{rs.dateFin}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+
+			<!-- SERVICE MIDI -->
+			<p:column headerText="Service midi" styleClass="AlignCenter">
+				<p:graphicImage library="images/icons" name="x-icon.png"
+					rendered="#{ rs.services.contains('SERVICE_MIDI')!= true}" />
+				<p:graphicImage library="images/icons" name="c-icon.png"
+					rendered="#{ rs.services.contains('SERVICE_MIDI')}" />
+			</p:column>
+
+			<!-- SERVICE SOIR -->
+			<p:column headerText="Service soir" styleClass="AlignCenter">
+				<p:graphicImage library="images/icons" name="x-icon.png"
+					rendered="#{ rs.services.contains('SERVICE_SOIR') != true}" />
+				<p:graphicImage library="images/icons" name="c-icon.png"
+					rendered="#{ rs.services.contains('SERVICE_SOIR')}" />
+			</p:column>
+
+			<p:column styleClass="AlignCenter" width="48">
+				<p:commandButton
+					action="#{reservationMBean.removeSemaineReservee(rs)}"
+					process="@this" update="semainesReservees-dtbl"
+					icon="ui-icon-custom-delete" />
+			</p:column>
+
+		</p:dataTable>
+
+	</p:panel>
+
+
+	<p:panel id="validationReservationParSemaine-pnl" visible="false"
+		styleClass="MarginAuto">
+
+		<center>
+
+			<h:panelGrid columns="2" styleClass="FormGrid">
+
+				<h3>
+					Date Réservation :
+					<!-- 					<h:outputLabel value="Date réservation" style="font-weight: bold;" /> -->
+				</h3>
+				<h:outputText value="#{reservationMBean.webBean.vo.dateOperation}">
+					<f:convertDateTime pattern="dd/MM/YYYY" />
+				</h:outputText>
+
+				<h3>Type réservation :</h3>
+				<!-- 				<h:outputLabel value="Type réservation" style="font-weight: bold;" /> -->
+				<h:outputText value="#{reservationMBean.webBean.vo.typeReservation}" />
+
+				<h3>Montant :</h3>
+				<!-- 				<h:outputLabel value="Montant" style="font-weight: bold;" /> -->
+				<h:outputText value="#{reservationMBean.webBean.vo.montant}" />
+
+			</h:panelGrid>
+
+			<br />
+
+			<div align="center">
+				<p:commandButton value="Valider"
+					action="#{reservationMBean.creer()}" process="@this"
+					update="reservation-outputPanel">
+					<f:setPropertyActionListener
+						target="#{reservationMBean.typeReservation}" value="null" />
+					<f:setPropertyActionListener target="#{reservationMBean.action}"
+						value="null" />
+				</p:commandButton>
+			</div>
+
+		</center>
+
+	</p:panel>
+
+
+
+	<!-- 		<table id="reservationParSemaine-dtbl" class="PaddedGrid MarginAuto"> -->
+
+	<!-- 			<tbody> -->
+
+	<!-- 				<ui:repeat -->
+	<!-- 					value="#{reservationMBean.webBean.reservationParSemaineVOs}" -->
+	<!-- 					var="r"> -->
+
+	<!-- 					<tr> -->
+
+	<!-- 						<td width="150px"><p:selectOneMenu style="width:200px;"> -->
+	<!-- 								<f:selectItem itemLabel="Semaine" /> -->
+	<!-- 								<f:selectItem itemLabel="S12" itemValue="S12" /> -->
+	<!-- 								<f:selectItem itemLabel="S13" itemValue="S13" /> -->
+	<!-- 								<f:selectItem itemLabel="S14" itemValue="S14" /> -->
+	<!-- 								<f:selectItem itemLabel="S15" itemValue="S15" /> -->
+	<!-- 							</p:selectOneMenu></td> -->
+
+	<!-- 						<td><p:calendar value="#{r.dateDebut}" pattern="dd/MM/yyyy" /></td> -->
+
+	<!-- 						<td><p:calendar value="#{r.dateFin}" pattern="dd/MM/yyyy" /></td> -->
+
+	<!-- 						<td><p:selectBooleanButton value="#{r.serviceMidi}" -->
+	<!-- 								onLabel="OUI" offLabel="NON" onIcon="ui-icon-check" -->
+	<!-- 								offIcon="ui-icon-close" style="width:60px" /></td> -->
+
+	<!-- 						<td><p:selectBooleanButton value="#{r.serviceSoir}" -->
+	<!-- 								onLabel="OUI" offLabel="NON" onIcon="ui-icon-check" -->
+	<!-- 								offIcon="ui-icon-close" style="width:60px" /></td> -->
+	<!-- 					</tr> -->
+
+	<!-- 				</ui:repeat> -->
+
+	<!-- 			</tbody> -->
+
+	<!-- 		</table> -->
+</ui:composition>

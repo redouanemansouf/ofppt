@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+	<ui:define name="content">
+
+		<p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;">
+			<ul class="menuCycleDeVie">
+				<li class="active"><h:link>
+						<div>
+							<center>#{prezmsg['GESTION_BORNE']}</center>
+						</div>
+					</h:link></li>
+			</ul>
+		</p:fieldset>
+		<p:ajaxStatus>
+			<f:facet name="start">
+				<p:graphicImage library="images" name="blueajax.gif"
+					styleClass="AjaxStatusLoader" />
+			</f:facet>
+		</p:ajaxStatus>
+
+
+
+		<h:form id="borne-form">
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+
+			<p:remoteCommand name="_updateCrudMenu" global="false"
+				update="crud-menu :search-overlay" />
+			<!--  -->
+
+
+
+			<center>
+				<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;"
+					styleClass="fieldsetCategories">
+
+					<center>
+						<p:messages autoUpdate="true" globalOnly="true" closable="true"
+							style="width:60%;" showIcon="false" />
+					</center>
+
+					<!-- Breadcrumb -->
+					<!-- 				<div class="BreadCrumbCust"> -->
+					<!-- 					<h:panelGrid columns="5" cellpadding="3"> -->
+					<!-- 						<h:outputLabel value="Référentiel" style="color:#419edd" /> -->
+					<!-- 						<span class="ui-icon ui-icon-carat-1-e"></span> -->
+					<!-- 						<h:outputLabel value="Critère" /> -->
+					<!-- 					</h:panelGrid> -->
+					<!-- 				</div> -->
+
+					<div class="RefCenter">
+						<p:toolbar id="crud-menu">
+
+							<f:facet name="left">
+
+								<p:commandButton id="create" widgetVar="create-wdg"
+									styleClass="ToolbarButton" value="#{prezmsg['NOUVEAU']}"
+									icon="ui-icon-custom-nouveau" process="@this"
+									action="#{borneMBean.resetWebBeanVO}" update=":create-form"
+									oncomplete="PF('create-dlg-wdg').show();">
+									<p:resetInput target=":create-form" />
+								</p:commandButton>
+
+								<p:commandButton id="search" widgetVar="search-wdg"
+									styleClass="ToolbarButton" value="#{prezmsg['CHERCHER']}"
+									type="button" icon="ui-icon-custom-chercher" />
+
+							</f:facet>
+						</p:toolbar>
+						<p:dataTable id="borne-dtbl" paginator="true"
+							emptyMessage="#{prezmsg['label_no_records_found']}"
+							rowStyleClass="#{borne.statut == 'DISABLED' ? 'is-disabled' :null }"
+							value="#{borneSearchMBean}" var="borne" lazy="true" rows="10"
+							selection="#{borneMBean.webBean.selectedVOs}"
+							rowKey="#{borne.id}" paginatorPosition="bottom"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="10,20,30"
+							currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+
+							<ui:include src="/pages/commun/datatableEvents.xhtml" />
+
+							<!-- 						<p:column selectionMode="multiple" styleClass="tableChkbox" -->
+							<!-- 							style="width:16px;text-align:center" /> -->
+
+							<!-- Identifiant de l'borne  -->
+							<p:column headerText="#{prezmsg['CODE']}" style="width:12%">
+								<center>
+									<h:outputText value="#{borne.code}" />
+								</center>
+							</p:column>
+
+							<!-- Libellé de la borne -->
+							<p:column headerText="Borne">
+								<center>
+									<h:outputText value="#{borne.libelle}" />
+								</center>
+							</p:column>
+
+							<p:column headerText="#{prezmsg['ADRESSE_IP']}">
+								<center>
+									<h:outputText value="#{borne.ip}" />
+								</center>
+							</p:column>
+
+							<p:column headerText="#{prezmsg['SITE']}">
+								<center>
+									<h:outputText value="#{borne.siteVO.libelle}" />
+								</center>
+							</p:column>
+
+
+
+							<p:column exportable="false" style="width:10%;text-align:center;"
+								headerText="">
+
+								<p:commandButton icon="ui-icon-custom-modifier"
+									styleClass="CrudButton" update=":edit-form"
+									title="Modifier borne" oncomplete="PF('edit-dlg-wdg').show();">
+									<f:setPropertyActionListener value="#{borne}"
+										target="#{borneMBean.webBean.vo}" />
+								</p:commandButton>
+
+								<p:commandButton icon="ui-icon-custom-supprimer"
+									styleClass="CrudButton" action="#{borneMBean.supprimer}"
+									update="borne-dtbl :error-messages" title="Supprimer borne">
+									<p:confirm header="#{prezmsg['CONFIRMATION_DELETE']}"
+										message="#{prezmsg['MESSAGE_CONFIRMATION_DELETE']}"
+										icon="ui-icon-alert" />
+									<f:setPropertyActionListener value="#{borne}"
+										target="#{borneMBean.webBean.vo}"></f:setPropertyActionListener>
+								</p:commandButton>
+
+							</p:column>
+
+						</p:dataTable>
+
+					</div>
+
+				</p:fieldset>
+			</center>
+		</h:form>
+
+		<p:overlayPanel id="search-overlay" for=":borne-form:search"
+			hideEffect="slide" showEffect="slide" widgetVar="searchOverlay"
+			dismissable="false" appendToBody="true">
+
+			<h:form id="search-form">
+
+				<h:panelGrid columns="4" styleClass="FormGrid">
+
+					<!-- Code   -->
+					<h:outputLabel value="#{prezmsg['CODE']}" />
+					<p:inputText id="code-search"
+						value="#{borneSearchMBean.borneCriteria.code}" />
+
+					<h:outputLabel value="#{prezmsg['LIBELLE']}" />
+					<p:inputText id="libelle-search"
+						value="#{borneSearchMBean.borneCriteria.libelle}" />
+
+					<h:outputLabel value="#{prezmsg['ADRESSE_IP']}" />
+					<p:inputText id="ip-search"
+						value="#{borneSearchMBean.borneCriteria.ip}" />
+
+					<h:outputLabel value="#{prezmsg['SITE']}" />
+					<p:inputText value="#{borneMBean.user.siteVO.libelle}"
+						rendered="#{borneMBean.user.siteVO !=null }" disabled="true" />
+
+					<p:selectOneMenu id="site"
+						rendered="#{borneMBean.user.siteVO ==null }"
+						value="#{borneSearchMBean.borneCriteria.libsite}">
+						<f:selectItem itemLabel="#{prezmsg['SELECTIONNER']}" />
+						<f:selectItems value="#{borneMBean.webBean.siteVOs}" var="site"
+							itemLabel="#{site.libelle}" itemValue="#{site.libelle}" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+
+				<p:toolbar>
+					<f:facet name="right">
+						<p:commandButton id="searchOk" styleClass="OpButton"
+							widgetVar="searchOk-wdg" value="#{prezmsg['OK']}"
+							action="#{borneSearchMBean.run}" update=":borne-form:borne-dtbl"
+							onstart="backToFirstPage(); block()"
+							oncomplete="PF('searchOverlay').hide(); unblock(); initCrudMenu();" />
+						<p:commandButton id="searchReset" styleClass="OpButton"
+							widgetVar="searchReset-wdg" icon="ui-icon-custom-undo"
+							value="#{prezmsg['RESET']}"
+							action="#{borneSearchMBean.resetSearchCriteria()}"
+							update="search-form" tabindex="-1">
+							<p:resetInput target="search-form" />
+						</p:commandButton>
+					</f:facet>
+				</p:toolbar>
+			</h:form>
+
+		</p:overlayPanel>
+
+		<ui:include src="editerBorne.xhtml"></ui:include>
+		<ui:include src="creeBorne.xhtml"></ui:include>
+
+	</ui:define>
+</ui:composition>
+

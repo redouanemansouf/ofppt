@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml" >
+
+	<ui:define name="content">
+	
+			<p:ajaxStatus>
+			<f:facet name="start">
+				<p:graphicImage library="images" name="blueajax.gif"
+					styleClass="AjaxStatusLoader" />
+			</f:facet>
+		</p:ajaxStatus>
+
+		<h:form id="nationalite-form-Adh">
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+			<p:remoteCommand name="_updateCrudMenu" global="false"
+				update="crud-menu" />
+
+			<!-- 			<p:remoteCommand name="_updateCrudMenu" global="false" -->
+			<!-- 				update="crud-menu :search-overlay" /> -->
+
+			<center>
+				<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;"
+					styleClass="fieldsetCategories">
+					
+					<center>
+				<p:messages autoUpdate="true" globalOnly="true" closable="true" style="width:60%;"
+					showIcon="false" />
+			</center>
+					
+			<div class="BackgroundGray">
+
+				<div class="RefCenter">
+				<p:fieldset
+								style="padding-left: 0px !important; padding-right: 0% !important;margin-left: 0%;"
+								styleClass="fieldsetSearch" id="searchField">
+
+						<center>
+							<h:panelGrid columns="4" styleClass="FormGrid">
+
+								<p:outputLabel value="#{prezmsg['MATRICULE']}" />
+								<p:inputText id="matr-create"
+									value="#{oppositionAdhSearchMbean.criteria.matrAdh}">
+								</p:inputText>								
+<!-- 								<p:selectOneMenu id="matr-create" filter="true" -->
+<!-- 									filterMatchMode="startsWith" style="width:220px" -->
+<!-- 									value="#{oppositionAdhSearchMbean.criteria.matrAdh}"> -->
+<!-- 									<f:selectItem itemLabel="Matricule....." noSelectionOption="true" /> -->
+<!-- 									<f:selectItems value="#{oppositionAdhMBean.webBeanAdh.adherentVOs}" -->
+<!-- 										var="e" itemLabel="#{e.matr}" itemValue="#{e.matr}" /> -->
+<!-- 								</p:selectOneMenu> -->
+								<p:outputLabel id="nom" value="Nom" />
+								<p:inputText id="nom_create"
+									value="#{oppositionAdhSearchMbean.criteria.nom}">
+								</p:inputText>
+								<p:outputLabel id="prenom" value="Prénom" />
+								<p:inputText id="prenom_create"
+									value="#{oppositionAdhSearchMbean.criteria.prenom}">
+								</p:inputText>
+
+								<p:outputLabel value="#{prezmsg['ETAT']}" />
+								<p:selectOneMenu id="oper-create" filter="true"
+									filterMatchMode="startsWith"
+									value="#{oppositionAdhSearchMbean.criteria.statut}">
+									<f:selectItem itemLabel="#{prezmsg['TOUS']}" />
+									<f:selectItem itemLabel="Personaliser" itemValue="PERSONALIZED" />
+									<f:selectItem itemLabel="#{prezmsg['VALIDATED']}" itemValue="VALIDATED" />
+									<f:selectItem itemLabel="#{prezmsg['OPPOSED']}" itemValue="OPPOSED" />
+								</p:selectOneMenu>
+							</h:panelGrid>
+
+
+
+							<p:commandButton id="searchOkk" styleClass="Val"
+								widgetVar="searchOk-wdg" value="#{prezmsg['CHERCHER']}"
+								action="#{oppositionAdhSearchMbean.run}"
+								update=":nationalite-form-Adh:nationalite-dtbl-Adh"
+								icon="ui-icon-custom-chercher" />
+
+							<!-- clear du formulaire  -->
+							<p:commandButton id="searchReset" styleClass="Val"
+								widgetVar="searchReset-wdg" value="#{prezmsg['RESET']}"
+								icon="ui-icon-custom-undo"
+								action="#{oppositionAdhSearchMbean.resetSearchCriteria()}"
+								update="searchField">
+							</p:commandButton>
+						</center>
+						<br />
+					</p:fieldset>
+					<br />
+					<p:toolbar id="crud-menu">
+					<f:facet name="right">
+							<p:commandButton id="create2" widgetVar="create-wdg2-Adh"
+								styleClass="ToolbarButton"
+								value="#{prezmsg['METTRE_MAIN_LEVEE']}" update=":create-form-Adh"
+								disabled="#{ oppositionAdhMBean.webBeanAdh.adherentVO == null
+								or oppositionAdhMBean.webBeanAdh.adherentVO.statut.statusCode == 'VALIDATED'
+								or oppositionAdhMBean.webBeanAdh.adherentVO.statut.statusCode == 'PERSONALIZED'
+								or oppositionAdhMBean.webBeanAdh.adherentVO.statut.statusCode == 'ENABLED'}"
+								onclick="PF('create-dlg-wdg2-Adh').show();"
+								icon="ui-icon-custom-nouveau">
+							</p:commandButton>
+							<p:commandButton id="create" widgetVar="create-wdg"
+								styleClass="ToolbarButton"
+								value="#{prezmsg['METTRE_OPPOSITION']}" update=":create-form2-Adh"
+								disabled="#{oppositionAdhMBean.webBeanAdh.adherentVO == null
+								or oppositionAdhMBean.webBeanAdh.adherentVO.statut.statusCode == 'OPPOSED'}"
+								action="#{oppositionAdhMBean.resetWebBeanVO}" process="@this"
+								oncomplete="PF('create-dlg-wdg-Adh').show();"
+								icon="ui-icon-custom-nouveau">
+							</p:commandButton>
+
+						</f:facet>
+
+					</p:toolbar>
+					<p:dataTable id="nationalite-dtbl-Adh" paginator="true"
+						value="#{oppositionAdhSearchMbean}" var="nat" lazy="true" rows="10"
+						emptyMessage="#{prezmsg['label_no_records_found']}"
+						selection="#{oppositionAdhMBean.webBeanAdh.adherentVO}"
+						selectionMode="single" rowKey="#{nat.id}"
+						paginatorPosition="bottom"
+						actionListener="#{oppositionAdhMBean.resetWebBeanVO}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="10,20,30"
+						currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+
+						
+
+		<p:ajax event="rowSelect"
+							update="@form :create-form-Adh :create-form2-Adh" />
+
+						<ui:include src="/pages/commun/datatableEvents.xhtml" />
+
+<!-- 						<p:column selectionMode="multiple" styleClass="tableChkbox" -->
+<!-- 							style="width:16px;text-align:center" /> -->
+
+						<p:column headerText="Matricule">
+							<h:outputText value="#{nat.matr}" />
+						</p:column>
+						<p:column headerText="Nom">
+							<h:outputText value="#{nat.nom}" />
+						</p:column>	
+						<p:column headerText="Prénom">
+							<h:outputText value="#{nat.prenom}" />
+						</p:column>												
+						<p:column headerText="#{prezmsg['NUMCARTE']}">
+							<h:outputText value="#{nat.numCarte}">
+								<f:convertNumber pattern="00000000" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Etat de la carte">
+							<h:outputText value="#{prezmsg[nat.statut]}" />
+						</p:column>						
+						
+
+					</p:dataTable>
+
+
+
+				</div>
+			</div>
+						</p:fieldset>
+			</center>
+		</h:form>
+
+	
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<h:panelGrid columns="2" styleClass="AlignCenter Width100pct">
+				<p:commandButton value="#{prezmsg['OUI']}" type="button"
+					styleClass="OpButton" icon="ui-icon-check" />
+				<p:commandButton value="#{prezmsg['NON']}" type="button"
+					styleClass="OpButton" icon="ui-icon-close" />
+			</h:panelGrid>
+		</p:confirmDialog>
+
+		<ui:include src="DeclarerOppositionAdh.xhtml"></ui:include>
+		<ui:include src="MainLeveeAdh.xhtml"></ui:include>
+
+	</ui:define>
+</ui:composition>
+

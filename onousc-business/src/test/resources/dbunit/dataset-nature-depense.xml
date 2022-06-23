@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<REF_NATURE_DEPENSE ND_ID="1" ND_LIBELLE="Nature depense test"
+		ND_DESCRIPTION="desc" ND_STATUT="ENABLED" />
+
+
+</dataset>

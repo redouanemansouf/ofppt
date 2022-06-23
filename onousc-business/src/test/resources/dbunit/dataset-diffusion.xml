@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<REF_DIFFUSION DIF_ID="1" DIF_LIBELLE="Personel de la CTM"
+		DIF_DESCRIPTION="Personel de la CTM" DIF_STATUT="ENABLED" />
+
+	<REF_DIFFUSION DIF_ID="2" DIF_LIBELLE="RH"
+		DIF_DESCRIPTION="Ressource humaine" DIF_STATUT="ENABLED" />
+		
+	<REF_DIFFUSION DIF_ID="1" DIF_LIBELLE="Personel de la CTM"
+		DIF_DESCRIPTION="Personel de la CTM" DIF_STATUT="ENABLED" />
+
+	<REF_DIFFUSION DIF_ID="2" DIF_LIBELLE="RH"
+		DIF_DESCRIPTION="Ressource humaine" DIF_STATUT="ENABLED" />
+</dataset>

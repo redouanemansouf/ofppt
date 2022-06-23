@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<!-- REF_CATEGORIE_AGE -->			
+	<TPT_FORFAIT FRF_ID="1" FRF_ID_FORFAITEE="5" FRF_TYPE_FORFAIT="T" FRF_VALEUR="40" />
+	<TPT_FORFAIT FRF_ID="2" FRF_ID_FORFAITEE="6" FRF_TYPE_FORFAIT="D" FRF_VALEUR="88" />
+
+</dataset>
+
+
+
+ 

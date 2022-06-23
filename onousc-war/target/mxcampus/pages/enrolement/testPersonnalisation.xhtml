@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layout.xhtml">
+
+	<ui:define name="content">
+	
+	
+
+		<h:form id="nationalite-form">
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+
+			<p:remoteCommand name="_updateCrudMenu" global="false"
+				update="crud-menu :search-overlay" />
+
+			<div class="BreadCrumbCust">
+
+				<h:panelGrid columns="5" cellpadding="5">
+
+					<h:outputLabel value="Enôlement" style="color:#419edd"
+						styleClass="LabelEnr" />
+
+					<span class="ui-icon ui-icon-carat-1-e"
+						style="float: left; margin-top: 3px;"></span>
+
+					<h:outputLabel value="Liste des demandes" styleClass="LabelEnr" />
+				</h:panelGrid>
+
+			</div>
+			<div class="BackgroundGray">
+
+				<div class="RefCenter">
+
+
+<p:messages globalOnly="true" autoUpdate="true" closable="true" showIcon="false" />
+					<p:menubar id="crud-menu" styleClass="CrudMenu">
+
+						<!-- 						<p:menuitem id="create" value="#{prezmsg['AJOUTER']}" -->
+						<!-- 							icon="ui-icon-custom-nouveau" -->
+						<!-- 							oncomplete="PF('create-dlg-wdg').show();"> -->
+						<!-- 						</p:menuitem> -->
+
+						<p:menuitem id="search" value="#{prezmsg['CHERCHER']}"
+							icon="ui-icon-search" />
+
+						<!-- 						<p:menuitem id="delete" value="#{prezmsg['SUPPRIMER']}" -->
+						<!-- 							icon="ui-icon-custom-supprimer-min" -->
+						<!-- 							disabled="#{empty etudiantMBean.webBean.selectedVOs}" -->
+						<!-- 							onclick="PF('widget_delete-dlg').show();" /> -->
+
+
+
+					</p:menubar>
+
+					<p:outputLabel   id="id" value="Id etudiant :"   styleClass="LabelIns" />
+					<p:inputText id="id_person"   
+						value="3258985" readonly="true"
+						>
+					</p:inputText>
+			
+					<p:outputLabel   id="anne" value="Année Universitaire :"   styleClass="LabelIns" />
+					<p:inputText id="anneee_person"   
+						value="#{etudiantMBean.webBean.vo.ann_universitaire}" readonly="true"
+						>
+					</p:inputText>
+				
+				
+
+
+				
+					<p:outputLabel for="nom_person" id="nom" value="Nom :"    styleClass="LabelIns"/>
+					<p:inputText id="nom_person"  
+						value="#{etudiantMBean.webBean.vo.nom}"  readonly="true" >
+					</p:inputText>
+					
+				
+
+				
+					<p:outputLabel for="prenom_person" id="prenom" value="Prénom :" styleClass="LabelIns"    />
+					<p:inputText id="prenom_person" styleClass="InscrInput"  readonly="true"
+					
+						value="#{etudiantMBean.webBean.vo.prenom}" >
+					</p:inputText>
+				
+				
+
+				
+					<p:outputLabel for="dat_nais_person" id="dat_nais" value="Date de naissance :" styleClass="LabelIns"  />
+					<p:calendar id="dat_nais_person" styleClass="InscrInput"  readonly="true"
+						value="#{etudiantMBean.webBean.vo.date_naissance}"
+						   
+						pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true"></p:calendar>
+			
+
+				
+					<p:outputLabel  value="Ville" styleClass="LabelIns" for="ville_person"   />
+<!-- 					<p:selectOneMenu id="ville-create" filter="true"  readonly="true" -->
+					
+<!-- 						filterMatchMode="startsWith"   -->
+<!-- 						value="#{etudiantMBean.webBean.vo.ville}"> -->
+<!-- 						<f:selectItem itemLabel="Ville...." noSelectionOption="true" /> -->
+<!-- 						<f:selectItems value="#{etudiantMBean.webBean.villeVOs}" var="v" -->
+<!-- 							itemLabel="#{v.libelle}" itemValue="#{v.libelle}" /> -->
+<!-- 					</p:selectOneMenu> -->
+					
+					
+					<p:inputText id="ville_person"  readonly="true"
+					
+						value="#{etudiantMBean.webBean.vo.ville}" >
+					</p:inputText>
+			       
+			       <p:outputLabel  value="Cite" styleClass="LabelIns"  />
+					<p:selectOneMenu id="cite_person" filter="true" converter="citeConverter" 
+						filterMatchMode="startsWith" 
+						value="#{etudiantMBean.webBean.vo.citovo}">
+						<f:selectItem itemLabel="Cité....." noSelectionOption="true" />
+						<f:selectItems value="#{etudiantMBean.webBean.citeVOs}" var="c"
+							itemLabel="#{c.libelle}" itemValue="#{c}" />
+					</p:selectOneMenu>
+				
+					<p:outputLabel for="NCIN_person" id="NCIN" value="N° CIN :" styleClass="LabelIns"   />
+					<p:inputText id="NCIN_person"  readonly="true"
+					
+						value="#{etudiantMBean.webBean.vo.NCIN}" >
+					</p:inputText>
+					
+				
+
+
+				
+					<p:outputLabel id="Boursier" value=" Boursier :"  styleClass="LabelIns" />
+					<p:selectBooleanCheckbox id="Boursier_person" disabled="true"
+						value="#{etudiantMBean.webBean.vo.boursier}" >
+<!-- 						<f:selectItem itemLabel="Oui" itemValue="#{true}" /> -->
+<!-- 						<f:selectItem itemLabel="Non" itemValue="#{false}" /> -->
+
+					</p:selectBooleanCheckbox>
+				
+				
+
+				
+					<p:outputLabel id="Resident" value=" Resident :" styleClass="LabelIns"  />
+					<p:selectBooleanCheckbox id="Resident_person" disabled="true"
+						value="#{etudiantMBean.webBean.vo.resident}">
+						
+
+					</p:selectBooleanCheckbox>
+			
+
+
+				
+					<p:outputLabel for="etab_person" id="etab" value="Etablissement d’étude :" styleClass="LabelIns" />
+					<p:inputText id="etab_person"  readonly="true"
+						
+						value="#{etudiantMBean.webBean.vo.etablissement}" >
+					</p:inputText>
+					
+				
+
+
+				
+					<p:outputLabel for="email_person" id="email" value="Email :"  styleClass="LabelIns"  />
+					<p:inputText id="email_person"  readonly="true"
+					
+						value="#{etudiantMBean.webBean.vo.email}" >
+					</p:inputText>
+					
+			
+			
+				<p:outputLabel   id="image" value="Image :"  styleClass="LabelIns"  />
+                                 <h:graphicImage value="/images/dynamic/?file=image#{etudiantMBean.webBean.vo.image}" height="40" width="40"/>
+
+				
+					<p:outputLabel id="Se" value="Sexe :" styleClass="LabelIns" />
+					<h:selectOneRadio id="sexe_person" disabled="true"
+						value="#{etudiantMBean.webBean.vo.sexe}">
+						<f:selectItem itemLabel="Masculin" itemValue="M"  />
+						<f:selectItem itemLabel="Féminin" itemValue="F" />
+					</h:selectOneRadio>
+					
+				
+
+<!-- 				<p:outputLabel id="image" value="Image  :" styleClass="LabelIns" /> -->
+<!-- 				<img src="C:/image#{etudiantMBean.webBean.vo.image}" alt=""/> -->
+				
+
+			</h:panelGrid>
+
+
+			<h:panelGrid columns="2" styleClass="FloatRight" cellpadding="5">
+				<p:commandButton value="#{prezmsg['VALIDER']}" process="@form"
+					onclick="maj_data()"
+					 update="@form"
+					styleClass="ValidateButton" />
+				<p:commandButton value="#{prezmsg['ANNULER']}" global="false"
+					oncomplete="PF('pers-dlg-wdg').hide()" styleClass="CancelButton" />
+			</h:panelGrid>
+
+			<!-- Cache le dialog s'il n'y a pas d'érreur -->
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('pers-dlg-wdg').hide()"
+				update=":nationalite-form:nationalite-dtbl" />
+
+			</h:form>
+
+		</p:overlayPanel>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<h:panelGrid columns="2" styleClass="AlignCenter Width100pct">
+				<p:commandButton value="#{prezmsg['OUI']}" type="button"
+					styleClass="OpButton" icon="ui-icon-check" />
+				<p:commandButton value="#{prezmsg['NON']}" type="button"
+					styleClass="OpButton" icon="ui-icon-close" />
+			</h:panelGrid>
+		</p:confirmDialog>
+		<ui:include src="/pages/enrolement/creerDemande.xhtml"></ui:include>
+		<ui:include src="/pages/enrolement/editerDemande.xhtml"></ui:include>
+
+		<ui:include src="/pages/enrolement/PersonnaliserDemande.xhtml"></ui:include>
+
+	</ui:define>
+</ui:composition>
+

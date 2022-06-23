@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+	<ui:define name="content">
+
+
+		<p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;width:193%;">
+			<ul class="menuOpposition">
+				<li class="active"><h:link
+						outcome="/pages/enrolement_carte/import.xhtml">
+						<div>
+							<center>IMPORT DES FICHIERS INSCRIPTIONS</center>
+						</div>
+					</h:link></li>
+				<li><h:link outcome="/pages/enrolement_carte/rejet.xhtml">
+						<div>
+							<center>LISTE DES REJETS INSCRIPTIONS</center>
+						</div>
+					</h:link></li>
+			</ul>
+		</p:fieldset>
+
+		<p:ajaxStatus>
+			<f:facet name="start">
+				<p:graphicImage library="images" name="blueajax.gif"
+					styleClass="AjaxStatusLoader" />
+			</f:facet>
+		</p:ajaxStatus>
+
+
+		<p:fieldset styleClass="fieldsetImport">
+			<center>
+				<p:ajaxStatus>
+					<f:facet name="start">
+						<p:graphicImage library="images" name="ajax-loader-1.gif" style="" />
+					</f:facet>
+				</p:ajaxStatus>
+			</center>
+			<h:form id="formGLobal">
+				<center>
+					<p:messages autoUpdate="true" globalOnly="true" closable="true"
+						styleClass="M2" />
+				</center>
+
+
+				<div class="BackgroundGray">
+					<div class="RefCenter">
+
+						<fieldset>
+							<center>
+								<h:panelGrid columns="3">
+									<h:outputLabel value="Fichier des Inscriptions" />
+									<p:fileUpload mode="advanced" dragDropSupport="false"
+										id="btn-import"
+										fileUploadListener="#{inscriptionMBean.insertInscriptionListener}"
+										fileLimit="1" label="Parcourir" uploadLabel="Importer"
+										cancelLabel="Annuler" allowTypes="/(\.|\/)(zip)$/"
+										multiple="false" update=""
+										onstart="PF('blockUIWidget1').block()"
+										oncomplete="$('#formGLobal\\:imprimer').click();PF('blockUIWidget1').unblock()"
+										fileLimitMessage="Le Nombre maximum de fichier à importer est atteint" />
+								</h:panelGrid>
+
+
+							</center>
+							<h:panelGrid columns="2">
+								<h:commandLink id="Linkexemple" value="exemple"
+									action="#{inscriptionMBean.exportExemple()}" />
+								<h:commandLink id="LinkDoc" value="Documentation"
+									action="#{inscriptionMBean.exportDoc()}" />
+							</h:panelGrid>
+							<p:commandButton value="Imprimer" id="imprimer"
+								styleClass="LoginButton" ajax="false" style="display:none;"
+								action="#{inscriptionMBean.export()}">
+							</p:commandButton>
+							<pe:blockUI target="btn-import" widgetVar="blockUIWidget1">
+								<h:panelGrid columns="2">
+									<h:graphicImage library="images" name="ajax-loader-1.gif"
+										style="margin-right: 12px; vertical-align: middle;" />
+									<h:outputText value="Lancement de l'import de Fichier"
+										style="white-space: nowrap;" />
+								</h:panelGrid>
+							</pe:blockUI>
+						</fieldset>
+						<br /> <br /> <br />
+
+
+					</div>
+				</div>
+
+			</h:form>
+
+		</p:fieldset>
+
+
+	</ui:define>
+</ui:composition>
+

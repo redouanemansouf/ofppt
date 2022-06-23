@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+		template="/pages/commun/layoutOcp.xhtml">
+
+
+
+	<ui:define name="content">
+
+
+       <p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;width:126%;">
+			<ul class="menuOpposition">
+				<li><h:link
+						outcome="/pages/referentiel/restaurant/listerRestaurant.xhtml">
+						<div>
+							<center>RESTAURANT</center>
+						</div>
+					</h:link></li>
+				<li class="active"><h:link
+						outcome="/pages/referentiel/caisse/listerCaisse.xhtml">
+						<div>
+							<center>CAISSE</center>
+						</div>
+					</h:link></li>
+
+				<li><h:link
+						outcome="/pages/referentiel/caissier/listerCaissier.xhtml">
+						<div>
+							<center>CAISSIER</center>
+						</div>
+					</h:link></li>
+<!-- 					<li><h:link -->
+<!-- 						> -->
+<!-- 						<div> -->
+<!-- 							<center>#{prezmsg['STOCK']}</center> -->
+<!-- 						</div> -->
+<!-- 					</h:link></li> -->
+			</ul>
+		</p:fieldset>
+		
+		<p:ajaxStatus>
+			<f:facet name="start">
+				<p:graphicImage library="images" name="blueajax.gif"
+					styleClass="AjaxStatusLoader" />
+			</f:facet>
+		</p:ajaxStatus>
+		
+		<h:form id="caisse-form">
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+
+			<p:remoteCommand name="_updateCrudMenu" global="false"
+				update="crud-menu :search-overlay" />
+			<!--  -->
+
+
+			
+			
+	<center>
+				<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;"
+					styleClass="fieldsetCategories">
+
+<!-- 					<center> -->
+<!-- 						<p:messages autoUpdate="true" globalOnly="true" closable="true" -->
+<!-- 							style="width:60%;" showIcon="false" /> -->
+<!-- 					</center> -->
+
+<script>
+					function showMessage() {
+
+						_showMessage();
+					}
+				</script>
+				<center>
+					<p:messages id="succes" globalOnly="true" closable="true"
+						styleClass="M2" />
+				</center>
+				<!-- Remote commands -->
+				<p:remoteCommand name="_errorDialog"
+					onstart="PF('error-dlg-wdg').show()" />
+				<p:remoteCommand name="_showMessage"
+					actionListener="#{caisseMBean.showMessage}" update="succes" />
+				<p:remoteCommand name="_updateCrudMenu" global="false"
+					update="crud-menu" />
+
+				<div class="RefCenter">
+					<p:toolbar id="crud-menu">
+
+						<f:facet name="left">
+
+							<p:commandButton id="create" widgetVar="create-wdg"
+								styleClass="ToolbarButton" value="#{prezmsg['NOUVEAU']}"
+								icon="ui-icon-custom-nouveau" process="@this" rendered="#{authMbean.hasCreate('000006')}"
+								action="#{caisseMBean.resetWebBeanVO}" update=":create-form"
+								oncomplete="PF('create-dlg-wdg').show();"
+								>
+								<p:resetInput target=":create-form" />
+							</p:commandButton>
+
+							<p:commandButton id="search" widgetVar="search-wdg"
+								styleClass="ToolbarButton" value="#{prezmsg['CHERCHER']}"
+								type="button" icon="ui-icon-custom-chercher"
+								 />
+
+						</f:facet>
+					</p:toolbar>
+
+					<p:dataTable id="caisse-dtbl" paginator="true"
+						emptyMessage="#{prezmsg['label_no_records_found']}"
+						rowStyleClass="#{caisse.statut == 'DISABLED' ? 'is-disabled' :null }"
+						value="#{caisseSearchMBean}" var="caisse" lazy="true" rows="10"
+						selection="#{caisseMBean.webBean.selectedVOs}"
+						rowKey="#{caisse.id}" paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="10,20,30"
+						currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+
+						<ui:include src="/pages/commun/datatableEvents.xhtml" />
+
+						<!-- 						<p:column selectionMode="multiple" styleClass="tableChkbox" -->
+						<!-- 							style="width:16px;text-align:center" /> -->
+
+						<!-- Identifiant de l'caisse  -->
+						<p:column headerText="#{prezmsg['CODE']}" style="width:12%" sortBy="#{caisse.code}">
+							<center>
+								<h:outputText value="#{caisse.code}"  style="  font-weight: bold;   "/>            
+ 
+							</center>
+						</p:column>
+
+						<!-- Libellé de la caisse -->
+						<p:column headerText="#{prezmsg['CAISSE']}" sortBy="#{caisse.libelle}">
+							<center>
+								<h:outputText value="#{caisse.libelle}" />
+							</center>
+						</p:column>
+
+						<!-- Solde -->
+<!-- 						<p:column headerText="#{prezmsg['SOLDE_CAISSE']}"> -->
+<!-- 							<center> -->
+<!-- 								<h:outputText value="#{caisse.solde} DH" /> -->
+<!-- 							</center> -->
+<!-- 						</p:column> -->
+
+						<!-- cite -->
+						<p:column headerText="#{prezmsg['RESTAURANT']}" sortBy="#{caisse.restaurant.libelle}">
+							<center>
+								<h:outputText value="#{caisse.restaurant.libelle}" />
+							</center>
+						</p:column>
+
+
+						<p:column exportable="false" style="width:10%;text-align:center;"
+							headerText="">
+
+							<p:commandButton icon="ui-icon-custom-modifier"
+								styleClass="CrudButton" update=":edit-form"
+								title="Modifier caisse" oncomplete="PF('edit-dlg-wdg').show();" rendered="#{authMbean.hasUpdate('000006')}"
+								>
+								<f:setPropertyActionListener value="#{caisse}"
+									target="#{caisseMBean.webBean.vo}" />
+							</p:commandButton>
+
+							<p:commandButton icon="ui-icon-custom-supprimer" actionListener="#{caisseSearchMBean.run}"
+								styleClass="CrudButton" action="#{caisseMBean.supprimer}"
+								update="caisse-dtbl :error-messages"
+								title="Supprimer caisse" rendered="#{authMbean.hasDelete('000006')}"
+								>
+								<p:confirm header="#{prezmsg['CONFIRMATION_DELETE']}"
+									message="#{prezmsg['MESSAGE_CONFIRMATION_DELETE']}"
+									icon="ui-icon-alert" />
+								<f:setPropertyActionListener value="#{caisse}"
+									target="#{caisseMBean.webBean.vo}"></f:setPropertyActionListener>
+							</p:commandButton>
+
+						</p:column>
+
+					</p:dataTable>
+
+				</div>
+
+			</p:fieldset>
+			</center>
+			
+			
+			
+			
+		</h:form>
+
+
+
+		<p:overlayPanel id="search-overlay" for=":caisse-form:search"
+			hideEffect="slide" showEffect="slide" widgetVar="searchOverlay"
+			dismissable="false" appendToBody="true">
+
+			<h:form id="search-form">
+
+				<h:panelGrid columns="4" styleClass="FormGrid">
+
+
+					<h:outputLabel value="#{prezmsg['SITE']}" />
+					<p:inputText value="#{caisseMBean.user.siteVO.libelle}"
+						rendered="#{caisseMBean.user.siteVO !=null }"
+						disabled="true" />
+					<p:selectOneMenu id="site"
+						rendered="#{caisseMBean.user.siteVO ==null }"
+						value="#{caisseSearchMBean.caisseCriteria.idSite}">
+						<f:selectItem itemLabel="#{prezmsg['SELECTIONNER']}" />
+						<f:selectItems value="#{caisseMBean.webBean.listSiteForCombo}"
+							var="site" itemLabel="#{site.libelle}" itemValue="#{site.id}" />
+					</p:selectOneMenu>
+
+					<!-- Code   -->
+					<h:outputLabel value="#{prezmsg['CODE']}" />
+					<p:inputText id="code-search"
+						value="#{caisseSearchMBean.caisseCriteria.code}" />
+
+					<!-- Libellé   -->
+					<h:outputLabel value="#{prezmsg['LIBELLE']}" />
+					<p:inputText id="lib-search"
+						value="#{caisseSearchMBean.caisseCriteria.libelle}" />
+					<!-- Resto -->
+					<h:outputLabel value="#{prezmsg['RESTAURANT']}" />
+					<p:selectOneMenu id="cite_search"
+						value="#{caisseSearchMBean.caisseCriteria.librest}"
+						style="width:125px">
+						<f:selectItem itemLabel="choisir un restaurant" />
+						<f:selectItems value="#{caisseMBean.webBean.restaurantVOs}"
+							var="u" itemLabel="#{u.libelle}" itemValue="#{u.libelle}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+
+				<p:toolbar>
+					<f:facet name="right">
+						<p:commandButton id="searchOk" styleClass="OpButton"
+							widgetVar="searchOk-wdg" value="#{prezmsg['OK']}"
+							action="#{caisseSearchMBean.run}"
+							update=":caisse-form:caisse-dtbl"
+							onstart="backToFirstPage(); block()"
+							oncomplete="PF('searchOverlay').hide(); unblock(); initCrudMenu();" />
+						<p:commandButton id="searchReset" styleClass="OpButton"
+							widgetVar="searchReset-wdg" 
+							value="#{prezmsg['RESET']}"
+							action="#{caisseSearchMBean.resetSearchCriteria()}"
+							update="search-form" tabindex="-1">
+							<p:resetInput target="search-form" />
+						</p:commandButton>
+					</f:facet>
+				</p:toolbar>
+			</h:form>
+
+		</p:overlayPanel>
+
+
+
+		<ui:include src="editerCaisse.xhtml"></ui:include>
+		<ui:include src="creeCaisse.xhtml"></ui:include>
+
+	</ui:define>
+</ui:composition>
+

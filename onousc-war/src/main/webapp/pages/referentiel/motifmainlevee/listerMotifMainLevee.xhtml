@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layout.xhtml">
+
+	<ui:define name="content">
+
+
+
+
+
+		<h:form id="motifMainLevee-form">
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+
+			<p:remoteCommand name="_updateCrudMenu" global="false"
+				update="crud-menu :search-overlay" />
+			<!--  -->
+
+			<div class="BreadCrumbCust">
+
+				<h:panelGrid columns="5" cellpadding="5">
+
+					<h:outputLabel value="Referentiel" style="color:#419edd"
+						styleClass="LabelEnr" />
+
+					<span class="ui-icon ui-icon-carat-1-e"
+						style="float: left; margin-top: 3px;"></span>
+
+					<h:outputLabel value="motif main levée" styleClass="LabelEnr" />
+				</h:panelGrid>
+
+			</div>
+
+			<div class="BackgroundGray">
+
+				<!-- Breadcrumb -->
+				<div class="BreadCrumbCust">
+					<h:panelGrid columns="5" cellpadding="3">
+						<h:outputLabel value="Référentiel" style="color:#419edd" />
+						<span class="ui-icon ui-icon-carat-1-e"></span>
+						<h:outputLabel value="Motif main levée" />
+					</h:panelGrid>
+				</div>
+
+				<div class="RefCenter">
+					<p:toolbar id="crud-menu">
+
+						<f:facet name="left">
+
+							<p:commandButton id="create" widgetVar="create-wdg"
+								styleClass="ToolbarButton" value="#{prezmsg['NOUVEAU']}"
+								action="#{motifMainLeveeMBean.resetWebBeanVO}" process="@this"
+								update=":create-form" oncomplete="PF('create-dlg-wdg').show();"
+								icon="ui-icon-custom-nouveau"
+								rendered="#{authMbean.hasCreate('000041')}">
+								<p:resetInput target=":create-form" />
+							</p:commandButton>
+
+							<p:commandButton id="search" widgetVar="search-wdg"
+								styleClass="ToolbarButton" value="#{prezmsg['CHERCHER']}"
+								type="button" icon="ui-icon-custom-chercher"
+								rendered="#{authMbean.hasSelect('000041')}" />
+
+						</f:facet>
+
+					</p:toolbar>
+
+					<p:dataTable id="motifMainLevee-dtbl" paginator="true"
+						styleClass="opposition-table"
+						emptyMessage="#{prezmsg['label_no_records_found']}"
+						rowStyleClass="#{univ.statut == 'DISABLED' ? 'is-disabled' :null }"
+						value="#{motifMainLeveeSearchMBean}" var="univ" lazy="true"
+						rows="10" selection="#{motifMainLeveeMBean.webBean.selectedVOs}"
+						rowKey="#{univ.id}" paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="10,20,30"
+						currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      													{totalRecords}, Page: {currentPage}/{totalPages}">
+
+						<ui:include src="/pages/commun/datatableEvents.xhtml" />
+
+						<!-- 						<p:column selectionMode="multiple" styleClass="tableChkbox" -->
+						<!-- 							style="width:2%;text-align:center" /> -->
+
+						<!-- Identifiant du'motifMainLevee  -->
+						<p:column headerText="#{prezmsg['CODE']}" style="width:10%">
+							<center>
+								<h:outputText value="#{univ.code}" />
+							</center>
+						</p:column>
+
+						<!-- Libellé de la nationalité -->
+						<p:column headerText="#{prezmsg['MAIN_LEVEE']}" style="width:20%">
+							<center>
+								<h:outputText value="#{univ.libelle}" />
+							</center>
+						</p:column>
+
+						<p:column exportable="false" style="width:10%;text-align:center;"
+							headerText="">
+
+							<p:commandButton icon="ui-icon-custom-modifier"
+								styleClass="CrudButton" update=":edit-form" title="Modifier main levée"
+								oncomplete="PF('edit-dlg-wdg').show();"
+								rendered="#{authMbean.hasUpdate('000041')}">
+								<f:setPropertyActionListener value="#{univ}"
+									target="#{motifMainLeveeMBean.webBean.vo}" />
+							</p:commandButton>
+
+							<p:commandButton icon="ui-icon-custom-supprimer"
+								styleClass="CrudButton" title="Supprimer main levée" actionListener="#{motifMainLeveeSearchMBean.run}"
+								action="#{motifMainLeveeMBean.supprimer}"
+								update="motifMainLevee-dtbl :error-messages :succes"
+								rendered="#{authMbean.hasDelete('000041')}">
+								<p:confirm header="#{prezmsg['CONFIRMATION_DELETE']}"
+									message="#{prezmsg['MESSAGE_CONFIRMATION_DELETE']}"
+									icon="ui-icon-alert" />
+								<f:setPropertyActionListener value="#{univ}"
+									target="#{motifMainLeveeMBean.webBean.vo}"></f:setPropertyActionListener>
+							</p:commandButton>
+
+						</p:column>
+
+					</p:dataTable>
+				</div>
+
+			</div>
+		</h:form>
+
+		<p:overlayPanel id="search-overlay" for=":motifMainLevee-form:search"
+			hideEffect="slide" showEffect="slide" widgetVar="searchOverlay"
+			dismissable="false" appendToBody="true">
+
+			<h:form id="search-form">
+
+				<h:panelGrid columns="4" styleClass="FormGrid">
+
+					<!-- Code   -->
+					<h:outputLabel value="#{prezmsg['CODE']}" />
+					<p:inputText id="code-search"
+						value="#{motifMainLeveeSearchMBean.motifMainLeveeCriteria.code}" />
+
+					<!-- Libellé   -->
+					<h:outputLabel value="#{prezmsg['LIBELLE']}" />
+					<p:inputText id="lib-search"
+						value="#{motifMainLeveeSearchMBean.motifMainLeveeCriteria.libelle}" />
+
+				</h:panelGrid>
+
+				<p:toolbar>
+					<f:facet name="right">
+						<p:commandButton id="searchOk" styleClass="OpButton"
+							widgetVar="searchOk-wdg" value="#{prezmsg['OK']}"
+							action="#{motifMainLeveeSearchMBean.run}"
+							update=":motifMainLevee-form:motifMainLevee-dtbl"
+							onstart="backToFirstPage(); block()"
+							oncomplete="PF('searchOverlay').hide(); unblock(); initCrudMenu();" />
+
+						<!-- clear du formulaire  -->
+						<p:commandButton id="searchReset" styleClass="OpButton"
+							widgetVar="searchReset-wdg" icon="ui-icon-custom-undo"
+							value="#{prezmsg['RESET']}"
+							action="#{motifMainLeveeSearchMBean.resetSearchCriteria()}"
+							update="search-form" tabindex="-1">
+							<p:resetInput target="search-form" />
+						</p:commandButton>
+					</f:facet>
+				</p:toolbar>
+			</h:form>
+
+		</p:overlayPanel>
+
+
+
+
+		<ui:include src="creeMotifMainLevee.xhtml"></ui:include>
+		<ui:include src="editerMotifMainLevee.xhtml"></ui:include>
+
+	</ui:define>
+</ui:composition>
+

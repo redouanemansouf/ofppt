@@ -1,0 +1,80 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+	<p:dialog id="trnqt-dlg" widgetVar="trnqt-dlg-wdg" closable="true"
+		closeOnEscape="true" header="Droits d'accès aux tourniquets"
+		hideEffect="fade" showEffect="fade" modal="true" dynamic="true">
+
+
+		<h:form id="trnqt-form">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+			
+			<p:remoteCommand name="_updateCrudMenu" global="false"
+					update=":trnqt-form" />
+
+			<h:panelGrid columns="3" styleClass="FormGrid">
+
+				<p:dataTable id="tourniquet-dtbl" paginator="true"
+					emptyMessage="#{prezmsg['label_no_records_found']}"
+					rowStyleClass="#{tourniquet.statut == 'DISABLED' ? 'is-disabled' :null }"
+					value="#{tourniquetSearchMBean}" var="tourniquet" lazy="true"
+					rows="20" selection="#{personnelMBean.webBean.selectedTourniquets}"
+					style="margin-bottom:10px" styleClass="papa"
+					rowKey="#{tourniquet.id}" paginatorPosition="bottom"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,20,30"
+					currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+
+					<ui:include src="/pages/commun/datatableEvents.xhtml" />
+
+
+
+
+					<p:column selectionMode="multiple" styleClass="tableChkbox"
+						style="width:16px;text-align:center" />
+
+					<!-- Libellé de la tourniquet -->
+					<p:column headerText="#{prezmsg['TOURNIQUET']}" style="width:200px;text-align:center" >
+						<center>
+							<h:outputText value="#{tourniquet.libelle}" style="width:200px;text-align:center" />
+						</center>
+					</p:column>
+
+					<!-- Solde -->
+					<p:column headerText="#{prezmsg['IP']}" style="width:100px;text-align:center">
+						<center>
+							<h:outputText value="#{tourniquet.reference}" style="width:100px;text-align:center" />
+						</center>
+					</p:column>
+
+
+
+				</p:dataTable>
+
+			</h:panelGrid>
+
+			<center>
+
+				<p:commandButton value="#{prezmsg['VALIDER']}" styleClass="ValOK"
+					action="#{personnelMBean.creerTourniquet()}"
+					oncomplete="PF('trnqt-dlg-wdg').hide()" process="@form" update="@form" />
+			</center>
+
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('trnqt-dlg-wdg').hide()"/>
+
+		</h:form>
+	</p:dialog>
+</ui:composition>

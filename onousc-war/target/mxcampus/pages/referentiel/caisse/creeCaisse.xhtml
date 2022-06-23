@@ -1,0 +1,112 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+	<p:dialog id="create-dlg" widgetVar="create-dlg-wdg" closable="true"
+		closeOnEscape="true" header="Ajouter caisse" hideEffect="fade"
+		showEffect="fade" modal="true" dynamic="true">
+
+
+		<h:form id="create-form">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+			<pe:tooltip for="caisse_univ" myPosition="left center"
+				showEvent="click" hideEvent="unfocus" atPosition="right center">
+				<h:message for="caisse_univ" />
+			</pe:tooltip>
+			<p:message for="caisse_univ"></p:message>
+			<h:panelGrid columns="2" styleClass="FormGrid">
+
+
+				<!--      Code caisse     -->
+				<h:outputLabel value="#{prezmsg['CODE']}" />
+				<p:inputText id="caisse_code" value="#{caisseMBean.webBean.vo.code}"
+					maxlength="4"
+					title="#{component.valid ? '' : caisseMBean.getErrorMessage(component.clientId)}">
+					<f:validateLength minimum="4" maximum="4" />
+					<p:ajax listener="#{caisseMBean.codevalidator}" update="@form"
+						process="@this" />
+					<pe:keyFilter regEx="/[0-9_]/i" preventPaste="false" />
+				</p:inputText>
+
+
+				<h:outputLabel value="#{prezmsg['SITE']}" />
+				<p:inputText value="#{caisseMBean.user.siteVO.libelle}"
+					rendered="#{caisseMBean.user.siteVO !=null }" disabled="true" />
+				<p:selectOneMenu id="site" value="#{caisseMBean.webBean.vo.siteVO}"
+					style="width:170px" required="true" converter="siteConverter"
+					rendered="#{caisseMBean.user.siteVO ==null }">
+					<f:selectItem itemLabel="#{prezmsg['SELECTIONNER']}" />
+					<f:selectItems value="#{caisseMBean.webBean.listSiteForCombo}"
+						var="site" itemLabel="#{site.libelle}" itemValue="#{site}" />
+				</p:selectOneMenu>
+
+				<!--      Libellé caisse     -->
+
+				<h:outputLabel value="#{prezmsg['LIBELLE']}" />
+				<p:inputText id="caisse_libelle"
+					value="#{caisseMBean.webBean.vo.libelle}" required="true"
+					title="#{component.valid ? '' : caisseMBean.getErrorMessage(component.clientId)}" />
+
+				<!--     Solde     -->
+				<!-- 				<h:outputLabel value="#{prezmsg['SOLDE_CAISSE']}" /> -->
+				<!-- 				<p:inputText id="caisse_solde" -->
+				<!-- 					value="#{caisseMBean.webBean.vo.solde}" required="true" -->
+				<!-- 					title="#{component.valid ? '' : caisseMBean.getErrorMessage(component.clientId)}" /> -->
+
+				<!-- 	  caisseresto       -->
+				<h:outputLabel value="#{prezmsg['RESTAURANT']}" />
+				<p:selectOneMenu id="caisse_univ"
+					value="#{caisseMBean.webBean.vo.restaurant}"
+					converter="restaurantConverter" style="width:125px" required="true">
+					<f:selectItem itemLabel="choisir un restaurant" />
+					<f:selectItems value="#{caisseMBean.webBean.restaurantVOs}" var="u"
+						itemLabel="#{u.libelle}" itemValue="#{u}" />
+				</p:selectOneMenu>
+
+
+			</h:panelGrid>
+
+			<p:toolbar>
+				<f:facet name="left">
+					<!-- Annuler la saisie -->
+					<!-- 					<p:commandButton styleClass="OpButton" value="#{prezmsg['RESET']}" -->
+					<!-- 						icon="ui-icon-custom-undo" -->
+					<!-- 						actionListener="#{caisseMBean.resetWebBeanVO()}" process="@this" -->
+					<!-- 						update="create-form" tabindex="-1"> -->
+					<!-- 						<p:resetInput target="create-form" /> -->
+					<!-- 					</p:commandButton> -->
+				</f:facet>
+				<f:facet name="right">
+					<!-- Valider le form -->
+					<p:commandButton id="validate-create" styleClass="ValidateButton"
+						value="#{prezmsg['VALIDER']}" action="#{caisseMBean.creer}"
+						update="@form" />
+
+					<p:commandButton id="cancel-create" styleClass="CancelButton"
+						value="#{prezmsg['ANNULER']}" type="button"
+						onclick="PF('create-dlg-wdg').hide()" global="false" />
+				</f:facet>
+			</p:toolbar>
+
+			<p:defaultCommand target="validate-create" />
+
+			<!-- Focus automatique  -->
+			<p:focus context="create-form" />
+
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('create-dlg-wdg').hide();showMessage();"
+				update=":caisse-form:caisse-dtbl" />
+		</h:form>
+	</p:dialog>
+</ui:composition>

@@ -1,0 +1,96 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+	<p:dialog id="create-anneeUniversitaire-profil"
+		widgetVar="create-anneeUniversitaire-profil" header="Ajouter un menu"  
+		hideEffect="fade" styleClass="dialogclass" showEffect="fade"
+		modal="true" dynamic="true" closeOnEscape="true">
+
+
+
+		<h:form id="creeMenu-form">  
+
+			<p:messages globalOnly="true" autoUpdate="true" />
+
+				<h:panelGrid columns="2" cellpadding="5">
+					<!--      Code anneeUniversitaire     -->
+
+					<p:column>
+						<h:outputLabel value="#{prezmsg['CODE']}" />
+					</p:column>
+
+					<p:column>
+						<p:inputText id="menu_code"
+							value="#{menuMBean.webBean.vo.code}" /> 
+						<p:message for="menu_code" />
+					</p:column>
+
+				
+					<p:column>
+						<h:outputLabel value="#{prezmsg['LIBELLE']}" />
+					</p:column>
+
+					<p:column>
+						<p:inputText id="menu_libelle"
+							value="#{menuMBean.webBean.vo.libelle}" /> 
+						<p:message for="menu_libelle" />
+					</p:column>
+
+					<p:column>
+						<h:outputLabel value="#{prezmsg['ABBREV']}" /> 
+					</p:column>
+
+					<p:column>
+						<p:inputText id="menu_abrev"
+							value="#{menuMBean.webBean.vo.abbrev}" /> 
+						<p:message for="menu_abrev" />
+					</p:column>
+						<p:column>
+							<h:outputLabel value="#{prezmsg['PAGE']}" /> 
+						</p:column>
+	
+						<p:column>
+							<p:inputText id="menu_page" 
+								value="#{menuMBean.webBean.vo.pageName}" />   
+							<p:message for="menu_page" />
+						</p:column> 
+
+
+<!-- 					<p:column> -->
+<!-- 						<h:outputLabel value="#{prezmsg['STATUT']}" /> -->
+<!-- 					</p:column> -->
+
+<!-- 					<p:column> -->
+<!-- 						<p:inputText id="user_statut" -->
+<!-- 							value="#{userEntityMBean.webBean.vo.statut}" /> -->
+<!-- 						<p:message for="user_statut" /> -->
+<!-- 					</p:column> -->
+
+
+
+
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2" styleClass="FloatRight" cellpadding="5">
+					<p:commandButton value="#{prezmsg['VALIDER']}" styleClass="ValidateButton"
+						action="#{menuMBean.creer}" process="@form"
+						update="@form :menu-form:menu-dtbl :menu-form:msg" oncomplete="PF('create-anneeUniversitaire-profil').hide()" />   
+					<p:commandButton value="#{prezmsg['ANNULER']}" global="false"
+						oncomplete="PF('create-anneeUniversitaire-profil').hide()" styleClass="CancelButton" />
+				</h:panelGrid>
+
+
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('create-anneeUniversitaire-profil').hide()"
+				update=":menu-form:menu-dtbl" />
+
+		</h:form>
+	</p:dialog>
+
+</ui:composition>

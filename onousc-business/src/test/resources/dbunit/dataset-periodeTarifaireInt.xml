@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+
+	<!-- periode tarifaire -->
+	<REF_PERIODE_TARIFAIRE PT_ID="1" PT_LIBELLE="periode 1"
+		PT_DESCRIPTION="periode tarifaire 1" PT_STATUT="ENABLED" />
+
+	<REF_PERIODE_TARIFAIRE PT_ID="2" PT_LIBELLE="periode 2"
+		PT_DESCRIPTION="periode tarifaire 2" PT_STATUT="ENABLED" />
+
+
+	<!-- intervalle -->
+	<REF_INTERVALLE IN_ID="1" IN_DATE_DEBUT="2014-03-03"
+		IN_DATE_FIN="2014-04-04" />
+
+	<REF_INTERVALLE IN_ID="2" IN_DATE_DEBUT="2014-06-06"
+		IN_DATE_FIN="2014-07-07" />
+
+	<REF_PERIODE_TAR_INTERVALLE PT_ID="1" IN_ID="1" />
+	<REF_PERIODE_TAR_INTERVALLE PT_ID="1" IN_ID="2" />
+
+</dataset>

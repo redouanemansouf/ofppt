@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/commun/loginlayout.xhtml">
+	<ui:define name="content">
+
+
+
+		<h:form id="authentification">
+
+			<h:panelGrid columns="1" styleClass="LoginGrid" cellpadding="10">
+			
+				<f:facet name="header">
+					<p:graphicImage library="images" name="Logo-MX-Campus.png"
+						styleClass="lgn" />
+				</f:facet>
+
+				<p:outputPanel styleClass="UserInput">
+					<p:inputText id="j_username" value="#{loginMBean.userName}"
+						styleClass="holderUserInput" required="true">
+						<f:validateLength minimum="2" />
+					</p:inputText>
+				</p:outputPanel>
+				<p:outputPanel styleClass="PassInput">
+					<p:password id="j_password" value="#{loginMBean.password}"
+						required="true" maxlength="8">
+						<f:validateLength minimum="8" />
+					</p:password>
+				</p:outputPanel>
+
+
+				<p:commandButton id="login" process="@form" update="@form" partialSubmit="true"
+					styleClass="LoginButt" action="#{loginMBean.doLogin}"
+					value="Connexion">
+				</p:commandButton>
+
+				<p:row>
+					<p:link styleClass="ChangerMDP"  outcome="/public/pwdOublie.xhtml"    
+					 value="Mot de passe oublier?" />  
+					 
+
+
+<!-- 					<p:link styleClass="ChangerMDP" style="float:right"  -->
+<!-- 						outcome="/public/prenrolement.xhtml" value="Inscription" /> -->
+
+				</p:row> 
+				
+				<center id="Copyright">Copyright © 2015 M2M Group</center>
+
+				<p:growl id="messages" showDetail="false" autoUpdate="true"
+					closable="true" />  
+
+			</h:panelGrid>
+
+			<p:watermark for="j_username" value="Identifiant" />    
+			<p:watermark for="j_password" value="Mot de passe" />
+
+		</h:form>
+	</ui:define>
+</ui:composition>

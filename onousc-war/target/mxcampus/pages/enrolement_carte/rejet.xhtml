@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+	<ui:define name="content">
+
+
+		<p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;width:193%;">
+			<ul class="menuOpposition">
+				<li><h:link outcome="/pages/enrolement_carte/import.xhtml">
+						<div>
+							<center>IMPORT DES FICHIERS INSCRIPTIONS</center>
+						</div>
+					</h:link></li>
+				<li class="active"><h:link
+						outcome="/pages/enrolement_carte/rejet.xhtml">
+						<div>
+							<center>LISTE DES REJETS INSCRIPTIONS</center>
+						</div>
+					</h:link></li>
+			</ul>
+		</p:fieldset>
+
+		<p:ajaxStatus>
+			<f:facet name="start">
+				<p:graphicImage library="images" name="blueajax.gif"
+					styleClass="AjaxStatusLoader" />
+			</f:facet>
+		</p:ajaxStatus>
+
+
+		<p:fieldset styleClass="fieldsetImport">
+			<center>
+				<p:ajaxStatus>
+					<f:facet name="start">
+						<p:graphicImage library="images" name="ajax-loader-1.gif" style="" />
+					</f:facet>
+				</p:ajaxStatus>
+			</center>
+			<h:form id="formGLobal">
+				<center>
+					<p:messages autoUpdate="true" globalOnly="true" closable="true"
+						styleClass="M2" />
+				</center>
+
+
+				<div class="BackgroundGray">
+					<div class="RefCenter">
+
+						<p:dataTable id="delivTabl" paginator="true"
+							value="#{inscriptionMBean.importInscriptionSearchMBean}" var="p" lazy="true"
+							rowStyleClass="" paginatorPosition="bottom"
+							 rows="100" style="margin-bottom:20px" styleClass="papa"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="100,200,300"
+							currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+
+							<f:facet name="{espace}">
+								<p:spacer width="150px" height="0px"></p:spacer>
+							</f:facet>
+							<!--       COLUMNS    -->
+							
+							<p:column headerText="#{prezmsg['CODE_MASSAR']}"
+								style="text-align:center; !important" sortBy="#{p.codeMassar}">
+								<h:outputText value="#{p.codeMassar}" />
+							</p:column>
+							
+							<p:column headerText="#{prezmsg['CIN']}"
+								style="text-align:center; !important" sortBy="#{p.cin}">
+								<h:outputText value="#{p.cin}" />
+							</p:column>
+
+							<p:column headerText="OPERATEUR" style="text-align:center;" sortBy="#{p.userName}">
+								<h:outputText value="#{p.userName}" />
+							</p:column>
+							<p:column headerText="DATE" style="text-align:center;" sortBy="#{p.dateOperation}">
+								<h:outputText value="#{p.dateOperation}">
+									<f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="MOTIFS DE REJET" style="text-align:center;"
+								width="300">
+
+
+								<table class="has-noBorder dualRow_ALLER_RETOUR}">
+									<ui:repeat value="#{p.motifRejet.split('_')}" var="item">
+										<tr>
+											<td style="width: 100%;"><h:outputText
+													styleClass="ui-dt-c" value="#{item}" /></td>
+
+										</tr>
+										<tr class="line-spacer" style="height: 10px !important;">
+											<td><p:spacer styleClass="MiniSpacer" /></td>
+										</tr>
+									</ui:repeat>
+
+								</table>
+							</p:column>
+
+						</p:dataTable>
+
+					</div>
+				</div>
+			</h:form>
+
+		</p:fieldset>
+
+
+	</ui:define>
+</ui:composition>
+

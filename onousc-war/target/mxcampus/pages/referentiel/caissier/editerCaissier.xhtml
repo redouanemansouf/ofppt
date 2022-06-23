@@ -1,0 +1,114 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+	<p:dialog id="edit-dlg" widgetVar="edit-dlg-wdg" closable="true"
+		closeOnEscape="true" header="Modifier caissier" hideEffect="fade"
+		showEffect="fade" modal="true" dynamic="true">
+
+		<h:form id="edit-form">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+			<pe:tooltip for="caisse_univ" myPosition="left center"
+				showEvent="click" hideEvent="unfocus" atPosition="right center">
+				<h:message for="caisse_univ" />
+			</pe:tooltip>
+
+			<p:message for="caisse_univ" />
+			<h:panelGrid columns="2" styleClass="FormGrid">
+
+				<!--      Code caissier     -->
+				<h:outputLabel value="#{prezmsg['CODE']}" />
+				<p:inputText id="caissier_code"
+					value="#{caissierMBean.webBean.vo.code}" disabled="true" />
+
+
+				<h:outputLabel value="#{prezmsg['SITE']}" />
+				<p:inputText value="#{caissierMBean.user.siteVO.libelle}"
+					rendered="#{caissierMBean.user.siteVO !=null }" disabled="true" />
+				<p:selectOneMenu id="site"
+					value="#{caissierMBean.webBean.vo.siteVO}" style="width:170px"
+					required="true" converter="siteConverter"
+					rendered="#{caissierMBean.user.siteVO ==null }">
+					<f:selectItem itemLabel="#{prezmsg['SELECTIONNER']}" />
+					<f:selectItems value="#{caissierMBean.webBean.listSiteForCombo}"
+						var="site" itemLabel="#{site.libelle}" itemValue="#{site}" />
+				</p:selectOneMenu>
+
+				<!--      Nom    -->
+				<h:outputLabel value="#{prezmsg['NOM']}" />
+				<p:inputText id="res_nomresponsable"
+					value="#{caissierMBean.webBean.vo.nom}" required="true"
+					title="#{component.valid ? '' : caissierMBean.getErrorMessage(component.clientId)}" />
+
+				<!--      Prenom    -->
+				<h:outputLabel value="#{prezmsg['PRENOM']}" />
+				<p:inputText id="res_prenomres"
+					value="#{caissierMBean.webBean.vo.prenom}" required="true"
+					title="#{component.valid ? '' : caissierMBean.getErrorMessage(component.clientId)}" />
+
+				<!--      Num telephone     -->
+				<h:outputLabel value="#{prezmsg['TEL']}" />
+				<p:inputText id="res_tele"
+					value="#{caissierMBean.webBean.vo.numTele}" required="true"
+					title="#{component.valid ? '' : caissierMBean.getErrorMessage(component.clientId)}">
+					<pe:keyFilter regEx="/[0-9_]/i" preventPaste="false" />
+				</p:inputText>
+
+				<!-- 	          ADRESSE EMAIL     -->
+				<h:outputLabel value="#{prezmsg['EMAIL']}" />
+				<p:inputText id="res_email"
+					value="#{caissierMBean.webBean.vo.adresseEmail}" />
+
+				<!-- 	  Caisse       -->
+				<h:outputLabel value="#{prezmsg['CAISSE']}" />
+				<p:selectOneMenu id="caisse_univ"
+					value="#{caissierMBean.webBean.vo.caisse}"
+					converter="caisseConverter" required="true">
+					<f:selectItem itemLabel="choisir une caisse" />
+					<f:selectItems value="#{caissierMBean.webBean.caisseVOs}" var="u"
+						itemLabel="#{u.libelle}" itemValue="#{u}" />
+				</p:selectOneMenu>
+
+				<h:outputLabel value="Numero Carte" />
+				<p:inputText id="res_numcarte"
+					value="#{caissierMBean.webBean.vo.numCarte}" required="true"
+					maxlength="16"
+					title="#{component.valid ? '' : caissierMBean.getErrorMessage(component.clientId)}">
+					<pe:keyFilter regEx="/[0-9_]/i" preventPaste="false" />
+				</p:inputText>
+
+				<p:outputLabel for="sub" value="Droit Annulation" />
+				<p:selectOneRadio id="sub" value="#{caissierMBean.webBean.vo.droit}">
+					<f:selectItem itemLabel="Oui" itemValue="true" />
+					<f:selectItem itemLabel="Non" itemValue="false" />
+				</p:selectOneRadio>
+
+			</h:panelGrid>
+			<p:toolbar>
+				<f:facet name="right">
+					<p:commandButton id="validate-edit" value="#{prezmsg['VALIDER']}"
+						process="@form" update="edit-form"
+						action="#{caissierMBean.modifier}" styleClass="ValidateButton" />
+					<p:commandButton value="#{prezmsg['ANNULER']}" global="false"
+						process="@none" onclick="PF('edit-dlg-wdg').hide()"
+						styleClass="CancelButton" />
+				</f:facet>
+			</p:toolbar>
+
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('edit-dlg-wdg').hide();showMessage();"
+				update=":caissier-form:caissier-dtbl" />
+		</h:form>
+	</p:dialog>
+</ui:composition>

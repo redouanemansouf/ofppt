@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<f:view locale="#{facesContext.externalContext.requestLocale}"
+	contentType="text/html">
+
+	<h:head>
+		<title>UCAD</title>
+		<h:outputScript id="idCommunJS" library="js" name="script.js" />
+		<h:outputStylesheet id="idCommunStyle" library="css" name="style.css" />
+	</h:head>
+	<h:body styleClass="LoginMenuGround">
+	
+<!-- 	<ui:include src="/pages/commun/menuTree.xhtml"/> -->
+<div class="StatusDiv_BG FloatRight">
+
+				<h:panelGrid columns="4" styleClass="StatusGrid">
+ 					<h:outputLabel value="#{sessionScope.userSession.userConecte.code}" />
+					<p:graphicImage library="images" name="icons/compte.png"
+						height="18" width="15" />
+						<p:commandLink  >
+						<p:graphicImage library="images" name="icons/deconnexion.png"  
+						height="22" width="20" />
+						</p:commandLink>
+					
+					
+				</h:panelGrid>
+				</div>
+
+	<div style="padding-bottom:2%">
+		<p:graphicImage styleClass="log1MenuPrincipal" library="images"
+			name="Logo-MX-Campus.png"></p:graphicImage>
+		<br />
+		<p:graphicImage styleClass="log2MenuPrincipal" library="images" ></p:graphicImage>
+	</div>
+	
+	
+<!-- 		<h:panelGrid styleClass="MenuPrincipal" columns="5"> -->
+<!-- 			<p:link style="text-decoration:none" outcome="/pages/enrolement/listerNationalite.xhtml" -->
+<!-- 				> -->
+<!-- 				<div class="MenuImg MenuImg_ERL" /> -->
+<!-- 				<div class="label"> -->
+<!-- 					<center> -->
+<!-- 						<h:outputText value="#{prezmsg['ENROLEMENT_ETUDIANT']}" style="width: 106%;"></h:outputText> -->
+<!-- 					</center> -->
+<!-- 				</div> -->
+<!-- 			</p:link> -->
+<!-- 			<p:link style="text-decoration:none" -->
+<!-- 				> -->
+<!-- 				<div class="MenuImg MenuImg_ERLP" /> -->
+<!-- 				<div class="label" style="width: 50%;"> -->
+<!-- 					<center> -->
+<!-- 						<h:outputText value="#{prezmsg['ENROLEMENT_PERSONNEL']}"></h:outputText> -->
+<!-- 					</center> -->
+<!-- 				</div> -->
+<!-- 			</p:link> -->
+<!-- 			<p:link style="text-decoration:none" -->
+<!-- 				> -->
+<!-- 				<div class="MenuImg MenuImg_PAR" /> -->
+<!-- 				<div class="label"> -->
+<!-- 					<center> -->
+<!-- 						<h:outputText value="#{prezmsg['PARAMETRAGE_VISITEURS']}"></h:outputText> -->
+<!-- 					</center> -->
+<!-- 				</div> -->
+<!-- 			</p:link> -->
+<!-- 			<p:link style="text-decoration:none" -->
+<!-- 				> -->
+<!-- 				<div class="MenuImg MenuImg_GES" /> -->
+<!-- 				<div class="label"> -->
+<!-- 					<center> -->
+<!-- 						<h:outputText value="#{prezmsg['GESTION_SERVICE']}"></h:outputText> -->
+<!-- 					</center> -->
+<!-- 				</div> -->
+<!-- 			</p:link> -->
+
+<!-- 			<p:link style="text-decoration:none" -->
+<!-- 				> -->
+<!-- 				<div class="MenuImg MenuImg_GDO" /> -->
+<!-- 				<div class="label"> -->
+<!-- 					<center> -->
+<!-- 						<h:outputText value="#{prezmsg['GESTION_OPPOSITIONS']}"></h:outputText> -->
+<!-- 					</center> -->
+<!-- 				</div> -->
+<!-- 			</p:link> -->
+<!-- 			<p:link style="text-decoration:none" outcome="/pages/referentiel/ref_region/nationalite/listerNationalite.xhtml" -->
+<!-- 				> -->
+<!-- 				<div class="MenuImg MenuImg_GCV" /> -->
+<!-- 				<div class="label"> -->
+<!-- 					<center> -->
+<!-- 						<h:outputText value="#{prezmsg['GESTION_CYCLE_DE_VIE']}"></h:outputText> -->
+<!-- 					</center> -->
+<!-- 				</div> -->
+<!-- 			</p:link> -->
+<!-- 			<p:link style="text-decoration:none"> -->
+<!-- 				<div class="MenuImg MenuImg_AS" /> -->
+<!-- 				<div class="label"> -->
+<!-- 					<center> -->
+<!-- 						<h:outputText value="#{prezmsg['ADMINISTRATION_SYSTEME']}"></h:outputText> -->
+<!-- 					</center> -->
+<!-- 				</div> -->
+<!-- 			</p:link> -->
+<!-- 			<p:link style="text-decoration:none" -->
+<!-- 				> -->
+<!-- 				<div class="MenuImg MenuImg_DC" /> -->
+<!-- 				<div class="label"> -->
+<!-- 					<center> -->
+<!-- 						<h:outputText value="#{prezmsg['DELIVRANCE_CARTE']}"></h:outputText> -->
+<!-- 					</center> -->
+<!-- 				</div> -->
+<!-- 			</p:link> -->
+
+<!-- <!-- 			<p:link style="text-decoration:none"></p:link> --> -->
+			
+<!-- 			<p:link style="text-decoration:none"> -->
+<!-- 				<div class="MenuImg MenuImg_LET" /> -->
+<!-- 				<div class="label"> -->
+<!-- 					<center> -->
+<!-- 						<h:outputText value="#{prezmsg['LOG_TRACABILITE']}"></h:outputText> -->
+<!-- 					</center> -->
+<!-- 				</div> -->
+<!-- 			</p:link> -->
+<!-- 			<p:link style="text-decoration:none" -->
+<!-- 					> -->
+<!-- 				<div class="MenuImg MenuImg_E" /> -->
+<!-- 				<div class="label"> -->
+<!-- 					<center> -->
+<!-- 						<h:outputText value="#{prezmsg['EDITION']}"></h:outputText> -->
+<!-- 					</center> -->
+<!-- 				</div> -->
+<!-- 			</p:link> -->
+<!-- 			<p:link style="text-decoration:none"></p:link> -->
+<!-- 		</h:panelGrid> -->
+ <div style="background:white;">
+	<div class="MenuFooter">
+		<div class="FooterTextMenu">
+				Copyright © 2015 M2M Group
+		</div>
+	</div>
+</div>
+	</h:body>
+</f:view>
+</html>

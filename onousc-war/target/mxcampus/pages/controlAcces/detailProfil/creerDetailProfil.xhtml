@@ -1,0 +1,146 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+	<p:dialog id="create-dlg" widgetVar="create-dlg-wdg" closable="true"
+		closeOnEscape="true" header="Ajouter détail profil" hideEffect="fade"
+		showEffect="fade" modal="true" dynamic="true">
+
+
+		<h:form id="create-form">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+				
+				<pe:tooltip for="jour" myPosition="left center"
+				showEvent="click" hideEvent="unfocus" atPosition="right center">
+				<h:message for="jour" />
+				</pe:tooltip>
+				
+					<pe:tooltip for="profil_create" myPosition="left center"
+				showEvent="click" hideEvent="unfocus" atPosition="right center">
+				<h:message for="profil_create" />
+				</pe:tooltip>
+				
+				
+				<pe:tooltip for="tranche" myPosition="left center"
+				showEvent="click" hideEvent="unfocus" atPosition="right center">
+				<h:message for="tranche" />
+				</pe:tooltip>
+
+
+			<h:panelGrid columns="2" styleClass="FormGrid">
+			
+			
+			 <h:outputLabel value="#{prezmsg['PROFIL']}" />
+
+						
+						
+							<p:selectOneMenu id="profil_create" converter="critereConverter"
+							value="#{detailProfilMBean.webBean.vo.profil}" filter="true" required="true"
+							 style="width:220px" title="#{component.valid ? '' : detailProfilMBean.getErrorMessage(component.clientId)}">
+							<f:selectItem itemLabel="Choisissez" />
+							<f:selectItems value="#{detailProfilMBean.webBean.criterevos}"
+								var="u" itemLabel="#{u.libelle}" itemValue="#{u}" />
+								
+						</p:selectOneMenu>
+
+				<!--      Code critere     -->
+				<h:outputLabel value="#{prezmsg['JOUR']}" />
+
+				<p:selectOneMenu id="jour" value="#{detailProfilMBean.webBean.vo.jour}"
+					required="true"
+					title="#{component.valid ? '' : detailProfilMBean.getErrorMessage(component.clientId)}" >
+					<f:selectItem itemLabel="Choisissez"  />
+					<f:selectItem itemLabel="Lundi" itemValue="Lundi"/>
+					<f:selectItem itemLabel="Mardi" itemValue="Mardi" />
+					<f:selectItem itemLabel="Mercredi" itemValue="Mercredi" />
+					<f:selectItem itemLabel="Jeudi" itemValue="Jeudi" />
+					<f:selectItem itemLabel="Vendredi" itemValue="Vendredi" />
+					<f:selectItem itemLabel="Samedi" itemValue="Samedi" />
+					<f:selectItem itemLabel="Dimanche" itemValue="Dimanche" />
+					</p:selectOneMenu>
+					
+					<h:outputLabel value="#{prezmsg['TRANCHE']}" />
+
+				<p:selectOneMenu id="tranche" value="#{detailProfilMBean.webBean.vo.tranche}"
+					required="true"
+					title="#{component.valid ? '' : detailProfilMBean.getErrorMessage(component.clientId)}" >
+					<f:selectItem itemLabel="Choisissez"  />
+					<f:selectItem itemLabel="Tranche 1" itemValue="1"/>
+					<f:selectItem itemLabel="Tranche 2" itemValue="2" />
+					<f:selectItem itemLabel="Tranche 3" itemValue="3" />
+					<f:selectItem itemLabel="Tranche 4" itemValue="4" />
+					<f:selectItem itemLabel="Tranche 5" itemValue="5" />
+					</p:selectOneMenu>
+					
+
+				<h:outputLabel value="#{prezmsg['DATE_DEBUT']}" />
+
+				<p:calendar id="date_debut"
+					value="#{detailProfilMBean.webBean.vo.dateDebut}" required="true" pattern="HH:mm" timeOnly="true" minMinute="0"
+					title="#{component.valid ? '' : critereMBean.getErrorMessage(component.clientId)}" />
+					
+					<h:outputLabel value="#{prezmsg['DATE_FIN']}" />
+
+				<p:calendar id="date_fin"
+					value="#{detailProfilMBean.webBean.vo.dateFin}" required="true" pattern="HH:mm" timeOnly="true" minMinute="0"
+					title="#{component.valid ? '' : detailProfilMBean.getErrorMessage(component.clientId)}" />
+					
+
+				    <h:outputLabel value="#{prezmsg['TOLEDATEDUBUT']}" />
+					<p:inputText value="#{detailProfilMBean.webBean.vo.toleranceDateDebut}"
+					title="#{component.valid ? '' : detailProfilMBean.getErrorMessage(component.clientId)}"
+					/>
+				
+				<h:outputLabel value="#{prezmsg['TOLEDATEFIN']}" />
+				<p:inputText value="#{detailProfilMBean.webBean.vo.toleranceDateFin}"
+				title="#{component.valid ? '' : detailProfilMBean.getErrorMessage(component.clientId)}"
+				/>
+
+
+			</h:panelGrid>
+			<p:toolbar>
+				<f:facet name="left">
+
+					<!-- Annuler la saisie -->
+<!-- 					<p:commandButton styleClass="OpButton" value="#{prezmsg['RESET']}" -->
+<!-- 						icon="ui-icon-custom-undo" -->
+<!-- 						actionListener="#{critereMBean.resetWebBeanVO}" process="@this" -->
+<!-- 						update="create-form" tabindex="-1"> -->
+<!-- 						<p:resetInput target="create-form" /> -->
+<!-- 					</p:commandButton> -->
+
+				</f:facet>
+				<f:facet name="right">
+					<p:commandButton id="validate-create" value="#{prezmsg['VALIDER']}" icon="ui-icon-custom-validerOsc" 
+						process="@form" update="create-form"
+						action="#{detailProfilMBean.creer}" styleClass="Valid"
+						 />
+					<!-- Annule le useCase-->
+					<p:commandButton id="cancel-create" styleClass="Cancel"
+						value="#{prezmsg['ANNULER']}" type="button"
+						onclick="PF('create-dlg-wdg').hide()" global="false" />
+				</f:facet>
+			</p:toolbar>
+
+ 			<p:defaultCommand target="validate-create" /> 
+
+			<!-- Focus automatique  -->
+			<p:focus context="create-form" />
+
+			<p:remoteCommand name="_hideDialog" action="#{detailProfilSearchMBean.run}"
+				oncomplete="PF('create-dlg-wdg').hide()"
+				update=":critere-form:detailprofil-dtbl" />
+
+		</h:form>
+	</p:dialog>
+</ui:composition>

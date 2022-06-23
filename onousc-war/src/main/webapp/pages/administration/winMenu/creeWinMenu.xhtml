@@ -1,0 +1,96 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+	<p:dialog id="create-anneeUniversitaire-profil"
+		widgetVar="create-anneeUniversitaire-profil" header="Ajout Utilisateur"  
+		hideEffect="fade" styleClass="dialogclass" showEffect="fade"
+		modal="true" dynamic="true" closeOnEscape="true">
+
+
+
+		<h:form id="creeUserEntity-form">  
+
+			<p:messages globalOnly="true" autoUpdate="true" />
+
+				<h:panelGrid columns="2" cellpadding="5">
+					<!--      Code anneeUniversitaire     -->
+
+					<p:column>
+						<h:outputLabel value="#{prezmsg['USERNAME1']}" />
+					</p:column>
+
+					<p:column>
+						<p:inputText id="univ_code"
+							value="#{userEntityMBean.webBean.vo.username}" /> 
+						<p:message for="univ_code" />
+					</p:column>
+
+
+					<!--      Nom     -->
+
+					<p:column>
+						<h:outputLabel value="#{prezmsg['FIRSTNAME']}" />
+					</p:column>
+
+					<p:column>
+						<p:inputText id="firstName"
+							value="#{userEntityMBean.webBean.vo.firstName}" />
+						<p:message for="firstName" /> 
+					</p:column>
+					<p:column>
+						<h:outputLabel value="#{prezmsg['LASTNAME']}" />
+					</p:column>
+
+					<p:column>
+						<p:inputText id="lastName"
+							value="#{userEntityMBean.webBean.vo.lastName}" />
+						<p:message for="lastName" />
+					</p:column>
+					<p:column>
+						<h:outputLabel value="#{prezmsg['EMAIL']}" />
+					</p:column>
+
+					<p:column>
+						<p:inputText id="user_email"
+							value="#{userEntityMBean.webBean.vo.email}" />
+						<p:message for="user_email" />
+					</p:column>
+
+					<p:column>
+						<h:outputLabel value="#{prezmsg['STATUT']}" />
+					</p:column>
+
+					<p:column>
+						<p:inputText id="user_statut"
+							value="#{userEntityMBean.webBean.vo.statut}" />
+						<p:message for="user_statut" />
+					</p:column>
+
+
+
+
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2" styleClass="FloatRight" cellpadding="5">
+					<p:commandButton value="#{prezmsg['VALIDER']}" styleClass="ValidateButton"
+						action="#{userEntityMBean.creer}" process="@form"
+						update="@form :userEntity-form:msg" />
+					<p:commandButton value="#{prezmsg['ANNULER']}" global="false"
+						oncomplete="PF('create-anneeUniversitaire-profil').hide()" styleClass="CancelButton" />
+				</h:panelGrid>
+
+
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('create-anneeUniversitaire-profil').hide()"
+				update=":winMenu-form:winMenu-dtbl" />
+
+		</h:form>
+	</p:dialog>
+
+</ui:composition>

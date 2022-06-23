@@ -1,0 +1,87 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+	<p:dialog id="det-dlg" widgetVar="det-dlg-wdg" closable="true"
+		closeOnEscape="true" header="Detail profil d'accés" hideEffect="fade"
+		showEffect="fade" modal="true" dynamic="true">
+
+
+		<h:form id="edit-form">
+
+			<p:dataTable id="detailprofil-dtbl" 
+							value="#{personnelMBean.webBean.detailProfilVOs}" var="det" lazy="true"
+							rows="10" 
+							rowKey="#{det.id}" paginatorPosition="bottom"
+							>
+
+							
+
+							<!-- 						<p:column selectionMode="multiple" styleClass="tableChkbox" -->
+							<!-- 							style="width:16px;text-align:center" /> -->
+
+							<!-- Identifiant du'critere  -->
+
+							<p:column headerText="#{prezmsg['PROFIL']}">
+								<center>
+									<h:outputText value="#{det.profil.libelle}" />
+								</center>
+							</p:column>
+							<p:column headerText="#{prezmsg['JOUR']}" style="width:18%">
+								<center>
+									<h:outputText value="#{det.jour}" />
+								</center>
+							</p:column>
+
+							<!-- Libellé -->
+							<p:column headerText="#{prezmsg['TRANCHE']}">
+								<center>
+									<h:outputText value="#{det.tranche}" />
+								</center>
+							</p:column>
+
+							<p:column headerText="#{prezmsg['DATE_DEBUT']}">
+								<center>
+									<h:outputText value="#{det.dateDebut}">
+										<f:convertDateTime pattern="HH:mm"></f:convertDateTime>
+									</h:outputText>
+								</center>
+							</p:column>
+
+							<p:column headerText="#{prezmsg['DATEFIN']}">
+								<center>
+									<h:outputText value="#{det.dateFin}">
+										<f:convertDateTime pattern="HH:mm"></f:convertDateTime>
+									</h:outputText>
+								</center>
+							</p:column>
+
+
+							<p:column headerText="#{prezmsg['TOLEDATEDUBUT']}">
+								<center>
+									<h:outputText value="#{det.toleranceDateDebut}">
+									
+									</h:outputText>
+								</center>
+							</p:column>
+
+							<p:column headerText="#{prezmsg['TOLEDATEFIN']}">
+								<center>
+									<h:outputText value="#{det.toleranceDateFin}">
+									
+									</h:outputText>
+								</center>
+							</p:column>
+
+
+							
+						</p:dataTable>
+			
+
+		</h:form>
+	</p:dialog>
+</ui:composition>

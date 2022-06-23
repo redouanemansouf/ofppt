@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-11-16T16:55:54 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formulaire" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a5066413-a94b-43c4-ac6a-a439d0e8ce2f">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#DC0000">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#FFE6E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="imageURL" class="java.lang.String"/>
+	<parameter name="annee" class="java.lang.Long"/>
+	<parameter name="Nom" class="java.lang.String"/>
+	<parameter name="Prenom" class="java.lang.String"/>
+	<parameter name="Cin" class="java.lang.String"/>
+	<parameter name="ville" class="java.lang.String"/>
+	<parameter name="resident" class="java.lang.String"/>
+	<parameter name="boursier" class="java.lang.String"/>
+	<parameter name="etablissement" class="java.lang.String"/>
+	<parameter name="email" class="java.lang.String"/>
+	<parameter name="cite" class="java.lang.String"/>
+	<parameter name="restaurant" class="java.lang.String"/>
+	<parameter name="sexe" class="java.lang.String"/>
+	<parameter name="revenuParent" class="java.lang.String"/>
+	<parameter name="nbreFreres" class="java.lang.String"/>
+	<parameter name="dateNaissance" class="java.lang.String"/>
+	<parameter name="realPath" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="710" splitType="Stretch">
+			<staticText>
+				<reportElement x="105" y="20" width="320" height="40" uuid="df3e28a4-cf4b-48a2-a32a-50aaa82afc16"/>
+				<textElement textAlignment="Center">
+					<font fontName="Cambria" size="22"/>
+				</textElement>
+				<text><![CDATA[Formulaire d'Inscription]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="124" width="160" height="30" uuid="59c8ee8f-7e2e-4c24-bd2f-bd69812e71eb"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<text><![CDATA[Année Universitaire:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="165" width="80" height="30" uuid="d268f7a1-720b-40a1-beec-bacc53a15519"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<text><![CDATA[Nom	:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="165" width="90" height="30" uuid="7f298927-1669-42dd-95ce-7cde26963810"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<text><![CDATA[Prénom:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="124" width="80" height="30" uuid="70f98586-4bae-482f-b552-dbea554e7768"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<text><![CDATA[N° CIN:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="208" width="90" height="30" uuid="b9b4d4e4-c693-4488-8898-5c87f3cfcb99"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<text><![CDATA[Ville	:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="300" width="80" height="30" uuid="64c0ef64-cc83-4791-891a-81ed19bb7bda"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<text><![CDATA[Boursier:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="255" width="90" height="30" uuid="e3638490-9ec2-40ee-ace9-887c059da8b8"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<text><![CDATA[Résident:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="302" width="79" height="30" uuid="d404e2c1-cea6-4a51-a3dc-97562a7d01dc"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<text><![CDATA[Cité:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="342" width="99" height="30" uuid="84311de1-d62c-4beb-8227-529830d9bb68"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<text><![CDATA[Réstaurant:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="465" width="170" height="30" uuid="87579a31-a941-404c-bdb5-c7b619034b81"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<text><![CDATA[Etablissement d'étude	:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="424" width="90" height="30" uuid="0dd172ef-9acf-4f92-a189-25ed8c0aad69"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<text><![CDATA[Email:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="207" width="70" height="30" uuid="98e6bb98-40dd-4ff4-be45-3275076e958c"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<text><![CDATA[Sexe:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="169" y="124" width="100" height="30" forecolor="#011FF0" uuid="7cc02049-9008-494d-97a3-46ce8dc417d8"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{annee}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="96" y="165" width="100" height="30" forecolor="#011FF0" uuid="3f122a37-2675-4a5c-9765-be8486d3e551"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Nom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="165" width="100" height="30" forecolor="#011FF0" uuid="c84ae6ba-40ef-473c-88ed-5f8ea7e45a54"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Prenom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="360" y="123" width="100" height="30" forecolor="#011FF0" uuid="d946d8c2-08ef-45de-8d4c-977b4cfac860"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Cin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="207" width="100" height="30" forecolor="#0011FF" uuid="44d6e5a1-149a-4057-bb96-f9e00b69d5aa"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ville}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="256" width="100" height="30" forecolor="#011FF0" uuid="0e8e9a64-7c75-4f75-9385-55014f1be563"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{resident}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="360" y="301" width="100" height="30" forecolor="#011FF0" uuid="13ac2444-0c87-4fc4-8d82-6b6b2bf0ddaf"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{boursier}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="198" y="465" width="229" height="30" forecolor="#011FF0" uuid="33108e8c-970c-434e-a88f-9d8082e5c13d"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{etablissement}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="98" y="424" width="214" height="30" forecolor="#011FF0" uuid="9fe79600-2e81-4e8f-99dc-0623aacbaedc"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="96" y="302" width="134" height="30" forecolor="#011FF0" uuid="a0e98c14-34dd-4c0e-98be-2721192f1c81"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{cite}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="115" y="342" width="140" height="30" forecolor="#011FF0" uuid="01678cf4-2c1c-4ec8-9426-8638ef6cb53d"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{restaurant}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="207" width="100" height="30" forecolor="#011FF0" uuid="01986920-d4cf-4580-ba24-bd2dbe6b33d5"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{sexe}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="489" y="73" width="50" height="50" uuid="f50468cf-1e85-414c-8494-73fce5d897b6"/>
+				<imageExpression><![CDATA[$P{imageURL}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="318" y="685" width="140" height="20" uuid="7c3de948-5dd2-4b9f-9981-b692c86b79f6"/>
+				<textElement>
+					<font fontName="Cambria" size="14"/>
+				</textElement>
+				<text><![CDATA[Signature]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="281" y="381" width="169" height="30" uuid="4af8aa5d-611f-4458-b63d-3c8ed7884b71"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<text><![CDATA[Revenu des parents:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="430" y="380" width="133" height="30" forecolor="#011FF0" uuid="3d5d1fe5-f15f-475d-9e01-3c7206e6e0c8"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{revenuParent}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="17" y="381" width="144" height="30" uuid="cc999592-e0a3-49c7-858c-b83226f58526"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<text><![CDATA[Nbr fréres/soeurs:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="161" y="381" width="108" height="30" forecolor="#011FF0" uuid="d047bf87-4d03-42c3-874f-9c8d3b53d56e"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nbreFreres}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="16" y="630" width="523" height="37" uuid="0778de3a-b836-416d-a9ca-992ef89dee34"/>
+				<textElement>
+					<font fontName="Cambria" size="14"/>
+				</textElement>
+				<text><![CDATA[Je soussigné déclare formellement, sur l'honneur et sous les peines de droit prévues par la loi l'exactitude de ces informations]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="254" width="124" height="30" uuid="6fddb75f-4651-4d42-8c08-9d6390b1ef94"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<text><![CDATA[Date Naissance:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="139" y="255" width="134" height="30" forecolor="#011FF0" uuid="b46750ac-7e2e-4464-a6ca-7b2c57dd8084"/>
+				<textElement>
+					<font fontName="Cambria" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dateNaissance}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement x="30" y="518" width="450" height="84" uuid="43efa213-9799-446e-8340-5debaccea0fc"/>
+				<box>
+					<topPen lineWidth="0.9" lineStyle="Dotted" lineColor="#C9C9C9"/>
+					<leftPen lineWidth="0.9" lineStyle="Dotted" lineColor="#C9C9C9"/>
+					<bottomPen lineWidth="0.9" lineStyle="Dotted" lineColor="#C9C9C9"/>
+					<rightPen lineWidth="0.9" lineStyle="Dotted" lineColor="#C9C9C9"/>
+				</box>
+				<staticText>
+					<reportElement x="161" y="6" width="100" height="30" uuid="b967587b-ce4a-484f-84d1-8ecf29c7f2ed"/>
+					<textElement textAlignment="Center">
+						<font fontName="Cambria" size="13"/>
+					</textElement>
+					<text><![CDATA[Pièces à fournir]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="33" width="209" height="22" uuid="58a0101b-33ec-4f35-bedb-f1c2591fb8fc"/>
+					<textElement>
+						<font fontName="Cambria" size="11"/>
+					</textElement>
+					<text><![CDATA[* Photocopie légalisé de la carte d'identité]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="56" width="209" height="22" uuid="4e77588e-7624-4e18-b041-5148fbbb1530"/>
+					<textElement>
+						<font fontName="Cambria" size="11"/>
+					</textElement>
+					<text><![CDATA[* Attestation scolaire]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="231" y="34" width="209" height="22" uuid="7a0ab51b-85d5-4715-8113-379e3659cd04"/>
+					<textElement>
+						<font fontName="Cambria" size="11"/>
+					</textElement>
+					<text><![CDATA[* Photocopie de l'avis fiscal d’imposition des parents ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="232" y="56" width="209" height="22" uuid="0bc89102-c508-465b-a1d9-9976e5baa5a9"/>
+					<textElement>
+						<font fontName="Cambria" size="11"/>
+					</textElement>
+					<text><![CDATA[* 3 photos d'identité]]></text>
+				</staticText>
+			</frame>
+			<image>
+				<reportElement x="10" y="10" width="50" height="50" uuid="8a9385e5-8f83-4d00-b7b2-845232a1e901"/>
+				<imageExpression><![CDATA[$P{realPath}+"/custom/logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageFooter>
+		<band height="37" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="19" width="558" height="15" backcolor="rgba(227, 227, 227, 0.5686275)" uuid="124476bd-3697-4982-9c9c-0bd04bc40be5"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField pattern="HH:mm">
+				<reportElement x="500" y="19" width="98" height="18" uuid="a522171b-ea80-47c3-b9db-8c04e7b26232"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="0" y="20" width="100" height="15" uuid="09eea0f2-591d-4e0e-b6ae-e3bb5801da65"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

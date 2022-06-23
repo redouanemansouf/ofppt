@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/commun/loginlayout.xhtml">
+	<ui:define name="content">
+
+
+
+		<h:form id="authentification">
+			
+			<h:panelGrid columns="1" styleClass="LoginGrid" cellpadding="10">
+				<f:facet name="header">
+					
+					<p:graphicImage library="images" name="Logo-MX-Campus.png" 
+					styleClass="lgn" /> 
+				</f:facet>
+<p:messages autoUpdate="true" globalOnly="true" closable="true"
+				showIcon="false" />
+					
+
+				<p:outputPanel>
+					<p:outputLabel for="j_email" id="email" value="Email :" 
+					styleClass="LabelIns" indicateRequired="false" /> 
+					<p:inputText id="j_email" value="#{userEntityMBean.webBean.email}"
+						styleClass="holderUserInput" required="true" >
+						<f:validateLength minimum="5" />
+					</p:inputText>
+				</p:outputPanel>
+
+
+				<p:commandButton ajax="false" id="getPwd" styleClass="LoginButt" update="@form :succes" 
+					action="#{userEntityMBean.getMyPassword()}" value="Valider" />  
+
+
+			</h:panelGrid> 
+				<p:watermark for="j_email" value="Veuillez saisir votre email" />
+
+</h:form>
+	
+	</ui:define>
+</ui:composition>

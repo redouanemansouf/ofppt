@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+
+	<!-- transaction-type is RESOURCE_LOCAL or JTA -->
+	<persistence-unit name="onouscPersistenceUnitTest">
+
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+
+		<class>com.m2m.technicalservices.security.UserEntity</class>
+		<class>com.m2m.technicalservices.security.RoleEntity</class>
+		<class>com.m2m.technicalservices.audit.impl.TraceEntity</class>
+		<class>com.m2m.technicalservices.security.WinMenu</class>
+		<!-- metier -->
+		<class>com.m2m.onousc.business.referentiel.model.CanalVente</class>
+		<class>com.m2m.onousc.business.referentiel.model.Etudiants</class>
+		<class>com.m2m.onousc.business.referentiel.model.Ville</class>
+		<class>com.m2m.onousc.business.referentiel.model.Universite</class>
+		<class>com.m2m.onousc.business.referentiel.model.Cite</class>
+		<class>com.m2m.onousc.business.referentiel.model.JoursFerie</class>
+		<class>com.m2m.onousc.business.referentiel.model.Tarif</class>
+		<class>com.m2m.onousc.business.referentiel.model.Service</class>
+		<class>com.m2m.onousc.business.referentiel.model.CycleVie</class>
+		<class>com.m2m.onousc.business.referentiel.model.Caisse</class>
+		<class>com.m2m.onousc.business.referentiel.model.Restaurant</class>
+		<class>com.m2m.onousc.business.referentiel.model.Plafond</class>
+		<class>com.m2m.onousc.business.referentiel.model.AnneeUniversitaire</class>
+		<class>com.m2m.onousc.business.referentiel.model.MotifOpposition</class>
+		<class>com.m2m.onousc.business.referentiel.model.MotifMainLevee</class>
+		<class>com.m2m.onousc.business.referentiel.model.CategoriePorteur</class>
+
+		<class>com.m2m.onousc.business.reservation.model.Reservation</class>
+		<class>com.m2m.onousc.business.reservation.model.ReservationDetail</class>
+		<class>com.m2m.onousc.business.referentiel.model.SemaineUniversitaire</class>
+		<class>com.m2m.onousc.business.referentiel.model.DelivranceCarte</class>
+		
+		<class>com.m2m.onousc.business.referentiel.model.GroupUser</class> 
+		<class>com.m2m.onousc.business.referentiel.model.ParametreGeneral</class>
+		<class>com.m2m.onousc.business.referentiel.model.Carte</class>
+
+		<!-- Avoid to scan *.class and *.hbm.xml -->
+		<exclude-unlisted-classes />
+		<properties>
+			<!-- cache Second level -->
+			<property name="hibernate.cache.use_second_level_cache"
+				value="true" />
+			<property name="hibernate.cache.use_query_cache" value="true" />
+			<!-- <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.EhCacheRegionFactory" 
+				/> -->
+			<property name="hibernate.cache.region.factory_class"
+				value="net.sf.ehcache.hibernate.EhCacheRegionFactory" />
+
+			<property name="hibernate.cache.provider_configuration_file_resource_path"
+				value="/cache/ehcache.xml" />
+
+		</properties>
+	</persistence-unit>
+</persistence>

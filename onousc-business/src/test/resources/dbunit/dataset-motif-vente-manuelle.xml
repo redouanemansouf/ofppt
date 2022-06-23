@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<REF_MOTIF_VENTE_MANUELLE MVM_ID="1"
+		MVM_LIBELLE="Panne électrique" MVM_DESCRIPTION="Panne électrique"
+		MVM_STATUT="ENABLED" />
+	<REF_MOTIF_VENTE_MANUELLE MVM_ID="2"
+		MVM_LIBELLE="Panne du réseau internet" MVM_DESCRIPTION="Panne du réseau internet"
+		MVM_STATUT="ENABLED" />
+
+</dataset>

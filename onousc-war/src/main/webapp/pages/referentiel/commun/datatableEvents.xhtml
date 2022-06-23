@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	<!--  Evenment ajax pour les 'datatable' afin d'update le menu Crud -->
+	<p:ajax event="rowSelect" oncomplete="_updateCrudMenu()" global="false" />
+	<p:ajax event="rowUnselect" oncomplete="_updateCrudMenu()"
+		process="@this" global="false" />
+	<p:ajax event="rowSelectCheckbox" oncomplete="_updateCrudMenu()"
+		process="@this" global="false" />
+	<p:ajax event="rowUnselectCheckbox" oncomplete="_updateCrudMenu()"
+		process="@this" global="false" />
+	<p:ajax event="toggleSelect" oncomplete="_updateCrudMenu()"
+		process="@this" global="false" />
+	<p:ajax event="page" update="@this" oncomplete="_updateCrudMenu()"
+		global="false" process="@this" />
+
+</ui:composition>

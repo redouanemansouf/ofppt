@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+
+	<ui:define name="content">
+
+		<p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;width:128%;">
+			<ul class="menuOpposition">
+				<li ><h:link
+						outcome="/pages/import.xhtml">
+						<div>
+							<center>Import</center>
+						</div>
+					</h:link></li>
+				<li><h:link outcome="/pages/liste.xhtml">
+						<div>
+							<center>Liste</center>
+						</div>
+					</h:link></li>
+					<li class="active" ><h:link outcome="/pages/browse.xhtml">
+						<div>
+							<center>Fichier Rejet</center>
+						</div>
+					</h:link></li>
+			</ul>
+		</p:fieldset>
+		
+		<p:fieldset styleClass="fieldsetCategories">
+			<center>
+				<p:ajaxStatus>
+					<f:facet name="start">
+						<p:graphicImage library="images" name="ajax-loader-1.gif" style="" />
+					</f:facet>
+				</p:ajaxStatus>
+			</center>
+			<h:form id="formGLobal">
+				<center>
+					<p:messages autoUpdate="true" globalOnly="true" closable="true"
+						styleClass="M2" />
+				</center>
+
+
+				<div class="BackgroundGray">
+					<div class="RefCenter">
+					
+				
+					
+						<br /> <br /> <br />
+
+
+					</div>
+				</div>
+
+			</h:form>
+			
+<!-- 			<h:commandButton id="but" value="Download" onclick="PrimeFaces.monitorDownload(start, stop);" icon="pi pi-arrow-down"> -->
+<!--  <f:ajax event="click" Listener="#{carteNapsMBean.recupfile}" update="filerepeat"/>	 -->
+<!--         <p:fileDownload value="#{carteNapsMBean.downloadFile}" /> -->
+        
+<!--     </h:commandButton>  -->
+
+<!-- <h:commandLink action="#{carteNapsMBean.downloadFile()}" value="index: #{status.index}"> -->
+<!--        <f:ajax></f:ajax> -->
+<!--   </h:commandLink> -->
+			
+			<h:form id="listf">
+
+<ui:repeat id="filerepeat" value="#{carteNapsMBean.filenameslst}" var="value" varStatus="status">
+
+<!-- <p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="pi pi-arrow-down"> -->
+<!--         <p:fileDownload value="#{carteNapsMBean.downloadFile(status.index)}" /> -->
+<!--     </p:commandButton> -->
+    
+<!-- 		 #{value}	<br/>		 -->
+
+<!--    <br />  -->
+
+<p:dataTable id="suchTabelle" var="value" scrollable="false"
+						rowIndexVar="rowIndex"  
+						style="margin-bottom:5px;" resizableColumns="true"
+						paginatorTemplate="{header}"
+						paginatorPosition="bottom" paginator="true" emptyMessage="#{value}"
+						widgetVar="searchTable">
+						<f:facet name="{header}">
+							<h:outputLabel value="" />
+							<p:commandButton value="Telecharger" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="pi pi-arrow-down">
+        						<p:fileDownload value="#{carteNapsMBean.downloadFile(status.index)}" />
+   							 </p:commandButton>
+						</f:facet>
+						<p:column>
+							<f:facet name="header">
+								<h:outputLabel value="#{label.name}" />
+							</f:facet>
+							<h:outputText value="#{dummyObject}" />
+						</p:column>
+
+
+					</p:dataTable>
+    
+</ui:repeat>
+
+<!-- 			<p:dataList value="#{carteNapsMBean.filenameslst}" var="element" itemType="disc">   -->
+<!--         #{element} -->
+        
+<!--     </p:dataList>  -->
+
+<!-- <p:dataTable id="table"  value="#{carteNapsMBean.filenameslst}" var="string" scrollRows="50"  -->
+<!-- 				varStatus="status" paginator="true" rows="10" lazy="true" paginatorPosition="bottom"  -->
+<!-- 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" -->
+<!-- 						rowsPerPageTemplate="10,20,30" -->
+<!-- 						currentPageReportTemplate="Affichant {startRecord} - {endRecord} de  -->
+<!--       				{totalRecords}, Page: {currentPage}/{totalPages}"> -->
+<!-- <p:column> -->
+<!--   <h:outputText value="#{string.filenameslst.value}"/> -->
+<!-- </p:column> -->
+<!-- <p:column> -->
+<!-- <p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="pi pi-arrow-down"> -->
+<!--         <p:fileDownload value="#{carteNapsMBean.downloadFile(string.key)}" /> -->
+<!--     </p:commandButton> -->
+<!-- </p:column> -->
+<!-- </p:dataTable> -->
+    
+    
+
+</h:form>
+		</p:fieldset>
+		
+		
+
+	</ui:define>
+</ui:composition>
+
+

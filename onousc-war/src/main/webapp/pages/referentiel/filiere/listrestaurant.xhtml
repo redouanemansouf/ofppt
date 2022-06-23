@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<p:dialog id="listF-dlg" widgetVar="listF-dlg-wdg"
+		header="Restaurants" hideEffect="fade" showEffect="fade"
+		modal="true" dynamic="true" styleClass="dialogclass"
+		onHide="PF('listF-dlg').content.empty" closeOnEscape="true">
+
+		<p:messages globalOnly="true" autoUpdate="true" />
+
+		<h:form>
+
+			<h:panelGrid columns="3">
+
+				<p:dataTable id="categTbl" paginator="true"
+					rowStyleClass="#{restaurant.statut == 'DISABLED' ? 'is-disabled' :null }"
+					value="#{familleProduitCanalVenteSearchMBean}" var="filiere"
+					lazy="true" selection="#{restaurantMBean.webBean.selectedFilVOs}"
+					rowKey="#{filiere.id}" paginatorPosition="bottom"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,20,40" rows="10" style="margin-bottom:20px"
+					styleClass="papa">
+
+					<p:column style="text-align:center;">
+						<h:outputText value="#{filiere.libelle}" />
+					</p:column>
+				</p:dataTable>
+
+			</h:panelGrid>
+			<br />
+
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>

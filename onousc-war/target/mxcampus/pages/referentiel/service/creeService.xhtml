@@ -1,0 +1,117 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<p:dialog id="create-dlg" widgetVar="create-dlg-wdg" closable="true"
+		closeOnEscape="true" header="Ajouter un repas" hideEffect="fade"
+		showEffect="fade" modal="true" dynamic="true">
+
+
+		<h:form id="create-form">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+			<!-- 			<pe:tooltip for="service_plafond" myPosition="left center" -->
+			<!-- 				showEvent="click" hideEvent="unfocus" atPosition="right center"> -->
+			<!-- 				<h:message for="service_plafond" /> -->
+			<!-- 			</pe:tooltip> -->
+
+			<h:panelGrid columns="2" styleClass="FormGrid">
+
+				<!--      Code service     -->
+				<h:outputLabel value="#{prezmsg['CODE']}" />
+				<p:inputText id="service_code"
+					value="#{serviceMBean.webBean.vo.code}" required="true"
+					title="#{component.valid ? '' : serviceMBean.getErrorMessage(component.clientId)}" />
+
+				<!--      Nom service     -->
+				<h:outputLabel value="#{prezmsg['NOM']}" />
+				<p:inputTextarea id="service_libelle" cols="50"
+					value="#{serviceMBean.webBean.vo.libelle}" required="true"
+					title="#{component.valid ? '' : serviceMBean.getErrorMessage(component.clientId)}" />
+
+			<!--  	<p:outputLabel for="time" value="#{prezmsg['HEURE_DEBUT']}" />
+				<p:calendar id="time" value="#{serviceMBean.webBean.vo.heureDebut}" label="Choisissez le temps"
+					pattern="HH:mm" timeOnly="true" minMinute="0" />
+
+				<p:outputLabel for="time2" value="#{prezmsg['HEURE_FIN']}" />
+				<p:calendar id="time2" value="#{serviceMBean.webBean.vo.heureFin}" label="Choisissez le temps"
+					pattern="HH:mm" timeOnly="true" minMinute="0" />-->
+					
+					<h:outputLabel value="#{prezmsg['PRIX']}" />
+				<p:inputText id="service_prix"
+					value="#{serviceMBean.webBean.vo.prix}" required="true"
+					title="#{component.valid ? '' : serviceMBean.getErrorMessage(component.clientId)}" />
+					
+			  		<h:outputLabel value="#{prezmsg['JOUR']}" />
+				<h:selectOneMenu id="jour" value="#{serviceMBean.webBean.vo.jour}" style="width:200px;"
+				 >
+					<f:selectItem itemLabel="Choisissez"  />
+					<f:selectItem itemLabel="Lundi" itemValue="Lundi"/>
+					<f:selectItem itemLabel="Mardi" itemValue="Mardi" />
+					<f:selectItem itemLabel="Mercredi" itemValue="Mercredi" />
+					<f:selectItem itemLabel="Jeudi" itemValue="Jeudi" />
+					<f:selectItem itemLabel="Vendredi" itemValue="Vendredi" />
+					<f:selectItem itemLabel="Samedi" itemValue="Samedi" />
+					<f:selectItem itemLabel="Dimanche" itemValue="Dimanche" />
+					</h:selectOneMenu>
+					
+					<h:outputLabel value="#{prezmsg['TYPE']}" />
+				<h:selectOneMenu id="type" value="#{serviceMBean.webBean.vo.type}" style="width:200px;"
+				 >
+					<f:selectItem itemLabel="Choisissez"  />
+					<f:selectItem itemLabel="Plat principal" itemValue="pp"/>
+					<f:selectItem itemLabel="Dessert" itemValue="d" />
+					<f:selectItem itemLabel="Entrée" itemValue="e" />
+					</h:selectOneMenu>
+					
+					
+			</h:panelGrid>
+			<p:toolbar>
+				<f:facet name="left">
+
+					<!-- Annuler la saisie 
+					<p:commandButton styleClass="OpButton" value="#{prezmsg['RESET']}"
+						icon="ui-icon-custom-undo"
+						actionListener="#{serviceMBean.resetWebBeanVO()}" process="@this"
+						update="create-form" tabindex="-1">
+						<p:resetInput target="create-form" />
+					</p:commandButton>-->
+
+				</f:facet>
+				<f:facet name="right">
+
+					<!-- Valider le form -->
+					<p:commandButton id="validate-create" styleClass="ValidateButton"
+						value="#{prezmsg['VALIDER']}" action="#{serviceMBean.creer}"
+						process=" @form" update="create-form"
+						onstart="block('create-dlg-wdg')"
+						oncomplete="unblock('create-dlg-wdg')" />
+
+					<!-- Annule le useCase-->
+					<p:commandButton id="cancel-create" styleClass="CancelButton"
+						value="#{prezmsg['ANNULER']}" type="button"
+						onclick="PF('create-dlg-wdg').hide()" global="false" />
+				</f:facet>
+			</p:toolbar>
+
+			<p:defaultCommand target="validate-create" />
+
+			<!-- Focus automatique  -->
+			<p:focus context="create-form" />
+
+
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('create-dlg-wdg').hide()"
+				update=":service-form:service-dtbl" />
+		</h:form>
+	</p:dialog>
+</ui:composition>

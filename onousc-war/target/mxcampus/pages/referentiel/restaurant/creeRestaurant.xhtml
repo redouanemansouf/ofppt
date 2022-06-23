@@ -1,0 +1,151 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<p:dialog id="create-dlg" widgetVar="create-dlg-wdg" closable="true"
+		closeOnEscape="true" header="Ajouter Restaurant" hideEffect="fade"
+		showEffect="fade" modal="true" dynamic="true">
+
+
+		<h:form id="create-form">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+			<!-- 			<pe:tooltip for="ville_univ" myPosition="left center" -->
+			<!-- 				showEvent="click" hideEvent="unfocus" atPosition="right center"> -->
+			<!-- 				<h:message for="ville_univ" /> -->
+			<!-- 			</pe:tooltip> -->
+
+
+
+
+			<h:panelGrid columns="2" styleClass="FormGrid">
+
+				<!--      Code restaurant     -->
+				<h:outputLabel value="#{prezmsg['CODE']}" />
+				<p:inputText id="restaurant_code"
+					value="#{restaurantMBean.webBean.vo.code}" required="true"
+					maxlength="4"
+					title="#{component.valid ? '' : restaurantMBean.getErrorMessage(component.clientId)}">
+					<f:validateLength minimum="4" maximum="4" />
+					<p:ajax listener="#{restaurantMBean.codevalidator}" update="@form"
+						process="@this" />
+					<pe:keyFilter regEx="/[0-9_]/i" preventPaste="false" />
+				</p:inputText>
+
+				<h:outputLabel value="#{prezmsg['SITE']}" />
+				<p:inputText value="#{restaurantMBean.user.siteVO.libelle}"
+					rendered="#{restaurantMBean.user.siteVO !=null }" disabled="true" />
+				<p:selectOneMenu id="site"
+					value="#{restaurantMBean.webBean.vo.siteVO}" style="width:170px"
+					required="true" converter="siteConverter"
+					rendered="#{restaurantMBean.user.siteVO ==null }">
+					<f:selectItem itemLabel="#{prezmsg['SELECTIONNER']}" />
+					<f:selectItems value="#{restaurantMBean.webBean.listSiteForCombo}"
+						var="site" itemLabel="#{site.libelle}" itemValue="#{site}" />
+				</p:selectOneMenu>
+
+				<!--      Libellé restaurant     -->
+				<h:outputLabel value="#{prezmsg['LIBELLE']}" />
+				<p:inputText id="restaurant_libelle"
+					value="#{restaurantMBean.webBean.vo.libelle}" required="true"
+					title="#{component.valid ? '' : restaurantMBean.getErrorMessage(component.clientId)}" />
+
+				<!-- 	  restaurantcite       -->
+				<!-- 				<h:outputLabel value="#{prezmsg['CITE']}" /> -->
+				<!-- 				<p:selectOneMenu id="restaurant_univ" -->
+				<!-- 					value="#{restaurantMBean.webBean.vo.citeVO}" -->
+				<!-- 					converter="citeConverter" required="true"  -->
+				<!-- 					> -->
+				<!-- 					<f:selectItem itemLabel="choisir une cité" /> -->
+				<!-- 					<f:selectItems value="#{restaurantMBean.webBean.citeVOs}" var="u" -->
+				<!-- 						itemLabel="#{u.libelle}" itemValue="#{u}" /> -->
+				<!-- 				</p:selectOneMenu> -->
+
+
+				<!--      Adresse      -->
+				<h:outputLabel value="#{prezmsg['ADRESSE']}" />
+				<p:inputTextarea id="resto_adresse"
+					value="#{restaurantMBean.webBean.vo.adresse}" required="true"
+					title="#{component.valid ? '' : restaurantMBean.getErrorMessage(component.clientId)}" />
+
+				<!--      Nom responsable     -->
+				<h:outputLabel value="#{prezmsg['NOM_RESPONSABLE']}" />
+				<p:inputText id="res_nomresponsable"
+					value="#{restaurantMBean.webBean.vo.nomResponsable}"
+					required="true"
+					title="#{component.valid ? '' : restaurantMBean.getErrorMessage(component.clientId)}" />
+
+				<!--      Prenom responsable     -->
+				<h:outputLabel value="#{prezmsg['PRENOM_RESPONSABLE']}" />
+				<p:inputText id="res_prenomres"
+					value="#{restaurantMBean.webBean.vo.prenomResponsable}"
+					required="true"
+					title="#{component.valid ? '' : restaurantMBean.getErrorMessage(component.clientId)}" />
+
+				<!--      Num telephone     -->
+				<h:outputLabel value="#{prezmsg['TEL']}" />
+				<p:inputText id="res_tele"
+					value="#{restaurantMBean.webBean.vo.numTele}" required="true"
+					title="#{component.valid ? '' : restaurantMBean.getErrorMessage(component.clientId)}">
+					<pe:keyFilter regEx="/[0-9_]/i" preventPaste="false" />
+				</p:inputText>
+
+				<!-- 	          ADRESSE EMAIL     -->
+				<h:outputLabel value="#{prezmsg['EMAIL']}" />
+				<p:inputText id="res_email"
+					value="#{restaurantMBean.webBean.vo.adresseEmail}" required="true"
+					title="#{component.valid ? '' : restaurantMBean.getErrorMessage(component.clientId)}" />
+
+				<!-- 	          Nombre de place     -->
+				<h:outputLabel value="#{prezmsg['NOMBRE_PLACE']}" />
+				<p:inputText id="res_place" required="true"
+					value="#{restaurantMBean.webBean.vo.nbreplace}"
+					title="#{component.valid ? '' : restaurantMBean.getErrorMessage(component.clientId)}" />
+
+				<!-- 	  ville       -->
+				<!-- 				<h:outputLabel value="#{prezmsg['VILLE']}" /> -->
+				<!-- 				<p:selectOneMenu id="ville_univ" -->
+				<!-- 					value="#{restaurantMBean.webBean.vo.ville}" -->
+				<!-- 					converter="villeConverter" required="true" -->
+				<!-- 					title="#{component.valid ? '' : restaurantMBean.getErrorMessage(component.clientId)}"> -->
+				<!-- 					<f:selectItem itemLabel="choisir une ville" /> -->
+				<!-- 					<f:selectItems value="#{restaurantMBean.webBean.villeVOs}" var="u" -->
+				<!-- 						itemLabel="#{u.libelle}" itemValue="#{u}" /> -->
+				<!-- 				</p:selectOneMenu> -->
+
+				<p:outputLabel for="sub" value="Appliquer Ratio" />
+				<p:selectOneRadio id="sub"
+					value="#{restaurantMBean.webBean.vo.etatr}">
+					<f:selectItem itemLabel="Oui" itemValue="true" />
+					<f:selectItem itemLabel="Non" itemValue="false" />
+				</p:selectOneRadio>
+
+			</h:panelGrid>
+				
+			<p:toolbar>
+				<f:facet name="right">
+					<p:commandButton id="validate-create" value="#{prezmsg['VALIDER']}"
+						process="@form" update="create-form"
+						action="#{restaurantMBean.creer}" styleClass="ValidateButton" />
+					<p:commandButton value="#{prezmsg['ANNULER']}" global="false"
+						process="@none" onclick="PF('create-dlg-wdg').hide()"
+						styleClass="CancelButton" />
+				</f:facet>
+			</p:toolbar>
+
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('create-dlg-wdg').hide();showMessage();"
+				update=":restaurant-form:restaurant-dtbl" />
+								
+		</h:form>
+	</p:dialog>
+</ui:composition>

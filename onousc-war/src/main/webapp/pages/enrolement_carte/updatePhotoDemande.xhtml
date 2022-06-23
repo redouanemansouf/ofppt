@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<p:dialog id="photo-dlg" widgetVar="photo-dlg-wdg"
+		header="photo" hideEffect="fade" showEffect="fade"
+		modal="true" dynamic="true" 
+		closeOnEscape="true" width="460px">
+
+		<p:messages globalOnly="true" autoUpdate="true" />
+
+		<h:form prependId="false">
+			<h:panelGrid columns="14" styleClass="FormGrid">
+			  
+			</h:panelGrid>
+
+			<h:panelGrid>
+				<h:outputText
+					value="Prise de la photo ?" />
+			</h:panelGrid>
+			<h:panelGrid columns="2" styleClass="FloatLeft" cellpadding="5">
+				<!-- fabrication_carte() --> 
+				<p:commandButton value="OUI" onclick="this.disabled=true;document.getElementById('luncherIframeIU').src='M2MGroupLuncher:#{etudiantMBean.webBean.jSessionID}|#{etudiantMBean.webBean.serverNameAndPort}';"
+					update="@form" styleClass="ValidateButton"  actionListener="#{etudiantMBean.updatePhoto}"
+					process="@this">
+					<f:setPropertyActionListener value="#{nat}"
+							target="#{etudiantMBean.webBean.vo}" />
+					</p:commandButton>
+
+
+				<!-- 					<p:commandButton style="display:none" action="#{etudiantMBean.personnaliser}" id="per"/> -->
+
+
+				<!-- 					 /> -->
+				<p:remoteCommand name="_personnalise"
+					 process="@this"
+					update=":critere-form:nationalite-dtbl"/>
+					
+			</h:panelGrid>
+
+			<h:panelGrid styleClass="FloatRight">
+
+				<p:commandButton value="NON" process="@this"
+					onclick="PF('photo-dlg-wdg').hide()" styleClass="CancelButton" />
+			</h:panelGrid>
+
+			<!-- Cache le dialog s'il n'y a pas d'érreur -->
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('photo-dlg-wdg').hide()"
+				update=":critere-form:nationalite-dtbl" />
+
+		</h:form>
+
+	</p:dialog>
+<pe:blockUI widgetVar="bui" >  
+				    <h:panelGrid columns="1" >    
+				        <h:outputText value="Traitement en cours ..." />  
+				    </h:panelGrid>  
+			</pe:blockUI>  
+			
+			<iframe id="luncherIframeIU" style="display: none ;"></iframe>
+</ui:composition>

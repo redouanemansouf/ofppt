@@ -1,0 +1,243 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+  
+	<p:dialog id="editm-dlg" widgetVar="editm-dlg-wdg"
+		header="Détail de la demande" hideEffect="fade" showEffect="fade"
+		modal="true" dynamic="true" onHide="PF('editm-dlg').content.empty"
+		closeOnEscape="true" width="1180px" height="600px" >
+
+		<p:messages globalOnly="true" autoUpdate="true" />
+		
+		<style>
+		
+
+.ui-radiobutton .ui-state-active {
+	background: url("#{resource['images/icons/check-icon_Layer.png']}")
+		no-repeat 10% 40% !important;
+}
+		</style>
+<h:body>
+		<h:form prependId="false">
+
+			<h:panelGrid columns="4" styleClass="FormGrid" >
+
+			<p:outputLabel   id="id_edm" value="Id étudiant :"   styleClass="LabelIns" />
+					<p:inputText id="id_person_edm"   
+						value="#{etudiantMBean.webBean.vo.id}" readonly="true"
+						disabled="true">
+					</p:inputText>
+					
+					
+				<p:outputLabel id="anne_edm" value="Année Universitaire :"
+					styleClass="LabelIns" />
+				<p:inputText id="anneee_createm" 
+					value="#{etudiantMBean.webBean.vo.ann_universitaire-1} - #{etudiantMBean.webBean.vo.ann_universitaire}" 
+					disabled="true" >
+				</p:inputText>
+
+
+
+
+
+				<p:outputLabel for="nom_createm" id="nom_edm" value="Nom :"
+					styleClass="LabelIns" />
+				<p:inputText id="nom_createm"
+					value="#{etudiantMBean.webBean.vo.nom}" 
+					>
+					
+				</p:inputText>
+
+
+
+				<p:outputLabel for="prenom_createm" id="prenom_edm" value="Prénom :"
+					styleClass="LabelIns" />
+				<p:inputText id="prenom_createm" styleClass="InscrInput"
+					value="#{etudiantMBean.webBean.vo.prenom}"
+					>
+				</p:inputText>
+
+
+
+
+				<p:outputLabel id="dat_nais_edm" value="Date de naissance :"
+					styleClass="LabelIns" />
+			 
+					<p:calendar id="dat_nais_createm" styleClass="InscrInput"
+						value="#{etudiantMBean.webBean.vo.date_naissance}"
+						pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true"
+						locale="fr"></p:calendar>
+
+			 
+
+
+
+				<p:outputLabel value="Ville de restaurant" styleClass="LabelIns" /> 
+					<p:selectOneMenu id="ville-createm" filter="true"
+						filterMatchMode="startsWith"
+						value="#{etudiantMBean.webBean.vo.ville}">
+						<f:selectItem itemLabel="Ville...." noSelectionOption="true" />
+						<f:selectItems value="#{etudiantMBean.webBean.villeVOs}" var="v"
+							itemLabel="#{v.libelle}" itemValue="#{v.libelle}" />
+					</p:selectOneMenu>
+				 
+
+
+				<p:outputLabel value="Cite :" styleClass="LabelIns" />
+				   
+					<p:selectOneMenu id="cite-createm" filter="true"
+						converter="citeConverter" filterMatchMode="startsWith"
+						value="#{etudiantMBean.webBean.vo.citovo}">
+						<f:selectItem itemLabel="Cité....." noSelectionOption="true" />
+						<f:selectItems value="#{etudiantMBean.webBean.citeVOs}" var="c"
+							itemLabel="#{c.libelle}" itemValue="#{c}" />
+					</p:selectOneMenu>
+				 
+				<p:outputLabel value="Restaurant :" styleClass="LabelIns" />
+				 
+					<p:selectOneMenu id="res-createm" filter="true"
+						converter="restaurantConverter" filterMatchMode="startsWith"
+						value="#{etudiantMBean.webBean.vo.restaurantVO}">
+						<f:selectItem itemLabel="Ville/Restaurant"
+							noSelectionOption="true" />
+						<f:selectItems value="#{etudiantMBean.webBean.restaurantVOs}"
+							var="r" itemLabel="#{r.villeVO.libelle} /  #{r.libelle}"
+							itemValue="#{r}" />
+					</p:selectOneMenu>
+				 
+
+
+				<p:outputLabel for="NCIN_createm" id="NCIN_edm" value="N° CIN :"
+					styleClass="LabelIns" />
+				<p:inputText id="NCIN_createm"
+					
+					value="#{etudiantMBean.webBean.vo.NCIN}">
+				</p:inputText>
+				
+				
+<!-- 				<p:outputLabel for="codeMassar_createm" id="codeMassar_edm" value="Code Massar :" -->
+<!-- 					styleClass="LabelIns" /> -->
+<!-- 				<p:inputText id="codeMassar_createm" -->
+<!-- 					readonly="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}" -->
+<!-- 					disabled="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}" -->
+<!-- 					value="#{etudiantMBean.webBean.vo.codeMassar}"> -->
+<!-- 				</p:inputText> -->
+				
+<!-- 				<p:outputLabel id="handicapm" value="Handiape :" styleClass="LabelIns" /> -->
+<!-- 				<p:selectOneRadio id="handicap_createm" -->
+<!-- 					value="#{etudiantMBean.webBean.vo.handicape}" -->
+<!-- 					> -->
+<!-- 					<f:selectItem itemLabel="Oui" itemValue="O" /> -->
+<!-- 					<f:selectItem itemLabel="Non" itemValue="N" /> -->
+<!-- 				</p:selectOneRadio> -->
+
+
+
+
+
+				<p:outputLabel id="Boursier_edm" value=" Boursier :"
+					styleClass="LabelIns" />
+				<!-- 					<p:selectBooleanCheckbox id="Boursier_create" -->
+				<!-- 						value="#{etudiantMBean.webBean.vo.boursier}" > -->
+				<p:selectOneRadio id="Boursier_createm"
+					value="#{etudiantMBean.webBean.vo.boursier}"
+					 >
+					<f:selectItem itemLabel="Bourse complète" itemValue="Complete" />
+					<f:selectItem itemLabel="Demi-bourse" itemValue="Demi" />
+					<f:selectItem itemLabel="Aucune" itemValue="Aucune" />
+
+				</p:selectOneRadio>
+
+
+
+
+				<p:outputLabel id="Resident_edm" value=" Resident :"
+					styleClass="LabelIns" />
+				<p:selectBooleanCheckbox id="Resident_createm"
+					value="#{etudiantMBean.webBean.vo.resident}"
+					>
+
+
+				</p:selectBooleanCheckbox>
+
+
+
+
+				<p:outputLabel for="email_createm" id="email_edm" value="Email :"
+					styleClass="LabelIns" />
+				<p:inputText id="email_createm"
+					value="#{etudiantMBean.webBean.vo.email}"
+					>
+				</p:inputText>
+
+				<p:outputLabel id="image_edm" value="Image :" styleClass="LabelIns" />
+
+				<h:graphicImage
+					value="/images/dynamic/?file=#{etudiantMBean.webBean.vo.id}.jpg"
+					height="40" width="40" cache="false" 
+					style="height:100px; width:100px; -webkit-box-shadow : 4px 4px 12px #555;-moz-box-shadow : 4px 4px 12px #555;box-shadow : 4px 4px 12px #555"/>
+						 
+	
+
+				<p:outputLabel id="Se_edm" value="Sexe :" styleClass="LabelIns" />
+				<p:selectOneRadio id="sexe_createm"
+					value="#{etudiantMBean.webBean.vo.sexe}"
+					>
+					<f:selectItem itemLabel="Masculin" itemValue="M" />
+					<f:selectItem itemLabel="Féminin" itemValue="F" />
+				</p:selectOneRadio>
+				
+				
+
+<p:column></p:column>
+				<p:fileUpload fileUploadListener="#{etudiantMBean.upload}"
+						cancelLabel="annuler" uploadLabel="télécharger" label="parcourir"
+						allowTypes="/(\.|\/)(gif|jpe?g|png)$/" description="Select Images"
+						styleClass="inputField" sizeLimit="1000000" 
+						 fileLimit="1"
+					  fileLimitMessage="Le nombre maximum de photo à charger est 1"
+					 rendered="#{etudiantMBean.webBean.vo.statut.statusCode =='ENABLED'}"/>
+
+				<!-- 				<p:outputLabel id="image" value="Image  :" styleClass="LabelIns" /> -->
+				<!-- 				<img src="C:/image#{etudiantMBean.webBean.vo.image}" alt=""/> -->
+
+					<h:inputHidden id="chexe_etud_edm" value="#{etudiantMBean.cheminexeimpression}" />	
+							<h:inputHidden id="chrecto_etud_edm" value="#{etudiantMBean.chemincarterecto}" />	
+							<h:inputHidden id="chverso_etud_edm" value="#{etudiantMBean.chemincarteverso}" />
+							 
+							
+							
+						
+
+			</h:panelGrid>
+
+
+<!-- onclick="visualisationcarte()" -->
+			<h:panelGrid columns="3" styleClass="FloatRight" cellpadding="5">
+			<p:commandButton value="Visualiser" process="@form" 
+					 styleClass="CancelButton" action="#{etudiantMBean.visualiser}"
+					onclick="document.getElementById('luncherIframeIU').src='M2MGroupLuncher:#{etudiantMBean.webBean.jSessionID}|#{etudiantMBean.webBean.serverNameAndPort}';"
+					rendered="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED' and etudiantMBean.webBean.vo.statut.statusCode !='CLOSED'}"/>
+					
+				<p:commandButton value="Enregistrer les modifications" process="@form"
+					action="#{etudiantMBean.modifier}" update="@form"
+					styleClass="ValidateButton" />
+				<p:commandButton value="Fermer" global="false"
+					oncomplete="PF('editm-dlg-wdg').hide()" styleClass="CancelButton" />
+			</h:panelGrid>
+
+			<!-- Cache le dialog s'il n'y a pas d'érreur -->
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('editm-dlg-wdg').hide()"
+				update=":critere-form:nationalite-dtbl" />
+
+		</h:form>
+</h:body>
+	</p:dialog>
+
+</ui:composition>

@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+
+
+	<ui:define name="content">
+
+<p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;width:126%;">
+			<ul class="menuOpposition">
+				<li><h:link
+						outcome="/pages/referentiel/restaurant/listerRestaurant.xhtml">
+						<div>
+							<center>RESTAURANT</center>
+						</div>
+					</h:link></li>
+				<li><h:link
+						outcome="/pages/referentiel/caisse/listerCaisse.xhtml">
+						<div>
+							<center>CAISSE</center>
+						</div>
+					</h:link></li>
+
+				<li  class="active"><h:link
+						outcome="/pages/referentiel/caissier/listerCaissier.xhtml">
+						<div>
+							<center>CAISSIER</center>
+						</div>
+					</h:link></li>
+<!-- 					<li><h:link -->
+						
+<!-- 						> -->
+<!-- 						<div> -->
+<!-- 							<center>#{prezmsg['STOCK']}</center> -->
+<!-- 						</div> -->
+<!-- 					</h:link></li> -->
+			</ul>
+		</p:fieldset>
+		<p:ajaxStatus>
+			<f:facet name="start">
+				<p:graphicImage library="images" name="blueajax.gif"
+					styleClass="AjaxStatusLoader" />
+			</f:facet>
+		</p:ajaxStatus>
+
+
+
+
+		<h:form id="caissier-form">
+
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+
+			<p:remoteCommand name="_updateCrudMenu" global="false"
+				update="crud-menu :search-overlay" />
+			<!--  -->
+
+			
+
+			<center>
+				<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;"
+					styleClass="fieldsetCategories">
+
+<!-- 					<center> -->
+<!-- 						<p:messages autoUpdate="true" globalOnly="true" closable="true" -->
+<!-- 							style="width:60%;" showIcon="false" /> -->
+<!-- 					</center> -->
+
+<script>
+					function showMessage() {
+
+						_showMessage();
+					}
+				</script>
+				<center>
+					<p:messages id="succes" globalOnly="true" closable="true"
+						styleClass="M2" />
+				</center>
+				<!-- Remote commands -->
+				<p:remoteCommand name="_errorDialog"
+					onstart="PF('error-dlg-wdg').show()" />
+				<p:remoteCommand name="_showMessage"
+					actionListener="#{caissierMBean.showMessage}" update="succes" />
+				<p:remoteCommand name="_updateCrudMenu" global="false"
+					update="crud-menu" />
+
+				<div class="RefCenter">
+					<p:toolbar id="crud-menu">
+
+						<f:facet name="left">
+
+							<!--Method d'ajout, fait un reset du formulaire et affiche le dialog d'ajout -->
+							<p:commandButton id="create" widgetVar="create-wdg" rendered="#{authMbean.hasCreate('000006')}"
+								styleClass="ToolbarButton" value="#{prezmsg['NOUVEAU']}"
+								action="#{caissierMBean.resetWebBeanVO}" process="@this"
+								update=":create-form" oncomplete="PF('create-dlg-wdg').show();"
+								icon="ui-icon-custom-nouveau"
+								>
+								<p:resetInput target=":create-form" />
+							</p:commandButton>
+
+							<!-- 	Lié au formulaire de la recherche, type boutton car ne fait aucune action/actionListener ni update, utiliser just pour pop le searchOverlay -->
+							<p:commandButton id="search" widgetVar="search-wdg"
+								styleClass="ToolbarButton" value="#{prezmsg['CHERCHER']}"
+								type="button" icon="ui-icon-custom-chercher"
+								 />
+
+						</f:facet>
+
+					</p:toolbar>
+
+					<p:dataTable id="caissier-dtbl" paginator="true"
+						emptyMessage="#{prezmsg['label_no_records_found']}"
+						rowStyleClass="#{caissier.statut == 'DISABLED' ? 'is-disabled' :null }"
+						value="#{caissierSearchMBean}" var="caissier" lazy="true" rows="10"
+						selection="#{caissierMBean.webBean.selectedVOs}"
+						rowKey="#{caissier.id}" paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="10,20,30"
+						currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+
+						<ui:include src="/pages/commun/datatableEvents.xhtml" />
+
+						<!-- 						<p:column selectionMode="multiple" styleClass="tableChkbox" -->
+						<!-- 							style="width:16px;text-align:center" /> -->
+
+						<!-- Identifiant de l'caissier  -->
+						<p:column headerText="#{prezmsg['CODE']}" style="width:12%" sortBy="#{caissier.code}">
+							<center>
+								<h:outputText value="#{caissier.code}" />
+							</center>
+						</p:column>
+
+						<!-- Libellé de la caissier -->
+						<p:column headerText="#{prezmsg['NOM']}" sortBy="#{caissier.nom}">
+							<center>
+								<h:outputText value="#{caissier.nom} #{caissier.prenom}" />
+							</center>
+						</p:column>
+
+
+						<!-- cite -->
+						<p:column headerText="#{prezmsg['CAISSE']}" sortBy="#{caissier.nom}">
+							<center>
+								<h:outputText value="#{caissier.caisse.libelle}" />
+							</center>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['TEL']}" sortBy="#{caissier.numTele}">
+							<center>
+								<h:outputText value="#{caissier.numTele}" />
+							</center>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['EMAIL']}" sortBy="#{caissier.adresseEmail}">
+							<center>
+								<h:outputText value="#{caissier.adresseEmail}" />
+							</center>
+						</p:column>
+						
+						<p:column headerText="RESTAURANT" sortBy="#{caissier.caisse.restaurant.id}">
+							<center>
+								<h:outputText value="#{caissier.caisse.restaurant.id}" />
+							</center>
+						</p:column>
+						
+						<p:column headerText="NUMERO CARTE" sortBy="#{caissier.numCarte}">
+							<center>
+								<h:outputText value="#{utilsMBean.displayCard(caissier.numCarte)}" />
+							</center>
+						</p:column>
+						
+						<p:column headerText="Droit Annulation" sortBy="#{caissier.droit}">
+							<center>
+<!-- 								<h:outputText value="#{prezmsg[caissier.droit]}" /> -->
+<!-- 								<h:outputText value="#{caissier.droit}" /> -->
+							<h:outputText
+									rendered="#{caissier.droit == false }"
+									value="Non" />
+											<h:outputText
+									rendered="#{caissier.droit == true }"
+									value="Oui" />
+							
+							</center>
+						</p:column>
+						
+						
+
+						<p:column exportable="false" style="width:10%;text-align:center;"
+							headerText="">
+
+							<p:commandButton icon="ui-icon-custom-modifier"
+								title="Modifier caissier" styleClass="CrudButton" rendered="#{authMbean.hasUpdate('000006')}"
+								update=":edit-form" oncomplete="PF('edit-dlg-wdg').show();">
+								<f:setPropertyActionListener value="#{caissier}"
+									target="#{caissierMBean.webBean.vo}"
+									 />
+							</p:commandButton>
+
+							<p:commandButton icon="ui-icon-custom-supprimer"
+								title="Supprimer caissier" styleClass="CrudButton"
+								action="#{caissierMBean.supprimer}" rendered="#{authMbean.hasDelete('000006')}"
+								update="caissier-dtbl :error-messages"
+								>
+								<p:confirm header="#{prezmsg['CONFIRMATION_DELETE']}"
+									message="#{prezmsg['MESSAGE_CONFIRMATION_DELETE']}"
+									icon="ui-icon-alert" />
+								<f:setPropertyActionListener value="#{caissier}"
+									target="#{caissierMBean.webBean.vo}"></f:setPropertyActionListener>
+							</p:commandButton>
+							
+<!-- 							<p:commandButton icon="ui-icon-custom-imprimer" -->
+<!-- 								title="Personnaliser" styleClass="CrudButton" -->
+<!-- 								onclick="document.getElementById('luncherIframeIU').src='M2MGroupLuncher:caisse|#{caissier.code}|#{caissier.caisse.restaurant.id}';"> -->
+<!-- 								<f:setPropertyActionListener value="#{caissier}" -->
+<!-- 									target="#{caissierMBean.webBean.vo}" -->
+<!-- 									 /> -->
+<!-- 							</p:commandButton> -->
+
+						</p:column>
+
+					</p:dataTable>
+
+				</div>
+</p:fieldset>
+</center>
+
+			
+		</h:form>
+
+
+
+		<p:overlayPanel id="search-overlay" for=":caissier-form:search"
+			hideEffect="slide" showEffect="slide" widgetVar="searchOverlay"
+			dismissable="false" appendToBody="true">
+
+			<h:form id="search-form">
+
+				<h:panelGrid columns="4" styleClass="FormGrid">
+				
+					<h:outputLabel value="#{prezmsg['SITE']}" />
+					<p:inputText value="#{caissierMBean.user.siteVO.libelle}"
+						rendered="#{caissierMBean.user.siteVO !=null }" disabled="true" />
+					<p:selectOneMenu id="site"
+						rendered="#{caissierMBean.user.siteVO ==null }"
+						value="#{caissierSearchMBean.caissierCriteria.idSite}">
+						<f:selectItem itemLabel="#{prezmsg['SELECTIONNER']}" />
+						<f:selectItems value="#{caissierMBean.webBean.listSiteForCombo}"
+							var="site" itemLabel="#{site.libelle}" itemValue="#{site.id}" />
+					</p:selectOneMenu>
+					<!-- Code   -->
+					<h:outputLabel value="#{prezmsg['CODE']}" />
+					<p:inputText id="code-search"
+						value="#{caissierSearchMBean.caissierCriteria.code}" />
+
+					<!-- Nom responsable -->
+					<h:outputLabel value="#{prezmsg['NOM']}" />
+					<p:inputText id="nom-search"
+						value="#{caissierSearchMBean.caissierCriteria.nom}" />
+
+					<!-- Prenom responsable -->
+					<h:outputLabel value="#{prezmsg['PRENOM']}" />
+					<p:inputText id="pre-search"
+						value="#{caissierSearchMBean.caissierCriteria.prenom}" />
+
+					<!-- N° tele -->
+					<h:outputLabel value="#{prezmsg['TEL']}" />
+					<p:inputText id="tel-search"
+						value="#{caissierSearchMBean.caissierCriteria.numTele}" />
+
+					<!-- email -->
+					<h:outputLabel value="#{prezmsg['EMAIL']}" />
+					<p:inputText id="email-search"
+						value="#{caissierSearchMBean.caissierCriteria.adresseEmail}" />
+
+					<!-- caisse -->
+					<h:outputLabel value="#{prezmsg['CAISSE']}" />
+					<p:selectOneMenu id="caisse_search"
+						value="#{caissierSearchMBean.caissierCriteria.libellecaisse}"
+						style="width:125px">
+						<f:selectItem itemLabel="choisir un caisse" />
+						<f:selectItems value="#{caissierMBean.webBean.caisseVOs}" var="u"
+							itemLabel="#{u.libelle}" itemValue="#{u.libelle}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+
+				<p:toolbar>
+					<f:facet name="right">
+						<!-- 	Lance la recherche, revien toujours à la premiere page: backToFirstPage()  -->
+						<p:commandButton id="searchOk" styleClass="OpButton"
+							widgetVar="searchOk-wdg" value="#{prezmsg['OK']}"
+							action="#{caissierSearchMBean.run}"
+							update=":caissier-form:caissier-dtbl"
+							onstart="backToFirstPage(); block()"
+							oncomplete="PF('searchOverlay').hide(); unblock(); initCrudMenu();" />
+
+						<!-- clear du formulaire  -->
+						<p:commandButton id="searchReset" styleClass="OpButton"
+							widgetVar="searchReset-wdg" icon="ui-icon-custom-undo"
+							value="#{prezmsg['RESET']}"
+							action="#{caissierSearchMBean.resetSearchCriteria()}"
+							update="search-form" tabindex="-1">
+							<p:resetInput target="search-form" />
+						</p:commandButton>
+					</f:facet>
+				</p:toolbar>
+
+
+			</h:form>
+<iframe id="luncherIframeIU" style="display: none ;"></iframe>
+
+		</p:overlayPanel>
+
+
+
+		<ui:include src="editerCaissier.xhtml"></ui:include>
+		<ui:include src="creeCaissier.xhtml"></ui:include>
+
+	</ui:define>
+</ui:composition>
+

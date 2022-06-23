@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/pages/commun/loginlayout.xhtml">
+	<ui:define name="content">
+
+
+
+		<h:form id="authentification">
+			<h:panelGrid columns="1" styleClass="LoginGrid" >   
+					<p:outputPanel style="height:270px">  
+						<p:graphicImage library="images" name="forbideen.jpg"    style="width: 50%;margin-left: 75px;"       
+						styleClass="lgn" />
+					</p:outputPanel>
+					<p:outputPanel>
+						<p:outputLabel value="Vous n'êtes pas autorisé à accéder cette page. Veuillez contacter l'administrateur"/>  
+					</p:outputPanel> 
+						<center id="Copyright">Copyright © 2015 M2M Group</center> 
+
+			</h:panelGrid>
+
+		</h:form>
+	
+	</ui:define>
+</ui:composition>

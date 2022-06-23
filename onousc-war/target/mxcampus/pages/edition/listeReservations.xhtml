@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layout.xhtml">
+
+	<ui:define name="content">
+
+		<h:form id="edit-form">
+			<div class="BreadCrumbCust">
+				<h:panelGrid columns="5" cellpadding="5">
+					<h:outputLabel value="Edition" style="color:#419edd"
+						/>
+					<span class="ui-icon ui-icon-carat-1-e"></span>
+					<h:outputLabel value="Liste des réservations" />
+				</h:panelGrid>
+			</div>
+				<br/>
+				<br/>
+				<br/> 
+			<center>
+					<p:messages id="msg" globalOnly="true" closable="true" showIcon="false" style="width:50%;text-align:center"/>  
+ 				<h:panelGrid style="width:50%;text-align:center" cellspacing="4" 
+					columns="2">
+					<p:outputLabel for="date_debut" id="dateDeb"
+						value="#{prezmsg['DATE_DEBUT']} :" styleClass="LabelIns" />
+ 
+
+					<p:outputLabel for="date_fin" id="dateFin"
+						value="#{prezmsg['DATE_FIN']} :" styleClass="LabelIns" /> 
+					<p:calendar id="date_debut" styleClass="InscrInput" required="true" maxdate="#{editionMBean.currentDate()}"  
+						value="#{editionMBean.webBean.date_debut}" pattern="dd/MM/yyyy"
+						pages="2" navigator="true" mask="true"></p:calendar>
+
+					<p:calendar id="date_fin" styleClass="InscrInput" required="true"
+						value="#{editionMBean.webBean.date_fin}"
+						maxdate="#{editionMBean.currentDate()}" pattern="dd/MM/yyyy"
+						pages="2" navigator="true" mask="true"></p:calendar>
+
+					<!-- 							<p:selectOneMenu value="#{editionMBean.webBean.type_fichier}" label="#{prezmsg['TYPE_FILE']}" required="true"> -->
+					<!-- 								<f:selectItem	itemLabel="PDF" itemValue="PDF"/> -->
+					<!-- 								<f:selectItem	itemLabel="XLS" itemValue="XLS"/> -->
+					<!-- 							</p:selectOneMenu> -->
+
+
+				</h:panelGrid>
+
+				<p:commandButton value="#{prezmsg['EDITER']}" process="@form"  
+					icon="ui-icon-arrowreturnthick-1-e" styleClass="CrudButton" ajax="false"
+					action="#{editionMBean.getListeOfReservations()}" update="@none" />   
+
+			</center>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+

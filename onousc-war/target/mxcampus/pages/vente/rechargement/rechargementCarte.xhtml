@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+
+
+	<ui:define name="content">
+
+		<applet id="appid" name="appid" permissions="all-permissions"
+			scriptable="true" archive="AppletMX.jar"
+			code="applet_mxcampus.AppletMX.class" width="0" height="0">
+		</applet>
+
+
+		<script type="text/javascript">
+			function lecture_data() {
+
+				try {
+
+					var version = "null";
+
+					// 	 version = appid.GetVersion(); 
+					version = appid.LectureElectriqueCrazy(2);
+
+					document.getElementById("j_matr").value = appid.matrAdherent;
+					document.getElementById("j_nom").value = appid.nomNaissanceAdherent;
+					document.getElementById("j_prenom").value = appid.prenomAdherent;
+					document.getElementById("j_solde").value = appid.SoldeAdherent;
+					
+					
+
+					
+				} catch (err) {
+
+					alert("Erreur de Lecture Carte Personnel : " + err);
+
+				}
+
+			}
+			
+			function recharge_carte() {
+
+				try {
+					var mont="";
+					var version = "null";
+				
+						
+					
+					if (document.getElementById("j_montant").value == "") {
+						var mont = "0.0";
+					} else {
+						mont = document
+								.getElementById("j_montant").value;
+					}
+					
+					document.getElementById("matric").value = appid.matrAdherent;
+					document.getElementById("solde").value = appid.SoldeAdherent;
+					document.getElementById("mntant").value=document.getElementById("j_montant").value;
+				
+					version =appid.gererSolde(mont, 1, 1);
+					//kimprimer_Ticket() ;
+
+								
+
+				} catch (err) {
+
+					alert("Erreur de Lecture Carte Personnel : " + err);
+
+				}
+
+			}
+			
+			
+			function imprimer_Ticket() {
+
+				try {
+
+					var version = "null";
+					
+					var mont="";
+				
+					if (document.getElementById("j_montant").value == "") {
+						var mont = "0.0";
+					} else {
+						mont = document
+								.getElementById("j_montant").value;
+					}
+					
+					var matr=document.getElementById("j_matr").value = appid.matrAdherent;
+					
+
+					cheminexeimpression="C:\\Carte_OCP\\Exe_Impression\\Exe";
+
+					
+					//
+				
+					version = appid.LancerExe("cmd /c " + cheminexeimpression + "\\ImprimTicket.exe "+" "+  matr+ " 1"+ " Rechargement"+" "+ mont);
+							
+
+				} catch (err) {
+
+					alert("Error de Capture Photo Personnel  : " + err);
+
+				}
+			}
+		</script>
+		<p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;width:128%;">
+			<ul class="menuOpposition">
+				<li><h:link
+						outcome="/pages/vente/rechargement/rechargementCartePersonnel.xhtml">
+						<div>
+							<center>#{prezmsg['PERS_RECHARGEMENT']}</center>
+						</div>
+					</h:link></li>
+				<li class="active"><h:link
+						outcome="/pages/vente/rechargement/rechargementCarte.xhtml">
+						<div>
+							<center>#{prezmsg['ADHER_RECHARGEMENT']}</center>
+						</div>
+					</h:link></li>
+<!-- 				<li><h:link -->
+<!-- 						outcome="/pages/controlAcces/categorieporteur/listerCategoriePorteur.xhtml"> -->
+<!-- 						<div> -->
+<!-- 							<center>#{prezmsg['CATEGORIE_POPTEUR_CARTE']}</center> -->
+<!-- 						</div> -->
+<!-- 					</h:link></li> -->
+				<li ><h:link
+						outcome="/pages/vente/rechargement/rechargementMifare/rechargementCarte.xhtml">
+						<div>
+							<center>#{prezmsg['RECH_PERS_RETR']}</center>
+						</div>
+					</h:link></li>
+<!-- 					<li><h:link -->
+<!-- 						outcome="/pages/vente/venteLocal/vente.xhtml"> -->
+<!-- 						<div> -->
+<!-- 							<center>#{prezmsg['VENTE_ADHER']}</center> -->
+<!-- 						</div> -->
+<!-- 					</h:link></li> -->
+			</ul>
+		</p:fieldset>
+
+		<!--         <p:fieldset legend="#{prezmsg['LECTURE_CARTE']}"> -->
+		<center>
+			<p:ajaxStatus>
+				<f:facet name="start">
+					<p:graphicImage library="images" name="blueajax.gif"
+						styleClass="AjaxStatusLoader" />
+				</f:facet>
+			</p:ajaxStatus>
+		</center>
+
+		<h:form id="recharge" prependId="false">
+			<center>
+				<p:messages autoUpdate="true" globalOnly="true" closable="true"
+					styleClass="M1" />
+				<div id="f1" style="padding: 2.6 em 1em"></div>
+			</center>
+
+			<center>
+				<p:fieldset styleClass="fieldsetCategories">
+					<h:panelGrid columns="4" id="informations" cellspacing="8">
+
+
+
+						<h:outputLabel value="#{prezmsg['MATRICULE']}" />
+
+						<p:inputText id="j_matr"  />
+						<h:outputLabel value="#{prezmsg['NOM']}" />
+
+						<p:inputText id="j_nom"  />
+
+						<h:outputLabel value="#{prezmsg['PRENOM']}" />
+						<p:inputText id="j_prenom"  />
+
+                        	<h:outputLabel value="#{prezmsg['SOLDE']}" />
+						<p:inputText id="j_solde" />
+
+					</h:panelGrid>
+
+					<p:commandButton id="lecture" onclick="lecture_data()"
+						icon="ui-icon-custom-detailsOsc"
+						value="#{prezmsg['LECTURE_CARTEPERSO']}" styleClass="Val"
+						update="recharge" style="width:200px;" />
+
+				</p:fieldset>
+			</center>
+			
+			
+			
+			<center>
+				<p:fieldset styleClass="fieldsetCategories">
+					<h:panelGrid columns="2" id="information" cellspacing="8">
+
+
+                        	<h:outputLabel value="#{prezmsg['Montant_RECHARGE']}" />
+						<p:inputText id="j_montant" />
+
+						
+					</h:panelGrid>
+					<h:panelGroup id="fieldHiddeen">
+					
+					<h:inputHidden id="matric" value="#{personnelMBean.webBean.vo.matricule}"></h:inputHidden>
+					<h:inputHidden id="solde" value="#{personnelMBean.webBean.vo.solde}"></h:inputHidden>
+					<h:inputHidden id="mntant" value="#{personnelMBean.webBean.vo.montant}"></h:inputHidden>
+					</h:panelGroup>
+
+
+<br/><br/><br/>
+					<p:commandButton id="recharger" onclick="recharge_carte()" oncomplete="lecture_data()"
+						icon="ui-icon-custom-detailsOsc" process="@this fieldHiddeen" action="#{personnelMBean.recharger}"
+						value="#{prezmsg['RECHARCHER_CARTE']}" styleClass="Val"
+						update="recharge" style="width:180px;" />
+						
+						
+<!-- 						<p:commandButton id="imprim" onclick="imprimer_Ticket()" -->
+<!-- 						icon="ui-icon-custom-printOsc" -->
+<!-- 						value="#{prezmsg['IMPRIMER_TiCKET']}" styleClass="Val" -->
+<!-- 						update="recharge" style="width:200px;" /> -->
+						
+<!-- 						<p:commandButton id="search" onclick="lecture_data()" -->
+<!-- 						icon="ui-icon-custom-detailsOsc" -->
+<!-- 						value="#{prezmsg['CONSULET_TRANSACT']}" styleClass="Val" -->
+<!-- 						update="recharge" style="width:200px;" /> -->
+						
+
+				</p:fieldset>
+			</center>
+		</h:form>
+	</ui:define>
+</ui:composition>
+

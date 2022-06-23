@@ -1,0 +1,95 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<p:dialog id="create-dlg2" widgetVar="create-dlg-wdg2-Adh" closable="true"
+		closeOnEscape="true" header="Mettre en main levée" hideEffect="fade"
+		showEffect="fade" modal="true" dynamic="true">
+
+		<h:form id="create-form2-Adh">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+			<pe:tooltip for="statut_univ" myPosition="left center"
+				showEvent="click" hideEvent="unfocus" atPosition="right center">
+				<h:message for="statut_univ" />
+			</pe:tooltip>
+
+			<h:panelGrid columns="2" styleClass="FormGrid">
+
+				<h:outputLabel value="Matricule" />
+				<p:inputText id="univ_matr"
+					value="#{oppositionAdhMBean.webBeanAdh.adherentVO.matr}"
+					required="true" readonly="true"
+					title="#{component.valid ? '' : cycleVieMBean.getErrorMessage(component.clientId)}" />
+					
+					
+				<h:outputLabel value="#{prezmsg['NOM']} et  #{prezmsg['PRENOM']}" />
+				<p:inputText id="univ_nom"
+					value="#{oppositionAdhMBean.webBeanAdh.adherentVO.nom} #{oppositionAdhMBean.webBeanAdh.adherentVO.prenom}"
+					required="true" readonly="true"
+					title="#{component.valid ? '' : cycleVieMBean.getErrorMessage(component.clientId)}" />
+					
+
+				<h:outputLabel value="#{prezmsg['MOTIF']}" />
+				<p:selectOneMenu id="statut_univ"
+					value="#{oppositionAdhMBean.webBeanAdh.adherentVO.motif}" filter="true"
+					required="true"
+					title="#{component.valid ? '' : cycleVieMBean.getErrorMessage(component.clientId)}">
+					<f:selectItem itemLabel="Sélectionner" />
+					<f:selectItems value="#{oppositionAdhMBean.webBeanAdh.motifMainVOs}"
+						var="u" itemLabel="#{u.libelle}" itemValue="#{u.libelle}" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+
+			<!-- Action toolbar -->
+			<p:toolbar>
+<!-- 				<f:facet name="left"> -->
+
+<!-- 					Annuler la saisie -->
+<!-- 					<p:commandButton styleClass="OpButton" value="#{prezmsg['RESET']}" -->
+<!-- 						icon="ui-icon-custom-undo" -->
+<!-- 						actionListener="#{oppositionAdhMBean.resetWebBeanVO()}" process="@this" -->
+<!-- 						update="create-form2" tabindex="-1"> -->
+<!-- 						<p:resetInput target="create-form2" /> -->
+<!-- 					</p:commandButton> -->
+
+<!-- 				</f:facet> -->
+				<f:facet name="right">
+
+					<!-- Valider le form -->
+					<p:commandButton id="validate-create" styleClass="ValidateButton"
+						value="#{prezmsg['VALIDER']}"
+						action="#{oppositionAdhMBean.carteMainLeveeAdh()}" process=" @form"
+						update=":nationalite-form-Adh create-form2-Adh" onstart="block('create-dlg-wdg2-Adh')"
+						oncomplete="unblock('create-dlg-wdg2-Adh')" />
+
+					<!-- Annule le useCase-->
+					<p:commandButton id="cancel-create" styleClass="CancelButton"
+						value="#{prezmsg['ANNULER']}" type="button"
+						onclick="PF('create-dlg-wdg2-Adh').hide()" global="false" />
+				</f:facet>
+			</p:toolbar>
+
+			<p:defaultCommand target="validate-create" />
+
+			<!-- Focus automatique  -->
+			<p:focus context="create-form2-Adh" />
+
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('create-dlg-wdg2-Adh').hide()"
+				update=":nationalite-form-Adh:nationalite-dtbl-Adh" />
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>

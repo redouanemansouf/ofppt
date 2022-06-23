@@ -1,0 +1,66 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:b="http://bootsfaces.net/ui">
+
+	<p:panel id="reservationList-pnl"
+		rendered="#{reservationMBean.action == 'SOLDE'}"
+		styleClass="MarginAuto">
+
+		<!-- SOLDE  DE L'USAGER-->
+		<h:panelGrid columns="1" styleClass="FormGrid">
+
+			<h:outputText id="soldeUsager-output"
+				styleClass="RecapReservation StrongFont" style="text-align: center;"
+				value="SOLDE : #{reservationMBean.soldeUsager} DH" >
+				   <f:convertNumber pattern="#0.000" locale="pt_BR" />
+				</h:outputText>
+
+		</h:panelGrid>
+
+		<p:dataTable style="width:800px;" styleClass="BorderDtbl"
+			value="#{reservationMBean.webBean.vos}" var="res" rowKey="#{res.id}"
+			emptyMessage="#{prezmsg['AUCUNE_RESERVATION_N_EST_EFFECTUEE']}"
+			paginatorAlwaysVisible="false" paginator="true"
+			paginatorPosition="bottom"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5">
+
+			<!-- DATE OPÉRATION -->
+			<p:column headerText="Date" styleClass="AlignCenter"
+				style="background:white;color:black;">
+				<h:outputText value="#{res.dateOperation}" style="color:black;"
+					styleClass="StrongFont">
+					<f:convertDateTime pattern="dd-MM-yyyy" />
+				</h:outputText>
+			</p:column>
+
+			<!-- TYPE RÉSERVATION -->
+			<p:column headerText="Type" styleClass="AlignCenter"
+				style="background:white;color:black;">
+				<h:outputText value="#{res.typeReservation.typeReservationCode}"
+					style="color:black;" styleClass="StrongFont" />
+			</p:column>
+
+			<!-- RÉSERVATION -->
+			<p:column headerText="Rés." styleClass="AlignCenter"
+				style="background:white;color:black;">
+				<h:outputText value="#{res.libelle}" style="color:black;"
+					styleClass="StrongFont" />
+			</p:column>
+
+			<!-- ETAT DE LA RÉSERVATION -->
+			<p:column headerText="Etat" styleClass="AlignCenter"
+				style="background:white;color:black;">
+				<h:outputText value="#{res.etat.etatReservation}"
+					style="color:black;" styleClass="StrongFont" />
+			</p:column>
+
+		</p:dataTable>
+
+	</p:panel>
+
+</ui:composition>

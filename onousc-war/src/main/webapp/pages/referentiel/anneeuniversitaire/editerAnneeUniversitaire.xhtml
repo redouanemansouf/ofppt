@@ -1,0 +1,77 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+	<p:dialog id="edit-dlg" widgetVar="edit-dlg-wdg"
+		header="Modifier année universitaire" hideEffect="fade"
+		showEffect="fade" modal="true" dynamic="true" closeOnEscape="true">
+
+
+
+		<h:form id="edit-form">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+			<h:panelGrid columns="2" styleClass="FormGrid">
+
+				<!--      Code anneeUniversitaire     -->
+				<h:outputLabel value="#{prezmsg['CODE']}" />
+				<p:inputText id="univ_code"
+					value="#{anneeUniversitaireMBean.webBean.vo.code}" disabled="true" />
+
+
+				<!--      Nom anneeUniversitaire     -->
+				<h:outputLabel value="#{prezmsg['LIBELLE']}" />
+				<p:inputText id="univ_libelle" required="true"
+					value="#{anneeUniversitaireMBean.webBean.vo.libelle}"
+					title="#{component.valid ? '' : anneeUniversitaireMBean.getErrorMessage(component.clientId)}" />
+
+				<!-- date debut -->
+				<h:outputLabel value="#{prezmsg['DATE_DEBUT']}" />
+				<p:calendar id="univ_datedebut" styleClass="InscrInput"
+					value="#{anneeUniversitaireMBean.webBean.vo.date_debut}"
+					title="#{component.valid ? '' : utilsMBean.getErrorMessage(component.clientId)}"
+					pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true">
+				</p:calendar>
+
+				<!--      Date fin     -->
+				<h:outputLabel value="#{prezmsg['DATE_FIN']}" />
+				<p:calendar id="univ_datefin" styleClass="InscrInput"
+					value="#{anneeUniversitaireMBean.webBean.vo.date_fin}"
+					title="#{component.valid ? '' : utilsMBean.getErrorMessage(component.clientId)}"
+					pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true">
+				</p:calendar>
+
+			</h:panelGrid>
+
+			<p:toolbar>
+				<f:facet name="right">
+					<p:commandButton id="validate-edit" value="#{prezmsg['VALIDER']}"
+						styleClass="ValidateButton"
+						action="#{anneeUniversitaireMBean.modifier}" process="@form"
+						update="edit-form :succes" />
+					<p:commandButton value="#{prezmsg['ANNULER']}" global="false"
+						styleClass="CancelButton" process="@none"
+						onclick="PF('edit-dlg-wdg').hide()" />
+				</f:facet>
+			</p:toolbar>
+
+
+			<!-- Cache le dialog s'il n'y a pas d'érreur -->
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('edit-dlg-wdg').hide()"
+				update=":anneeUniversitaire-form:anneeUniversitaire-dtbl" />
+
+		</h:form>
+	</p:dialog>
+
+</ui:composition>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<REF_SOURCE_RECLAMATION SR_ID="1" SR_LIBELLE="cv"
+		SR_DESCRIPTION="cv" SR_STATUT="ENABLED" />
+
+	<REF_SOURCE_RECLAMATION SR_ID="2" SR_LIBELLE="cv libelle"
+	SR_DESCRIPTION="cv description" SR_STATUT="DISABLED" />
+
+</dataset>

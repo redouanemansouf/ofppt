@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-11-16T17:29:44 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_res" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b640759b-1d4a-419c-bf99-07aa7493b237">
+	<parameter name="ReportTitle" class="java.lang.String"/>
+	<parameter name="author" class="java.lang.String"/>
+	<parameter name="realPath" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="libelle" class="java.lang.String">
+		<fieldDescription><![CDATA[libelle]]></fieldDescription>
+	</field>
+	<field name="CARTE" class="com.m2m.onousc.business.referentiel.vo.CarteVO">
+		<fieldDescription><![CDATA[carte]]></fieldDescription>
+	</field>
+	<field name="montant" class="java.lang.Double">
+		<fieldDescription><![CDATA[montant]]></fieldDescription>
+	</field>
+	<field name="typeReservation" class="com.m2m.onousc.business.reservation.vo.TypeReservation">
+		<fieldDescription><![CDATA[typeReservation]]></fieldDescription>
+	</field>
+	<field name="dateOperation" class="java.util.Date">
+		<fieldDescription><![CDATA[dateOperation]]></fieldDescription>
+	</field>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{typeReservation}]]></groupExpression>
+		<groupHeader>
+			<band height="33">
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="100" height="32" forecolor="#666666" backcolor="#D1D1D1" uuid="544a48cd-816f-4d8b-bdb2-0396c34b57dc"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[TYPE]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Opaque" x="100" y="0" width="455" height="32" forecolor="#006699" backcolor="#B3B3B3" uuid="53c5ec06-4ff0-4427-825a-2cf345683946"/>
+					<textElement>
+						<font size="24" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{typeReservation}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="-20" y="32" width="595" height="1" forecolor="#666666" uuid="8d27aa7c-bfeb-4d79-977e-c88efce3426e"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="07458279-1df7-4cdf-a24d-f6c5c5b654af"/>
+				<textField>
+					<reportElement x="170" y="31" width="230" height="30" forecolor="#FFFFFF" uuid="6c52e3f0-3a8d-4253-8b0a-1cbbcaa9cd2d"/>
+					<textElement textAlignment="Center">
+						<font fontName="Cambria" size="20"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{ReportTitle}]]></textFieldExpression>
+				</textField>
+				<image>
+					<reportElement x="20" y="10" width="50" height="50" uuid="8a1e018a-fa6c-421d-9209-0bdda5363a59"/>
+					<imageExpression><![CDATA[$P{realPath}+"/custom/logo.png"]]></imageExpression>
+				</image>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="90226368-e7f5-4d06-a392-fe90e69796b0"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="100" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="0f55bf30-d011-405d-807e-d5947bf9aab4"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LIBELLE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="100" y="0" width="110" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="5602cc4e-09c8-41b9-aeaa-a65a96c138ec"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOM ETUDIANT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="210" y="0" width="140" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="5602cc4e-09c8-41b9-aeaa-a65a96c138ec"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRÉNOM ETUDIANT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="350" y="0" width="99" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="b59fbc4c-0b23-4f03-8c87-993ad9e35a06"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MONTANT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="450" y="0" width="105" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="d1973d0e-ee43-41b2-9ad7-c11a79203eb8"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATE OPERATION]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="c99d76b5-ed37-4bf5-b6ff-2376178893eb"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="100" height="20" uuid="c2a1a1be-8b34-4428-b1ad-37a1235a681d"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{libelle}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="102" y="-1" width="108" height="20" uuid="16eb6c65-c36a-4330-822f-6658642ae4b9"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CARTE}.getEtudiantvo().getNom()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="210" y="-1" width="140" height="20" uuid="16eb6c65-c36a-4330-822f-6658642ae4b9"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CARTE}.getEtudiantvo().getPrenom()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="350" y="-1" width="99" height="20" uuid="ab104c46-0aae-4afb-9b14-0560327030a3"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{montant}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="450" y="0" width="105" height="20" uuid="47593764-a4d5-47bf-9fce-1f2919b97da4"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dateOperation}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="04222ccb-1fd9-419a-99fc-be5224764284"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" sur"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="f156890e-be98-4a51-b8c5-63633e3dc23c"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="4b1488df-280c-41e7-8314-66b47c15da33"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="4" width="100" height="13" uuid="8f74583d-2d81-4dea-8635-cc5a34959700"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{author}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

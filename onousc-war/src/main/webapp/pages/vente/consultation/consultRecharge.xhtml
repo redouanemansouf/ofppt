@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+	<ui:define name="content">
+
+		<p:ajaxStatus>
+			<f:facet name="start">
+				<p:graphicImage library="images" name="blueajax.gif"
+					styleClass="AjaxStatusLoader" />
+			</f:facet>
+		</p:ajaxStatus>
+
+
+
+		<h:form id="critere-form">
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+
+
+			<!--  -->
+
+
+
+			<center>
+				<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;"
+					styleClass="fieldsetCategories">
+
+					<center>
+						<p:messages autoUpdate="true" globalOnly="true" closable="true"
+							style="width:60%;" showIcon="false" />
+					</center>
+
+					<p:commandLink ajax="false">
+						<h:graphicImage url="./../../../resources/images/pdf.png"></h:graphicImage>
+						<p:dataExporter target="statistique-dtbl" type="pdf"
+							fileName="CaissePDF"
+							></p:dataExporter>
+					</p:commandLink>
+					<p:commandLink ajax="false">
+						<h:graphicImage url="./../../../resources/images/excel.png"></h:graphicImage>
+						<p:dataExporter target="statistique-dtbl" type="xls"
+							fileName="CaisseExcel"></p:dataExporter>
+					</p:commandLink>
+					<p:commandLink ajax="false">
+						<h:graphicImage url="./../../../resources/images/csv.png"></h:graphicImage>
+						<p:dataExporter target="statistique-dtbl" type="csv"
+							fileName="CaisseCSV"></p:dataExporter>
+					</p:commandLink>
+
+					<div class="RefCenter">
+						<center>
+							<p:fieldset
+								style="padding-left: 0px !important; padding-right: 0% !important;margin-left: 0%;"
+								styleClass="fieldsetSearch" id="searchField">
+								<h:form id="search-form">
+
+
+									<h:panelGrid columns="4" styleClass="FormGrid">
+
+
+										<h:outputLabel value="#{prezmsg['SITE']}" />
+										<p:inputText
+											value="#{operationCaisseMBean.user.siteVO.libelle}"
+											rendered="#{operationCaisseMBean.user.siteVO !=null }"
+											disabled="true" />
+										<p:selectOneMenu id="site"
+											rendered="#{operationCaisseMBean.user.siteVO ==null }"
+											value="#{operationCaisseSearchMBean.operationCaisseCriteria.idSite}">
+											<f:selectItem itemLabel="#{prezmsg['SELECTIONNER']}" />
+											<f:selectItems
+												value="#{operationCaisseMBean.webBean.listSiteForCombo}"
+												var="site" itemLabel="#{site.libelle}"
+												itemValue="#{site.id}" />
+										</p:selectOneMenu>
+
+
+
+										<h:outputLabel value="#{prezmsg['MATRICULE']}" />
+
+										<p:inputText id="matr-search"
+											value="#{operationCaisseSearchMBean.operationCaisseCriteria.matricule}" />
+
+										<h:outputLabel value="#{prezmsg['DATE_DEBUT']}" />
+										<p:calendar id="date_deb"
+											value="#{operationCaisseSearchMBean.operationCaisseCriteria.dateDebut}"
+											pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true" />
+
+
+										<h:outputLabel value="#{prezmsg['DATE_FIN']}" />
+										<p:calendar id="date_Fin"
+											value="#{operationCaisseSearchMBean.operationCaisseCriteria.dateFin}"
+											pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true" />
+
+
+										<h:outputLabel value="#{prezmsg['TYPEOPER']}" />
+										<p:selectOneMenu id="tourniquet_search"
+											value="#{operationCaisseSearchMBean.operationCaisseCriteria.typeOperation}"
+											style="width:220px">
+											<f:selectItem itemLabel="Choisissez" />
+
+
+											<f:selectItem itemLabel="Annulation" itemValue="A" />
+											<f:selectItem itemLabel="Vente" itemValue="V" />
+											<f:selectItem itemLabel="Recharge" itemValue="R" />
+										</p:selectOneMenu>
+
+										<h:outputLabel value="#{prezmsg['CAISSE']}" />
+										<p:selectOneMenu id="caisse_search"
+											value="#{operationCaisseSearchMBean.operationCaisseCriteria.idcaisse}"
+											style="width:220px">
+											<f:selectItem itemLabel="Choisissez" />
+											<f:selectItems value="#{caissierMBean.webBean.caisseVOs}"
+												var="caisse" itemLabel="#{caisse.libelle} "
+												itemValue="#{caisse.id}" />
+										</p:selectOneMenu>
+
+									</h:panelGrid>
+
+								
+
+
+								<p:commandButton id="searchOk" styleClass="Val"
+									icon="ui-icon-custom-rechercheOsc" value="#{prezmsg['OK']}"
+									action="#{operationCaisseSearchMBean.run}"
+									update=":critere-form:statistique-dtbl" />
+
+								<!-- clear du formulaire  -->
+								<p:commandButton id="searchReset" styleClass="Val"
+									widgetVar="searchReset-wdg" icon="ui-icon-custom-cancelOsc"
+									value="#{prezmsg['RESET']}"
+									action="#{operationCaisseSearchMBean.resetSearchCriteria}"
+									update="caisse_search tourniquet_search date_Fin date_deb matr-search site" tabindex="-1">
+									<p:resetInput target="search-form" />
+								</p:commandButton>
+								</h:form>
+
+								<!-- 								<h:panelGrid columns="3"> -->
+								<!-- 									<h:form id="search-form"> -->
+
+
+
+								<!-- 										<h:panelGrid columns="4" styleClass="FormGrid"> -->
+
+								<!-- 											<h:outputLabel value="#{prezmsg['MATRICULE']}" /> -->
+
+								<!-- 											<p:inputText id="matr-search" -->
+								<!-- 												value="#{operationCaisseSearchMBean.operationCaisseCriteria.matricule}" /> -->
+
+								<!-- 											<h:outputLabel value="#{prezmsg['DATE_DEBUT']}" /> -->
+								<!-- 											<p:calendar id="date_deb" -->
+								<!-- 												value="#{operationCaisseSearchMBean.operationCaisseCriteria.dateDebut}" -->
+								<!-- 												pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true" /> -->
+
+
+								<!-- 											<h:outputLabel value="#{prezmsg['DATE_FIN']}" /> -->
+								<!-- 											<p:calendar id="date_Fin" -->
+								<!-- 												value="#{operationCaisseSearchMBean.operationCaisseCriteria.dateFin}" -->
+								<!-- 												pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true" /> -->
+
+
+								<!-- 											<h:outputLabel value="#{prezmsg['TYPEOPER']}" /> -->
+								<!-- 											<p:selectOneMenu id="tourniquet_search"  -->
+								<!-- 												value="#{operationCaisseSearchMBean.operationCaisseCriteria.typeOperation}" -->
+								<!-- 												 style="width:220px"> -->
+								<!-- 												<f:selectItem itemLabel="Choisissez" /> -->
+
+
+								<!-- 													<f:selectItem itemLabel="Annulation"  itemValue="A"/> -->
+								<!-- 														<f:selectItem itemLabel="Vente" itemValue="V" /> -->
+
+								<!-- 											</p:selectOneMenu> -->
+
+								<!-- 											<h:outputLabel value="#{prezmsg['CAISSE']}" /> -->
+								<!-- 											<p:selectOneMenu id="caisse_search" -->
+								<!-- 												value="#{operationCaisseSearchMBean.operationCaisseCriteria.idcaisse}" -->
+								<!-- 												 style="width:220px"  -->
+								<!-- 										> -->
+								<!-- 												<f:selectItem itemLabel="Choisissez" /> -->
+								<!-- 												<f:selectItems value="#{caissierMBean.webBean.caisseVOs}" -->
+								<!-- 													var="caisse"   itemLabel="#{caisse.libelle} " -->
+								<!-- 													itemValue="#{caisse.id}" /> -->
+								<!-- 											</p:selectOneMenu> -->
+
+
+
+								<!-- 										</h:panelGrid> -->
+
+
+
+
+
+								<!-- 									</h:form> -->
+
+
+
+								<!-- 								</h:panelGrid> -->
+								<!-- 								<p:commandButton id="searchOk" styleClass="Val" -->
+								<!-- 									icon="ui-icon-custom-rechercheOsc" value="#{prezmsg['OK']}" -->
+								<!-- 									action="#{operationCaisseSearchMBean.run}" -->
+								<!-- 									update=":critere-form:statistique-dtbl" /> -->
+
+								<!-- clear du formulaire  -->
+								<!-- 								<p:commandButton id="searchReset" styleClass="Val" -->
+								<!-- 									widgetVar="searchReset-wdg" icon="ui-icon-custom-cancelOsc" -->
+								<!-- 									value="#{prezmsg['RESET']}" -->
+								<!-- 									action="#{operationCaisseSearchMBean.resetSearchCriteria()}" -->
+								<!-- 									update=":critere-form:search-form"> -->
+								<!-- 									<p:resetInput target="search-form" /> -->
+								<!-- 								</p:commandButton> -->
+
+								<!-- 								<p:commandButton id="searchReset" styleClass="Val" -->
+								<!-- 								widgetVar="searchReset-wdg" value="#{prezmsg['RESET']}" -->
+								<!-- 								icon="ui-icon-custom-undo" -->
+								<!-- 								action="#{operationCaisseSearchMBean.resetSearchCriteria()}" -->
+								<!-- 								update="searchField"> -->
+								<!-- 							</p:commandButton> -->
+
+							</p:fieldset>
+						</center>
+
+						<br />
+
+						<p:dataTable id="statistique-dtbl" paginator="true"
+							value="#{operationCaisseSearchMBean}" var="univ" rows="10"
+							lazy="true" paginatorPosition="bottom"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="10,20,30"
+							actionListener="#{operationCaisseMBean.resetWebBeanVO}"
+							selection="#{operationCaisseMBean.webBean.selectedVOs}"
+							selectionMode="multiple"
+							currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+
+
+
+
+							<p:column headerText="#{prezmsg['MATRICULE']}"
+								style="width:12%;text-align:center" sortBy="#{univ.matricule}">
+
+								<h:outputText value="#{univ.matricule}" />
+							</p:column>
+
+							<p:column headerText="Nom" style="width:12%;text-align:center"
+								sortBy="#{univ.nom.nom}">
+
+								<h:outputText value="#{univ.nom.nom}" />
+							</p:column>
+
+							<p:column headerText="Prénom" sortBy="#{univ.prenom.prenom}"
+								style="width:12%;text-align:center">
+
+								<h:outputText value="#{univ.prenom.prenom}" />
+							</p:column>
+							<!-- Identifiant de l'universite  -->
+							<p:column headerText="#{prezmsg['DATE_TRANSACTION']}"
+								style="width:12%;text-align:center"
+								sortBy="#{univ.dateOperation}">
+								<h:outputText value="#{univ.dateOperation}">
+									<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+								</h:outputText>
+							</p:column>
+							<p:column headerText="#{prezmsg['TYPE_OPERATION']} "
+								style="width:12%;text-align:center"
+								sortBy="#{univ.typeOperation}">
+								<h:outputText value="Annulation"
+									rendered="#{univ.typeOperation == 'A' }" />
+								<h:outputText value="Vente"
+									rendered="#{univ.typeOperation == 'V' }" />
+									<h:outputText value="Recharge"
+									rendered="#{univ.typeOperation == 'R' }" />
+							</p:column>
+							<p:column headerText="#{prezmsg['MONTANT']} (DH)"
+								style="width:12%;text-align:center" sortBy="#{univ.montant}">
+								<h:outputText value="#{univ.montant}">
+									<f:convertNumber maxFractionDigits="3"></f:convertNumber>
+
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="#{prezmsg['PRODUIT']}"
+								style="width:12%;text-align:center"
+								sortBy="#{univ.produitVO.libelle}">
+								<h:outputText value="#{univ.produitVO.libelle}" />
+							</p:column>
+
+							<p:column headerText="#{prezmsg['CAISSE']}"
+								style="width:12%;text-align:center"
+								sortBy="#{univ.caisseVO.libelle}">
+								<h:outputText value="#{univ.caisseVO.libelle}" />
+							</p:column>
+
+
+						</p:dataTable>
+
+					</div>
+
+				</p:fieldset>
+			</center>
+		</h:form>
+
+
+
+
+
+	</ui:define>
+</ui:composition>
+

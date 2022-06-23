@@ -1,0 +1,57 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+	<p:dialog id="editer-groupe"
+		widgetVar="editer-groupe"
+		header="Modifier groupe utilisateur" hideEffect="fade"
+		styleClass="dialogclass" showEffect="fade" modal="true" dynamic="true"
+		closeOnEscape="true"
+		onHide="PF('editer-groupe').content.empty">
+
+
+
+		<h:form id="editergroupe-form">
+
+				<!-- Message d'e-rreur metier -->
+			<p:messages id="edit-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+				<h:panelGrid columns="2" cellpadding="5">
+					<!--      Code anneeUniversitaire     -->
+
+					<p:column>
+						<h:outputLabel value="#{prezmsg['GROUPENAME']}" />
+					</p:column>
+
+					<p:column>
+						<p:inputText id="groupe_name_edit"
+							value="#{groupUserMBean.webBean.vo.groupname}" />
+					</p:column>
+				</h:panelGrid>
+
+				<h:panelGrid columns="2" styleClass="FloatRight" cellpadding="5">
+					<p:commandButton value="#{prezmsg['VALIDER']}" styleClass="ValidateButton"
+						action="#{groupUserMBean.modifier}" 
+						update="@form " 
+						 />
+					<p:commandButton value="#{prezmsg['ANNULER']}" global="false"
+						oncomplete="PF('editer-groupe').hide()" styleClass="CancelButton" />
+				</h:panelGrid>
+
+
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('editer-groupe').hide()"
+				update=":groupe-form:groupe-dtbl" />   
+
+		</h:form>
+	</p:dialog>
+
+</ui:composition>

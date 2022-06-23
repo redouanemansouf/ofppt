@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<REF_PARTICULARITE_TRONCON CPT_ID="1" CPT_LIBELLE="difficile"
+		CPT_DESCRIPTION="troncon difficile" CPT_STATUT="ENABLED" />
+
+	<REF_PARTICULARITE_TRONCON CPT_ID="2" CPT_LIBELLE="concurrence"
+		CPT_DESCRIPTION="concurrence sur le troncon" CPT_STATUT="DISABLED" />
+
+</dataset>

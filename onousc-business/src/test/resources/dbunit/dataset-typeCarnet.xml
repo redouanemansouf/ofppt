@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<REF_TYPE_CARNET TCA_ID="1" TCA_LIBELLE="Billet IU"
+		TCA_DESCRIPTION="vente de billet manuelle IU" TCA_STATUT="ENABLED" />
+		
+	<REF_TYPE_CARNET TCA_ID="2" TCA_LIBELLE="Billet IN"
+		TCA_DESCRIPTION="vente de billet manuelle IN" TCA_STATUT="DISABLED" />
+</dataset>

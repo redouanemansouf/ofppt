@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+	<p:dialog id="create-groupe"
+		widgetVar="create-groupe" closable="true" 
+		header="Ajouter groupe utilisateur" hideEffect="fade" styleClass="dialogclass"
+		showEffect="fade" modal="true" dynamic="true" closeOnEscape="true">
+
+
+		<h:form id="creeGroupe-form">  	
+
+				<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true"  severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+
+
+
+
+
+<!-- 			<pe:tooltip for="user_groupe" myPosition="left center"  -->
+<!-- 				showEvent="click" hideEvent="unfocus" atPosition="right center"> -->
+<!-- 				<h:message for="user_groupe" />   -->
+<!-- 			</pe:tooltip> -->
+  
+			<h:panelGrid columns="2" cellpadding="5">
+				<!--      Code anneeUniversitaire     -->
+
+				<p:column>
+					<h:outputLabel value="#{prezmsg['GROUPENAME']}" />
+				</p:column>
+
+				<p:column>
+					<p:inputText id="groupe_name"
+						value="#{groupUserMBean.webBean.vo.groupname}"  required="true"
+						title="#{component.valid ? '' : groupUserMBean.getErrorMessage(component.clientId)}" />
+				</p:column>
+			</h:panelGrid>
+
+<!-- 					Annuler la saisie    -->
+ 				<p:commandButton value="#{prezmsg['RESET']}"  
+ 					icon="ui-icon-custom-undo" styleClass="OpButton"     
+					actionListener="#{groupUserMBean.resetWebBeanVO()}"   
+					process="@this" update="@form"> 
+					<p:resetInput target="@form" />   
+				</p:commandButton>
+			<h:panelGrid columns="2" styleClass="FloatRight" cellpadding="5">
+			
+				<p:commandButton value="#{prezmsg['VALIDER']}"
+					styleClass="ValidateButton" action="#{groupUserMBean.creer}"
+					 update="@form " 
+					  />
+				<p:commandButton value="#{prezmsg['ANNULER']}" global="false"
+					oncomplete="PF('create-groupe').hide()"
+					styleClass="CancelButton" />
+			</h:panelGrid>
+
+  						
+			<p:remoteCommand name="_hideDialog" 
+				oncomplete="PF('create-groupe').hide()"
+				update=":groupe-form:groupe-dtbl" />
+
+		</h:form>
+	</p:dialog>
+
+</ui:composition>

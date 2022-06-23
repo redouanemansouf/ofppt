@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+	<ui:define name="content">
+
+		<p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;">
+			<ul class="menuCycleDeVie">
+				<li class="active"><h:link>
+						<div>
+							<center>CONSULTATIONS DES RESERVATION</center>
+						</div>
+					</h:link></li>
+			</ul>
+		</p:fieldset>
+		<p:ajaxStatus>
+			<f:facet name="start">
+				<p:graphicImage library="images" name="blueajax.gif"
+					styleClass="AjaxStatusLoader" />
+			</f:facet>
+		</p:ajaxStatus>
+
+		<h:form id="oppo-form">
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+			<p:remoteCommand name="_updateCrudMenu" global="false"
+				update="crud-menu" />
+
+			<!-- 			<p:remoteCommand name="_updateCrudMenu" global="false" -->
+			<!-- 				update="crud-menu :search-overlay" /> -->
+
+			<center>
+				<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;"
+					styleClass="fieldsetCategories">
+
+					<center>
+						<p:messages autoUpdate="true" globalOnly="true" closable="true"
+							style="width:60%;" showIcon="false" />
+					</center>
+
+					<div class="BackgroundGray">
+
+						<div class="RefCenter">
+							<p:fieldset
+								style="padding-left: 0px !important; padding-right: 0% !important;margin-left: 0%;"
+								styleClass="fieldsetSearch" id="searchField">
+
+								<center>
+									<h:panelGrid columns="4" styleClass="FormGrid">
+
+										<h:outputLabel value="Montant" />
+
+										<p:inputText id="mont-search"
+											value="#{reservationBorneSearchMBean.reservationBorneCriteria.montant}" />
+										<h:outputLabel value="Carte Porteur" />
+
+										<p:inputText id="carte-search"
+											value="#{reservationBorneSearchMBean.reservationBorneCriteria.cartePorteur}" />
+
+										<h:outputLabel value="#{prezmsg['SITE']}" />
+										<p:inputText
+											value="#{reservationBorneMBean.user.siteVO.libelle}"
+											rendered="#{reservationBorneMBean.user.siteVO !=null }"
+											disabled="true" />
+										<p:selectOneMenu id="site"
+											rendered="#{reservationBorneMBean.user.siteVO ==null }"
+											value="#{reservationBorneMBean.idSite}">
+											<f:selectItem itemLabel="#{prezmsg['SELECTIONNER']}" />
+											<f:selectItems
+												value="#{reservationBorneMBean.webBean.listSiteForCombo}"
+												var="site" itemLabel="#{site.libelle}"
+												itemValue="#{site.id}" />
+											<p:ajax event="change"
+												listener="#{reservationBorneMBean.onChangeSite}"
+												update="borne_search" global="false" />
+										</p:selectOneMenu>
+
+										<h:outputLabel value="#{prezmsg['BORNE_RESTAURATION']}" />
+										<p:selectOneMenu id="borne_search"
+											value="#{reservationBorneSearchMBean.reservationBorneCriteria.idBorne}"
+											style="width:220px">
+											<f:selectItem itemLabel="#{prezmsg['SELECTIONNER']}" />
+											<f:selectItems
+												value="#{reservationBorneMBean.webBean.borneVOs}"
+												var="borne" itemLabel="#{borne.libelle}"
+												itemValue="#{borne.id}" />
+
+										</p:selectOneMenu>
+									</h:panelGrid>
+
+									<p:commandButton id="searchOkk" styleClass="OpButton"
+										widgetVar="searchOk-wdg" value="#{prezmsg['CHERCHER']}"
+										action="#{reservationBorneSearchMBean.run}"
+										update="oppo-form:statistique-dtbl"
+										icon="ui-icon-custom-chercher" />
+
+									<!-- clear du formulaire  -->
+									<p:commandButton id="searchReset" styleClass="OpButton"
+										widgetVar="searchReset-wdg" value="#{prezmsg['RESET']}"
+										icon="ui-icon-custom-undo"
+										action="#{reservationBorneSearchMBean.resetSearchCriteria()}"
+										update="searchField oppo-form:statistique-dtbl">
+									</p:commandButton>
+								</center>
+								<br />
+							</p:fieldset>
+							<br />
+							<p:toolbar id="crud-menu">
+
+								<f:facet name="left">
+
+									<p:commandLink ajax="false">
+										<h:graphicImage url="./../../resources/images/pdf.png"></h:graphicImage>
+										<p:dataExporter target="statistique-dtbl" type="pdf"
+											fileName="ReservationBornePDF"></p:dataExporter>
+									</p:commandLink>
+									<p:commandLink ajax="false">
+										<h:graphicImage url="./../../resources/images/excel.png"></h:graphicImage>
+										<p:dataExporter target="statistique-dtbl" type="xls"
+											fileName="ReservationBorneExcel"></p:dataExporter>
+									</p:commandLink>
+									<p:commandLink ajax="false">
+										<h:graphicImage url="./../../resources/images/csv.png"></h:graphicImage>
+										<p:dataExporter target="statistique-dtbl" type="csv"
+											fileName="ReservationBorneCSV"></p:dataExporter>
+									</p:commandLink>
+
+								</f:facet>
+
+							</p:toolbar>
+
+							<p:dataTable id="statistique-dtbl" paginator="true"
+								value="#{reservationBorneSearchMBean}" var="univ" rows="10"
+								lazy="true" paginatorPosition="bottom"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="10,20,30"
+								currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+
+								<p:column headerText="Borne"
+									style="width:12%">
+
+									<h:outputText value="#{univ.borne.libelle}" />
+
+								</p:column>
+
+								<p:column headerText="Carte Porteur" style="width:12%">
+
+									<h:outputText value="#{univ.cartePorteur}" />
+
+								</p:column>
+								<p:column headerText="#{prezmsg['DATE_OPERATION']}"
+									style="width:12%">
+
+									<h:outputText value="#{univ.dateOperation}">
+										<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+									</h:outputText>
+
+								</p:column>
+
+								<p:column headerText="Montant" style="width:12%">
+
+									<h:outputText value="#{univ.montant}" />
+
+								</p:column>
+
+							</p:dataTable>
+
+
+
+						</div>
+					</div>
+				</p:fieldset>
+			</center>
+		</h:form>
+	</ui:define>
+</ui:composition>
+

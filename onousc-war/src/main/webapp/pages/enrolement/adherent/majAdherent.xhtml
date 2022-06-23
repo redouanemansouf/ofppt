@@ -1,0 +1,589 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+	
+
+	<ui:define name="content">
+
+		<applet id="appid" name="appid" permissions="all-permissions"
+			scriptable="true" archive="AppletMX.jar"
+			code="applet_mxcampus.AppletMX.class" width="0" height="0">
+		</applet>
+
+		<script type="text/javascript">
+			function majcarte() {
+
+				try {
+
+					var version = "null";
+
+					//Matricule
+					if (document.getElementById("j_matr").value == "") {
+						appid.matrAdherent = " ";
+					} else {
+						appid.matrAdherent = document
+								.getElementById("j_matr").value;
+					}
+
+					
+					
+							//	alert("appid.matrPersonnel  : " + appid.matrPersonnel);
+
+					//NOM  
+					if (document.getElementById("j_nom").value == "") {
+						appid.nomNaissanceAdherent = " ";
+					} else {
+						appid.nomNaissanceAdherent = document
+								.getElementById("j_nom").value;
+					}
+
+									//	alert("appid.nomNaissancePersonnel  : " + appid.nomNaissancePersonnel);
+
+					//PRENOM  
+					if (document.getElementById("j_prenom").value == "") {
+						appid.prenomAdherent = " ";
+					} else {
+						appid.prenomAdherent = document
+								.getElementById("j_prenom").value;
+					}
+
+
+				//	alert("appid.prenomPersonnel  : " + appid.prenomPersonnel);
+					//SEXE  
+					if (document.getElementById("sexe_create:0").checked) {
+						appid.sexeAdherent= "M";
+					} else if (document.getElementById("sexe_create:1").checked) {
+						appid.sexeAdherent = "F";
+					} else {
+						appid.sexeAdherent = " ";
+					}
+
+				//	alert("appid.sexePersonnel  : " + appid.sexePersonnel);
+
+					//DATE NAISSANCE 
+					if (document.getElementById("datenaissanceAdh_input").value == "") {
+						appid.dateNaissanceAdherent = " ";
+					} else {
+						appid.dateNaissanceAdherent = document
+								.getElementById("datenaissanceAdh_input").value;
+					}
+
+					  		//		alert("appid.dateNaissancePersonnel  : " + appid.dateNaissancePersonnel);
+
+					//LIEU NAISSANCE 
+					if (PF('selectVille').getSelectedValue() == "") {
+						appid.lieuNaissanceAdherent = " ";
+					} else {
+						appid.lieuNaissanceAdherent = PF('selectVille').getSelectedValue();
+					}
+
+				//	alert("appid.lieuNaissancePersonnel  : " + PF('selectVille').getSelectedValue());
+					//CNI  
+					if (document.getElementById("cni").value == "") {
+						appid.cniAdherent = " ";
+					} else {
+						appid.cniAdherent = document.getElementById("cni").value;
+					}
+	                  
+					//alert("appid.cniPersonnel  : " + appid.cniPersonnel);
+					
+					if (document.getElementById("telephone").value == "") {
+						appid.telephoneAdherent = " ";
+					} else {
+						appid.telephoneAdherent = document.getElementById("telephone").value;
+					}
+					if (document.getElementById("j_numCarte").value == "") {
+						appid.numCarteAdherent = " ";
+					} else {
+						appid.numCarteAdherent = document
+								.getElementById("j_numCarte").value;
+					}
+					
+					//SOLDE  
+					if (document.getElementById("sld").value == "") {
+						appid.SoldeAdherent = " ";
+					} else {
+						appid.SoldeAdherent = document.getElementById("sld").value;
+					}	
+					 			
+
+					//EMAIL  
+					if (PF('selectProfil').getSelectedValue()== "") {
+						appid.ProfilAdherent = " ";
+					} else {
+						appid.ProfilAdherent =PF('selectProfil').getSelectedValue();
+					}
+
+					if (document.getElementById("date_expiration_input").value == "") {
+						appid.dateexpirationcarteAdherent = " ";
+					} else {
+						appid.dateexpirationcarteAdherent = document
+								.getElementById("date_expiration_input").value;
+					}
+					
+					if (document.getElementById("date_delivrance_input").value == "") {
+						appid.datedelivrancecarteAdherent = " ";
+					} else {
+						appid.datedelivrancecarteAdherent  = document
+								.getElementById("date_delivrance_input").value;
+					}
+								//	alert("appid.ProfilPersonnel  : " + appid.ProfilPersonnel  dateexpirationcarteAdherent);
+
+					//CHEMIN CARTE RECTO  
+					if (document.getElementById("j_cheminCarteRecto").value == "") {
+						appid.chemincarterecto = " ";
+					} else {
+						appid.chemincarterecto = document
+								.getElementById("j_cheminCarteRecto").value;
+					}
+					  			//	alert("appid.chemincarterecto  : " + appid.chemincarterecto);
+
+					//CHEMIN CARTE VERSO 
+					if (document.getElementById("j_cheminCarteVerso").value == "") {
+						appid.chemincarteverso = " ";
+					} else {
+						appid.chemincarteverso = document
+								.getElementById("j_cheminCarteVerso").value;
+					}
+					   			//	alert("appid.chemincarteverso  : " + appid.chemincarteverso);
+
+					//CHEMIN EXE IMPRESSION  
+					if (document.getElementById("j_cheminExeImpression").value == "") {
+						appid.cheminexeimpression = " ";
+					} else {
+						appid.cheminexeimpression = document
+								.getElementById("j_cheminExeImpression").value;
+					}
+					
+					
+				
+					//   				alert("appid.cheminexeimpression  : " + appid.cheminexeimpression);
+
+					//      		    version = appid.GetVersion(); 
+				//	version = appid.LancerExe("cmd /c "
+			//				+ appid.cheminexeimpression
+				//			+ "\\IMPRESSION_CARTE.exe " + "1");
+					version = appid.EcritureElectriqueCrazy(2);
+	/************************TRANCHE PROFIL Lundi*******************************/
+					
+					if (document.getElementById("j_tranLundi").value == "") {
+						appid.tranche1 = "00000000";
+					} else {
+						appid.tranche1 = document
+								.getElementById("j_tranLundi").value;
+					}
+					
+					/************************TRANCHE PROFIL Mardi*******************************/
+					if (document.getElementById("j_tranMardi").value == "") {
+						appid.tranche2 = "00000000";
+					} else {
+						appid.tranche2 = document
+								.getElementById("j_tranMardi").value;
+					}
+					
+					/************************TRANCHE PROFIL Mercredi*******************************/
+					if (document.getElementById("j_tranMercredi").value == "") {
+						appid.tranche3 = "00000000";
+					} else {
+						appid.tranche3 = document
+								.getElementById("j_tranMercredi").value;
+					}
+					
+					/************************TRANCHE PROFIL JEUDI*******************************/
+					if (document.getElementById("j_tranJeudi").value == "") {
+						appid.tranche4 = "00000000";
+					} else {
+						appid.tranche4 = document
+								.getElementById("j_tranJeudi").value;
+					}
+					
+					/************************TRANCHE PROFIL Vendredi*******************************/
+					if (document.getElementById("j_tranVendredi").value == "") {
+						appid.tranche5 = "00000000";
+					} else {
+						appid.tranche5 = document
+								.getElementById("j_tranVendredi").value;
+					}
+					
+					/************************TRANCHE PROFIL Samedi*******************************/
+					if (document.getElementById("j_tranSamedi").value == "") {
+						appid.tranche6 = "00000000";
+					} else {
+						appid.tranche6 = document
+								.getElementById("j_tranSamedi").value;
+					}
+					
+					/************************TRANCHE PROFIL Dimanche*******************************/
+					if (document.getElementById("j_tranDimanche").value == "") {
+						appid.tranche7 = "00000000";
+					} else {
+						appid.tranche7 = document
+								.getElementById("j_tranDimanche").value;
+					}
+					
+					
+					
+					version =appid.ecrireProfilAcces(10,appid.tranche1);
+					version =appid.ecrireProfilAcces(11,appid.tranche2);
+					version =appid.ecrireProfilAcces(12,appid.tranche3);
+					version =appid.ecrireProfilAcces(13,appid.tranche4);
+					version =appid.ecrireProfilAcces(14,appid.tranche5);
+					version =appid.ecrireProfilAcces(15,appid.tranche6);
+					version =appid.ecrireProfilAcces(16,appid.tranche7);
+					// //                 version = appid.LancerExe("cmd /c " + appid.cheminexeimpression + "\\IMPRESSION_CARTE.exe " + "2" + " "  
+					// //  			    		                            + appid.chemincarterecto+"\\Carte_Etudiant_Recto_" + appid.idEtudiant + ".bmp"+ " " 
+					// //  			    		                            + appid.chemincarteverso+"\\Carte_Etudiant_Verso_" + appid.idEtudiant + ".bmp"); 
+
+				} catch (err) {
+
+					alert("Error d'impression de Carte Adherent  : " + err);
+
+				}
+			}
+		</script>
+
+		<p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;width:128%;">
+			<ul class="menuOpposition">
+				<li><h:link
+						outcome="/pages/enrolement/adherent/gestionAdherent.xhtml">
+						<div>
+							<center>#{prezmsg['ENROLEMENT_ADHERENT_MENU']}</center>
+						</div>
+					</h:link></li>
+				<li class="active"><h:link outcome="/pages/enrolement/adherent/majAdherent.xhtml">
+						<div>
+							<center>#{prezmsg['MAJCARTE_PERSO']}</center>
+						</div>
+					</h:link></li>
+				<li><h:link outcome="/pages/enrolement/adherent/lectureAdherent.xhtml">
+						<div>
+							<center>#{prezmsg['LECTURE_CARTE_PERSO']}</center>
+						</div>
+					</h:link></li>
+			</ul>
+		</p:fieldset>
+		<!--         <p:fieldset legend="#{prezmsg['MAJ_PERSONNEL']}"> -->
+		<p:ajaxStatus>
+			<f:facet name="start">
+				<p:graphicImage library="images" name="blueajax.gif"
+					styleClass="AjaxStatusLoader" />
+			</f:facet>
+		</p:ajaxStatus>
+
+		<h:form id="verification" prependId="false">
+			<center>
+				<p:messages autoUpdate="true" globalOnly="true" closable="true"
+					showIcon="false" />
+			</center>
+
+
+			<center>
+				<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;margin-left: 26%;"
+					styleClass="fieldsetSearche">
+
+					<h:panelGrid columns="7" >
+					
+					<h:outputLabel value="#{prezmsg['MATRICULE']}" />
+						<p:inputText id="matr1" value="#{adherentMBean.matrSearch}"
+							styleClass="textcenter" />
+ 						<h:outputLabel value="#{prezmsg['NOM']}" /> 
+						<p:inputText id="nom1" value="#{adherentMBean.nomSearch}" 
+							styleClass="textcenter" /> 
+ 							<h:outputLabel value="#{prezmsg['PRENOM']}" /> 
+ 						<p:inputText id="prenom1" value="#{adherentMBean.prenomSearch}" 
+ 							styleClass="textcenter" /> 
+							<p:commandButton id="search"
+						icon="ui-icon-custom-rechercheOsc" styleClass="Vall"
+						action="#{adherentMBean.findAdherentByMatr}"   update="verification" process="@this matr1"/>
+
+					</h:panelGrid>
+					
+
+				</p:fieldset>
+			</center>
+
+
+
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+			<pe:tooltip for="ville_create" myPosition="left center"
+				showEvent="click" hideEvent="unfocus" atPosition="right center">
+				<h:message for="ville_create" />
+			</pe:tooltip>
+<!-- 			<pe:tooltip for="personn_create" myPosition="left center" -->
+<!-- 				showEvent="click" hideEvent="unfocus" atPosition="right center"> -->
+<!-- 				<h:message for="cite_univ" /> -->
+<!-- 			</pe:tooltip> -->
+
+
+
+
+			<center>
+				<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;"
+					styleClass="fieldsetCategories">
+					<h:panelGrid columns="4" id="informations" cellspacing="8">
+
+
+                       <h:outputLabel value="#{prezmsg['PERSONNEL_OCP']}" />
+
+						<p:selectOneMenu id="personn_create"
+							value="#{adherentMBean.webBean.vo.personnel}" filter="true"
+							converter="personnelConverter" style="width:220px" required="true"
+							title="#{component.valid ? '' : adherentMBean.getErrorMessage(component.clientId)}">
+							<f:selectItem itemLabel="Choisissez" />
+							<f:selectItems value="#{adherentMBean.webBean.personnelvos}" var="p"
+								itemLabel=" #{p.nom}  #{p.prenom}" itemValue="#{p}" />
+								<p:ajax listener="#{adherentMBean.OnchangeMatr}" update="j_matr"></p:ajax>
+						</p:selectOneMenu>
+
+
+						<h:outputLabel value="#{prezmsg['MATRICULE']}" />
+
+						<p:inputText id="j_matr" value="#{adherentMBean.webBean.vo.matr}" required="true"
+							
+							title="#{component.valid ? '' : utilsMBean.getErrorMessage(component.clientId)}" />
+
+
+
+						<h:outputLabel value="#{prezmsg['NOM']}" />
+
+
+
+						<p:inputText id="j_nom" value="#{adherentMBean.webBean.vo.nom}"
+							required="true"
+							title="#{component.valid ? '' : utilsMBean.getErrorMessage(component.clientId)}" />
+
+						<h:outputLabel value="#{prezmsg['PRENOM']}" />
+						<p:inputText id="j_prenom"
+							value="#{adherentMBean.webBean.vo.prenom}" required="true"
+							title="#{component.valid ? '' : utilsMBean.getErrorMessage(component.clientId)}" />
+
+
+
+						<h:outputLabel value="#{prezmsg['SEXE']}" />
+						<p:selectOneRadio id="sexe_create"
+							value="#{adherentMBean.webBean.vo.sexe}" required="true"
+							title="#{component.valid ? '' : adherentMBean.getErrorMessage(component.clientId)}">
+							<f:selectItem itemLabel="Masculin " itemValue="M" />
+							<f:selectItem itemLabel="Feminin " itemValue="F" />
+						</p:selectOneRadio>
+
+
+
+						<h:outputLabel value="#{prezmsg['DATENAISS']}" />
+
+						<p:calendar id="datenaissanceAdh"
+							value="#{adherentMBean.webBean.vo.dateNaissance}"
+							pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true" yearRange="1960:2018" maxdate="#{adherentMBean.currentDate()}" />
+
+						<h:outputLabel value="#{prezmsg['LIEUNAISS']}" />
+
+						<p:selectOneMenu id="ville_create" widgetVar="selectVille"
+							value="#{adherentMBean.webBean.vo.lieuNaissance}"
+							converter="villeConverter" style="width:220px" required="true"
+							title="#{component.valid ? '' : utilsMBean.getErrorMessage(component.clientId)}">
+							<f:selectItem itemLabel="Choisissez" />
+							<f:selectItems value="#{adherentMBean.webBean.villevos}" var="u"
+								itemLabel="#{u.libelle}" itemValue="#{u}" />
+						</p:selectOneMenu>
+
+
+						<h:outputLabel value="#{prezmsg['CNI_ADHER']}" />
+						<p:inputText id="cni" value="#{adherentMBean.webBean.vo.cni}" 
+						
+							 />
+
+						<h:outputLabel value="#{prezmsg['TELEPHONE']}" />
+						<p:inputText id="telephone"
+							value="#{adherentMBean.webBean.vo.telephone}" 
+							title="#{component.valid ? '' : utilsMBean.getErrorMessage(component.clientId)}" />
+
+
+						<h:outputLabel value="#{prezmsg['TYPE']}" />
+						<p:selectOneRadio id="type_create" required="true"
+							value="#{adherentMBean.webBean.vo.type}"
+							title="#{component.valid ? '' : adherentMBean.getErrorMessage(component.clientId)}"
+							 style="width:220px">
+						<f:selectItem itemLabel="Conjoint " itemValue="C" />
+							<f:selectItem itemLabel="Enfant " itemValue="E" />
+								
+						</p:selectOneRadio>
+						
+						<h:outputLabel value="#{prezmsg['SCOLARISE']}" />
+						<p:selectOneRadio id="scola_create" 
+							value="#{adherentMBean.webBean.vo.scolarise}"
+							
+							 style="width:220px">
+						<f:selectItem itemLabel="OUI " itemValue="O" />
+							<f:selectItem itemLabel="NON " itemValue="N" />
+								
+						</p:selectOneRadio>
+
+                    <h:outputLabel value="#{prezmsg['CATEGORIE']}" />
+						<p:selectOneMenu id="categ_create"
+							value="#{adherentMBean.webBean.vo.categorie}"
+							converter="categoriePorteurConverter" style="width:220px">
+							<f:selectItem itemLabel="Choisissez" />
+							<f:selectItems value="#{adherentMBean.webBean.categorievos}"
+								var="u" itemLabel="#{u.libelle}" itemValue="#{u}" />
+								<p:ajax event="change" update="categ_create"></p:ajax>
+						</p:selectOneMenu>
+						
+						<h:outputLabel value="#{prezmsg['PROFIL']}" />
+						<p:selectOneMenu id="profil_create" widgetVar="selectProfil"
+							value="#{adherentMBean.webBean.vo.profil}" filter="true"
+							converter="critereConverter" style="width:220px">
+							<f:selectItem itemLabel="Choisissez" />
+							<f:selectItems value="#{adherentMBean.webBean.profilvos}"
+								var="u" itemLabel="#{u.libelle}" itemValue="#{u}" />
+								<p:ajax listener="#{adherentMBean.OnchangeProfil}" update="j_tranLundi j_tranMardi j_tranMercredi j_tranJeudi j_tranVendredi j_tranSamedi j_tranDimanche"></p:ajax>
+						</p:selectOneMenu>
+						
+						<h:outputLabel value="Solde" />
+						<p:inputText id="sld" readonly="true"  value="#{adherentMBean.webBean.solde}" />
+						
+						<h:outputLabel value="#{prezmsg['DATE_DELIV']}" />
+						<p:calendar id="date_delivrance"  value="#{adherentMBean.webBean.vo.dateDeliv}" 
+							pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true" />
+						<h:outputLabel value="#{prezmsg['DATE_EXP']}" />
+						<p:calendar id="date_expiration" value="#{adherentMBean.webBean.vo.dateExpiration}"  pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true"  />
+
+
+						<p:commandButton id="Tourn" widgetVar="trnqt-wdg"
+							icon="ui-icon-custom-nouveau" styleClass="ToolbarButton"
+							value="Liste des Tourniquets" process="@this j_matr"
+							disabled="#{adherentMBean.webBean.vo.matr ==null}"
+							actionListener="#{adherentMBean.getTourniquet()}"
+							oncomplete="PF('trnqt-dlg-wdg').show();" update=":trnqt-form:tourniquet-dtbl" />
+
+
+						 <h:inputHidden id="j_tranLundi" 
+ 							value="#{adherentMBean.webBean.vo.tranLundi}" /> 
+							
+							 <h:inputHidden id="j_tranMardi"
+							value="#{adherentMBean.webBean.vo.tranMardi}" /> 
+							
+							 <h:inputHidden id="j_tranMercredi" 
+						value="#{adherentMBean.webBean.vo.tranMercredi}" /> 
+							
+							 <h:inputHidden id="j_tranJeudi" 
+							value="#{adherentMBean.webBean.vo.tranJeudi}" /> 
+							
+							 <h:inputHidden id="j_tranVendredi" 
+							value="#{adherentMBean.webBean.vo.tranVendredi}" /> 
+							
+							 <h:inputHidden id="j_tranSamedi" 
+							value="#{adherentMBean.webBean.vo.tranSamdi}" /> 
+							
+						<h:inputHidden id="j_tranDimanche" 
+							value="#{adherentMBean.webBean.vo.tranDimanche}" /> 
+
+						<h:inputHidden id="j_cheminEnregPho"
+							value="#{adherentMBean.webBean.vo.cheminEnregPhoto}" />
+
+						<h:inputHidden id="j_cheminExePho"
+							value="#{adherentMBean.webBean.vo.cheminEnregPhoto}" />
+
+
+
+
+						<h:inputHidden id="j_cheminCarteRecto"
+							value="#{adherentMBean.webBean.vo.cheminCarteRecto}" />
+
+
+
+
+						<h:inputHidden id="j_cheminCarteVerso"
+							value="#{adherentMBean.webBean.vo.cheminCarteVerso}" />
+
+
+
+
+						<!-- 						<p:inputText id="j_cheminExePho" -->
+						<!-- 							value="#{personnelMBean.webBean.vo.cheminExePhoto}" -->
+						<!-- 							rendered="true" styleClass="display" /> -->
+
+
+
+						<h:inputHidden id="j_cheminExeImpression"
+							value="#{adherentMBean.webBean.vo.cheminExeImpression}" />
+							<h:inputText id="j_numCarte"
+							value="#{adherentMBean.webBean.vo.numcarte}" />
+
+
+
+						<!-- 						<p:inputText id="j_cheminCarteRecto" -->
+						<!-- 							value="#{personnelMBean.webBean.vo.cheminCarteRecto}" -->
+						<!-- 							rendered="true" styleClass="display" /> -->
+
+
+
+
+						<!-- 						<p:inputText id="j_cheminCarteVerso" -->
+						<!-- 							value="#{personnelMBean.webBean.vo.cheminCarteVerso}" -->
+						<!-- 							rendered="true" styleClass="display" /> -->
+
+
+
+
+						<!-- 						<p:inputText id="j_cheminExePho" -->
+
+						<!-- 						<p:inputText id="j_cheminCarteRecto" -->
+						<!-- 							value="#{personnelMBean.webBean.vo.cheminCarteRecto}" -->
+						<!-- 							rendered="true" styleClass="display" /> -->
+
+
+
+
+						<!-- 						<p:inputText id="j_cheminCarteVerso" -->
+						<!-- 							value="#{personnelMBean.webBean.vo.cheminCarteVerso}" -->
+						<!-- 							rendered="true" styleClass="display" /> -->
+
+
+
+
+						<!-- 						<p:inputText id="j_cheminExePho" -->
+						<!-- 							value="#{personnelMBean.webBean.vo.cheminExePhoto}" -->
+						<!-- 							rendered="true" styleClass="display" /> -->
+
+
+
+						<!-- 						<p:inputText id="j_cheminExeImpression" -->
+						<!-- 							value="#{personnelMBean.webBean.vo.cheminExeImpression}" -->
+						<!-- 							rendered="true" styleClass="display" /> -->
+
+
+
+						<!-- 						<p:spacer width="-350px" height="0px"/> -->
+						</h:panelGrid>
+					<p:row>
+						<p:commandButton id="maj" value="#{prezmsg['MISE_JOUR_MAJ']}" icon="ui-icon-custom-modifierOsc" disabled="#{adherentMBean.webBean.vo.matr==null}"
+									update="verification"  action="#{adherentMBean.modifier}"  onclick="majcarte()" style="width:200px;"
+									styleClass="Val">
+						</p:commandButton>
+						
+						
+
+					</p:row>
+
+
+				</p:fieldset>
+			</center>
+		</h:form>
+
+<ui:include src="accesTourniquet.xhtml"></ui:include>
+
+	</ui:define>
+</ui:composition>
+

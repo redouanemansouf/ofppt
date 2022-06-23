@@ -1,0 +1,98 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+	<p:dialog id="editer-anneeuniversitaire"
+		widgetVar="editer-anneeuniversitaire-profil"
+		header="Modifier droit d'accés groupe" hideEffect="fade"   
+		styleClass="dialogclass" showEffect="fade" modal="true" dynamic="true"
+		closeOnEscape="true"
+		onHide="PF('editer-anneeuniversitaire').content.empty">
+
+
+
+		<h:form id="editeranneeUniversitaire-form">
+
+			<p:messages globalOnly="true" autoUpdate="true" />
+
+				<h:panelGrid columns="2" cellpadding="5">
+					<!--      Code anneeUniversitaire     -->
+
+<!-- 					<p:column> -->
+<!-- 						<h:outputLabel value="#{prezmsg['USERNAME1']}" /> -->
+<!-- 					</p:column> -->
+
+<!-- 					<p:column> -->
+<!-- 						<p:inputText id="univ_code" -->
+<!-- 							value="#{winMenuMBean.webBean.vo.code}" -->
+<!-- 							disabled="true" /> -->
+<!-- 						<p:message for="univ_code" /> -->
+<!-- 					</p:column> -->
+ 
+						<p:column><h:outputLabel value="#{prezmsg['CODE']}" /></p:column>
+						<p:column>
+							<p:inputText id="code" value="#{winMenuMBean.webBean.vo.code}"
+								disabled="true" />
+							<p:message for="code" />
+						</p:column>
+						<p:column><h:outputLabel value="#{prezmsg['LIBELLE']}" /></p:column>
+						<p:column>
+							<p:inputText id="libelle" value="#{winMenuMBean.webBean.vo.libelle}" disabled="true" />
+							<p:message for="libelle" />
+						</p:column>
+						<p:column><h:outputLabel value="#{prezmsg['ABBREV']}" /></p:column>
+						<p:column>
+							<p:inputText id="abbrev" value="#{winMenuMBean.webBean.vo.abbrev}" disabled="true"/>
+						</p:column>
+						<p:column><h:outputLabel value="#{prezmsg['GROUPE']}" /></p:column>
+						<p:column> 
+							<p:inputText id="operateur" value="#{winMenuMBean.webBean.vo.operateur}" disabled="true"/> 
+						</p:column>
+						<p:column><h:outputLabel value="#{prezmsg['ACTIF']}" /></p:column>
+						<p:column>
+							<p:selectBooleanCheckbox id="actif" value="#{winMenuMBean.webBean.vo.actif}" />
+						</p:column>
+						<p:column><h:outputLabel value="#{prezmsg['CONSULTATION']}" /></p:column>
+						<p:column> 
+								<p:selectBooleanCheckbox id="consult" value="#{winMenuMBean.webBean.vo.droitConsult}" />
+						</p:column>
+						<p:column><h:outputLabel value="#{prezmsg['CREATION']}" /></p:column>
+						<p:column>
+							<p:selectBooleanCheckbox id="creat" value="#{winMenuMBean.webBean.vo.droitCreat}" />
+						</p:column>
+						<p:column><h:outputLabel value="#{prezmsg['MODIFICATION']}" /></p:column>
+						<p:column>
+							<p:selectBooleanCheckbox id="modif" value="#{winMenuMBean.webBean.vo.droitModif}" />
+						</p:column>
+						<p:column><h:outputLabel value="#{prezmsg['SUPPRESSION']}" /></p:column>
+						<p:column>
+							<p:selectBooleanCheckbox id="supr" value="#{winMenuMBean.webBean.vo.droitSuppr}" />   
+						</p:column>
+
+
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2" styleClass="FloatRight" cellpadding="5">
+					<p:commandButton value="#{prezmsg['VALIDER']}" styleClass="ValidateButton"
+						action="#{winMenuMBean.modifier}" process="@form"
+						update="@form :succes" 
+						onstart="block('create-dlg-wdg')"
+						oncomplete="unblock('create-dlg-wdg')"  /> 
+					<p:commandButton value="#{prezmsg['ANNULER']}" global="false"
+						oncomplete="PF('editer-anneeuniversitaire-profil').hide()" styleClass="CancelButton" />
+				</h:panelGrid>
+
+
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('editer-anneeuniversitaire-profil').hide()"
+				update=":winMenu-form:winMenu-dtbl" />   
+
+		</h:form>
+	</p:dialog>
+ 
+</ui:composition>

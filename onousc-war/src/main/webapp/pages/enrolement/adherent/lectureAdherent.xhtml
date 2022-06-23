@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+
+
+	<ui:define name="content">
+
+		<applet id="appid" name="appid" permissions="all-permissions"
+			scriptable="true" archive="AppletMX.jar"
+			code="applet_mxcampus.AppletMX.class" width="0" height="0">
+		</applet>
+
+
+		<script type="text/javascript">
+			function lecture_data() {
+
+				try {
+
+					var version = "null";
+
+					// 	 version = appid.GetVersion(); 
+					version = appid.LectureElectriqueCrazy(2);
+					
+
+					document.getElementById("j_matr").value = appid.matrAdherent;
+					document.getElementById("j_nom").value = appid.nomNaissanceAdherent;
+					document.getElementById("j_prenom").value = appid.prenomAdherent;
+					//Sexe_Etudiant 
+					if (appid.sexeAdherent == "M") {
+						document.getElementById("sexe_create:0").checked = true;
+					} else if (appid.sexeAdherent == "F") {
+						document.getElementById("sexe_create:1").checked = true;
+					}
+
+					
+					document.getElementById("num_carte").value = appid.numCarteAdherent;
+					document.getElementById("solde").value = appid.SoldeAdherent;
+					document.getElementById("datenaissancePerso").value = appid.dateNaissanceAdherent;
+					document.getElementById("ville_create").value = appid.lieuNaissanceAdherent;
+					document.getElementById("cni").value = appid.cniAdherent;
+					document.getElementById("telephone").value = appid.telephoneAdherent;
+					document.getElementById("profil").value = appid.ProfilAdherent;
+					/*document.getElementById("Tlundi").value = appid.tranche1;
+					document.getElementById("TMardi").value = appid.tranche2;
+					document.getElementById("TMercredi").value = appid.tranche3;
+					document.getElementById("TJeudi").value = appid.tranche4;
+					document.getElementById("TVendredi").value = appid.tranche5;
+					document.getElementById("TSamedi").value = appid.tranche6;
+					document.getElementById("TDimanche").value = appid.tranche7;*/
+					document.getElementById("date_delivrance").value = appid.datedelivrancecarteAdherent;
+					document.getElementById("date_expiration").value = appid.dateexpirationcarteAdherent;
+
+				} catch (err) {
+
+					alert("Erreur de Lecture Carte Personnel : " + err);
+
+				}
+
+			}
+		</script>
+		<p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;width:128%;">
+			<ul class="menuOpposition">
+				<li><h:link
+						outcome="/pages/enrolement/adherent/gestionAdherent.xhtml">
+						<div>
+							<center>#{prezmsg['ENROLEMENT_ADHERENT_MENU']}</center>
+						</div>
+					</h:link></li>
+				<li><h:link
+						outcome="/pages/enrolement/adherent/majAdherent.xhtml">
+						<div>
+							<center>#{prezmsg['MAJCARTE_PERSO']}</center>
+						</div>
+					</h:link></li>
+				<li class="active"><h:link
+						outcome="/pages/enrolement/adherent/lectureAdherent.xhtml">
+						<div>
+							<center>#{prezmsg['LECTURE_CARTE_PERSO']}</center>
+						</div>
+					</h:link></li>
+			</ul>
+		</p:fieldset>
+
+		<!--         <p:fieldset legend="#{prezmsg['LECTURE_CARTE']}"> -->
+		<center>
+			<p:ajaxStatus>
+				<f:facet name="start">
+					<p:graphicImage library="images" name="blueajax.gif"
+						styleClass="AjaxStatusLoader" />
+				</f:facet>
+			</p:ajaxStatus>
+		</center>
+
+		<h:form id="verification" prependId="false">
+			<center>
+				<p:messages autoUpdate="true" globalOnly="true" closable="true"
+					styleClass="M1" />
+				<div id="f1" style="padding: 2.6 em 1em"></div>
+			</center>
+
+			<center>
+				<p:fieldset styleClass="fieldsetCategories">
+					<h:panelGrid columns="4" id="informations" cellspacing="8">
+
+
+
+						<!-- 						 <h:outputLabel value="#{prezmsg['PERSONNEL_OCP']}" /> -->
+
+						<!-- 						<p:selectOneMenu id="personn_create" -->
+						<!-- 							value="#{adherentMBean.webBean.vo.personnel}" -->
+						<!-- 							converter="personnelConverter" style="width:220px" required="true" -->
+						<!-- 							title="#{component.valid ? '' : adherentMBean.getErrorMessage(component.clientId)}"> -->
+						<!-- 							<f:selectItem itemLabel="Choisissez" /> -->
+						<!-- 							<f:selectItems value="#{adherentMBean.webBean.personnelvos}" var="p" -->
+						<!-- 								itemLabel="#{p.matr} | #{p.nom}  #{p.prenom}" itemValue="#{p}" /> -->
+						<!-- 								<p:ajax listener="#{adherentMBean.OnchangeMatr}" update="j_matr"></p:ajax> -->
+						<!-- 						</p:selectOneMenu> -->
+
+
+						<h:outputLabel value="#{prezmsg['MATRICULE']}" />
+
+						<p:inputText id="j_matr" />
+
+
+
+						<h:outputLabel value="#{prezmsg['NOM']}" />
+
+
+
+						<p:inputText id="j_nom" />
+
+						<h:outputLabel value="#{prezmsg['PRENOM']}" />
+						<p:inputText id="j_prenom" />
+
+
+
+						<h:outputLabel value="#{prezmsg['SEXE']}" />
+						<p:selectOneRadio id="sexe_create">
+							<f:selectItem itemLabel="Masculin " itemValue="M" />
+							<f:selectItem itemLabel="Feminin " itemValue="F" />
+						</p:selectOneRadio>
+
+
+
+                       <h:outputLabel value="#{prezmsg['NUMCARTE']}" />
+						<p:inputText id="num_carte"
+							/>
+							
+							<h:outputLabel value="#{prezmsg['SOLDE']}" />
+						<p:inputText id="solde"  />
+							
+
+						<h:outputLabel value="#{prezmsg['DATENAISS']}" />
+
+						<p:inputText id="datenaissancePerso" />
+
+						<h:outputLabel value="#{prezmsg['LIEUNAISS']}" />
+
+						<p:inputText id="ville_create" />
+
+
+						<h:outputLabel value="#{prezmsg['CNI_ADHER']}" />
+						<p:inputText id="cni" />
+
+						<h:outputLabel value="#{prezmsg['TELEPHONE']}" />
+						<p:inputText id="telephone" />
+
+						<h:outputLabel value="#{prezmsg['PROFIL']}" />
+						<p:inputText id="profil" />
+
+<!-- 						<h:outputLabel value="#{prezmsg['TYPE']}" /> -->
+<!-- 						<p:selectOneRadio id="type_create"> -->
+<!-- 							<f:selectItem itemLabel="Conjoint " itemValue="C" /> -->
+<!-- 							<f:selectItem itemLabel="Enfant " itemValue="E" /> -->
+
+<!-- 						</p:selectOneRadio> -->
+
+						<h:outputLabel value="#{prezmsg['CATEGORIE']}" />
+						<p:inputText id="categ_create" />
+
+						<h:outputLabel value="#{prezmsg['DATE_DELIV']}" />
+						<p:inputText id="date_delivrance" />
+						<h:outputLabel value="#{prezmsg['DATE_EXP']}" />
+						<p:inputText id="date_expiration" />
+
+						<h:inputHidden id="Tlundi" />
+						<h:inputHidden id="TMardi" />
+						<h:inputHidden id="TMercredi" />
+						<h:inputHidden id="TJeudi" />
+						<h:inputHidden id="TVendredi" />
+						<h:inputHidden id="TSamedi" />
+						<h:inputHidden id="TDimanche" />
+
+					</h:panelGrid>
+
+					<p:commandButton id="search" onclick="lecture_data()"
+						icon="ui-icon-custom-detailsOsc"
+						value="#{prezmsg['LECTURE_CARTEPERSO']}" styleClass="Val"
+						update="verification" style="width:200px;" />
+
+				</p:fieldset>
+			</center>
+		</h:form>
+	</ui:define>
+</ui:composition>
+

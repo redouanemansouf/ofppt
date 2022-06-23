@@ -1,0 +1,94 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+	<p:dialog id="edit-dlg" widgetVar="edit-dlg-wdg" closable="true"
+		closeOnEscape="true" header="Modifier tarif" hideEffect="fade"
+		showEffect="fade" modal="true" dynamic="true">
+
+
+		<h:form id="edit-form">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+			<pe:tooltip for="tarif_service" myPosition="left center"
+				showEvent="click" hideEvent="unfocus" atPosition="right center">
+				<h:message for="tarif_service" />
+			</pe:tooltip>
+
+			<pe:tooltip for="tarif_cat" myPosition="left center"
+				showEvent="click" hideEvent="unfocus" atPosition="right center">
+				<h:message for="tarif_cat" />
+			</pe:tooltip>
+
+			<h:panelGrid columns="2" styleClass="FormGrid">
+
+				<!--      CODE TARIF     -->
+				<h:outputLabel value="#{prezmsg['CODE']}" />
+				<p:inputText id="univ_code" value="#{tarifMBean.webBean.vo.code}"
+					disabled="true" />
+
+				<!--      LIBELLE TARIF     -->
+				<h:outputLabel value="#{prezmsg['LIBELLE']}" />
+				<p:inputText id="univ_libelle"
+					value="#{tarifMBean.webBean.vo.libelle}" required="true"
+					title="#{component.valid ? '' : tarifMBean.getErrorMessage(component.clientId)}" />
+
+				<!-- 	  tarifservice      -->
+				<h:outputLabel value="#{prezmsg['SERVICE']}" />
+				<p:selectOneMenu id="tarif_service"
+					value="#{tarifMBean.webBean.vo.serviceVO}"
+					converter="serviceConverter" required="true"
+					title="#{component.valid ? '' : tarifMBean.getErrorMessage(component.clientId)}">
+					<f:selectItem itemLabel="Choisir un service" />
+					<f:selectItems value="#{tarifMBean.webBean.serviceVOs}" var="u"
+						itemLabel="#{u.libelle}" itemValue="#{u}" />
+				</p:selectOneMenu>
+
+				<!-- 	  tarifcategoriePorteur      -->
+				<h:outputLabel value="#{prezmsg['CATEGORIE_PORTEUR']}" />
+				<p:selectOneMenu id="tarif_cat"
+					value="#{tarifMBean.webBean.vo.categoriePorteurVO}"
+					converter="categoriePorteurConverter" required="true"
+					title="#{component.valid ? '' : tarifMBean.getErrorMessage(component.clientId)}">
+					<f:selectItem itemLabel="Choisir une catégorie de porteur" />
+					<f:selectItems value="#{tarifMBean.webBean.categoriePorteurVOs}"
+						var="u" itemLabel="#{u.libelle}" itemValue="#{u}" />
+				</p:selectOneMenu>
+
+				<!--     TARIF     -->
+				<h:outputLabel value="#{prezmsg['TARIF']}" />
+				<p:inputText id="univ_tarif" value="#{tarifMBean.webBean.vo.tarif}"
+					required="true"
+					title="#{component.valid ? '' : tarifMBean.getErrorMessage(component.clientId)}" />
+
+			</h:panelGrid>
+
+			<p:toolbar>
+				<f:facet name="right">
+					<p:commandButton id="validate-edit" value="#{prezmsg['VALIDER']}"
+						process="@form" update="edit-form"
+						action="#{tarifMBean.modifier}" styleClass="ValidateButton" />
+					<p:commandButton value="#{prezmsg['ANNULER']}" global="false"
+						process="@none" onclick="PF('edit-dlg-wdg').hide()"
+						styleClass="CancelButton" />
+				</f:facet>
+			</p:toolbar>
+
+
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('edit-dlg-wdg').hide()"
+				update=":tarif-form:tarif-dtbl" />
+
+		</h:form>
+	</p:dialog>
+</ui:composition>

@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+
+
+	<ui:define name="content">
+
+		<applet id="appid" name="appid" permissions="all-permissions"
+			scriptable="true" archive="AppletMX.jar"
+			code="applet_mxcampus.AppletMX.class" width="0" height="0">
+		</applet>
+
+		<p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;width:128%;">
+			<ul class="menuOpposition">
+				<li><h:link outcome="/pages/import.xhtml">
+						<div>
+							<center>Import</center>
+						</div>
+					</h:link></li>
+				<li class="active"><h:link outcome="/pages/liste.xhtml">
+						<div>
+							<center>Liste</center>
+						</div>
+					</h:link></li>
+				<li><h:link outcome="/pages/browse.xhtml">
+						<div>
+							<center>Fichier Rejet</center>
+						</div>
+					</h:link></li>
+			</ul>
+		</p:fieldset>
+
+		<p:fieldset styleClass="fieldsetCategories">
+			<center>
+				<p:ajaxStatus>
+					<f:facet name="start">
+						<p:graphicImage library="images" name="ajax-loader-1.gif" style="" />
+					</f:facet>
+				</p:ajaxStatus>
+			</center>
+			<h:form id="critere-form">
+
+				<!-- Remote commands -->
+				<!-- 			<p:remoteCommand name="_errorDialog" -->
+				<!-- 				onstart="PF('error-dlg-wdg').show()" /> -->
+
+				<!-- 			<p:remoteCommand name="_updateCrudMenu" global="false" -->
+				<!-- 				update="crud-menu :search-overlay" /> -->
+				<!--  -->
+
+
+
+
+
+
+				<center>
+					<p:messages autoUpdate="true" globalOnly="true" closable="true"
+						style="width:60%;" showIcon="false" />
+				</center>
+
+
+
+				<div class="RefCenter">
+					<p:toolbar id="crud-menu">
+
+						<f:facet name="left">
+
+							<!-- 								<p:commandButton id="create" widgetVar="create-wdg" -->
+							<!-- 									styleClass="ToolbarButton" value="#{prezmsg['NOUVEAU']}" -->
+							<!-- 									process="@this" action="#{produitMBean.resetWebBeanVO}" -->
+							<!-- 									update=":create-form" oncomplete="PF('create-dlg-wdg').show();" -->
+							<!-- 									icon="ui-icon-custom-nouveau"> -->
+							<!-- 									<p:resetInput target=":create-form" /> -->
+							<!-- 								</p:commandButton> -->
+
+							<!-- 	Lié au formulaire de la recherche, type boutton car ne fait aucune action/actionListener ni update, utiliser just pour pop le searchOverlay -->
+							<p:commandButton id="search" widgetVar="search-wdg"
+								styleClass="ToolbarButton" value="#{prezmsg['CHERCHER']}"
+								type="button" icon="ui-icon-custom-chercher" />
+
+						</f:facet>
+
+					</p:toolbar>
+
+					<p:dataTable id="critere-dtbl" paginator="true"
+						style="margin-bottom:40px"
+						emptyMessage="#{prezmsg['label_no_records_found']}"
+						rowStyleClass="#{etud.statut == 'DISABLED' ? 'is-disabled' :null }"
+						value="#{carteNapsSearchMBean}" var="etud" lazy="true" rows="10"
+						selection="#{carteNapsMBean.webBean.selectedVOs}"
+						rowKey="#{prod.id}" paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="10,20,30"
+						currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      													{totalRecords}, Page: {currentPage}/{totalPages}">
+
+
+
+						<ui:include src="/pages/commun/datatableEvents.xhtml" />
+
+						<!-- 						<p:column selectionMode="multiple" styleClass="tableChkbox" -->
+						<!-- 							style="width:16px;text-align:center" /> -->
+
+						<!-- Identifiant du'critere  -->
+						<p:column headerText="Nom Prenom" style="width:18%"
+							sortBy="#{etud.nomprenom}">
+							<center>
+								<h:outputText value="#{etud.nomprenom}" />
+							</center>
+						</p:column>
+
+						<!-- Libellé -->
+						<p:column headerText="Nom" sortBy="#{etud.nom}">
+							<center>
+								<h:outputText value="#{etud.nom}" />
+							</center>
+						</p:column>
+
+						<p:column headerText="Prenom" sortBy="#{etud.prenom}">
+							<center>
+								<h:outputText value="#{etud.prenom}" />
+							</center>
+						</p:column>
+
+						<p:column headerText="Numero Identite"
+							sortBy="#{etud.numidentite}">
+							<center>
+								<h:outputText value="#{etud.numidentite}" />
+							</center>
+						</p:column>
+						<p:column headerText="Telephone" sortBy="#{etud.tel}">
+							<center>
+								<h:outputText value="#{etud.tel}" />
+							</center>
+						</p:column>
+						<p:column headerText="Etablissement" sortBy="#{etud.etab}">
+							<center>
+								<h:outputText value="#{etud.etab}" />
+							</center>
+						</p:column>
+
+						<p:column headerText="Matricule" sortBy="#{etud.matr}">
+							<center>
+								<h:outputText value="#{etud.matr}" />
+							</center>
+						</p:column>
+
+					</p:dataTable>
+
+				</div>
+
+
+
+			</h:form>
+
+		</p:fieldset>
+
+		<p:overlayPanel id="search-overlay" for=":critere-form:search"
+			style="width:600px;" hideEffect="slide" showEffect="slide"
+			widgetVar="searchOverlay" dismissable="false" appendToBody="true">
+
+			<h:form id="search-form">
+
+				<h:panelGrid columns="2" styleClass="FormGrid">
+
+
+
+					<h:outputLabel value="#{prezmsg['SITE']}" />
+					<p:inputText value="#{carteNapsMBean.user.siteVO.libelle}"
+						rendered="#{carteNapsMBean.user.siteVO !=null }" disabled="true" />
+					<p:selectOneMenu id="site"
+						rendered="#{carteNapsMBean.user.siteVO ==null }"
+						value="#{carteNapsSearchMBean.cartenapsCriteria.idSite}">
+						<f:selectItem itemLabel="#{prezmsg['SELECTIONNER']}" />
+						<f:selectItems value="#{carteNapsMBean.webBean.listSiteForCombo}"
+							var="site" itemLabel="#{site.libelle}" itemValue="#{site.id}" />
+					</p:selectOneMenu>
+					<!-- Code   -->
+					<h:outputLabel value="Numero Identite" />
+					<p:inputText id="code-search"
+						value="#{carteNapsSearchMBean.cartenapsCriteria.numidentite}" />
+
+					<!-- Libellé   -->
+					<h:outputLabel value="Matricule" />
+					<p:inputText id="lib-search"
+						value="#{carteNapsSearchMBean.cartenapsCriteria.matr}" />
+
+
+				</h:panelGrid>
+
+
+				<p:commandButton id="searchOk" styleClass="Val"
+					icon="ui-icon-custom-validerOsc" style="width:10%"
+					widgetVar="searchOk-wdg" value="#{prezmsg['OK']}"
+					action="#{carteNapsSearchMBean.run}"
+					update=":critere-form:critere-dtbl"
+					onstart="backToFirstPage(); block()"
+					oncomplete="PF('searchOverlay').hide(); unblock(); initCrudMenu();" />
+				<p:commandButton id="searchReset" styleClass="Val" style="width:25%"
+					widgetVar="searchReset-wdg" icon="ui-icon-custom-cancelOsc"
+					value="#{prezmsg['RESET']}"
+					action="#{carteNapsSearchMBean.resetSearchCriteria()}"
+					update="search-form" tabindex="-1">
+					<p:resetInput target="search-form" />
+				</p:commandButton>
+
+			</h:form>
+
+		</p:overlayPanel>
+
+
+	</ui:define>
+</ui:composition>

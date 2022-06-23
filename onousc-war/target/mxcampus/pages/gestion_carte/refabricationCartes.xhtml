@@ -1,0 +1,252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+	<ui:define name="content">
+
+		<p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;">
+			<ul class="menuCycleDeVie">
+				<li class="active"><h:link>
+						<div>
+							<center>REFABRICATION DES CARTES</center>
+						</div>
+					</h:link></li>
+			</ul>
+		</p:fieldset>
+		<p:ajaxStatus>
+			<f:facet name="start">
+				<p:graphicImage library="images" name="blueajax.gif"
+					styleClass="AjaxStatusLoader" />
+			</f:facet>
+		</p:ajaxStatus>
+
+		<h:form id="nationalite-form-validee">
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialogValidee"
+				onstart="PF('error-dlg-wdg').show()" />
+			<p:messages globalOnly="true" autoUpdate="true" closable="true"
+				showIcon="false" />
+
+			<center>
+				<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;"
+					styleClass="fieldsetCategories">
+					
+								<p:toolbar id="crud-menu">
+				<f:facet name="left">
+					<p:commandButton id="search-validee" widgetVar="search-validee-wdg"
+						styleClass="ToolbarButton" value="#{prezmsg['CHERCHER']}"
+						type="button" icon="ui-icon-custom-chercher" />
+				</f:facet>
+			</p:toolbar>
+
+					<center>
+						<p:messages autoUpdate="true" globalOnly="true" closable="true"
+							style="width:60%;" showIcon="false" />
+					</center>
+
+					<div class="BackgroundGray">
+
+						<div class="RefCenter">
+
+							<br />
+
+
+							<p:dataTable id="nationalite-dtbl" paginator="true"
+								value="#{refabricationSearchMBean}" var="nat" lazy="true"
+								rows="100" emptyMessage="#{prezmsg['label_no_records_found']}"
+								rowKey="#{nat.id}" paginatorPosition="bottom" styleClass="papa"
+								actionListener="#{etudiantMBean.resetCarteWebBeanVO}" 
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="100,200,300"
+								currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+
+								<!-- Libellé de la nationalité -->
+								<p:column headerText="#{prezmsg['NDEMANDE']}"
+									sortBy="#{nat.etudiantvo.id}">
+
+									<h:outputText value="#{nat.etudiantvo.id}" id="tabl_id_person">
+										<f:convertNumber pattern="00000000" />
+									</h:outputText>
+								</p:column>
+
+					 
+
+								<p:column headerText="#{prezmsg['NOM_PRENOM']}"
+									sortBy="#{nat.etudiantvo.Nom}">
+									<h:outputText id="tabl_idnom" value="#{nat.etudiantvo.nom}" />
+									<h:outputText id="tabl_idesp" value=" " />
+									<h:outputText id="tabl_idprenom"
+										value="#{nat.etudiantvo.prenom}" />
+								</p:column>
+								<p:column id="tabl_date"
+									headerText="#{prezmsg['DATENAISSANCE']}"
+									sortBy="#{nat.etudiantvo.etudiantvo.Date_naissance}">
+									<h:outputText value="#{nat.etudiantvo.date_naissance}">
+										<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+									</h:outputText>
+								</p:column>
+						 
+								<p:column headerText="Code Profil" sortBy="#{nat.etudiantvo.codeProfil}">
+								<h:outputText value="#{nat.etudiantvo.codeProfil}" />
+							</p:column>
+								<p:column headerText="#{prezmsg['CIN']}" id="tabl_ncin"
+									sortBy="#{nat.etudiantvo.NCIN}">
+									<h:outputText value="#{nat.etudiantvo.NCIN}" />
+								</p:column>
+								<p:column headerText="#{prezmsg['SITE']}" sortBy="#{nat.id}">
+									<h:outputText value="#{nat.etudiantvo.siteVO.libelle}" />
+
+								</p:column>
+
+<p:column headerText="Matricule"
+								sortBy="#{nat.etudiantvo.codeMassar}">
+								<h:outputText
+									value="#{nat.etudiantvo.codeMassar}" />
+		 						</p:column>
+									<p:column headerText="Téléphone"
+								sortBy="#{nat.etudiantvo.tele}">
+								<h:outputText value="#{nat.etudiantvo.tele}" />
+								
+								
+								
+ 			</p:column>
+ 							
+														<p:column headerText="Catégorie "
+															id="tabl_codeMassar" sortBy="#{nat.etudiantvo.typePersonelle}">
+															<h:outputText value="#{nat.etudiantvo.typePersonelle=='S'?'sttaf':'Etudiant' }" />
+														</p:column>
+<p:column headerText="Type Carte"
+								style="text-align: center" sortBy="#{nat.etudiantvo.typeCarte}">
+								<h:outputText value="Privative" rendered="#{nat.etudiantvo.typeCarte == 'P'}" />
+								<h:outputText value="NAPS" rendered="#{nat.etudiantvo.typeCarte == 'N'}" />
+								 
+							 
+							</p:column>
+							<p:column headerText="Etablissement"
+								sortBy="#{nat.etudiantvo.etablissement}">
+								<h:outputText value="#{nat.etudiantvo.etablissement}" />
+							</p:column>
+					   
+
+
+								<p:column styleClass="AlignCenter Width10" headerText="Action">
+
+									<p:commandButton icon="ui-icon-custom-printOsc"
+										title="Personnaliser la carte" styleClass="CrudButton"
+										action="#{etudiantMBean.generateNumCarte}"
+										oncomplete="PF('pers-dlg-wdg').show();"
+										onConfirmComplete="#{etudiantMBean.reload}"
+										update=":nationalite-form-validee">
+										<f:setPropertyActionListener value="#{nat}"
+											target="#{etudiantMBean.carteWebBean.vo}" />
+									</p:commandButton>
+
+							 
+								</p:column>
+
+							</p:dataTable>
+
+
+
+						</div>
+					</div>
+				</p:fieldset>
+			</center>
+		</h:form>
+		
+					<p:overlayPanel id="search-overlay-validee"
+				for=":nationalite-form-validee:search-validee" hideEffect="slide"
+				showEffect="slide" widgetVar="searchValideeOverlay"
+				dismissable="false" appendToBody="true" showCloseIcon="true">
+
+				<h:form id="search-form-validee">
+
+					<h:panelGrid columns="4" styleClass="FormGrid">
+
+						<p:outputLabel id="anne" value="#{prezmsg['ANNEE_ACADEM']}" />
+						<p:inputText id="anneee_create" style="width:80px;"
+							value="#{refabricationSearchMBean.etudiantCriteria.ann_universitaire}">
+						</p:inputText>
+
+						<p:outputLabel id="nom" value="#{prezmsg['NOM']}" />
+						<p:inputText id="nom_create"
+							value="#{refabricationSearchMBean.etudiantCriteria.nom}">
+
+						</p:inputText>
+
+						<p:outputLabel id="prenom" value="#{prezmsg['PRENOM']}" />
+						<p:inputText id="prenom_create" styleClass="InscrInput"
+							value="#{refabricationSearchMBean.etudiantCriteria.prenom}">
+						</p:inputText>
+
+						<p:outputLabel id="NCIN" value="#{prezmsg['CIN']}" />
+						<p:inputText id="NCIN_create"
+							value="#{refabricationSearchMBean.etudiantCriteria.NCIN}">
+						</p:inputText>
+
+					<h:outputLabel value="#{prezmsg['SITE']}" />
+					
+					<p:inputText value="#{etudiantMBean.user.siteVO.libelle}"
+						rendered="#{etudiantMBean.user.siteVO !=null }" disabled="true" />
+					<p:selectOneMenu id="site"
+						rendered="#{etudiantMBean.user.siteVO ==null }"
+						value="#{refabricationSearchMBean.etudiantCriteria.idSite}">
+						<f:selectItem itemLabel="#{prezmsg['SELECTIONNER']}" />
+						<f:selectItems value="#{etudiantMBean.webBean.listSiteForCombo}"
+							var="site" itemLabel="#{site.libelle}" itemValue="#{site.id}" />
+					</p:selectOneMenu>
+
+						<p:outputLabel id="email" value="#{prezmsg['EMAIL']}" />
+						<p:inputText id="email_create"
+							value="#{refabricationSearchMBean.etudiantCriteria.email}">
+						</p:inputText>
+
+					</h:panelGrid>
+					<p:toolbar>
+						<f:facet name="right">
+							<!--Lance la recherche, revien toujours à la premiere page: backToFirstPage()  -->
+							<p:commandButton id="searchOk" styleClass="OpButton"
+								widgetVar="searchOk-wdg" value="#{prezmsg['OK']}"
+								action="#{refabricationSearchMBean.run}"
+								oncomplete="PF('searchValideeOverlay').hide();"
+								onstart="backToFirstPage(); block()"
+								update=":nationalite-form-validee:nationalite-dtbl" />
+
+
+							<!-- 											clear du formulaire  unblock(); initCrudMenu();  -->
+							<p:commandButton id="searchReset" styleClass="OpButton"
+						widgetVar="searchReset-wdg" value="#{prezmsg['RESET']}"
+						icon="ui-icon-custom-undo"
+						action="#{refabricationSearchMBean.resetSearchCriteria()}"
+						update=":search-form-validee" tabindex="-1">
+						<p:resetInput target="search-form-validee" />
+					</p:commandButton>
+						</f:facet>
+					</p:toolbar>
+				</h:form>
+
+			</p:overlayPanel>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<h:panelGrid columns="2" styleClass="AlignCenter Width100pct">
+				<p:commandButton value="#{prezmsg['OUI']}" type="button"
+					styleClass="OpButton" icon="ui-icon-check" />
+				<p:commandButton value="#{prezmsg['NON']}" type="button"
+					styleClass="OpButton" icon="ui-icon-close" />
+			</h:panelGrid>
+		</p:confirmDialog>
+
+		<ui:include src="PersonnaliserCarte.xhtml"></ui:include>
+	</ui:define>
+</ui:composition>
+

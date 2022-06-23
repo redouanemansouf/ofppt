@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="bus.svg">
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="208.58859"
+     inkscape:cy="468.4865"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1018"
+     inkscape:window-x="-32000"
+     inkscape:window-y="-32000"
+     inkscape:window-maximized="0"
+     showguides="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4070" />
+  </sodipodi:namedview>
+  <defs
+     id="defs4" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:groupmode="layer"
+     inkscape:label="Layer 1">
+    <rect
+       inkscape:export-ydpi="100.00111"
+       inkscape:export-xdpi="100.00111"
+       inkscape:export-filename="F:\dev\onousc\POC\onousc-war\src\main\webapp\resources\images\bus44.png"
+       ry="22.641718"
+       y="520.32404"
+       x="16.006105"
+       height="147.86778"
+       width="560.94739"
+       id="rect2985-4-1"
+       style="opacity:0.56194691;fill:#666666;fill-opacity:1;stroke:#ffffff;stroke-width:0.65816522;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <rect
+       inkscape:export-ydpi="100.00111"
+       inkscape:export-xdpi="100.00111"
+       inkscape:export-filename="F:\dev\onousc\POC\onousc-war\src\main\webapp\resources\images\bus44.png"
+       ry="21.386568"
+       y="524.20648"
+       x="25.79027"
+       height="139.67068"
+       width="544.40942"
+       id="rect2985-4"
+       style="fill:#f9f9f9;fill-opacity:1;stroke:#ffffff;stroke-width:0.63016254;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <rect
+       inkscape:export-ydpi="100.00111"
+       inkscape:export-xdpi="100.00111"
+       inkscape:export-filename="F:\dev\onousc\POC\onousc-war\src\main\webapp\resources\images\bus44.png"
+       ry="20.503965"
+       y="527.19891"
+       x="63.119587"
+       height="133.90663"
+       width="499.16125"
+       id="rect2985"
+       style="opacity:0.24336285;fill:#808080;fill-opacity:1;stroke:#ffffff;stroke-width:0.5908246;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       inkscape:export-ydpi="100.00111"
+       inkscape:export-xdpi="100.00111"
+       inkscape:export-filename="F:\dev\onousc\POC\onousc-war\src\main\webapp\resources\images\bus44.png"
+       sodipodi:nodetypes="ccccc"
+       inkscape:connector-curvature="0"
+       id="path3817"
+       d="M 50.530582,537.38554 49.441534,652.64527 33.710563,649.51682 33.155997,538.86192 z"
+       style="opacity:0.23451329;fill:#00ece5;fill-opacity:1;stroke:#000000;stroke-width:0.3768256;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <path
+       sodipodi:end="4.9253798"
+       sodipodi:start="2.7289304"
+       d="m 728.57439,782.14903 a 3.0304577,2.5253813 0 0 1 3.41666,-3.48112 l -0.64059,2.46832 z"
+       sodipodi:ry="2.5253813"
+       sodipodi:rx="3.0304577"
+       sodipodi:cy="781.13623"
+       sodipodi:cx="731.35046"
+       id="path3861"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.77700001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       sodipodi:type="arc" />
+    <rect
+       ry="0"
+       y="520.01184"
+       x="59.119308"
+       height="6.5660949"
+       width="67.849182"
+       id="rect3865"
+       style="fill:#ffffff;fill-opacity:1;stroke:none" />
+    <path
+       style="fill:none;stroke:#0000ca;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;opacity:0.71238938"
+       d="m 60,512.36218 15,-20 15,20 z"
+       id="path4090"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;opacity:0.74778761"
+       d="m 125.35714,492.8979 -15,20 -15,-20 z"
+       id="path4090-5"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>

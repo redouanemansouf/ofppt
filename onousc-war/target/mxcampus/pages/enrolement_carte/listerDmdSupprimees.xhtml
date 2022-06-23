@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+	<ui:define name="content">
+
+
+		<p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;">
+			<ul class="menuOpposition">
+				<li><h:link
+						outcome="/pages/enrolement_carte/listerDmdEnCours.xhtml">
+						<div>
+							<center>#{prezmsg['DMD_EN_COURS']}</center>
+						</div>
+					</h:link></li>
+				<li><h:link
+						outcome="/pages/enrolement_carte/listerDmdValidees.xhtml">
+						<div>
+							<center>#{prezmsg['DMD_VALIDEES']}</center>
+						</div>
+					</h:link></li>
+				<li><h:link
+						outcome="/pages/enrolement_carte/listerDmdAnnulees.xhtml">
+						<div>
+							<center>#{prezmsg['DMD_ANNULEES']}</center>
+						</div>
+					</h:link></li>
+				<li class="active"><h:link
+						outcome="/pages/enrolement_carte/listerDmdSupprimees.xhtml">
+						<div>
+							<center>#{prezmsg['MOD_SUPP']}</center>
+						</div>
+					</h:link></li>
+				<li><h:link
+						outcome="/pages/enrolement_carte/listerDmdLot.xhtml">
+						<div>
+							<center>#{prezmsg['IMPRESSION_LOT']}</center>
+						</div>
+					</h:link></li>
+			</ul>
+		</p:fieldset>
+
+		<p:ajaxStatus>
+			<f:facet name="start">
+				<p:graphicImage library="images" name="blueajax.gif"
+					styleClass="AjaxStatusLoader" />
+			</f:facet>
+		</p:ajaxStatus>
+
+
+
+		<h:form id="critere-form">
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+
+			<p:remoteCommand name="_updateCrudMenu" global="false"
+				update="crud-menu :search-overlay" />
+			<!--  -->
+
+
+
+			<center>
+				<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;"
+					styleClass="fieldsetCategories">
+
+					<!-- 					<center> -->
+					<!-- 				<p:messages autoUpdate="true" globalOnly="true" closable="true" style="width:60%;" -->
+					<!-- 					showIcon="false" /> -->
+					<!-- 			</center> -->
+
+					<script>
+						function showMessage() {
+
+							_showMessage();
+						}
+					</script>
+					<center>
+						<p:messages id="succes" globalOnly="true" closable="true"
+							styleClass="M2" />
+					</center>
+					<!-- Remote commands -->
+					<p:remoteCommand name="_errorDialog"
+						onstart="PF('error-dlg-wdg').show()" />
+					<p:remoteCommand name="_showMessage"
+						actionListener="#{etudiantMBean.showMessage}" update="succes" />
+					<p:remoteCommand name="_updateCrudMenu" global="false"
+						update="crud-menu" />
+
+					<!-- Breadcrumb -->
+					<!-- 				<div class="BreadCrumbCust"> -->
+					<!-- 					<h:panelGrid columns="5" cellpadding="3"> -->
+					<!-- 						<h:outputLabel value="Référentiel" style="color:#419edd" /> -->
+					<!-- 						<span class="ui-icon ui-icon-carat-1-e"></span> -->
+					<!-- 						<h:outputLabel value="Critère" /> -->
+					<!-- 					</h:panelGrid> -->
+					<!-- 				</div> -->
+
+					<div class="RefCenter">
+						<p:toolbar id="crud-menu">
+
+							<f:facet name="left">
+
+								<!-- 								<p:commandButton id="create" widgetVar="create-wdg" -->
+								<!-- 									styleClass="ToolbarButton" value="#{prezmsg['NOUVEAU']}" -->
+								<!-- 									process="@this" action="#{etudiantMBean.resetWebBeanVO}" -->
+								<!-- 									update=":create-form" oncomplete="PF('create-dlg-wdg').show();" -->
+								<!-- 									icon="ui-icon-custom-nouveau" -->
+								<!-- 									rendered="#{authMbean.hasCreate('000008')}"> -->
+								<!-- 																	<f:setPropertyActionListener value="#{famp.code}" -->
+								<!-- 																			target="#{canalventeMBean.webBean.restaurantVOs}" /> -->
+								<!-- 									<p:resetInput target=":create-form" /> -->
+								<!-- 								</p:commandButton> -->
+
+								<!-- 	Lié au formulaire de la recherche, type boutton car ne fait aucune action/actionListener ni update, utiliser just pour pop le searchOverlay -->
+								<p:commandButton id="search" widgetVar="search-wdg"
+									styleClass="ToolbarButton" value="#{prezmsg['CHERCHER']}"
+									type="button" icon="ui-icon-custom-chercher" />
+
+							</f:facet>
+
+						</p:toolbar>
+
+						<p:dataTable id="nationalite-dtbl" paginator="true"
+							value="#{etudiantSearchMBean}" var="nat" lazy="true" rows="50"
+							emptyMessage="#{prezmsg['label_no_records_found']}"
+							rowKey="#{nat.id}" paginatorPosition="bottom"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="50,100,200"
+							currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+
+
+
+
+							<!-- 				<p:ajax event="rowSelect" -->
+							<!-- 					update=":demande-menu:nationalite-form" /> -->
+
+							<!-- 				<ui:include src="/pages/commun/datatableEvents.xhtml" /> -->
+
+							<!-- 				<p:column selectionMode="multiple" styleClass="tableChkbox" -->
+							<!-- 					style="width:16px;text-align:center" /> -->
+
+							<!-- Libellé de la nationalité -->
+							<p:column headerText="#{prezmsg['NDEMANDE']}" sortBy="#{nat.id}">
+								<h:outputText value="#{nat.id}" id="tabl_id_person">
+									<f:convertNumber pattern="00000000" />
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="#{prezmsg['ANNEE_ACADEM']}"
+								sortBy="#{nat.ann_universitaire}">
+								<h:outputText
+									value="#{nat.anneeUniversitaireVO.libelle-1}-#{nat.anneeUniversitaireVO.libelle}" />
+							</p:column>
+							<p:column headerText="#{prezmsg['NOM_PRENOM']}"
+								sortBy="#{nat.Nom}">
+								<h:outputText id="tabl_idnom" value="#{nat.nom}" />
+								<h:outputText id="tabl_idesp" value=" " />
+								<h:outputText id="tabl_idprenom" value="#{nat.prenom}" />
+							</p:column>
+							<p:column id="tabl_date" headerText="#{prezmsg['DATENAISSANCE']}"
+								sortBy="#{nat.Date_naissance}">
+								<h:outputText value="#{nat.date_naissance}">
+									<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+								</h:outputText>
+							</p:column>
+							<p:column headerText="#{prezmsg['VILLE']}" sortBy="#{nat.ville}">
+								<h:outputText value="#{nat.ville}" />
+							</p:column>
+							<p:column headerText="#{prezmsg['CIN']}" id="tabl_ncin"
+								sortBy="#{nat.NCIN}">
+								<h:outputText value="#{nat.NCIN}" />
+							</p:column>
+							<!-- 							<p:column headerText="#{prezmsg['CODE_MASSAR']}" -->
+							<!-- 								id="tabl_codeMassar" sortBy="#{nat.codeMassar}"> -->
+							<!-- 								<h:outputText value="#{nat.codeMassar}" /> -->
+							<!-- 							</p:column> -->
+							<!-- 							<p:column headerText="#{prezmsg['HANDICAPE']}" -->
+							<!-- 								id="tabl_handicape" sortBy="#{nat.handicape}"> -->
+							<!-- 								<h:outputText value="#{nat.handicape}" /> -->
+							<!-- 							</p:column> -->
+							
+							<p:column headerText="#{prezmsg['SITE']}"
+								sortBy="#{nat.siteVO.libelle}">
+								<h:outputText value="#{nat.siteVO.libelle}" />
+
+							</p:column>
+
+
+				<p:column styleClass="AlignCenter Width10" headerText="Action">
+
+					<p:commandButton icon="ui-icon-custom-modifierOsc"  disabled="#{nat.statut == 'CLOSED'}"
+						title="Modifier la demande" styleClass="CrudButton"
+						update=":editm-dlg" oncomplete="PF('editm-dlg-wdg').show();">
+						<f:setPropertyActionListener value="#{nat}"
+							target="#{etudiantMBean.webBean.vo}" />
+					</p:commandButton>
+					
+					<p:commandButton icon="ui-icon-custom-annulerOsc" disabled="#{nat.statut == 'CLOSED'}"
+						action="#{etudiantMBean.supprimer}" title="Annuler la demande"
+						styleClass="CrudButton" update="nationalite-dtbl"
+						process="@this">
+						<f:setPropertyActionListener value="#{nat}"
+							target="#{etudiantMBean.webBean.vo}" />
+						<p:confirm header="#{prezmsg['CONFIRMATION_ANNULATION']}"
+							icon="ui-icon-alert"
+							message="#{prezmsg['CONFIRMATION_ANNULER_MESSAGE']}" />
+					</p:commandButton>
+				</p:column>
+
+						</p:dataTable>
+
+					</div>
+
+				</p:fieldset>
+			</center>
+		</h:form>
+
+		<p:overlayPanel id="search-overlay" for=":critere-form:search"
+			style="width:600px;" hideEffect="slide" showEffect="slide"
+			widgetVar="searchOverlay" dismissable="false" appendToBody="true">
+
+			<h:form id="search-form">
+
+				<h:panelGrid columns="4" styleClass="FormGrid">
+					<!-- Code   -->
+					<!-- 					<h:outputLabel value="#{prezmsg['CLIENT']}" /> -->
+					<!-- 					<p:inputText id="code-search" -->
+					<!-- 						value="#{siteSearchMBean.siteCriteria.description}" /> -->
+
+					<!-- 						<p:selectOneMenu id="famp_search" -->
+					<!-- 							value="#{siteSearchMBean.siteCriteria.description}"  -->
+					<!-- 							> -->
+					<!-- 							<f:selectItem itemLabel="Choisissez" /> -->
+					<!-- 							<f:selectItem itemLabel="Portail Web " itemValue="W" /> -->
+					<!-- 							<f:selectItem itemLabel="Mini Caisse " itemValue="C" /> -->
+					<!-- 						</p:selectOneMenu> -->
+
+					<!-- Libellé   -->
+					<h:outputLabel value="Libelle Produit" />
+					<p:inputText id="lib-search"
+						value="#{siteSearchMBean.siteCriteria.libelle}" />
+
+					<!-- coefficient   -->
+
+				</h:panelGrid>
+
+
+				<!-- 	Lance la recherche, revien toujours à la premiere page: backToFirstPage()  -->
+				<p:commandButton id="searchOk" styleClass="Val"
+					icon="ui-icon-custom-validerOsc" style="width:10%"
+					widgetVar="searchOk-wdg" value="#{prezmsg['OK']}"
+					action="#{siteSearchMBean.run}"
+					onstart="backToFirstPage(); block()"
+					oncomplete="PF('searchOverlay').hide(); unblock(); initCrudMenu();" />
+
+				<p:commandButton id="searchReset" styleClass="Val" style="width:25%"
+					widgetVar="searchReset-wdg" icon="ui-icon-custom-cancelOsc"
+					value="#{prezmsg['RESET']}"
+					action="#{siteSearchMBean.resetSearchCriteria}"
+					update="search-form" tabindex="-1">
+					<p:resetInput target="search-form" />
+				</p:commandButton>
+
+
+
+
+			</h:form>
+
+		</p:overlayPanel>
+
+		<!-- 		<ui:include src="creerSite.xhtml"></ui:include> -->
+		<!-- 		<ui:include src="editerSite.xhtml"></ui:include> -->
+		<!-- 		<ui:include src="listrestaurant.xhtml"></ui:include> -->
+		<ui:include src="/pages/enrolement_carte/creerDemande.xhtml"></ui:include>
+		<ui:include src="/pages/enrolement_carte/editerDemande.xhtml"></ui:include>
+		<ui:include src="/pages/enrolement_carte/changerImage.xhtml"></ui:include>
+		<ui:include src="/pages/enrolement_carte/editerDemandeModifSupp.xhtml"></ui:include>
+		<ui:include src="/pages/enrolement_carte/PersonnaliserDemande.xhtml"></ui:include>
+		<ui:include src="/pages/enrolement_carte/PersonnaliserLot.xhtml"></ui:include>
+
+	</ui:define>
+</ui:composition>
+

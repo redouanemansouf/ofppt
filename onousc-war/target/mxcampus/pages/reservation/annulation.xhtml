@@ -1,0 +1,97 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:b="http://bootsfaces.net/ui">
+
+	<p:panel id="annulation-pnl"
+		rendered="#{reservationMBean.typeReservation == 'ANNULATION'}"
+		styleClass="MarginAuto">
+
+		<br />
+
+		<h:panelGrid columns="1" styleClass="FormGrid">
+			<h:outputText styleClass="RecapReservation StrongFont"
+				style="text-align: center;" value="RÉSERVATIONS NON CONSOMÉES" />
+		</h:panelGrid>
+
+		<p:dataTable id="annulation-dtbl" style="width:800px;"
+			styleClass="BorderDtbl"
+			emptyMessage="#{prezmsg['AUCUNE_RESERVATION_N_EST_EFFECTUEE']}" lazy="true"
+			value="#{reservationMBean.webBean.listOfReservationsNonConsomees}"
+			selection="#{reservationMBean.webBean.listOfReservationsForAnnulation}" 
+			var="r" rowKey="#{r.id}" paginatorAlwaysVisible="false" rows="20" 
+			currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords}"
+			paginator="true" paginatorPosition="bottom"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="20,30">
+
+			<p:column selectionMode="multiple"
+				style="width:35px;text-align:center;background:white;color:orange;" />
+
+			<!-- DATE  SERVICE -->
+			<p:column headerText="Date Service" styleClass="AlignCenter"
+				style="background:white;color:black;">
+				<h:outputText value="#{r.dateService}" style="color:black;"
+					styleClass="StrongFont">
+					<f:convertDateTime pattern="dd-MM-yyyy" />
+				</h:outputText>
+			</p:column>
+
+			<!-- TYPE SERVICE -->
+			<p:column headerText="Type Service" styleClass="AlignCenter"
+				style="background:white;color:black;">
+				<h:outputText value="#{r.service.libelle}" style="color:black;"
+					styleClass="StrongFont" />
+			</p:column>
+
+			<!-- ETAT -->
+			<p:column headerText="Etat" styleClass="AlignCenter"
+				style="background:white;color:black;">
+				<h:outputText value="#{r.etat.etatReservation}" style="color:black;"
+					styleClass="StrongFont" />
+			</p:column>
+
+			<f:facet name="footer">
+				<p:commandButton process="@this annulation-dtbl"
+					update="annulation-dtbl :reservation-form:messages :reservation-form:reservationAsString-input :reservation-form:montant-input"
+					styleClass="AlignCenter StrongFont DateServiceButton"
+					action="#{reservationMBean.annulerSelectedReservation()}" 
+					onstart="PF('blockUIWidget').block()"
+					onsuccess="ecrireReservation();crediterSolde();getUsager();PF('blockUIWidget').unblock();"
+					value="ANNULER RÉSERVATION">
+					<p:confirm header="Confirmation annulation" style="background:#ce2d63;"
+						message="Voulez vous annuler cette réservation ..." />
+				</p:commandButton>
+
+			</f:facet>
+
+		</p:dataTable>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" >
+			<center>
+				<p:commandButton value="OUI" type="button"
+					styleClass="ui-confirmdialog-yes"
+					style="width:200px;height:80px;color:white;background:#ce2d63;font-weight: bold !important;" />
+				<p:commandButton value="NON" type="button"
+					styleClass="ui-confirmdialog-no"
+					style="width:200px;height:80px;color:white;background:#ce2d63;font-weight: bold !important;" />
+			</center>
+		</p:confirmDialog>
+
+		<!-- BLOCK UI -->
+		<pe:blockUI widgetVar="blockUIWidget" centerX="true" centerY="true"
+			timeout="5000">
+			<h:panelGrid columns="2">
+				<h:graphicImage library="images" name="ajax-loader.gif"
+					style="margin-right: 12px; vertical-align: middle;" />
+				<h:outputText value="Présentez votre carte s'il vous plait...."
+					style="white-space: nowrap;" />
+			</h:panelGrid>
+		</pe:blockUI>
+
+	</p:panel>
+
+</ui:composition>

@@ -1,0 +1,351 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layout.xhtml">
+
+	<ui:define name="content">
+
+		<applet id="app" name="app" permissions="all-permissions"
+			scriptable="true" archive="AppletMX.jar"
+			code="applet_mxcampus.AppletMX.class" height="0" width="0">
+		</applet>
+
+		
+		
+
+		<h:form id="nationalite-form" prependId="false">
+
+
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+
+			<p:remoteCommand name="_updateCrudMenu" global="false"
+				update="crudd-menu crud-menu :search-overlay" />
+				
+				<p:remoteCommand name="_personnaliseCollection" action="#{etudiantMBean.personnaliserCollection}" process="@this"></p:remoteCommand>
+
+			<div class="BreadCrumbCust">
+
+				<h:panelGrid columns="5" cellpadding="5">
+
+					<h:outputLabel value="Enrôlement" style="color:#419edd"
+						styleClass="LabelEnr" />
+
+					<span class="ui-icon ui-icon-carat-1-e"
+						style="float: left; margin-top: 3px;"></span>
+
+					<h:outputLabel value="Liste des demandes" styleClass="LabelEnr" />
+				</h:panelGrid>
+
+			</div>
+			<div class="BackgroundGray">
+				<!-- Breadcrumb -->
+				<div class="BreadCrumbCust">
+					<h:panelGrid columns="5" cellpadding="3">
+						<h:outputLabel value="Enrôlement" style="color:#419edd" />
+						<span class="ui-icon ui-icon-carat-1-e"></span>
+						<h:outputLabel value="#{prezmsg['DEMANDES']}" />
+					</h:panelGrid>
+				</div>
+				<div class="RefCenter">
+					<p:messages globalOnly="true" autoUpdate="true" closable="true"
+						showIcon="false" />
+					<p:toolbar id="crud-menu">
+						<f:facet name="left">
+							<p:commandButton id="search" widgetVar="search-wdg"
+								styleClass="ToolbarButton" value="#{prezmsg['CHERCHER']}"
+								type="button" icon="ui-icon-custom-chercher" />
+						</f:facet>
+					</p:toolbar>
+					<p:toolbar id="crudd-menu">
+
+						<f:facet name="left"> 
+							<p:commandButton id="validate" widgetVar="create-wdg"
+								disabled="#{empty etudiantMBean.webBean.selectedVOs}" rendered="#{not empty etudiantMBean.webBean.selectedVOs and  etudiantMBean.webBean.selectedVOs.get(0).statut.statusCode =='ENABLED' }"
+								styleClass="ToolbarButton"
+								action="#{etudiantMBean.validerCollectionEtudiant}"
+								value="#{prezmsg['VALIDER_LOT']}" update="@form"
+								icon="ui-icon-check">
+								<p:confirm header="#{prezmsg['CONFIRMATION_VALIDATION']}"
+									icon="ui-icon-alert"
+									message="#{prezmsg['CONFIRMATION_VALIDER_MESSAGES']}" />
+							</p:commandButton>
+
+						</f:facet>
+						<f:facet name="right">
+							<p:commandButton id="create" widgetVar="create-wdg"
+								disabled="#{empty etudiantMBean.webBean.selectedVOs}" rendered="#{not empty etudiantMBean.webBean.selectedVOs and  etudiantMBean.webBean.selectedVOs.get(0).statut.statusCode =='VALIDATED' }"
+								styleClass="ToolbarButton" 
+								action="#{etudiantMBean.prepareCarteSelected}"
+								oncomplete="fabrication_Lot_carte()"
+								value="#{prezmsg['GENERER_LOT']}" update="@form"
+								icon="ui-icon-print">
+							</p:commandButton>
+						</f:facet>
+					</p:toolbar>
+					<p:dataTable id="nationalite-dtbl" paginator="true" 
+						value="#{etudiantSearchMBean}" var="nat" lazy="true" rows="100"
+						emptyMessage="#{prezmsg['label_no_records_found']}"
+						selection="#{etudiantMBean.webBean.selectedVOs}"
+						rowKey="#{nat.id}" paginatorPosition="bottom"
+						actionListener="#{etudiantMBean.resetWebBeanVO}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="100,200,300"
+						currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+
+						<ui:include src="/pages/commun/datatableEvents.xhtml" />
+
+						<p:column selectionMode="multiple" styleClass="tableChkbox"
+							style="width:16px;text-align:center" />
+
+						<!-- Libellé de la nationalité -->
+						<p:column headerText="#{prezmsg['NDEMANDE']}">
+							<h:outputText value="#{nat.id}" id="tabl_id_person">
+								<f:convertNumber pattern="00000000" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['ANNEE_ACADEM']}">
+							<h:outputText value="#{nat.anneeUniversitaireVO.libelle}" />
+						</p:column>
+						<p:column headerText="#{prezmsg['NOM_PRENOM']}">
+							<h:outputText id="tabl_idnom" value="#{nat.nom}" />
+							<h:outputText id="tabl_idesp" value=" " />
+							<h:outputText id="tabl_idprenom" value="#{nat.prenom}" />
+						</p:column>
+						<p:column id="tabl_date"  headerText="#{prezmsg['DATENAISSANCE']}">
+							<h:outputText value="#{nat.date_naissance}" >
+							<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#{prezmsg['VILLE']}">
+							<h:outputText value="#{nat.ville}" />
+						</p:column>
+						<p:column headerText="#{prezmsg['CIN']}" id="tabl_ncin">
+							<h:outputText value="#{nat.NCIN}" />
+						</p:column>
+						<p:column headerText="#{prezmsg['CITE']}">
+							<h:outputText value="#{nat.citovo.libelle}" />
+								
+						</p:column>
+
+						<!-- BOURSIER -->
+						<p:column headerText="#{prezmsg['BOURSIER']}"
+							style="text-align: center">
+							<h:outputText value="#{nat.boursier}" />
+							<!-- 							<p:graphicImage library="images" name="icons/c-icon.png" -->
+							<!-- 								rendered="#{nat.boursier}" /> -->
+							<!-- 							<p:graphicImage library="images" name="icons/x-icon.png" -->
+							<!-- 								rendered="#{!nat.boursier}" /> -->
+						</p:column>
+
+						<!-- RÉSEIDENT -->
+						<p:column headerText="#{prezmsg['RESIDENT']}"
+							style="text-align: center">
+							<p:graphicImage library="images" name="icons/c-icon.png"
+								rendered="#{nat.resident}" />
+							<p:graphicImage library="images" name="icons/x-icon.png"
+								rendered="#{!nat.resident}" />
+						</p:column>
+						<p:column headerText="#{prezmsg['NOTE']}">
+							<h:outputText value="#{nat.note}" />
+							<h:inputHidden id="tab_libCit_person"
+								value="#{nat.citovo.libelle}" />
+                                <h:inputHidden  id="tabl_dat_exp" value="#{nat.anneeUniversitaireVO.datefinExp}" />	
+							<h:inputHidden id="tabl_rest_code"
+								value="#{nat.restaurantVO.code}" />
+							
+							<h:inputHidden id="tabl_rest_person"
+								value="#{nat.restaurantVO.libelle}" />
+								
+							<h:inputHidden id="tabl_codCit_person" value="#{nat.citovo.code}" />
+							<h:inputHidden id="tabl_num_carte" value="#{nat.numCarte}" />
+							<h:inputHidden id="tabl_email_etud" value="#{nat.email}" />	
+							
+						</p:column>
+					
+
+						<p:column styleClass="AlignCenter Width10">
+						
+						<p:commandButton icon="ui-icon-custom-detailsOsc"
+								title="Détail  demande" styleClass="CrudButton"
+								update=":edit-dlg" oncomplete="PF('edit-dlg-wdg').show();">
+								<f:setPropertyActionListener value="#{nat}"
+									target="#{etudiantMBean.webBean.vo}" />
+							</p:commandButton>
+
+							<p:commandButton icon="ui-icon-custom-printOsc"
+								rendered="#{nat.statut.statusCode =='VALIDATED'}"
+								action="#{etudiantMBean.prepareCarte}"
+								title="Personnaliser la carte" styleClass="CrudButton"
+								update=":pers-dlg" oncomplete="PF('pers-dlg-wdg').show();">
+								<f:setPropertyActionListener value="#{nat}"
+									target="#{etudiantMBean.webBean.vo}" />
+							</p:commandButton>
+
+							<p:commandButton icon="ui-icon-custom-validerOsc"
+								action="#{etudiantMBean.valider}" title="Valider la demande"
+								styleClass="CrudButton"
+								update=":nationalite-form:nationalite-dtbl"
+								rendered="#{nat.statut.statusCode =='ENABLED'}">
+								<f:setPropertyActionListener value="#{nat}"
+									target="#{etudiantMBean.webBean.vo}" />
+								<p:confirm header="#{prezmsg['CONFIRMATION_VALIDATION']}"
+									icon="ui-icon-alert"
+									message="#{prezmsg['CONFIRMATION_VALIDER_MESSAGE']}" />
+							</p:commandButton>
+
+							<p:commandButton icon="ui-icon-custom-annulerOsc"
+								action="#{etudiantMBean.annuler}" title="Annuler la demande"
+								rendered="#{nat.statut.statusCode =='ENABLED'}"
+								styleClass="CrudButton"
+								update=":nationalite-form:nationalite-dtbl">
+								<f:setPropertyActionListener value="#{nat}"
+									target="#{etudiantMBean.webBean.vo}" />
+								<p:confirm header="#{prezmsg['CONFIRMATION_ANNULATION']}"
+									icon="ui-icon-alert"
+									message="#{prezmsg['CONFIRMATION_ANNULER_MESSAGE']}" />
+							</p:commandButton>
+						</p:column>
+
+
+
+
+						<!-- 					<h:inputHidden id="libCit_person"  readonly="true" -->
+						<!-- 						value="#{etudiantMBean.webBean.vo.citovo.libelle}" > -->
+						<!-- 					</h:inputHidden> -->
+						<!-- 					<h:inputHidden id="codCit_person"  readonly="true" -->
+						<!-- 						value="#{etudiantMBean.webBean.vo.citovo.code}" > -->
+						<!-- 					</h:inputHidden> -->
+						<!-- 					<h:inputHidden id="dat_naissance" value="#{etudiantMBean.webBean.vo.date_naissance}"/> -->
+						<!-- 					<h:inputHidden id="num_carte" value="#{etudiantMBean.webBean.vo.numCarte}"/> -->
+
+
+
+
+					</p:dataTable>
+				</div>
+
+			</div>
+			
+		</h:form>
+
+		<p:overlayPanel id="search-overlay" for=":nationalite-form:search" 
+			hideEffect="slide" showEffect="slide" widgetVar="searchOverlay"
+			dismissable="false" appendToBody="true" showCloseIcon="true">
+
+			<h:form id="search-form">
+
+				<h:panelGrid columns="4" styleClass="FormGrid">
+
+
+
+					<p:outputLabel id="anne" value="#{prezmsg['ANNEE_ACADEM']}" />
+					<p:inputText id="anneee_create" style="width:80px;"
+						value="#{etudiantSearchMBean.etudiantCriteria.ann_universitaire}">
+					</p:inputText>
+
+					<p:outputLabel id="nom" value="#{prezmsg['NOM']}" />
+					<p:inputText id="nom_create"
+						value="#{etudiantSearchMBean.etudiantCriteria.nom}">
+
+					</p:inputText>
+
+
+
+
+					<p:outputLabel id="prenom" value="#{prezmsg['PRENOM']}" />
+					<p:inputText id="prenom_create" styleClass="InscrInput"
+						value="#{etudiantSearchMBean.etudiantCriteria.prenom}">
+					</p:inputText>
+
+
+
+
+					<p:outputLabel id="NCIN" value="#{prezmsg['CIN']}" />
+					<p:inputText id="NCIN_create"
+						value="#{etudiantSearchMBean.etudiantCriteria.NCIN}">
+					</p:inputText>
+
+					<p:outputLabel value="#{prezmsg['CITE']}" style="width:120px;" />
+					<p:selectOneMenu id="cite-create" filter="true"
+						filterMatchMode="startsWith"
+						value="#{etudiantSearchMBean.etudiantCriteria.cite}">
+						<f:selectItem itemLabel="Sélectionner" noSelectionOption="true" />
+						<f:selectItems value="#{etudiantMBean.webBean.citeVOs}" var="c"
+							itemLabel="#{c.libelle}" itemValue="#{c.id}" />
+					</p:selectOneMenu>
+
+					<!-- 				 <p:selectBooleanCheckbox id="Resident_create" value="#{etudiantSearchMBean.etudiantCriteria.resident}" /> -->
+
+
+					<p:outputLabel id="email" value="#{prezmsg['EMAIL']}" />
+					<p:inputText id="email_create"
+						value="#{etudiantSearchMBean.etudiantCriteria.email}">
+					</p:inputText>
+
+					<p:outputLabel id="statut" value="#{prezmsg['STATUT']}" />
+					<p:selectOneMenu id="statutss"
+						value="#{etudiantSearchMBean.etudiantCriteria.status}">
+						<f:selectItem itemLabel="#{prezmsg['TOUS']}" />
+						<f:selectItem itemLabel="#{prezmsg['ENCOURS']}"
+							itemValue="ENABLED" />
+						<f:selectItem itemLabel="#{prezmsg['CLOSED']}" itemValue="CLOSED" />
+						<f:selectItem itemLabel="#{prezmsg['VALIDATED']}"
+							itemValue="VALIDATED" />
+					</p:selectOneMenu>
+
+
+				</h:panelGrid>
+				<p:toolbar>
+					<f:facet name="right">
+						<!-- 	Lance la recherche, revien toujours à la premiere page: backToFirstPage()  -->
+						<p:commandButton id="searchOk" styleClass="OpButton"
+							widgetVar="searchOk-wdg" value="#{prezmsg['OK']}"
+							action="#{etudiantSearchMBean.run}"
+							update=":nationalite-form:nationalite-dtbl"
+							onstart="backToFirstPage(); block()"
+							oncomplete="PF('searchOverlay').hide();" />
+
+						<!-- clear du formulaire  unblock(); initCrudMenu();  -->
+						<p:commandButton id="searchReset" styleClass="OpButton"
+							widgetVar="searchReset-wdg" value="#{prezmsg['RESET']}"
+							icon="ui-icon-custom-undo"
+							action="#{etudiantSearchMBean.resetSearchCriteria()}"
+							update="search-form" tabindex="-1">
+							<p:resetInput target="search-form" />
+						</p:commandButton>
+					</f:facet>
+				</p:toolbar>
+			</h:form>
+
+		</p:overlayPanel>
+
+
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<h:panelGrid columns="2" styleClass="AlignCenter Width100pct">
+				<p:commandButton value="#{prezmsg['OUI']}" type="button"
+					styleClass="OpButton" icon="ui-icon-check" />
+				<p:commandButton value="#{prezmsg['NON']}" type="button"
+					styleClass="OpButton" icon="ui-icon-close" />
+			</h:panelGrid>
+		</p:confirmDialog>
+		<ui:include src="/pages/enrolement/creerDemande.xhtml"></ui:include>
+		<ui:include src="/pages/enrolement/editerDemande.xhtml"></ui:include>
+
+		<ui:include src="/pages/enrolement/PersonnaliserDemande.xhtml"></ui:include>
+
+<h:outputScript id="personnaliserJS" library="js" name="personnaliser.js"
+			target="body" />
+	</ui:define>
+</ui:composition>
+

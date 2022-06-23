@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="/pages/commun/appmenulayout.xhtml">
+
+	<ui:define name="content">
+		<h:link outcome="/pages/espaces.xhtml">
+			<p:graphicImage library="images" name="MX-Pay-Card-Store.png"
+				styleClass="LogoContainer MainUpperMXLogo" />
+		</h:link>
+		<h:form>
+			<b:container styleClass="AppmenuContainer">
+				<b:row>
+					<b:column span="4">
+						<div class="SectionTitle">
+							<span>Relation client</span>
+						</div>
+						<b:panelGrid colSpans="12" styleClass="GlassPanel">
+							<p:link
+								outcome="souscription_contrat_client/identiteClient.xhtml">
+								<p:outputPanel styleClass="ItemSlot">
+									<div class="MenuItem">
+										<div class="Curtain" />
+										<div class="MenuLabel">
+											<span>#{prezmsg['SOUSCRIPTION_CONTRAT_CLIENT_CAPS']}</span>
+										</div>
+										<div class="MenuImg Menuitem_souscription" />
+									</div>
+								</p:outputPanel>
+							</p:link>
+							<p:outputPanel styleClass="ItemSlot">
+								<div class="MenuItem">
+									<div class="Curtain" />
+									<div class="MenuLabel">
+										<span>
+											#{prezmsg['SOUSCRIPTION_CONTRAT_COMMERCANT_CAPS']}</span>
+									</div>
+									<div class="MenuImg Menuitem_souscription-commercant " />
+								</div>
+							</p:outputPanel>
+
+							<!-- 							<p:link outcome="service_client/acceuilServiceClient.xhtml"> -->
+							<pe:spotlight blocked="false" styleClass="ItemSlot "
+								widgetVar="service-spotlight-wdg">
+								<div class="MenuItem Service_container">
+									<div class="Curtain" />
+									<div class="MenuLabel">
+										<span> #{prezmsg['SERVICE_CLIENT_CAPS']}</span>
+									</div>
+									<div class="MenuImg Menuitem_service-client" />
+								</div>
+								<div class="IdForm">
+									<h:panelGrid styleClass="FormGrid" columns="2"
+										columnClasses="AlignLeft Width40pct,Width60pct">
+										<p:outputLabel value="N° Carte :" />
+										<p:inputText />
+
+										<p:outputLabel value="N° Compte :" />
+										<p:inputText />
+
+										<p:outputLabel value="N° CIN :" />
+										<p:inputText />
+
+										<p:outputLabel value="Nom/prénom :" />
+										<p:inputText />
+
+									</h:panelGrid>
+									<div class="Width100pct">
+										<p:commandButton value="AUTHENTIFICATION ÉLECTRONIQUE"
+											process="@this" styleClass="CrudButton" />
+										<p:commandButton value="VALIDER" styleClass="CrudButton"
+											process="@this"
+											action="service_client/acceuilServiceClient.xhtml?faces-redirect=true" />
+									</div>
+								</div>
+							</pe:spotlight>
+
+						</b:panelGrid>
+					</b:column>
+					<b:column span="4">
+						<div class="SectionTitle">
+							<span>Produits</span>
+						</div>
+						<b:panelGrid colSpans="12" styleClass="GlassPanel">
+							<p:link outcome="vente_carte_prepayee/venteCartePrepayee.xhtml">
+								<p:outputPanel styleClass="ItemSlot">
+									<div class="MenuItem">
+										<div class="Curtain" />
+										<div class="MenuLabel">
+											<span> #{prezmsg['VENTE_CARTE_PREPAYEE_CAPS']}</span>
+										</div>
+										<div class="MenuImg Menuitem_vente-carte-prepayee" />
+									</div>
+								</p:outputPanel>
+							</p:link>
+							<p:outputPanel styleClass="ItemSlot">
+								<div class="MenuItem">
+									<div class="Curtain" />
+									<div class="MenuLabel">
+										<span> #{prezmsg['AFFECTATION_TOKEN_CAPS']}</span>
+									</div>
+									<div class="MenuImg Menuitem_affectation-token" />
+								</div>
+							</p:outputPanel>
+
+							<p:link outcome="emission_instantanee/rootPanel.xhtml">
+								<p:outputPanel styleClass="ItemSlot">
+									<div class="MenuItem">
+										<div class="Curtain" />
+										<div class="MenuLabel">
+											<span> #{prezmsg['EMISSION_INSTANTANEE_CAPS']}</span>
+										</div>
+										<div class="MenuImg Menuitem_emission" />
+									</div>
+								</p:outputPanel>
+							</p:link>
+
+						</b:panelGrid>
+					</b:column>
+					<b:column span="4">
+						<div class="SectionTitle">
+							<span>Activité</span>
+						</div>
+						<b:panelGrid colSpans="12" styleClass="GlassPanel">
+							<p:link outcome="tableau_bord/dashboard.xhtml">
+								<p:outputPanel styleClass="ItemSlot">
+									<div class="MenuItem">
+										<div class="Curtain" />
+										<div class="MenuLabel">
+											<span> #{prezmsg['TABLEAU_BORD_CAPS']}</span>
+										</div>
+										<div class="MenuImg Menuitem_tableau-bord" />
+									</div>
+								</p:outputPanel>
+							</p:link>
+							<p:link outcome="gestion_stock/stock.xhtml">
+								<p:outputPanel styleClass="ItemSlot">
+									<div class="MenuItem">
+										<div class="Curtain" />
+										<div class="MenuLabel">
+											<span> #{prezmsg['GESTION_STOCK_CAPS']}</span>
+										</div>
+										<div class="MenuImg Menuitem_gestion-stock" />
+									</div>
+								</p:outputPanel>
+							</p:link>
+							<p:outputPanel styleClass="ItemSlot">
+								<div class="MenuItem">
+									<div class="Curtain" />
+									<div class="MenuLabel">
+										<span> #{prezmsg['ARRETE_GAB_CAPS']}</span>
+									</div>
+									<div class="MenuImg Menuitem_gestion-gab" />
+								</div>
+							</p:outputPanel>
+						</b:panelGrid>
+					</b:column>
+				</b:row>
+			</b:container>
+
+		</h:form>
+
+		<div class="ThemeFunctionGroup">
+			<h:form>
+				<p:menu overlay="true" trigger="modify-theme" my="left top"
+					at="left bottom">
+					<p:menuitem value="Standard" update="@all">
+						<f:setPropertyActionListener
+							target="#{logedUserMBean.currentTheme}" value="" />
+					</p:menuitem>
+					<p:menuitem value="Blue" update="@all">
+						<f:setPropertyActionListener
+							target="#{logedUserMBean.currentTheme}" value="theme_blue/" />
+					</p:menuitem>
+					<p:menuitem value="Orange" update="@all">
+						<f:setPropertyActionListener
+							target="#{logedUserMBean.currentTheme}" value="theme_orange/" />
+					</p:menuitem>
+					<p:menuitem value="Light" update="@all">
+						<f:setPropertyActionListener
+							target="#{logedUserMBean.currentTheme}" value="theme_light/" />
+					</p:menuitem>
+					<p:menuitem value="Dark" update="@all">
+						<f:setPropertyActionListener
+							target="#{logedUserMBean.currentTheme}" value="theme_dark/" />
+					</p:menuitem>
+				</p:menu>
+
+				<ul class="HorizontalMenu clickable">
+					<li><p:graphicImage id="modify-theme" library="images"
+							name="modify-theme.png" /></li>
+				</ul>
+			</h:form>
+		</div>
+	</ui:define>
+
+</ui:composition>

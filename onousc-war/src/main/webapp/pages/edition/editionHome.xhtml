@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layout.xhtml">
+
+	<ui:define name="content">
+
+		<h:form id="edit-form">
+			<h:panelGrid styleClass="MenuPrincipal" columns="5">
+				<p:link style="text-decoration:none" outcome="/pages/edition/listeCarteFabrique.xhtml" rendered="#{authMbean.hasEcran('000018')}"> 
+					<div class="MenuImg MenuImg_E" />
+					<div class="label">
+						<center>
+							<h:outputText value="Cartes fabriquées"
+								style="width: 106%;"></h:outputText>  
+						</center>
+					</div>
+				</p:link>
+				<p:link style="text-decoration:none" outcome="/pages/edition/listeReservations.xhtml" rendered="#{authMbean.hasEcran('000038')}">
+					<div class="MenuImg MenuImg_E" />
+					<div class="label">
+						<center>
+							<h:outputText value="Réservation"
+								style="width: 106%;"></h:outputText>
+						</center>
+					</div>
+				</p:link>
+				<p:link style="text-decoration:none" outcome="/pages/edition/listeDemandes.xhtml" rendered="#{authMbean.hasEcran('000028')}"> 
+					<div class="MenuImg MenuImg_E" />
+					<div class="label">
+						<center>
+							<h:outputText value="Demandes"
+								style="width: 106%;"></h:outputText>
+						</center>
+					</div>
+				</p:link>
+			</h:panelGrid>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+

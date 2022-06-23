@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layout.xhtml">
+
+	<ui:define name="content">
+
+
+		<h:form id="menu-form"> 
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+
+			<p:remoteCommand name="_updateCrudMenu" global="false"
+				update="crud-menu :search-overlay" />
+			<!--  -->
+
+			<div class="BreadCrumbCust">
+
+				<h:panelGrid columns="5" cellpadding="5">
+
+					<h:outputLabel value="Administration" style="color:#419edd"
+						styleClass="LabelEnr" />
+
+					<span class="ui-icon ui-icon-carat-1-e"
+						style="float: left; margin-top: 3px;"></span>
+
+					<h:outputLabel value="Gestion des Menus" styleClass="LabelEnr" />
+				</h:panelGrid>
+
+			</div>
+
+
+			<div class="BackgroundGray">
+
+				<div class="RefCenter">
+				<p:messages id="msg" globalOnly="true" closable="true" showIcon="false" />
+					<p:menubar id="crud-menu" styleClass="CrudMenu">
+
+						<p:menuitem id="create" value="#{prezmsg['NOUVEAU']}"
+							icon="ui-icon-custom-nouveau" styleClass="ToolbarButton"
+							action="#{menuMBean.resetWebBeanVO}"
+							update=":creeMenu-form" 
+							oncomplete="PF('create-anneeUniversitaire-profil').show();">
+						</p:menuitem>
+
+						<p:menuitem id="search" value="#{prezmsg['CHERCHER']}" 
+							icon="ui-icon-search" />
+
+					</p:menubar>
+
+					<p:dataTable id="menu-dtbl" paginator="true"  
+						rowStyleClass="#{user.statut == 'DELETED' ? 'is-disabled' :null }"
+						value="#{menuSearchMBean}" var="menu" lazy="true"
+						rows="5"
+						selection="#{menuMBean.webBean.selectedVOs}" 
+						emptyMessage="#{prezmsg['label_no_records_found']}"
+						rowKey="#{menu.code}" paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="5,10,20"
+						currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+
+						<ui:include src="/pages/commun/datatableEvents.xhtml" />
+
+						<p:column selectionMode="multiple" styleClass="tableChkbox"
+							style="width:5%;text-align:center" />
+
+						<p:column headerText="#{prezmsg['CODE']}" style="width:25%">
+							<center>
+								<h:outputText value="#{menu.code}" />
+							</center>
+						</p:column>
+						<p:column headerText="#{prezmsg['LIBELLE']}" style="width:30%">
+							<center>
+								<h:outputText value="#{menu.libelle}" />
+							</center>
+						</p:column>
+						<p:column headerText="#{prezmsg['ABBREV']}" style="width:30%">
+							<center>
+								<h:outputText value="#{menu.abbrev}" />
+							</center>
+						</p:column>
+
+
+						<p:column exportable="false" style="width:10%;text-align:center;"
+							headerText="ACTIONS">
+
+							<p:commandButton icon="ui-icon-custom-modifier" 
+								update=":editer-anneeuniversitaire"
+								oncomplete="PF('editer-anneeuniversitaire-profil').show();">
+								<f:setPropertyActionListener value="#{menu}"
+									target="#{menuMBean.webBean.vo}" />
+							</p:commandButton>
+
+<!-- 							<p:commandButton icon="ui-icon-custom-supprimer" -->
+<!-- 								styleClass="CrudButton" -->
+<!-- 								action="#{menuMBean.supprimer}"  -->
+<!-- 								update="menu-dtbl :menu-form:msg">   -->
+<!-- 								<p:confirm header="#{prezmsg['CONFIRMATION_DELETE']}" -->
+<!-- 									message="#{prezmsg['MESSAGE_CONFIRMATION_DELETE']}"   -->
+<!-- 									icon="ui-icon-alert"  /> -->
+<!-- 								<f:setPropertyActionListener value="#{menu}"  	 -->
+<!-- 									target="#{menuMBean.webBean.vo}"></f:setPropertyActionListener> -->
+<!-- 							</p:commandButton> --> 
+
+						</p:column>
+
+					</p:dataTable>
+
+				</div>
+
+			</div>
+		</h:form>
+
+		<p:overlayPanel id="search-overlay"
+			for=":menu-form:search" hideEffect="slide"
+			showEffect="slide" widgetVar="searchOverlay" dismissable="false"
+			appendToBody="true">
+
+			<h:form>
+
+				<h:panelGrid columns="4" styleClass="FormGrid">
+					<!-- Code   -->
+					<h:outputLabel value="#{prezmsg['CODE']}" />
+					<p:inputText id="code-search"
+						value="#{menuSearchMBean.menuCriteria.code}" />
+					<!-- Libellé   --> 
+					<h:outputLabel value="#{prezmsg['LIBELLE']}" />
+					<p:inputText id="lib-search"
+						value="#{menuSearchMBean.menuCriteria.libelle}" />
+
+
+					<h:outputLabel value="#{prezmsg['ABBRV']}" />
+					<p:inputText id="annee-search"
+						value="#{menuSearchMBean.menuCriteria.abbrev}" /> 
+
+
+				</h:panelGrid>
+
+				<p:commandButton value="#{prezmsg['OK']}" styleClass="OpButton"
+					action="#{menuSearchMBean.run}" ajax="true"
+					style="margin-left:93%" 
+					update=":menu-form:menu-dtbl"
+					onclick="PF('searchOverlay').hide();" />
+
+			</h:form>
+
+		</p:overlayPanel>
+
+
+
+		<ui:include src="creeMenu.xhtml"></ui:include>
+		<ui:include src="editerMenu.xhtml"></ui:include>
+
+	</ui:define>
+</ui:composition>
+

@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layout.xhtml">
+
+	<ui:define name="content">
+
+		<h:form id="nationalite-form">
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+<!-- 			<p:remoteCommand name="_updateCrudMenu" global="false" -->
+<!-- 				update="crud-menu" /> -->
+
+			<!-- 			<p:remoteCommand name="_updateCrudMenu" global="false" -->
+			<!-- 				update="crud-menu :search-overlay" /> -->
+
+			<div class="BreadCrumbCust">
+
+				<h:panelGrid columns="5" cellpadding="5">
+
+					<h:outputLabel value="Gestion Délivrance" style="color:#419edd"
+						styleClass="LabelEnr" />
+
+					<span class="ui-icon ui-icon-carat-1-e"
+						style="float: left; margin-top: 3px;"></span>
+
+					<h:outputLabel value="" styleClass="LabelEnr" />
+				</h:panelGrid>
+
+			</div>
+			<div class="BackgroundGray">
+				<!-- Breadcrumb -->
+				<div class="BreadCrumbCust">
+					<h:panelGrid columns="5" cellpadding="3">
+						<h:outputLabel value="Enôlement" style="color:#419edd" />
+						<span class="ui-icon ui-icon-carat-1-e"></span>
+						<h:outputLabel value="Gestion Délivrance" />
+					</h:panelGrid>
+				</div>
+				<div class="RefCenter">
+					<div class="RechercheCycle">
+						<center>
+							<h:panelGrid columns="4" styleClass="FormGrid">
+								<p:outputLabel id="anne" value="#{prezmsg['NSERIE']}" />
+								<p:inputText id="serie_create"
+									value="#{cycleVieFabrSearchMBean.cycleVieCriteria.numSerie}">
+								</p:inputText>
+
+                                <p:outputLabel id="numCarte" value="N° Carte" />
+								<p:inputText id="ncarte_create"
+									value="#{cycleVieFabrSearchMBean.cycleVieCriteria.operateur}">
+								</p:inputText>
+
+								<p:outputLabel value="#{prezmsg['PORTEUR']}" />
+								<p:selectOneMenu id="Porteur-create" filter="true"
+									filterMatchMode="startsWith"
+									value="#{cycleVieFabrSearchMBean.cycleVieCriteria.numPorteur}">
+									<f:selectItem itemLabel="Porteur....." noSelectionOption="true" />
+									<f:selectItems value="#{cycleVieMBean.webBean.etudiantVOs}"
+										var="e" itemLabel="#{e.nom} #{e.prenom}" itemValue="#{e.id}" />
+								</p:selectOneMenu>
+
+
+
+<!-- 								<p:outputLabel value="#{prezmsg['ETAT']}" /> -->
+<!-- 								<p:selectOneMenu id="oper-create" filter="true" -->
+<!-- 									filterMatchMode="startsWith" -->
+<!-- 									value="#{cycleVieSearchMBean.cycleVieCriteria.operation}"> -->
+<!-- 									<f:selectItem itemLabel="#{prezmsg['TOUS']}" /> -->
+<!-- 									<f:selectItem itemLabel="#{prezmsg['ENCOURS']}" -->
+<!-- 										itemValue="ENCOURS" /> -->
+<!-- 									<f:selectItem itemLabel="Personnalisée" -->
+<!-- 										itemValue="PERSONNALISATION" /> -->
+<!-- 									<f:selectItem itemLabel="Delivrée" itemValue="DELIVRANCE" /> -->
+
+
+<!-- 								</p:selectOneMenu> -->
+							</h:panelGrid>
+
+
+
+							<p:commandButton id="searchOkk" styleClass="OpButton"
+								widgetVar="searchOk-wdg" value="#{prezmsg['CHERCHER']}"
+								action="#{cycleVieFabrSearchMBean.run}"
+								update=":nationalite-form:nationalite-dtbl"
+								icon="ui-icon-custom-chercher" />
+
+							<!-- clear du formulaire  -->
+							<p:commandButton id="searchReset" styleClass="OpButton"
+								widgetVar="searchReset-wdg" value="#{prezmsg['RESET']}"
+								icon="ui-icon-custom-undo"
+								action="#{cycleVieFabrSearchMBean.resetSearchCriteria()}"
+								update="nationalite-form" tabindex="-1">
+							</p:commandButton>
+						</center>
+					</div>
+					<br />
+					
+						
+					<p:dataTable id="nationalite-dtbl" paginator="true"
+						value="#{cycleVieFabrSearchMBean}" var="nat" lazy="true" rows="10"
+						emptyMessage="#{prezmsg['label_no_records_found']}"
+						selection="#{cycleVieFabrMBean.webBean.selectedVO}"
+						selectionMode="single" rowKey="#{nat.id}"
+						paginatorPosition="bottom"
+						actionListener="#{cycleVieFabrMBean.resetWebBeanVO}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="10,20,30"
+						currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+
+						<ui:include src="/pages/commun/datatableEvents.xhtml" />
+
+						<p:ajax event="rowSelect"
+							update="@form :create-form :create-form2" />
+
+						<!--  <ui:include src="/pages/commun/datatableEvents.xhtml" />-->
+
+						<p:column selectionMode="multiple" styleClass="tableChkbox"
+							style="width:16px;text-align:center" />
+
+						<!-- Libellé de la nationalité -->
+						<p:column headerText="#{prezmsg['NSERIE']}">
+							<h:outputText value="#{nat.numSerie}">
+								<f:convertNumber pattern="00000000" />
+							</h:outputText>
+						</p:column>
+						
+						<p:column headerText="N° Carte">
+							<h:outputText value="#{nat.operateur}">
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['OPERATION']}">
+							<h:outputText value="#{nat.operation}" />
+						</p:column>
+
+						<p:column headerText="#{prezmsg['NPORTEUR']}">
+							<h:outputText value="#{nat.etudvo.id}" />
+						</p:column>
+
+						<p:column headerText="#{prezmsg['PORTEUR']}">
+							<h:outputText value="#{nat.etudvo.nom} #{nat.etudvo.prenom}" />
+						</p:column>
+
+						<p:column headerText="#{prezmsg['CITE']}">
+							<h:outputText value="#{nat.etudvo.citovo.libelle}" />
+						</p:column>
+						<p:column headerText="#{prezmsg['DATE_OPERATION_ENR']}"
+							styleClass="AlignCenter">
+							<h:outputText value="#{nat.dateOperation}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column styleClass="AlignLeft Width60">
+
+							<p:commandButton icon="ui-icon-arrowreturnthick-1-e"
+								action="#{cycleVieFabrMBean.delivrer}" title="Délivrer la Carte"
+								styleClass="CrudButton"
+								update=":nationalite-form:nationalite-dtbl"
+								rendered="#{render}">
+								<f:setPropertyActionListener value="#{nat}"
+									target="#{cycleVieFabrMBean.webBean.vo}" />
+								<p:confirm header="#{prezmsg['CONFIRMATION_VALIDATION']}"
+									icon="ui-icon-alert"
+									message="#{prezmsg['CONFIRMATION_DELIVERE_MESSAGE']}" />
+							</p:commandButton>
+						</p:column>
+
+					</p:dataTable>
+
+
+
+				</div>
+			</div>
+		</h:form>
+
+		<!--  <p:overlayPanel id="search-overlay" for=":nationalite-form:search"
+			hideEffect="slide" showEffect="slide" widgetVar="searchOverlay"
+			dismissable="false" appendToBody="true">
+
+			<h:form id="search-form">
+
+				<h:panelGrid columns="4" styleClass="FormGrid">
+
+
+
+					<p:outputLabel id="anne" value="#{prezmsg['NSERIE']}" />
+					<p:inputText id="serie_create" style="width:80px;"
+						value="#{cycleVieSearchMBean.cycleVieCriteria.numSerie}">
+					</p:inputText>
+
+					<p:outputLabel id="nom" value="#{prezmsg['OPERATION']}" />
+					<p:selectOneMenu id="operation"
+						value="#{cycleVieSearchMBean.cycleVieCriteria.operation}">
+						<f:selectItem itemLabel="#{prezmsg['TOUS']}" />
+						<f:selectItem itemLabel="PERSONNALISATION"
+							itemValue="PERSONNALISATION" />
+						<f:selectItem itemLabel="IMPRESSION" itemValue="IMPRESSION" />
+						<f:selectItem itemLabel="EN COURS" itemValue="EN COURS" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="#{prezmsg['PORTEUR']}" />
+					<p:selectOneMenu id="Porteur-create" filter="true"
+						filterMatchMode="startsWith"
+						value="#{cycleVieSearchMBean.cycleVieCriteria.numPorteur}">
+						<f:selectItem itemLabel="Porteur....." noSelectionOption="true" />
+						<f:selectItems value="#{cycleVieMBean.webBean.etudiantVOs}"
+							var="e" itemLabel="#{e.nom}" itemValue="#{e.id}" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+
+				<p:toolbar>
+					<f:facet name="right">
+						<p:commandButton id="searchOk" styleClass="OpButton"
+							widgetVar="searchOk-wdg" value="#{prezmsg['OK']}"
+							action="#{cycleVieSearchMBean.run}"
+							update=":nationalite-form:nationalite-dtbl"
+							onstart="backToFirstPage(); block()"
+							oncomplete="PF('searchOverlay').hide(); unblock(); initCrudMenu();" />
+
+						<p:commandButton id="searchReset" styleClass="OpButton"
+							widgetVar="searchReset-wdg" value="Reset"
+							action="#{ycleVieSearchMBean.resetSearchCriteria()}"
+							update="search-form" tabindex="-1">
+							<p:resetInput target="search-form" />
+						</p:commandButton>
+					</f:facet>
+				</p:toolbar>
+
+			</h:form>
+
+		</p:overlayPanel>-->
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<h:panelGrid columns="2" styleClass="AlignCenter Width100pct">
+				<p:commandButton value="#{prezmsg['OUI']}" type="button"
+					styleClass="OpButton" icon="ui-icon-check" />
+				<p:commandButton value="#{prezmsg['NON']}" type="button"
+					styleClass="OpButton" icon="ui-icon-close" />
+			</h:panelGrid>
+		</p:confirmDialog>
+
+		<ui:include src="DeclarerOpposition.xhtml"></ui:include>
+		<ui:include src="MainLevee.xhtml"></ui:include>
+
+	</ui:define>
+</ui:composition>
+

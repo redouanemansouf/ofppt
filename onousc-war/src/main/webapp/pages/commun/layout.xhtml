@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<f:view locale="#{facesContext.externalContext.requestLocale}"
+	contentType="text/html">
+
+	<h:head>
+		<title>ONOUSC</title>
+		<title>ONOUSC</title>
+		<h:outputScript id="idCommunJS" library="js" name="script.js" />
+<!-- 		<h:outputScript id="idFullScreen" library="js" -->
+<!-- 			name="screenfull.js" /> -->
+		
+		<h:outputScript id="idPFWidgetsJS" library="js" name="PFWidgets.js"
+			target="body" />
+		<h:outputStylesheet id="idStatistiqueStyle" library="css"
+			name="StyleStatistique.css" />
+		<h:outputStylesheet id="idCommunStyle" library="css"
+			name="styleee.css" />
+		<h:outputStylesheet id="idTopMenuStyle" library="css"
+			name="topMenu.css" />
+
+
+	</h:head>
+	<h:body>
+		<h:form id="session-monitor"> 
+			<p:idleMonitor timeout="1800000">        
+				<p:ajax event="idle" listener="#{webUtilsMBean.onSessionExpire}"
+					oncomplete="PF('session-dlg-wdg').show()" update="session-messages" />
+			</p:idleMonitor>
+
+			<p:dialog id="session-dlg" header="Session expirée" closable="false"
+				widgetVar="session-dlg-wdg" modal="true" styleClass="WarningDialog">
+				<h:messages id="session-messages" globalOnly="true"
+					showDetail="true" styleClass="ErrorMessages" />
+				<div class="AlignCenter">
+					<p:commandButton ajax="false" id="error-ok" value="OK"
+						styleClass="OpButton"
+						action="/public/login.xhtml?faces-redirect=true" />
+				</div>
+			</p:dialog>
+		</h:form>
+
+		<ui:include src="/pages/commun/header.xhtml" />
+
+
+		<p:outputPanel id="block_header" style="height:50px;">
+			<ui:include src="/pages/commun/menu.xhtml" />
+		</p:outputPanel>
+
+		<div class="Theatre">
+
+			<p:outputPanel styleClass="MainContainer  ">
+				<p:ajaxStatus styleClass="ref-ajaxloading">
+					<f:facet name="start">
+<!-- 						<p:graphicImage library="images" name="loadingbar.gif" width="80" -->
+<!-- 							height="10" /> -->
+							<p:graphicImage id="ajaxLoader" name="images/blueajax.gif"
+					styleClass="AjaxStatusLoader" />
+					<br/>
+					</f:facet>
+				</p:ajaxStatus>
+				<pe:tooltip global="true" atPosition="top center"
+					myPosition="bottom center" />
+				<p:outputPanel id="block_content">
+					<h:outputLabel id="success" />
+					<ui:insert name="content" />
+				</p:outputPanel>
+
+
+
+				<!-- Dialog de confirmation  -->
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+					closeOnEscape="true" widgetVar="confirm-wdg">
+					<h:panelGrid columns="2" styleClass="AlignCenter Width100pct">
+						<p:commandButton value="Oui" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-custom-check" />
+						<p:commandButton value="Non" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-custom-close" />
+					</h:panelGrid>
+				</p:confirmDialog>
+
+				<!--  Dialog d'erreur -->
+				<p:dialog id="error-dlg" widgetVar="error-dlg-wdg" header="Erreur"
+					modal="false">
+					<p:messages id="error-messages" globalOnly="true" />
+					<h:form>
+
+
+
+						<!-- 						<p:dialog id="dlg" widgetVar="dlg3" -->
+						<!-- 					header="#{prezmsg['SESSION_EXP']}" hideEffect="fade" width="250" -->
+						<!-- 					height="60" showEffect="fade" modal="true" dynamic="true" -->
+						<!-- 					> -->
+						<!-- 					<center> -->
+						<!-- 						<h:outputText value="#{prezmsg['SESSION_MSG']}" /> -->
+						<!-- 						<p:commandButton id="session_exp" styleClass="OpButton" -->
+						<!-- 							value="#{prezmsg['SESS_LOGOUT']}" ajax="false" -->
+						<!-- 							action="#{loginMBean.timeout_redirect}"></p:commandButton> -->
+						<!-- 					</center> -->
+						<!-- 				</p:dialog> -->
+
+
+
+						<div class="AlignCenter">
+							<p:commandButton type="button" id="error-ok" value="OK"
+								styleClass="OpButton" onclick="PF('error-dlg-wdg').hide()" />
+						</div>
+					</h:form>
+				</p:dialog>
+
+				<!--  message de suces -->
+				<p:growl id="succes" globalOnly="true" escape="false" />
+
+
+			</p:outputPanel>
+		</div>
+
+
+	</h:body>
+</f:view>
+</html>

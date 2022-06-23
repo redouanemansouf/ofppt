@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="/pages/commun/layout.xhtml">
+
+	<ui:define name="content">
+		<h:form id="trs-form">
+
+			<div class="BackgroundGray">
+
+				<!-- Breadcrumb -->
+				<div class="BreadCrumbCust">
+					<h:panelGrid columns="5" cellpadding="3">
+						<h:outputLabel value="Suivi des activités" style="color:#419edd" />
+						<span class="ui-icon ui-icon-carat-1-e"></span>
+						<h:outputLabel value="Transactions" />
+					</h:panelGrid>
+				</div>
+				<div class="RefCenter">
+					<p:toolbar id="crud-menu">
+
+						<f:facet name="left">
+							<p:commandButton id="search" widgetVar="search-wdg"
+								styleClass="ToolbarButton" value="#{prezmsg['CHERCHER']}"
+								type="button" icon="ui-icon-custom-chercher" />
+						</f:facet>
+					</p:toolbar>
+					<p:dataTable id="statistique-dtbl" paginator="true"
+						value="#{operationCaisseSearchMBean}" var="univ" rows="10"
+						lazy="true" paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="10,20,30"
+						currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+
+						<!-- Identifiant de l'universite  -->
+						<p:column headerText="#{prezmsg['DATE_TRANSACTION']}"
+							style="width:12%">
+							<center>
+								<h:outputText value="#{univ.dateOperation}" >
+								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+								</h:outputText>
+							</center>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['TYPE_OPERATION']} "
+							style="width: 10%;">
+							<center>
+								<h:outputText value="Recharge"
+									rendered="#{univ.typeOperation == 'R' }" />
+								<h:outputText value="Decharge"
+									rendered="#{univ.typeOperation == 'D' }" />
+							</center>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['MONTANT']}" style="width:12%">
+							<center>
+								<h:outputText value="#{univ.montant} DH" />
+							</center>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['ETUDIANT']}" style="width:12%">
+							<center>
+								<h:outputText
+									value="#{univ.etudiantVO.nom} #{univ.etudiantVO.prenom}" />
+							</center>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['CAISSE']}" style="width:12%">
+							<center>
+								<h:outputText value="#{univ.caisseVO.libelle}" />
+							</center>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['RESTAURANT']}" style="width:12%">
+							<center>
+								<h:outputText value="#{univ.caisseVO.restaurantVO.libelle}" />
+							</center>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['CITE']}" style="width:12%">
+							<center>
+								<h:outputText
+									value="#{univ.caisseVO.restaurantVO.citeVO.libelle}" />
+							</center>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['GESTION_CAISSIER']}"
+							style="width:12%">
+							<center>
+								<h:outputText
+									value="#{univ.caissierVO.nom} #{univ.caissierVO.prenom}" />
+							</center>
+						</p:column>
+
+
+						<!-- 						<p:columnGroup type="footer"> -->
+
+						<!-- 							<p:row> -->
+						<!-- 								<p:column style="text-align:right" footerText="Total:" /> -->
+						<!-- 								<p:column /> -->
+						<!-- 								<p:column footerText="${operationCaisseSearchMBean.some} DH" -->
+						<!-- 									rendered="${ empty operationCaisseSearchMBean.operationCaisseCriteria.type }" /> -->
+						<!-- 								<p:column footerText="#{operationCaisseSearchMBean.someR} DH" -->
+						<!-- 									rendered="${ operationCaisseSearchMBean.operationCaisseCriteria.type eq 'R'}" /> -->
+						<!-- 								<p:column footerText="#{operationCaisseSearchMBean.someD} DH" -->
+						<!-- 									rendered="${ operationCaisseSearchMBean.operationCaisseCriteria.type eq 'D'}" /> -->
+						<!-- 							</p:row> -->
+						<!-- 						</p:columnGroup> -->
+
+					</p:dataTable>
+					<!--<div class="transaction-tbl" style="width: 40%;">
+						 <p:dataTable id="total-transaction-dtbl" paginator="true"
+							value="#{operationCaisseMBean.webBean.transactionVOs}" var="u"
+							rows="5" lazy="true" paginatorTemplate=""
+							rowsPerPageTemplate="5,10,20"
+							currentPageReportTemplate="Affichant {startRecord}">
+
+							<p:column headerText="#{prezmsg['TYPE_OPERATION']}"
+								style="width:30%">
+								<center>
+									<h:outputText value="Recharge"
+										rendered="${ u.typeOperation == 'R' }" />
+									<h:outputText value="Decharge"
+										rendered="${ u.typeOperation == 'D' }" />
+								</center>
+							</p:column>
+
+							<p:column headerText="#{prezmsg['MONTANT_TOTALE']}">
+								<center>
+									<h:outputText value="#{u.total} DH" />
+								</center>
+							</p:column>
+						</p:dataTable>
+					</div>-->
+				</div>
+			</div>
+
+		</h:form>
+		<p:overlayPanel id="search-overlay" for=":trs-form:search"
+			hideEffect="slide" showEffect="slide" widgetVar="searchOverlay"
+			dismissable="false" appendToBody="true">
+
+			<h:form id="search-form">
+
+				<h:panelGrid columns="4" styleClass="FormGrid">
+
+					<h:outputLabel value="#{prezmsg['DATE_TRANSACTION']}" />
+					<p:calendar id="st_datedebut" styleClass="InscrInput"
+						value="#{operationCaisseSearchMBean.operationCaisseCriteria.dateOperation}"
+						pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true">
+					</p:calendar>
+
+					<h:outputLabel value="Cite" />
+					<p:selectOneMenu id="cite_search"
+						value="#{operationCaisseSearchMBean.operationCaisseCriteria.libcite}"
+						style="width:125px">
+						<p:ajax
+							listener="#{operationCaisseMBean.onCountryChange(operationCaisseSearchMBean.operationCaisseCriteria.libcite)}"
+							update="rest_search" />
+						<f:selectItem itemLabel="choisir une cité" />
+						<f:selectItems value="#{statistiqueMBean.webBean.citeVO}" var="u"
+							itemLabel="#{u.libelle}" itemValue="#{u.libelle}" />
+					</p:selectOneMenu>
+
+					<h:outputLabel value="Restaurant" />
+					<p:selectOneMenu id="rest_search"
+						value="#{operationCaisseSearchMBean.operationCaisseCriteria.libresto}"
+						style="width:125px">
+						<p:ajax
+							listener="#{operationCaisseMBean.onCiteChange(operationCaisseSearchMBean.operationCaisseCriteria.libresto)}"
+							update="etu_search caisse_search" />
+						<f:selectItem itemLabel="choisir un restaurant" />
+						<f:selectItems
+							value="#{operationCaisseMBean.webBean.restaurantVOs}" var="u"
+							itemLabel="#{u.libelle}" itemValue="#{u.libelle}" />
+					</p:selectOneMenu>
+
+					<h:outputLabel value="Etudiant" />
+					<p:selectOneMenu id="etu_search"
+						value="#{operationCaisseSearchMBean.operationCaisseCriteria.codeetu}"
+						style="width:125px">
+
+						<f:selectItem itemLabel="choisir un etudiant" />
+						<f:selectItems value="#{operationCaisseMBean.webBean.etudiantVO}"
+							var="u" itemLabel="#{u.nom} #{u.prenom}" itemValue="#{u.id}" />
+					</p:selectOneMenu>
+
+					<h:outputLabel value="Caisse" />
+					<p:selectOneMenu id="caisse_search"
+						value="#{operationCaisseSearchMBean.operationCaisseCriteria.libcaisse}"
+						style="width:125px">
+
+						<f:selectItem itemLabel="choisir une caisse" />
+						<f:selectItems value="#{operationCaisseMBean.webBean.caisseVOs}"
+							var="u" itemLabel="#{u.libelle}" itemValue="#{u.libelle}" />
+					</p:selectOneMenu>
+
+					<h:outputLabel value="Caissier" />
+					<p:selectOneMenu id="caissier_search"
+						value="#{operationCaisseSearchMBean.operationCaisseCriteria.caissiercode}"
+						style="width:125px">
+
+						<f:selectItem itemLabel="choisir un caissier" />
+						<f:selectItems value="#{operationCaisseMBean.webBean.caissierVOs}"
+							var="u" itemLabel="#{u.nom} #{u.prenom}" itemValue="#{u.code}" />
+					</p:selectOneMenu>
+
+					<h:outputLabel value="Type transaction" />
+					<p:selectOneMenu id="type_search"
+						value="#{operationCaisseSearchMBean.operationCaisseCriteria.type}"
+						style="width:125px">
+						<f:selectItem itemLabel="choisir type" />
+						<f:selectItem itemLabel="Recharge" itemValue="R" />
+						<f:selectItem itemLabel="Décharge" itemValue="D" />
+					</p:selectOneMenu>
+
+
+				</h:panelGrid>
+
+				<p:toolbar>
+					<f:facet name="right">
+
+						<p:commandButton id="searchOk" styleClass="OpButton"
+							widgetVar="searchOk-wdg" value="#{prezmsg['OK']}"
+							action="#{operationCaisseSearchMBean.chercher}"
+							update=":trs-form:statistique-dtbl" onstart="backToFirstPage();"
+							oncomplete="PF('searchOverlay').hide(); unblock(); initCrudMenu();" />
+
+
+						<p:commandButton id="searchReset" styleClass="OpButton"
+							widgetVar="searchReset-wdg" value="#{prezmsg['RESET']}"
+							icon="ui-icon-custom-undo"
+							action="#{operationCaisseSearchMBean.resetSearchCriteria()}"
+							update="search-form" tabindex="-1">
+						</p:commandButton>
+
+					</f:facet>
+				</p:toolbar>
+
+			</h:form>
+		</p:overlayPanel>
+	</ui:define>
+</ui:composition>

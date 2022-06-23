@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<REF_CRITERE_TAUX_REMPLISSAGE CPTR_ID="1" CPTR_LIBELLE="critere 1"
+		CPTR_DESCRIPTION="critere1 description" CPTR_VALEUR_INF="0.3" CPTR_VALEUR_SUP="40.5" CPTR_STATUT="ENABLED" />
+
+	<REF_CRITERE_TAUX_REMPLISSAGE CPTR_ID="2" CPTR_LIBELLE="concurrence"
+		CPTR_DESCRIPTION="concurrence sur le troncon" CPTR_VALEUR_INF="0.0" CPTR_VALEUR_SUP="60.5" CPTR_STATUT="DISABLED" />
+
+</dataset>

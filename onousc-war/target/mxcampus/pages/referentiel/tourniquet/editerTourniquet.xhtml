@@ -1,0 +1,107 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<p:dialog id="edit-dlg" widgetVar="edit-dlg-wdg" closable="true"
+		closeOnEscape="true" header="Modifier tourniquet" hideEffect="fade"
+		showEffect="fade" modal="true" dynamic="true">
+
+		<h:form id="edit-form">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+		<!--  	<pe:tooltip for="tourniquet_univ" myPosition="left center"
+				showEvent="click" hideEvent="unfocus" atPosition="right center">
+				<h:message for="tourniquet_univ" />
+			</pe:tooltip> -->
+				<pe:tooltip for="mode_trq_c" myPosition="left center"
+				showEvent="click" hideEvent="unfocus" atPosition="right center">
+				<h:message for="mode_trq_c" />
+			</pe:tooltip> 
+			<pe:tooltip for="type_trq_c" myPosition="left center"
+				showEvent="click" hideEvent="unfocus" atPosition="right center">
+				<h:message for="type_trq_c" />
+			</pe:tooltip> 
+
+			<h:panelGrid columns="2" styleClass="FormGrid">
+				<!--      Code      -->
+				<h:outputLabel value="#{prezmsg['CODE']}" />
+				<p:inputText id="_code" value="#{tourniquetMBean.webBean.vo.code}"
+					disabled="true" />
+
+				<!--      Libellé      -->
+				<h:outputLabel value="#{prezmsg['LIBELLE']}" />
+				<p:inputText id="_libelle"
+					value="#{tourniquetMBean.webBean.vo.libelle}" required="true"
+					title="#{component.valid ? '' : tourniquetMBean.getErrorMessage(component.clientId)}" />
+
+				<!--     Reference     -->
+				<h:outputLabel value="#{prezmsg['IP']}" />
+				<p:inputText id="tourniquet_solde"
+					value="#{tourniquetMBean.webBean.vo.reference}" required="true"
+					title="#{component.valid ? '' : tourniquetMBean.getErrorMessage(component.clientId)}" />
+
+				
+				<h:outputLabel value="#{prezmsg['MODE_TRQ']}" />
+											<p:selectOneMenu id="mode_trq_c" 
+												value="#{tourniquetMBean.webBean.vo.mode}" required="true"
+													title="#{component.valid ? '' : tourniquetMBean.getErrorMessage(component.clientId)}"
+												 style="width:220px">
+												<f:selectItem itemLabel="Choisissez" />
+												
+													<f:selectItem itemLabel="Passage simple"  itemValue="S"/>
+														<f:selectItem itemLabel="Passage contôlé" itemValue="C" />
+												
+											</p:selectOneMenu>
+											
+											<h:outputLabel value="#{prezmsg['TYPE_TRQ']}" />
+											<p:selectOneMenu id="type_trq_c" required="true" 
+												value="#{tourniquetMBean.webBean.vo.type}"
+													title="#{component.valid ? '' : tourniquetMBean.getErrorMessage(component.clientId)}"
+												 style="width:220px">
+												<f:selectItem itemLabel="Choisissez" />
+												
+													<f:selectItem itemLabel="Entrée"  itemValue="E"/>
+														<f:selectItem itemLabel="Sortie" itemValue="S" />
+												
+											</p:selectOneMenu>
+				
+				<!-- 	  tourniquetresto       -->
+			<!--  	<h:outputLabel value="#{prezmsg['RESTAURANT']}" />
+				<p:selectOneMenu id="tourniquet_univ"
+					value="#{tourniquetMBean.webBean.vo.restaurantVO}"
+					converter="restaurantConverter" style="width:125px" required="true"
+					title="#{component.valid ? '' : tourniquetMBean.getErrorMessage(component.clientId)}">
+					<f:selectItem itemLabel="choisir un restaurant" />
+					<f:selectItems value="#{tourniquetMBean.webBean.restaurantVOs}"
+						var="u" itemLabel="#{u.libelle}" itemValue="#{u}" />
+				</p:selectOneMenu>
+-->
+			</h:panelGrid>
+
+
+			<p:toolbar>
+				<f:facet name="right">
+					<p:commandButton id="validate-edit" value="#{prezmsg['VALIDER']}"
+						process="@form" update="edit-form"
+						action="#{tourniquetMBean.modifier}" styleClass="ValidateButton" />
+					<p:commandButton value="#{prezmsg['ANNULER']}" global="false"
+						process="@none" onclick="PF('edit-dlg-wdg').hide()"
+						styleClass="CancelButton" />
+
+				</f:facet>
+			</p:toolbar>
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('edit-dlg-wdg').hide()"
+				update=":tourniquet-form:tourniquet-dtbl" />
+		</h:form>
+	</p:dialog>
+</ui:composition>

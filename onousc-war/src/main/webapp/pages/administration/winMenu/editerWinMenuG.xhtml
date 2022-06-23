@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+	<p:dialog id="editer-anneeuniversitaire"
+		widgetVar="editer-anneeuniversitaire-profil"
+		header="Modifier droit d'accés groupe" hideEffect="fade"   
+		styleClass="dialogclass" showEffect="fade" modal="true" dynamic="true"
+		closeOnEscape="true"
+		onHide="PF('editer-anneeuniversitaire').content.empty">
+
+
+
+		<h:form id="editeranneeUniversitaire-form">
+
+			<p:messages globalOnly="true" autoUpdate="true" />
+
+				<h:panelGrid columns="2" cellpadding="5">
+
+						<p:column><h:outputLabel value="#{prezmsg['GROUPE']}" /></p:column>
+						<p:column> 
+							<p:inputText id="operateur" value="#{winMenuMBean.webBean.vo.operateur}" disabled="true"/> 
+						</p:column>
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2" styleClass="FloatRight" cellpadding="5">
+					<p:commandButton value="#{prezmsg['VALIDER']}" styleClass="ValidateButton"
+						action="#{winMenuMBean.modifier}" process="@form"
+						update="@form " 
+						onstart="block('create-dlg-wdg')"
+						oncomplete="unblock('create-dlg-wdg')"  /> 
+					<p:commandButton value="#{prezmsg['ANNULER']}" global="false"
+						oncomplete="PF('editer-anneeuniversitaire-profil').hide()" styleClass="CancelButton" />
+				</h:panelGrid>
+
+
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('editer-anneeuniversitaire-profil').hide()"
+				update=":winMenu-form:winMenu-dtbl" />   
+
+		</h:form>
+	</p:dialog>
+ 
+</ui:composition>

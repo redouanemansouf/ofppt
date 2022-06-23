@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<f:view locale="#{facesContext.externalContext.requestLocale}"
+	contentType="text/html">
+
+	<h:head>
+		<title>mxplus</title>
+		<h:outputScript id="idCommunJS" library="js" name="script.js"
+			target="body" />
+		<h:outputScript id="idCustomScrollbarJS" library="js"
+			name="jquery.mCustomScrollbar.concat.min.js" />
+	</h:head>
+	<h:body onload="document.body.setAttribute('class', 'loaded')">
+
+		<f:facet name="last">
+			<h:outputStylesheet id="idCustomScrollbar" library="css"
+				name="jquery.mCustomScrollbar.css" />
+			<h:outputStylesheet id="idCommunStyle" library="css"
+				name="#{logedUserMBean.currentTheme}style.css" />
+			<h:outputStylesheet id="idUiStyle" library="css" name="ui.css" />
+			<h:outputStylesheet id="idImagesStyle" library="css"
+				name="#{logedUserMBean.currentTheme}images.css" />
+			<h:outputStylesheet id="idTopMenuStyle" library="css"
+				name="topMenu.css" />
+			<h:outputStylesheet id="idFontAwsome" library="css"
+				name="font-awesome.css" />
+			<h:outputStylesheet id="idMediaStyle" library="css" name="media.css" />
+		</f:facet>
+
+
+
+		<div class="Page">
+			<p:graphicImage library="images" name="logo.png"
+				styleClass="LogoContainer upperLogo" />
+
+			<h:link outcome="/pages/espaces.xhtml">
+				<p:graphicImage library="images" name="MX-Pay-Card-Store.png"
+					styleClass="LogoContainer upperMXLogo" />
+			</h:link>
+
+			<pe:tooltip global="true" showEffect="fadeIn" hideEffect="fadeIn"
+				myPosition="bottom center" atPosition="top center" />
+
+			<b:inputSecret style="display:none" />
+			<div>
+
+				<p:outputPanel styleClass="UserPanel ">
+					<p:outputPanel styleClass="TopMenuContainer">
+						<ui:include src="menu.xhtml" />
+					</p:outputPanel>
+
+					<div class="LogedUser">
+						<table>
+							<tr>
+								<td><h:outputText value=" M.Mourabit"
+										styleClass="StrongFont FloatRight" /></td>
+								<td><a href="#"
+									onclick="toggle_visibility('loggedUserMenu')"><span
+										class="ui-icon ui-icon-custom-logeduser FloatRight" /></a></td>
+								<td><a href="#" title="Notification"><span
+										class="ui-icon ui-icon-custom-envelope" /> <span
+										class="NotificationBadge">2</span> </a></td>
+								<td><a href="#" title="Aide"><span
+										class="ui-icon ui-icon-custom-helper" /></a></td>
+							</tr>
+						</table>
+						<div id="loggedUserMenu" class="LogedUserMenu">
+							<ul>
+								<li><div class="FloatLeft">Dernière connexion le</div>
+									<div class="FloatRight ColoredFont">02 septembre à 08:52</div></li>
+								<li><div class="FloatLeft">Langue</div>
+									<div class="FloatRight" style="width: 200px">
+										<p:selectOneMenu panelStyle="width:200px">
+											<f:selectItem itemLabel="Français " itemValue="0" />
+											<f:selectItem itemLabel="Anglais " itemValue="1" />
+										</p:selectOneMenu>
+									</div></li>
+								<li>
+									<div class="LogoutContainer">
+										<a href="#">Déconnexion</a>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</p:outputPanel>
+
+				<p:outputPanel styleClass="PageContent">
+					<!-- AJAX LOADING ANIMATION -->
+					<p:ajaxStatus>
+						<f:facet name="start">
+							<p:graphicImage id="ajaxLoader" name="images/ajaxLoader.gif"
+								styleClass="AjaxStatusLoader" />
+						</f:facet>
+					</p:ajaxStatus>
+
+					<ui:insert name="content" />
+				</p:outputPanel>
+
+				<p:dialog modal="true" header="Identification du client"
+					widgetVar="idClient-wdg">
+					<h:panelGrid styleClass="FormGrid" columns="2"
+						columnClasses="AlignLeft Width40pct,Width60pct">
+						<p:outputLabel value="N° Carte :" />
+						<p:inputText />
+
+						<p:outputLabel value="N° Compte :" />
+						<p:inputText />
+
+						<p:outputLabel value="N° CIN :" />
+						<p:inputText />
+
+						<p:outputLabel value="Nom/prénom :" />
+						<p:inputText />
+
+					</h:panelGrid>
+					<div class="Width100pct">
+						<p:commandButton value="AUTHENTIFICATION ÉLECTRONIQUE"
+							process="@this" styleClass="CrudButton" />
+						<p:commandButton value="VALIDER" styleClass="CrudButton"
+							process="@this"
+							action="service_client/acceuilServiceClient.xhtml?faces-redirect=true" />
+					</div>
+				</p:dialog>
+
+			</div>
+		</div>
+		<a href="#0" class="cd-top">Top</a>
+		<div class="PageFooter">
+			<div class="ThemeFunctionGroup">
+				<h:form>
+					<p:menu overlay="true" trigger="modify-theme" my="left top"
+						at="left bottom">
+						<p:menuitem value="Standard" update="@all">
+							<f:setPropertyActionListener
+								target="#{logedUserMBean.currentTheme}" value="" />
+						</p:menuitem>
+						<p:menuitem value="Blue" update="@all">
+							<f:setPropertyActionListener
+								target="#{logedUserMBean.currentTheme}" value="theme_blue/" />
+						</p:menuitem>
+						<p:menuitem value="Orange" update="@all">
+							<f:setPropertyActionListener
+								target="#{logedUserMBean.currentTheme}" value="theme_orange/" />
+						</p:menuitem>
+						<p:menuitem value="Light" update="@all">
+							<f:setPropertyActionListener
+								target="#{logedUserMBean.currentTheme}" value="theme_light/" />
+						</p:menuitem>
+						<p:menuitem value="Dark" update="@all">
+							<f:setPropertyActionListener
+								target="#{logedUserMBean.currentTheme}" value="theme_dark/" />
+						</p:menuitem>
+					</p:menu>
+
+					<ul class="HorizontalMenu clickable">
+						<li><p:graphicImage id="modify-theme" library="images"
+								name="modify-theme.png" /></li>
+					</ul>
+				</h:form>
+			</div>
+			<p:graphicImage library="images" name="copyright.png"
+				styleClass="CopyRight" />
+		</div>
+	</h:body>
+</f:view>
+</html>

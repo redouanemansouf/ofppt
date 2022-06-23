@@ -1,0 +1,1014 @@
+/* Global-----*/
+.ui-icon.ui-icon-custom-home {
+	background: url("#{resource['images/icons/home.png']}") no-repeat center
+		center;
+	height: 27px;
+	width: 36px;
+	background-size: 36px 27px;
+}
+
+ui-icon-custom-undo {
+	background: url("#{resource['images/svg/undo.svg']}") no-repeat center
+		center !important;
+}
+
+.ui-icon.ui-icon-custom-envelope {
+	background: url("#{resource['images/icons/envelope.png']}") no-repeat
+		center center;
+	height: 13px;
+	width: 18px;
+	background-size: 18px 13px;
+}
+
+.ui-icon.ui-icon-custom-helper {
+	background: url("#{resource['images/icons/helper.png']}") no-repeat
+		center center;
+	height: 14px;
+	width: 7px;
+	background-size: 7px 14px;
+}
+
+.ui-icon.ui-icon-custom-arrow-e {
+	background: url("#{resource['images/breadcrumb-arrow.png']}") no-repeat
+		center center;
+}
+
+.ui-icon.ui-icon-custom-arrow-n {
+	background: url("#{resource['images/svg/backtolist-arrow.svg']}")
+		no-repeat center center;
+}
+
+.ui-icon.ui-icon-custom-confirm {
+	background: url("#{resource['images/svg/valider.svg']}") no-repeat
+		center center;
+}
+
+.ui-icon.ui-icon-custom-cancel {
+	background: url("#{resource['images/svg/annuler.svg']}") no-repeat
+		center center;
+}
+
+.ui-icon.ui-icon-custom-actions {
+	background: url("#{resource['images/svg/actions.svg']}") no-repeat
+		center center;
+	height: 23px;
+	width: 23px;
+}
+
+.ui-icon.ui-icon-custom-minigrid {
+	background: url("#{resource['images/minigrid.svg']}") no-repeat center
+		center;
+	height: 16px;
+	width: 16px;
+}
+
+.ui-icon.ui-icon-custom-minilist {
+	background: url("#{resource['images/minilist.svg']}") no-repeat center
+		center;
+	height: 14px;
+	width: 16px;
+}
+
+a:hover .ui-icon.ui-icon-custom-actions {
+	background: url("#{resource['images/svg/actions_active.svg']}")
+		no-repeat center center;
+}
+
+.ui-icon.ui-icon-custom-generate {
+	background: url("#{resource['images/svg/generate-cardnmbr.svg']}")
+		no-repeat center center;
+}
+
+.ui-icon.ui-icon-custom-logeduser {
+	background: url("#{resource['images/svg/logeduser.svg']}") no-repeat
+		center center;
+}
+
+.ui-icon.ui-icon-search {
+	background: url("#{resource['images/svg/listbox-search.svg']}")
+		no-repeat center center;
+}
+/* Toolbar----------------*/
+.ui-icon.ui-icon-custom-add {
+	background: url("#{resource['images/icons/nouveau.png']}") no-repeat
+		center center;
+}
+
+.ui-icon.ui-icon-custom-search {
+	background: url("#{resource['images/icons/chercher.png']}") no-repeat
+		center center;
+}
+
+.ui-icon.ui-icon-custom-delete {
+	background: url("#{resource['images/icons/supprimer.png']}") no-repeat
+		center center;
+}
+
+.ui-icon.ui-icon-custom-print {
+	background: url("#{resource['images/icons/imprimer.png']}") no-repeat
+		center center;
+}
+
+.ui-icon.ui-icon-custom-export {
+	background: url("#{resource['images/icons/excel.png']}") no-repeat center
+		center;
+}
+
+.ui-icon.ui-icon-custom-import {
+	background: url("#{resource['images/svg/import.svg']}") no-repeat center
+		center;
+}
+
+.ui-icon.ui-icon-circle-triangle-e {
+	background: url("#{resource['images/icons/arrow-e-1.png']}") no-repeat
+		center center;
+}
+
+.ui-icon.ui-icon-circle-triangle-w {
+	background: url("#{resource['images/icons/arrow-w-1.png']}") no-repeat
+		center center;
+}
+
+.ui-icon.ui-icon-circle-triangle-n {
+	background: url("#{resource['images/icons/arrow-n-1.png']}") no-repeat
+		center center;
+}
+
+.ui-icon.ui-icon-circle-triangle-s {
+	background: url("#{resource['images/icons/arrow-s-1.png']}") no-repeat
+		center center;
+}
+
+.SearchButtonGroup .ui-icon.ui-icon-custom-search {
+	background: url("#{resource['images/svg/search_w.svg']}") no-repeat
+		center center;
+	margin-top: -8px;
+	height: 17px;
+	width: 17px;
+}
+
+.SearchButtonGroup .ui-icon.ui-icon-custom-refresh {
+	background: url("#{resource['images/svg/refresh-arrow_a.svg']}")
+		no-repeat center center;
+	margin-top: -8px;
+	height: 17px;
+	width: 17px;
+}
+
+.SearchButtonGroup .ui-icon.ui-icon-custom-advancedSearch {
+	background: url("#{resource['images/svg/advancedSearch_plus.svg']}")
+		no-repeat center center;
+	margin-top: -8px;
+	height: 17px;
+	width: 17px;
+	margin-left: -8px !important;
+}
+
+.SearchButtonGroup .AdvancedSearchButton.is-active .ui-icon.ui-icon-custom-advancedSearch
+	{
+	background: url("#{resource['images/svg/advancedSearch_minus.svg']}")
+		no-repeat center center;
+	margin-top: -8px;
+	height: 17px;
+	width: 17px;
+	margin-left: -8px !important;
+}
+
+.ui-icon.ui-icon-custom-edit {
+	background: url("#{resource['images/svg/in-form.svg']}") no-repeat
+		center center;
+}
+
+.ui-icon.ui-icon-custom-delete,.ui-icon.ui-icon-custom-delete-min {
+	background: url("#{resource['images/svg/delete.svg']}") no-repeat center
+		center;
+}
+
+/**-----------*/
+/* Module menu------*/
+.Menuitem_module_poste-agence {
+	background: transparent;;
+	background-image: url("#{resource['images/poste-agence.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 87px 56px;
+}
+
+.Menuitem_module_poste-agence.active {
+	background-image: url("#{resource['images/poste-agence_a.png']}");
+}
+
+.Menuitem_module_emission {
+	background: transparent;;
+	background-image: url("#{resource['images/emission.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 87px 56px;
+}
+
+.Menuitem_module_emission.active {
+	background-image: url("#{resource['images/emission_a.png']}");
+}
+
+/* Menu MX branch------------------------------------------*/
+.Menuitem_souscription {
+	background: transparent;;
+	background-image:
+		url("#{resource['images/fo/principal/souscription.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 50px 55px;
+}
+
+.Menuitem_souscription.active {
+	background-image:
+		url("#{resource['images/fo/principal/souscription_a.png']}");
+}
+
+.Menuitem_souscription-commercant {
+	background: transparent;
+	background-image:
+		url("#{resource['images/fo/principal/souscription-contrat-commercant.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 87px 56px;
+}
+
+.Menuitem_souscription-commercant.active {
+	background-image:
+		url("#{resource['images/fo/principal/souscription-contrat-commercant_a.png']}");
+}
+
+.RuneImg.Menuitem_souscription {
+	background: transparent;
+	background-image:
+		url("#{resource['images/fo/principal/souscription_g.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 20px 22px;
+}
+
+.RuneImg.Menuitem_souscription.active,a:hover .RuneImg.Menuitem_souscription
+	{
+	background-image:
+		url("#{resource['images/fo/principal/souscription.png']}");
+}
+
+.RuneImg.Menuitem_souscription-commercant {
+	background: transparent;
+	background-image:
+		url("#{resource['images/fo/principal/souscription-contrat-commercant_g.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 43px 28px;
+}
+
+.RuneImg.Menuitem_souscription-commercant.active,a:hover .RuneImg.Menuitem_souscription-commercant
+	{
+	background-image:
+		url("#{resource['images/fo/principal/souscription-contrat-commercant.png']}");
+}
+
+.Menuitem_gestion-stock {
+	background: transparent;;
+	background-image:
+		url("#{resource['images/fo/principal/gestion-stock.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 50px 50px;
+}
+
+.Menuitem_gestion-stock.active {
+	background-image:
+		url("#{resource['images/fo/principal/gestion-stock_a.png']}");
+}
+
+.RuneImg.Menuitem_gestion-stock {
+	background: transparent;
+	background-image:
+		url("#{resource['images/fo/principal/gestion-stock_g.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 20px 20px;
+}
+
+.RuneImg.Menuitem_gestion-stock.active,a:hover .RuneImg.Menuitem_gestion-stock
+	{
+	background-image:
+		url("#{resource['images/fo/principal/gestion-stock.png']}");
+}
+
+.Menuitem_service-client {
+	background: transparent;;
+	background-image:
+		url("#{resource['images/fo/principal/service-client.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 60px 65px;
+}
+
+.Menuitem_service-client.active {
+	background-image:
+		url("#{resource['images/fo/principal/service-client_a.png']}");
+}
+
+.RuneImg.Menuitem_service-client {
+	background: transparent;;
+	background-image:
+		url("#{resource['images/fo/principal/service-client_g.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 24px 26px;
+}
+
+.RuneImg.Menuitem_service-client.active,a:hover .RuneImg.Menuitem_service-client
+	{
+	background-image:
+		url("#{resource['images/fo/principal/service-client.png']}");
+}
+
+.Menuitem_emission {
+	background: transparent;;
+	background-image: url("#{resource['images/fo/principal/emission.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 85px 50px;
+}
+
+.Menuitem_emission.active {
+	background-image:
+		url("#{resource['images/fo/principal/emission_a.png']}");
+}
+
+.RuneImg.Menuitem_emission {
+	background: transparent;;
+	background-image:
+		url("#{resource['images/fo/principal/emission_g.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 36px 24px;
+	margin-top: -2px;
+}
+
+.RuneImg.Menuitem_emission.active,a:hover .RuneImg.Menuitem_emission {
+	background-image: url("#{resource['images/fo/principal/emission.png']}");
+}
+
+.Menuitem_vente-carte-prepayee {
+	background: transparent;
+	background-image:
+		url("#{resource['images/fo/principal/portfolio-carte.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 75px 45px;
+}
+
+.Menuitem_vente-carte-prepayee.active {
+	background-image:
+		url("#{resource['images/fo/principal/portfolio-carte_a.png']}");
+}
+
+.RuneImg.Menuitem_vente-carte-prepayee {
+	background: transparent;
+	background-image:
+		url("#{resource['images/fo/principal/portfolio-carte_g.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 30px 18px;
+}
+
+.RuneImg.Menuitem_vente-carte-prepayee.active,a:hover .RuneImg.Menuitem_vente-carte-prepayee
+	{
+	background-image:
+		url("#{ resource['images/fo/principal/portfolio-carte.png']}");
+}
+
+.Menuitem_affectation-token {
+	background: transparent;
+	background-image:
+		url("#{resource['images/fo/principal/produit-token.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 85px 45px;
+}
+
+.Menuitem_affectation-token.active {
+	background-image:
+		url("#{resource['images/fo/principal/produit-token_a.png']}");
+}
+
+.RuneImg.Menuitem_affectation-token {
+	background: transparent;
+	background-image:
+		url("#{resource['images/fo/principal/produit-token_g.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 34px 18px;
+}
+
+.RuneImg.Menuitem_affectation-token.active,a:hover .RuneImg.Menuitem_affectation-token
+	{
+	background-image:
+		url("#{resource['images/fo/principal/produit-token.png']}");
+}
+
+.Menuitem_tableau-bord {
+	background: transparent;
+	background-image:
+		url("#{resource['images/fo/principal/tableau-de-bord.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 55px 60px;
+}
+
+.Menuitem_tableau-bord.active {
+	background-image:
+		url("#{resource['images/fo/principal/tableau-de-bord_a.png']}");
+}
+
+.RuneImg.Menuitem_tableau-bord {
+	background: transparent;
+	background-image:
+		url("#{resource['images/fo/principal/tableau-de-bord_g.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 22px 24px;
+}
+
+.RuneImg.Menuitem_tableau-bord.active,a:hover .RuneImg.Menuitem_tableau-bord
+	{
+	background-image:
+		url("#{resource['images/fo/principal/tableau-de-bord.png']}");
+}
+
+.Menuitem_gestion-gab {
+	background: transparent;
+	background-image:
+		url("#{resource['images/fo/principal/gestion-gab.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 50px 55px;
+}
+
+.Menuitem_gestion-gab.active {
+	background-image:
+		url("#{resource['images/fo/principal/gestion-gab_a.png']}");
+}
+
+.RuneImg.Menuitem_gestion-gab {
+	background: transparent;
+	background-image:
+		url("#{resource['images/fo/principal/gestion-gab_g.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 20px 22px;
+}
+
+.RuneImg.Menuitem_gestion-gab.active,a:hover .RuneImg.Menuitem_gestion-gab
+	{
+	background-image:
+		url("#{resource['images/fo/principal/gestion-gab.png']}");
+}
+
+.Menuitem_notif {
+	background: transparent;
+	background-image: url("#{resource['images/fo/principal/notif.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 50px 55px;
+}
+
+.Menuitem_notif.active {
+	background-image: url("#{resource['images/fo/principal/notif_a.png']}");
+}
+
+/* End of menu MX branch-------------------------------------------------------------*/
+
+/* Emission megamenu------*/
+.Menuitem_parametre-plateform {
+	background: transparent;
+	background-image:
+		url("#{resource['images/bo/principal/parametreplateforme.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 55px 55px;
+}
+
+.Menuitem_parametre-plateform.active {
+	background-image:
+		url("#{resource['images/bo/principal/parametresplateforme_a.png']}");
+}
+
+.RuneImg.Menuitem_parametre-plateform {
+	background: transparent;
+	background-image:
+		url("#{resource['images/bo/principal/parametresplateforme_g.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 22px 22px;
+}
+
+.RuneImg.Menuitem_parametre-plateform.active,a:hover .RuneImg.Menuitem_parametre-plateform
+	{
+	background-image:
+		url("#{resource['images/bo/principal/parametreplateforme.png']}");
+}
+
+.Menuitem_emission-carte {
+	background: transparent;
+	background-image:
+		url("#{resource['images/bo/principal/emissioncarte.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 85px 50px;
+}
+
+.Menuitem_emission-carte.active {
+	background-image:
+		url("#{resource['images/bo/principal/emissioncarte_a.png']}");
+}
+
+.RuneImg.Menuitem_emission-carte {
+	background: transparent;
+	background-image:
+		url("#{resource['images/bo/principal/emissioncarte_g.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 25px 16px;
+}
+
+.RuneImg.Menuitem_emission-carte.active,a:hover .RuneImg.Menuitem_emission-carte
+	{
+	background-image:
+		url("#{resource['images/bo/principal/emissioncarte.png']}");
+}
+
+.Menuitem_acquisition-multicanal {
+	background: transparent;
+	background-image:
+		url("#{resource['images/bo/principal/acquisitionmulticanal.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 62px 54px;
+}
+
+.Menuitem_acquisition-multicanal.active {
+	background-image:
+		url("#{resource['images/bo/principal/acquisitionmulticanal_a.png']}");
+}
+
+.RuneImg.Menuitem_acquisition-multicanal {
+	background: transparent;
+	background-image:
+		url("#{resource['images/bo/principal/acquisitionmulticanal_g.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 25px 21px;
+}
+
+.RuneImg.Menuitem_acquisition-multicanal.active,a:hover .RuneImg.Menuitem_acquisition-multicanal
+	{
+	background-image:
+		url("#{resource['images/bo/principal/acquisitionmulticanal.png']}");
+}
+
+.Menuitem_gestion-transaction {
+	background: transparent;
+	background-image:
+		url("#{resource['images/bo/principal/transaction.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 68px 36px;
+}
+
+.Menuitem_gestion-transaction.active {
+	background-image:
+		url("#{resource['images/bo/principal/transaction_a.png']}");
+}
+
+.RuneImg.Menuitem_gestion-transaction {
+	background: transparent;
+	background-image:
+		url("#{resource['images/bo/principal/transaction_g.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 28px 16px;
+}
+
+.RuneImg.Menuitem_gestion-transaction.active,a:hover .RuneImg.Menuitem_gestion-transaction
+	{
+	background-image:
+		url("#{resource['images/bo/principal/transaction.png']}");
+}
+
+.Menuitem_gestion-fidelite {
+	background: transparent;
+	background-image: url("#{resource['images/bo/principal/fidelite.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 57px 67px;
+}
+
+.Menuitem_gestion-fidelite.active {
+	background-image:
+		url("#{resource['images/bo/principal/fidelite_a.png']}");
+}
+
+.RuneImg.Menuitem_gestion-fidelite {
+	background: transparent;
+	background-image:
+		url("#{resource['images/bo/principal/fidelite_g.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 23px 26px;
+}
+
+.RuneImg.Menuitem_gestion-fidelite.active,a:hover .RuneImg.Menuitem_gestion-fidelite
+	{
+	background-image: url("#{resource['images/bo/principal/fidelite.png']}");
+}
+
+.Menuitem_gestion-authentification {
+	background: transparent;
+	background-image:
+		url("#{resource['images/bo/principal/gestionauthentification.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 50px 62px;
+}
+
+.Menuitem_gestion-authentification.active {
+	background-image:
+		url("#{resource['images/bo/principal/gestionauthentification_a.png']}");
+}
+
+.RuneImg.Menuitem_gestion-authentification {
+	background: transparent;
+	background-image:
+		url("#{resource['images/bo/principal/gestionauthentification_g.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 21px 25px;
+}
+
+.RuneImg.Menuitem_gestion-authentification.active,a:hover .RuneImg.Menuitem_gestion-authentification
+	{
+	background-image:
+		url("#{resource['images/bo/principal/gestionauthentification.png']}");
+}
+
+.Menuitem_administration {
+	background: transparent;
+	background-image:
+		url("#{resource['images/bo/principal/administration_a.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 50px 62px;
+}
+
+.Menuitem_administration.active {
+	background-image:
+		url("#{resource['images/bo/principal/administration.png']}");
+}
+
+.RuneImg.Menuitem_administration {
+	background: transparent;
+	background-image:
+		url("#{resource['images/bo/principal/administration_g.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 20px 25px;
+}
+
+.RuneImg.Menuitem_administration.active,a:hover .RuneImg.Menuitem_administration
+	{
+	background-image:
+		url("#{resource['images/bo/principal/administration_a.png']}");
+}
+
+.Menuitem_reporting {
+	background: transparent;
+	background-image:
+		url("#{resource['images/bo/principal/reporting.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 57px 51px;
+}
+
+.Menuitem_reporting.active {
+	background-image:
+		url("#{resource['images/bo/principal/reporting_a.png']}");
+}
+
+.RuneImg.Menuitem_reporting {
+	background: transparent;
+	background-image:
+		url("#{resource['images/bo/principal/reporting_g.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 25px 21px;
+}
+
+.RuneImg.Menuitem_reporting.active,a:hover .RuneImg.Menuitem_reporting {
+	background-image:
+		url("#{resource['images/bo/principal/reporting.png']}");
+}
+
+.Menuitem_monitoring {
+	background: transparent;
+	background-image:
+		url("#{resource['images/bo/principal/monitoring.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 70px 70px;
+}
+
+.Menuitem_monitoring.active {
+	background-image:
+		url("#{resource['images/bo/principal/monitoring_a.png']}");
+}
+
+.RuneImg.Menuitem_monitoring {
+	background: transparent;
+	background-image:
+		url("#{resource['images/bo/principal/monitoring_g.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 25px 25px;
+}
+
+.RuneImg.Menuitem_monitoring.active,a:hover .RuneImg.Menuitem_monitoring
+	{
+	background-image:
+		url("#{resource['images/bo/principal/monitoring.png']}");
+}
+/*------------*/
+
+/*-Emission carte -----------------*/
+.Menuitem_gestion-auto {
+	background: transparent;
+	
+	background-image:
+		url("#{resource['images/bo/emission_carte/gestion-auto.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 60px 49px;
+}
+
+.Menuitem_gestion-auto.active {
+	background-image:
+		url("#{resource['images/bo/emission_carte/gestion-auto_a.png']}");
+}
+
+.Menuitem_gestion-contrat {
+	background: transparent;
+	background-image:
+		url("#{resource['images/bo/emission_carte/gestion-contrat.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 42px 60px;
+}
+
+.Menuitem_gestion-contrat.active {
+	background-image:
+		url("#{resource['images/bo/emission_carte/gestion-contrat_a.png']}");
+}
+
+.Menuitem_gestion-opposition {
+	background: transparent;
+	background-image:
+		url("#{resource['images/bo/emission_carte/gestion-opposition.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 52px 47px;
+}
+
+.Menuitem_gestion-opposition.active {
+	background-image:
+		url("#{resource['images/bo/emission_carte/gestion-opposition_a.png']}");
+}
+
+.Menuitem_gestion-personnalisation {
+	background: transparent;
+	background-image:
+		url("#{resource['images/bo/emission_carte/gestion-personnalisation.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 48px 48px;
+}
+
+.Menuitem_gestion-personnalisation.active {
+	background-image:
+		url("#{resource['images/bo/emission_carte/gestion-personnalisation_a.png']}");
+}
+
+.Menuitem_parametrage-emission {
+	background: transparent;
+	background-image:
+		url("#{resource['images/bo/emission_carte/parametrage-emission.png']}");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 75px 45px;
+}
+
+.Menuitem_parametrage-emission.active {
+	background-image:
+		url("#{resource['images/bo/emission_carte/parametrage-emission_a.png']}");
+}
+
+/*specifique*/
+.ui-icon.ui-icon-custom-take-picture {
+	background: url("#{resource['images/svg/take-picture.svg']}") no-repeat
+		center center;
+}
+
+.ui-icon.ui-icon-custom-edit-picture {
+	background: url("#{resource['images/svg/edit-picture.svg']}") no-repeat
+		center center;
+}
+
+.ui-icon.ui-icon-custom-delete-picture {
+	background: url("#{resource['images/svg/delete_w.svg']}") no-repeat
+		center center;
+}
+
+.ui-icon.ui-icon-custom-fingerprint {
+	background: url("#{resource['images/svg/fingerprint.svg']}") no-repeat
+		center center;
+}
+
+.ui-icon.ui-icon-custom-signature {
+	background: url("#{resource['images/svg/take-signature.svg']}")
+		no-repeat center center;
+}
+
+.ui-icon.ui-icon-custom-pad {
+	background: url("#{resource['images/svg/pad.svg']}") no-repeat center
+		center;
+}
+
+.ui-icon.ui-icon-custom-validate {
+	background: url("#{resource['images/svg/validate-icon.svg']}") no-repeat
+		center center;
+}
+
+.ui-icon.ui-icon-custom-replace {
+	background: url("#{resource['images/svg/replace.svg']}") no-repeat
+		center center;
+}
+
+.ui-icon.ui-icon-custom-put-inservice {
+	background: url("#{resource['images/svg/put-inservice.svg']}") no-repeat
+		center center;
+}
+
+.ui-icon.ui-icon-custom-prepayed {
+	background: url("#{resource['images/svg/charge-prepayed.svg']}")
+		no-repeat center center;
+}
+
+.ui-icon.ui-icon-minusthick {
+	background: url("#{resource['images/svg/panel-dash.svg']}") no-repeat
+		center center;
+}
+
+.ui-icon.ui-icon-plusthick {
+	background: url("#{resource['images/svg/panel-plus.svg']}") no-repeat
+		center center;
+}
+
+.MenuImg {
+	 height: 185px;
+    padding-right: 56px;
+    width: 241px;
+}
+
+.MenuImg_ERL {
+	background:
+		url("#{resource['images/BoutonsAc/Menu_Enrolement-des-etudiants.png']}")
+		no-repeat center center !important;
+}
+
+.MenuImg_ERL:hover {
+	background:
+		url("#{resource['images/BoutonsAc/Menu_Enrolement-des-etudiants_Actif.png']}")
+		no-repeat center center !important;
+}
+
+.MenuImg_ERLP {
+	background:
+		url("#{resource['images/BoutonsAc/Enrolement-du-personnel.png']}")
+		no-repeat center center !important;
+}
+
+.MenuImg_ERLP:hover {
+	background:
+		url("#{resource['images/BoutonsAc/Enrolement-du-personnel_Actif.png']}")
+		no-repeat center center !important;
+}
+
+.MenuImg_O {
+	background: url("#{resource['images/BoutonsAc/Consultation-des-operations.png']}") no-repeat
+		center center !important;
+}
+
+.MenuImg_O:hover {
+	background: url("#{resource['images/BoutonsAc/3.png']}")
+		no-repeat center center !important;
+}
+
+.MenuImg_PAR {
+	background:
+		url("#{resource['images/BoutonsAc/Edition.png']}")
+		no-repeat center center !important;
+}
+
+.MenuImg_PAR:hover {
+	background:
+		url("#{resource['images/BoutonsAc/Edition_Actif.png']}")
+		no-repeat center center !important;
+}
+
+.MenuImg_GES {
+	background:
+		url("#{resource['images/BoutonsAc/Menu_Enrolement-des-etudiants.png']}")
+		no-repeat center center !important;
+}
+
+.MenuImg_GES:hover {
+	background:
+		url("#{resource['images/BoutonsAc/Menu_Enrolement-des-etudiants_Actif.png']}")
+		no-repeat center center !important;
+}
+
+.MenuImg_GDO {
+	background:
+		url("#{resource['images/BoutonsAc/gestion-de-cycle-de-vie.png']}")
+		no-repeat center center !important;
+}
+
+.MenuImg_GDO:hover {
+	background:
+		url("#{resource['images/BoutonsAc/gestion-de-cycle-de-vie_Actif.png']}")
+		no-repeat center center !important;
+}
+
+.MenuImg_GCV {
+	background:
+		url("#{resource['images/BoutonsAc/Consultation-sold.png']}")
+		no-repeat center center !important;
+}
+
+.MenuImg_GCV:hover {
+	background:
+		url("#{resource['images/BoutonsAc/4.png']}")
+		no-repeat center center !important;
+}
+
+.MenuImg_AS {
+	background:
+		url("#{resource['images/BoutonsAc/Administration-du-systeme.png']}")
+		no-repeat center center !important;
+}
+
+.MenuImg_AS:hover {
+	background:
+		url("#{resource['images/BoutonsAc/1.png']}")
+		no-repeat center center !important;
+}
+
+.MenuImg_DC {
+	background:
+		url("#{resource['images/BoutonsAc/Gestion-des-vents.png']}")
+		no-repeat center center !important;
+}
+
+.MenuImg_DC:hover {
+	background:
+		url("#{resource['images/BoutonsAc/2.png']}")
+		no-repeat center center !important;
+}
+
+.MenuImg_LET {
+	background:
+		url("#{resource['images/BoutonsAc/Gestion-des-services.png']}")
+		no-repeat center center !important;
+}
+
+.MenuImg_LET:hover {
+	background:
+		url("#{resource['images/BoutonsAc/Gestion-des-services_Actif.png']}")
+		no-repeat center center !important;
+}
+
+.MenuImg_E {
+	background: url("#{resource['images/BoutonsAc/Import-personnel.png']}") no-repeat
+		center center !important;
+}
+
+.MenuImg_E:hover {
+	background: url("#{resource['images/BoutonsAc/5.png']}")
+		no-repeat center center !important;
+}
+
+

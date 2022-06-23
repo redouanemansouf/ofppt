@@ -1,0 +1,172 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+	<p:dialog id="create-dlg" widgetVar="create-dlg-wdg" closable="true"
+		closeOnEscape="true" header="Ajouter produit" hideEffect="fade"
+		showEffect="fade" modal="true" dynamic="true">
+
+
+		<h:form id="create-form">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+
+
+
+
+			<h:panelGrid columns="2" styleClass="FormGrid">
+
+				<p:outputLabel for="sub" value="Subvention" />
+				<p:selectOneRadio id="sub" value="#{produitMBean.vo.sub}">
+					<f:selectItem itemLabel="Oui" itemValue="true" />
+					<f:selectItem itemLabel="Non" itemValue="false" />
+					<p:ajax event="change" listener="#{produitMBean.resetRatio}"
+						process="@this" update="@form create-form famp_ratio" />
+				</p:selectOneRadio>
+
+				<!--      Code critere     -->
+				<h:outputLabel value="#{prezmsg['CODE']}" />
+
+				<p:inputText id="famp_code" value="#{produitMBean.webBean.vo.code}"
+					required="true" maxlength="4"
+					title="#{component.valid ? '' : produitMBean.getErrorMessage(component.clientId)}">
+					<f:validateLength minimum="4" maximum="4" />
+					<p:ajax listener="#{produitMBean.codevalidator}" update="@form"
+						process="@this" />
+					<pe:keyFilter regEx="/[0-9_]/i" preventPaste="false" />
+				</p:inputText>
+
+
+				<h:outputLabel value="#{prezmsg['SITE']}" />
+				<p:inputText value="#{produitMBean.user.siteVO.libelle}"
+					rendered="#{produitMBean.user.siteVO !=null }" disabled="true" />
+				<p:selectOneMenu id="site" value="#{produitMBean.webBean.vo.siteVO}"
+					style="width:170px" required="true" converter="siteConverter"
+					rendered="#{produitMBean.user.siteVO ==null }" >
+					<p:ajax listener="#{produitMBean.updateFamilleProduit}" update="famp_create"
+						process="@this" />
+					<f:selectItem itemLabel="#{prezmsg['SELECTIONNER']}" />
+					<f:selectItems value="#{produitMBean.webBean.listSiteForCombo}"
+						var="site" itemLabel="#{site.libelle}" itemValue="#{site}" />
+				</p:selectOneMenu>
+
+				<!--      Nom critere     -->
+				<h:outputLabel value="#{prezmsg['LIBELLE']}" />
+
+				<p:inputText id="famp_libelle"
+					value="#{produitMBean.webBean.vo.libelle}" required="true"
+					title="#{component.valid ? '' : produitMBean.getErrorMessage(component.clientId)}" />
+
+				<h:outputLabel value="#{prezmsg['DESCRIPTION']}" />
+
+				<p:inputTextarea id="famp_desc"
+					value="#{produitMBean.webBean.vo.description}" required="true"
+					title="#{component.valid ? '' : produitMBean.getErrorMessage(component.clientId)}" />
+
+				<h:outputLabel value="Prix Initial" />
+				<p:inputText id="famp_prixsub" required="true"
+					value="#{produitMBean.webBean.vo.prixSub}"
+					title="#{component.valid ? '' : produitMBean.getErrorMessage(component.clientId)}" />
+
+
+				<h:outputLabel value="#{prezmsg['TVA']}" />
+
+				<p:inputText id="famp_tva" value="#{produitMBean.webBean.vo.tva}"
+					required="true"
+					title="#{component.valid ? '' : produitMBean.getErrorMessage(component.clientId)}" />
+
+				<!-- 				<h:outputLabel value="#{prezmsg['CODEBAR']}" /> -->
+				<!-- 				<p:inputText id="famp_codbar" -->
+				<!-- 					value="#{produitMBean.webBean.vo.codeBar}" required="true" -->
+				<!-- 					title="#{component.valid ? '' : produitMBean.getErrorMessage(component.clientId)}" /> -->
+
+				<h:outputLabel value="#{prezmsg['FAMILLE_PRODUIT']}" />
+				<p:selectOneMenu id="famp_create"
+					value="#{produitMBean.webBean.vo.familleProd}" style="width:220px"
+					required="true" converter="canalVenteConverter">
+					<f:selectItem itemLabel="Choisissez" />
+					<f:selectItems value="#{produitMBean.webBean.famProduitvos}"
+						var="fp" itemLabel="#{fp.code} | #{fp.libelle} " itemValue="#{fp}" />
+				</p:selectOneMenu>
+
+
+
+
+				<!--             <h:outputLabel value="Ratio" /> -->
+
+				<!-- 				<p:inputText id="famp_ratio"   -->
+				<!-- 					value="#{produitMBean.webBean.vo.ratio}" disabled="#{!produitMBean.vo.sub}" maxlength="3" -->
+				<!-- 					title="#{component.valid ? '' : produitMBean.getErrorMessage(component.clientId)}" -->
+				<!-- 					validatorMessage="Please enter valid ratio." -->
+				<!-- 					> -->
+				<!-- 					 <p:ajax listener="#{produitMBean.CompterPrixSub}" update="famp_prixsub" /> -->
+				<!-- 					  <f:validateLength minimum="3" maximum="3" /> -->
+				<!-- 					 </p:inputText> -->
+
+				<h:outputLabel value="Ratio" />
+
+				<p:inputText id="famp_ratio"
+					value="#{produitMBean.webBean.vo.ratio}"
+					disabled="#{!produitMBean.vo.sub}" maxlength="5"
+					title="#{component.valid ? '' : produitMBean.getErrorMessage(component.clientId)}">
+					<p:ajax listener="#{produitMBean.CompterPrixSub}"
+						update="famp_prixsub" />
+
+				</p:inputText>
+
+				<h:outputLabel value="#{prezmsg['PRIX']}" />
+
+				<p:inputText id="famp_mont"
+					value="#{produitMBean.webBean.vo.montant}" disabled="true"
+					title="#{component.valid ? '' : produitMBean.getErrorMessage(component.clientId)}">
+					<p:ajax listener="#{produitMBean.CompterPrixSub}"
+						update="famp_prixsub" />
+				</p:inputText>
+
+
+
+
+
+
+
+
+			</h:panelGrid>
+
+			<p:toolbar>
+
+				<f:facet name="right">
+					<p:commandButton id="validate-create" value="#{prezmsg['VALIDER']}"
+						icon="ui-icon-custom-validerOsc" update="create-form"
+						action="#{produitMBean.creer}" style="width:50%;" styleClass="Val" />
+					<!-- Annule le useCase-->
+					<p:commandButton id="cancel-create" styleClass="Val"
+						icon="ui-icon-custom-cancelOsc" value="#{prezmsg['ANNULER']}"
+						type="button" style="width:48%;"
+						onclick="PF('create-dlg-wdg').hide()" global="false" />
+				</f:facet>
+			</p:toolbar>
+
+
+			<p:defaultCommand target="validate-create" />
+
+			<!-- Focus automatique  -->
+			<p:focus context="create-form" />
+
+			<p:remoteCommand name="_hideDialog"
+				action="#{produitSearchMBean.run}"
+				oncomplete="PF('create-dlg-wdg').hide();showMessage();"
+				update=":critere-form:critere-dtbl" />
+
+		</h:form>
+	</p:dialog>
+</ui:composition>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<REF_TYPE_AGREMENT TAG_ID="1" TAG_LIBELLE="agrement1"
+		TAG_DESCRIPTION=" agrement 1 desc" TAG_STATUT="ENABLED" />
+
+	<REF_TYPE_AGREMENT TAG_ID="2" TAG_LIBELLE="agrement2"
+		TAG_DESCRIPTION=" agrement 2 desc" TAG_STATUT="DISABLED" />
+
+	
+	<!-- <SEQUENCE_GENERATOR GEN_NAME="TypeAgrement_Gen"
+		GEN_VALUE="3" /> -->
+	
+
+</dataset>

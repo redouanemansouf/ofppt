@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+	<p:dialog id="edit-dlg" widgetVar="edit-dlg-wdg" closable="true"
+		closeOnEscape="true" header="Modifier famille produit" hideEffect="fade"
+		showEffect="fade" modal="true" dynamic="true">
+
+
+		<h:form id="edit-form">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+
+			<h:panelGrid columns="2" styleClass="FormGrid">
+
+				<!--      Code critere     -->
+				<h:outputLabel value="#{prezmsg['CODE']}" />
+
+				<p:inputText id="famp_code" value="#{canalVenteMBean.webBean.vo.code}"
+					readonly="true" disabled="true"/>
+
+
+				<h:outputLabel value="#{prezmsg['SITE']}" />
+				<p:inputText value="#{canalVenteMBean.user.siteVO.libelle}"
+					rendered="#{canalVenteMBean.user.siteVO !=null }" disabled="true" />
+				<p:selectOneMenu id="site"
+					value="#{canalVenteMBean.webBean.vo.siteVO}" style="width:170px"
+					required="true" converter="siteConverter" disabled="true"
+					rendered="#{canalVenteMBean.user.siteVO ==null }">
+					<f:selectItem itemLabel="#{prezmsg['SELECTIONNER']}" />
+					<f:selectItems value="#{canalVenteMBean.webBean.listSiteForCombo}"
+						var="site" itemLabel="#{site.libelle}" itemValue="#{site}" />
+				</p:selectOneMenu>
+
+				<!--      Nom critere     -->
+				<h:outputLabel value="#{prezmsg['LIBELLE']}" />
+
+				<p:inputText id="famp_libelle"
+					value="#{canalVenteMBean.webBean.vo.libelle}" required="true"
+					title="#{component.valid ? '' : canalVenteMBean.getErrorMessage(component.clientId)}" />
+
+				
+                 <h:outputLabel value="Restaurants" />
+				<p:selectManyMenu id="res" 
+					value="#{canalVenteMBean.webBean.vo.idRestaurants}"
+					 >
+					<f:selectItems value="#{canalVenteMBean.webBean.restaurantVOs}"
+						var="res" itemLabel="#{res.libelle}"
+						itemValue="#{res.id}" />
+						<p:ajax event="change" process="@this" />
+				</p:selectManyMenu>
+					
+					
+<!-- 					<p:selectOneMenu id="famp_desc" -->
+<!-- 							value="#{canalVenteMBean.webBean.vo.description}" required="true" -->
+<!-- 							title="#{component.valid ? '' : canalVenteMBean.getErrorMessage(component.clientId)}"> -->
+<!-- 							<f:selectItem itemLabel="Choisissez" /> -->
+<!-- 							<f:selectItem itemLabel="Portail Web " itemValue="W" /> -->
+<!-- 							<f:selectItem itemLabel="Mini Caisse " itemValue="C" /> -->
+<!-- 						</p:selectOneMenu> -->
+
+			</h:panelGrid>
+			<p:toolbar>
+				<f:facet name="right">
+					<p:commandButton id="validate-edit" value="#{prezmsg['VALIDER']}" icon="ui-icon-custom-validerOsc"
+						process="@form" update="edit-form"
+						action="#{canalVenteMBean.modifier}" styleClass="Val"  style="width:50%"/>
+					<p:commandButton value="#{prezmsg['ANNULER']}" global="false" icon="ui-icon-custom-cancelOsc"
+						process="@none" onclick="PF('edit-dlg-wdg').hide()"
+						styleClass="Val" style="width:48%"/>
+				</f:facet>
+			</p:toolbar>
+
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('edit-dlg-wdg').hide();showMessage();"
+				update=":critere-form:critere-dtbl" />
+
+		</h:form>
+	</p:dialog>
+</ui:composition>

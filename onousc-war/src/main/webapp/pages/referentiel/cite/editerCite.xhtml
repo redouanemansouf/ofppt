@@ -1,0 +1,118 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<p:dialog id="edit-dlg" widgetVar="edit-dlg-wdg" closable="true"
+		closeOnEscape="true" header="Modifier cité" hideEffect="fade"
+		showEffect="fade" modal="true" dynamic="true">
+
+		<h:form id="edit-form">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+			<pe:tooltip for="cite_univ" myPosition="left center"
+				showEvent="click" hideEvent="unfocus" atPosition="right center">
+				<h:message for="cite_univ" />
+			</pe:tooltip>
+
+			<pe:tooltip for="ville_univ" myPosition="left center"
+				showEvent="click" hideEvent="unfocus" atPosition="right center">
+				<h:message for="ville_univ" />
+			</pe:tooltip>
+
+
+			<h:panelGrid columns="2" styleClass="FormGrid">
+
+				<!--      Code cite     -->
+				<h:outputLabel value="#{prezmsg['CODE']}" />
+
+				<p:inputText id="cite_code" value="#{citeMBean.webBean.vo.code}"
+					disabled="true" />
+
+
+				<!--      Nom cite     -->
+				<h:outputLabel value="#{prezmsg['LIBELLE']}" />
+				<p:inputText id="cite_libelle"
+					value="#{citeMBean.webBean.vo.libelle}" required="true"
+					title="#{component.valid ? '' : citeMBean.getErrorMessage(component.clientId)}" />
+
+				<!-- 	  citeersite       -->
+				<h:outputLabel value="#{prezmsg['UNIVERSITE']}" />
+				<p:selectOneMenu id="cite_univ"
+					value="#{citeMBean.webBean.vo.universiteVO}"
+					converter="universiteConverter" style="width:125px" required="true"
+					title="#{component.valid ? '' : citeMBean.getErrorMessage(component.clientId)}">
+					<f:selectItem itemLabel="Choisir université" />
+					<f:selectItems value="#{citeMBean.webBean.universiteVOs}" var="u"
+						itemLabel="#{u.libelle}" itemValue="#{u}" />
+				</p:selectOneMenu>
+
+				<!--      Adresse cite     -->
+				<h:outputLabel value="#{prezmsg['ADRESSE']}" />
+				<p:inputTextarea id="cite_adresse"
+					value="#{citeMBean.webBean.vo.adresseCite}" required="true"
+					title="#{component.valid ? '' : citeMBean.getErrorMessage(component.clientId)}" />
+
+				<!--      Nom responsable     -->
+				<h:outputLabel value="#{prezmsg['NOM_RESPONSABLE']}" />
+				<p:inputText id="cite_nomresponsable"
+					value="#{citeMBean.webBean.vo.nomResponsableCite}" required="true"
+					title="#{component.valid ? '' : citeMBean.getErrorMessage(component.clientId)}" />
+
+				<!--      Prenom responsable     -->
+				<h:outputLabel value="#{prezmsg['PRENOM_RESPONSABLE']}" />
+				<p:inputText id="cite_prenomres"
+					value="#{citeMBean.webBean.vo.prenomResponsableCite}"
+					required="true"
+					title="#{component.valid ? '' : citeMBean.getErrorMessage(component.clientId)}" />
+
+				<!--      Num telephone     -->
+				<h:outputLabel value="#{prezmsg['TEL']}" />
+				<p:inputText id="cite_tele"
+					value="#{citeMBean.webBean.vo.numTeleCite}" required="true"
+					title="#{component.valid ? '' : citeMBean.getErrorMessage(component.clientId)}" />
+
+				<!-- 	          ADRESSE EMAIL     -->
+				<h:outputLabel value="#{prezmsg['EMAIL']}" />
+				<p:inputText id="cite_email"
+					value="#{citeMBean.webBean.vo.adresseEmailCite}" required="true"
+					title="#{component.valid ? '' : citeMBean.getErrorMessage(component.clientId)}" />
+
+				<!-- 	  ville       -->
+				<h:outputLabel value="#{prezmsg['VILLE']}" />
+				<p:selectOneMenu id="ville_univ"
+					value="#{citeMBean.webBean.vo.villeVO}" converter="villeConverter"
+					style="width:125px" required="true"
+					title="#{component.valid ? '' : citeMBean.getErrorMessage(component.clientId)}">
+					<f:selectItem itemLabel="choisir une ville" />
+					<f:selectItems value="#{citeMBean.webBean.villeVOs}" var="u"
+						itemLabel="#{u.libelle}" itemValue="#{u}" />
+				</p:selectOneMenu>
+
+			</h:panelGrid>
+
+
+			<p:toolbar>
+				<f:facet name="right">
+					<p:commandButton id="validate-edit" value="#{prezmsg['VALIDER']}"
+						process="@form" update="edit-form :succes"
+						action="#{citeMBean.modifier}" styleClass="ValidateButton" />
+					<p:commandButton value="#{prezmsg['ANNULER']}" global="false"
+						process="@none" onclick="PF('edit-dlg-wdg').hide()"
+						styleClass="CancelButton" />
+				</f:facet>
+			</p:toolbar>
+
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('edit-dlg-wdg').hide()" update=":cite-form:cite-dtbl" />
+		</h:form>
+	</p:dialog>
+</ui:composition>

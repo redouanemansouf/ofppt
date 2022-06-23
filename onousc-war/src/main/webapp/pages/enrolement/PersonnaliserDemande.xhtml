@@ -1,0 +1,202 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	
+	<p:dialog id="pers-dlg" widgetVar="pers-dlg-wdg"
+		header="Personnaliser carte" hideEffect="fade"
+		showEffect="fade" modal="true" dynamic="true"
+		onHide="PF('pers-dlg').content.empty" closeOnEscape="true">
+		
+		
+		
+		
+		
+		
+
+		<p:messages globalOnly="true" autoUpdate="true" />
+
+		<h:form prependId="false">
+
+			<h:panelGrid columns="4" styleClass="FormGrid">
+
+			
+			<p:outputLabel   id="id" value="Id étudiant :"   styleClass="LabelIns" />
+					<p:inputText id="id_person"   
+						value="#{etudiantMBean.webBean.vo.id}" readonly="true"
+						>
+					</p:inputText>
+			
+					<p:outputLabel   id="anne" value="Année Universitaire :"   styleClass="LabelIns" />
+					<p:inputText id="anneee_person"   
+						value="#{etudiantMBean.webBean.vo.ann_universitaire}" readonly="true"
+						>
+					</p:inputText>
+				
+				
+
+
+				
+					<p:outputLabel for="nom_person" id="nom" value="Nom :"    styleClass="LabelIns"/>
+					<p:inputText id="nom_person"  
+						value="#{etudiantMBean.webBean.vo.nom}"  readonly="true" >
+					</p:inputText>
+					
+				
+
+				
+					<p:outputLabel for="prenom_person" id="prenom" value="Prénom :" styleClass="LabelIns"    />
+					<p:inputText id="prenom_person" styleClass="InscrInput"  readonly="true"
+					
+						value="#{etudiantMBean.webBean.vo.prenom}" >
+					</p:inputText>
+				
+				
+
+				
+					<p:outputLabel for="dat_nais_person" id="dat_nais" value="Date de naissance :" styleClass="LabelIns"  />
+					<p:inputText id="dat_nais_person" styleClass="InscrInput"  readonly="true"
+						value="#{etudiantMBean.webBean.vo.date_naissance}">
+						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+						</p:inputText>
+			
+
+				
+					<p:outputLabel  value="Ville :" styleClass="LabelIns" for="ville_person"   />
+<!-- 					<p:selectOneMenu id="ville-create" filter="true"  readonly="true" -->
+					
+<!-- 						filterMatchMode="startsWith"   -->
+<!-- 						value="#{etudiantMBean.webBean.vo.ville}"> -->
+<!-- 						<f:selectItem itemLabel="Ville...." noSelectionOption="true" /> -->
+<!-- 						<f:selectItems value="#{etudiantMBean.webBean.villeVOs}" var="v" -->
+<!-- 							itemLabel="#{v.libelle}" itemValue="#{v.libelle}" /> -->
+<!-- 					</p:selectOneMenu> -->
+					
+					
+					<p:inputText id="ville_person"  readonly="true"
+					
+						value="#{etudiantMBean.webBean.vo.ville}" >
+					</p:inputText>
+			       
+			       <p:outputLabel  value="Cité :" styleClass="LabelIns"  />
+					<p:inputText id="cite_person" filter="true"  readonly="true"
+						value="#{etudiantMBean.webBean.vo.citovo.libelle}">
+					</p:inputText>
+				
+					<p:outputLabel for="NCIN_person" id="NCIN" value="N° CIN :" styleClass="LabelIns"   />
+					<p:inputText id="NCIN_person"  readonly="true"
+					
+						value="#{etudiantMBean.webBean.vo.NCIN}" >
+					</p:inputText>
+					
+				
+
+
+				
+					<p:outputLabel id="Boursier" value=" Boursier :"  styleClass="LabelIns" />
+					<p:inputText id="Boursier_person" readonly="true"
+						value="#{etudiantMBean.webBean.vo.boursier}" >
+				
+
+					</p:inputText>
+				
+				
+
+				
+					<p:outputLabel id="Resident" value=" Résident :" styleClass="LabelIns"  />
+					<p:selectBooleanCheckbox id="Resident_person" disabled="true"
+						value="#{etudiantMBean.webBean.vo.resident}">
+						
+
+					</p:selectBooleanCheckbox>
+			
+
+
+				
+					<p:outputLabel for="etab_person" id="etab" value="Etablissement d’étude :" styleClass="LabelIns" />
+					<p:inputText id="etab_person"  readonly="true"
+						
+						value="#{etudiantMBean.webBean.vo.etablissement}" >
+					</p:inputText>
+					
+				
+
+
+				
+					<p:outputLabel for="email_person" id="email" value="Email :"  styleClass="LabelIns"  />
+					<p:inputText id="email_person"  readonly="true"
+					
+						value="#{etudiantMBean.webBean.vo.email}" >
+					</p:inputText>
+					
+			
+			
+				<p:outputLabel   id="image" value="Image :"  styleClass="LabelIns"  />
+                                 <h:graphicImage value="/images/dynamic/?file=#{etudiantMBean.webBean.vo.id}.jpg" height="40" width="40"/>
+
+				
+					<p:outputLabel id="Se" value="Sexe :" styleClass="LabelIns" />
+					<h:selectOneRadio id="sexe_person" disabled="true"
+						value="#{etudiantMBean.webBean.vo.sexe}">
+						<f:selectItem itemLabel="Masculin" itemValue="M"  />
+						<f:selectItem itemLabel="Féminin" itemValue="F" />
+					</h:selectOneRadio>
+					
+				
+
+<!-- 				<p:outputLabel id="image" value="Image  :" styleClass="LabelIns" /> -->
+<!-- 				<img src="C:/image#{etudiantMBean.webBean.vo.image}" alt=""/> -->
+				
+				
+				<h:inputHidden id="rest_person"  readonly="true"
+						value="#{etudiantMBean.webBean.vo.restaurantVO.libelle}" >
+					</h:inputHidden>
+					<h:inputHidden id="rest_code"  readonly="true"
+						value="#{etudiantMBean.webBean.vo.restaurantVO.code}" >
+					</h:inputHidden>
+					<h:inputHidden id="libCit_person"  readonly="true"
+						value="#{etudiantMBean.webBean.vo.citovo.libelle}" >
+					</h:inputHidden>
+					<h:inputHidden id="codCit_person"  readonly="true"
+						value="#{etudiantMBean.webBean.vo.citovo.code}" >
+					</h:inputHidden>
+					<h:inputHidden id="dat_naissance" value="#{etudiantMBean.webBean.vo.date_naissance}"/>
+					<h:inputHidden id="num_carte" value="#{etudiantMBean.webBean.vo.numCarte}"/>
+					<h:inputHidden id="date_exp" value="#{etudiantMBean.webBean.vo.anneeUniversitaireVO.date_fin}"/>
+					
+
+			</h:panelGrid>
+
+
+			<h:panelGrid columns="2" styleClass="FloatRight" cellpadding="5">
+				<p:commandButton value="#{prezmsg['VALIDER']}"
+					 onclick="fabrication_carte()"  oncomplete="$('#per').click()"
+					 update="@form"
+					styleClass="ValidateButton" />
+					
+						
+<!-- 						<p:commandButton style="display:none" action="#{etudiantMBean.personnaliser}" id="per" -->
+					
+					
+<!-- 					 /> -->
+					 <p:remoteCommand name="_personnalise" action="#{etudiantMBean.personnaliser}" process="@this"></p:remoteCommand>
+					</h:panelGrid>
+					
+					 <h:panelGrid styleClass="FloatLeft">
+					  
+			<p:commandButton value="Préparer/Visualiser" process="@this"
+					action="#{etudiantMBean.visualiserCarte}" styleClass="CancelButton" />
+			</h:panelGrid>
+
+			<!-- Cache le dialog s'il n'y a pas d'érreur -->
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('pers-dlg-wdg').hide()"
+				update=":nationalite-form:nationalite-dtbl" />
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>

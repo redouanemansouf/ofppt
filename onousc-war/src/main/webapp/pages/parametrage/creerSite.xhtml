@@ -1,0 +1,111 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+	<p:dialog id="create-dlg" widgetVar="create-dlg-wdg" closable="true"
+		closeOnEscape="true" header="Ajouter site" hideEffect="fade"
+		showEffect="fade" modal="true" dynamic="true">
+
+
+		<h:form id="create-form">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+
+			<h:panelGrid columns="2" styleClass="FormGrid">
+
+				<!--      Code critere     -->
+				<h:outputLabel value="#{prezmsg['CODE']}" />
+
+				<p:inputText id="famp_code" value="#{siteMBean.webBean.vo.code}"
+					required="true" maxlength="4"
+					title="#{component.valid ? '' : siteMBean.getErrorMessage(component.clientId)}">
+					<f:validateLength minimum="4" maximum="4" />
+					<p:ajax listener="#{siteMBean.codevalidator}" update="@form"
+						process="@this" />
+					<pe:keyFilter regEx="/[0-9_]/i" preventPaste="false" />
+				</p:inputText>
+
+
+				<!--      Nom critere     -->
+				<h:outputLabel value="#{prezmsg['LIBELLE']}" />
+
+				<p:inputText id="famp_libelle"
+					value="#{siteMBean.webBean.vo.libelle}" required="true"
+					title="#{component.valid ? '' : siteMBean.getErrorMessage(component.clientId)}" />
+
+				<!--      Adresse      -->
+				<h:outputLabel value="#{prezmsg['ADRESSE']}" />
+				<p:inputTextarea id="site_adresse"
+					value="#{siteMBean.webBean.vo.adresse}" required="true"
+					title="#{component.valid ? '' : siteMBean.getErrorMessage(component.clientId)}" />
+
+				<!--      Nom responsable     -->
+				<h:outputLabel value="#{prezmsg['NOM_RESPONSABLE']}" />
+				<p:inputText id="res_nomresponsable"
+					value="#{siteMBean.webBean.vo.nomResponsable}" required="true"
+					title="#{component.valid ? '' : siteMBean.getErrorMessage(component.clientId)}" />
+
+				<!--      Prenom responsable     -->
+				<h:outputLabel value="#{prezmsg['PRENOM_RESPONSABLE']}" />
+				<p:inputText id="res_prenomres"
+					value="#{siteMBean.webBean.vo.prenomResponsable}" required="true"
+					title="#{component.valid ? '' : siteMBean.getErrorMessage(component.clientId)}" />
+
+				<!--      Num telephone     -->
+				<h:outputLabel value="#{prezmsg['TEL']}" />
+				<p:inputText id="res_tele" value="#{siteMBean.webBean.vo.numTele}"
+					required="true"
+					title="#{component.valid ? '' : siteMBean.getErrorMessage(component.clientId)}">
+					<pe:keyFilter regEx="/[0-9_]/i" preventPaste="false" />
+				</p:inputText>
+
+				<!-- 	  ville       -->
+				<h:outputLabel value="#{prezmsg['VILLE']}" />
+				<p:selectOneMenu id="ville_univ"
+					value="#{siteMBean.webBean.vo.ville}" converter="villeConverter"
+					required="true"
+					title="#{component.valid ? '' : siteMBean.getErrorMessage(component.clientId)}">
+					<f:selectItem itemLabel="choisir une ville" />
+					<f:selectItems value="#{siteMBean.webBean.villeVOs}" var="u"
+						itemLabel="#{u.libelle}" itemValue="#{u}" />
+				</p:selectOneMenu>
+
+			</h:panelGrid>
+
+			<p:toolbar>
+
+				<f:facet name="right">
+					<p:commandButton id="validate-create" value="#{prezmsg['VALIDER']}"
+						icon="ui-icon-custom-validerOsc" update="@form"
+						action="#{siteMBean.creer}" style="width:50%;" styleClass="Val" />
+					<!-- Annule le useCase-->
+					<p:commandButton id="cancel-create" styleClass="Val"
+						icon="ui-icon-custom-cancelOsc" value="#{prezmsg['ANNULER']}"
+						type="button" style="width:48%;"
+						onclick="PF('create-dlg-wdg').hide()" global="false" />
+				</f:facet>
+			</p:toolbar>
+
+
+			<p:defaultCommand target="validate-create" />
+
+			<!-- Focus automatique  -->
+			<p:focus context="create-form" />
+
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('create-dlg-wdg').hide();showMessage();"
+				update=":critere-form:critere-dtbl" />
+
+		</h:form>
+	</p:dialog>
+</ui:composition>

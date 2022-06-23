@@ -1,0 +1,195 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<p:dialog id="pers-dlg" widgetVar="pers-dlg-wdg"
+		header="Personnaliser carte" hideEffect="fade" showEffect="fade"
+		modal="true" dynamic="true" onHide="PF('pers-dlg-wdg').content.empty"
+		closeOnEscape="true" width="460px">
+ 		<p:messages globalOnly="true" autoUpdate="true" />
+
+		<h:form  id="personalisationForm" prependId="false">
+<!--  			<h:panelGrid columns="14" styleClass="FormGrid"> -->
+
+
+<!-- 			    <h:inputHidden id="cheminftp_r" value="" /> -->
+<!-- 			    <h:inputHidden id="userftp_r" value="" /> -->
+<!-- 	          	<h:inputHidden id="passftp_r" value="" /> -->
+	          	
+<!-- 	          	<h:inputHidden id="cheminLocal_p" value="#{etudiantMBean.cheminexeEncoding}" />	        	          -->
+<!-- 				<h:inputHidden id="tramVersionDll" value="#{etudiantMBean.tramVersionDll}" /> -->
+<!-- 	          	<h:inputHidden id="tramEncoding" value="#{etudiantMBean.tramEncoding}" /> -->
+<!-- 	          	<h:inputHidden id="tramVersionPrint" value="#{etudiantMBean.tramVersionPrint}" /> -->
+<!-- 	          	<h:inputHidden id="tramVersionEncoding" value="#{etudiantMBean.tramVersionEncoding}" /> -->
+	      
+<!-- 	      		<h:inputHidden value="#{etudiantMBean.carteWebBean.vo.solde}"></h:inputHidden> -->
+<!-- 				<h:inputHidden id="id" value="Id étudiant :" styleClass="LabelIns" /> -->
+<!-- 				<h:inputHidden id="id_person" value="#{etudiantMBean.carteWebBean.vo.etudiantvo.id}" -->
+<!-- 					readonly="true" disabled="true"> -->
+<!-- 				</h:inputHidden> -->
+
+<!-- 				<h:inputHidden id="anne" value="Année Universitaire :" -->
+<!-- 					styleClass="LabelIns" /> -->
+<!-- 				<h:inputHidden id="anneee_person" -->
+<!-- 					value="#{etudiantMBean.carteWebBean.vo.etudiantvo.ann_universitaire - 1} - #{etudiantMBean.carteWebBean.vo.etudiantvo.ann_universitaire}" -->
+<!-- 					readonly="true" disabled="true"> -->
+<!-- 				</h:inputHidden> -->
+
+<!-- 				<h:inputHidden for="nom_person" id="nom" value="Nom :" -->
+<!-- 					styleClass="LabelIns" /> -->
+<!-- 				<h:inputHidden id="nom_person" -->
+<!-- 					value="#{etudiantMBean.carteWebBean.vo.etudiantvo.nom}" readonly="true" -->
+<!-- 					disabled="true"> -->
+<!-- 				</h:inputHidden> -->
+
+<!-- 				<h:inputHidden for="prenom_person" id="prenom" value="Prénom :" -->
+<!-- 					styleClass="LabelIns" /> -->
+<!-- 				<h:inputHidden id="prenom_person" styleClass="InscrInput" -->
+<!-- 					readonly="true" disabled="true" -->
+<!-- 					value="#{etudiantMBean.carteWebBean.vo.etudiantvo.prenom}"> -->
+<!-- 				</h:inputHidden> -->
+
+<!-- 				<h:inputHidden for="dat_nais_person" id="dat_nais" -->
+<!-- 					value="Date de naissance :" styleClass="LabelIns" /> -->
+<!-- 				<h:inputHidden id="dat_nais_person" styleClass="InscrInput" -->
+<!-- 					readonly="true" value="#{etudiantMBean.carteWebBean.vo.etudiantvo.date_naissance}" -->
+<!-- 					disabled="true"> -->
+<!-- 					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime> -->
+<!-- 				</h:inputHidden> -->
+
+<!-- 				<h:inputHidden value="Ville :" styleClass="LabelIns" -->
+<!-- 					for="ville_person" /> -->
+<!-- 									<p:selectOneMenu id="ville-create" filter="true"  readonly="true" -->
+
+<!-- 										filterMatchMode="startsWith"   -->
+<!-- 										value="#{etudiantMBean.webBean.vo.ville}"> -->
+<!-- 										<f:selectItem itemLabel="Ville...." noSelectionOption="true" /> -->
+<!-- 										<f:selectItems value="#{etudiantMBean.webBean.villeVOs}" var="v" -->
+<!-- 											itemLabel="#{v.libelle}" itemValue="#{v.libelle}" /> -->
+<!-- 									</p:selectOneMenu> -->
+
+
+<!-- 				<h:inputHidden id="ville_person" readonly="true" disabled="true" -->
+<!-- 					value="#{etudiantMBean.carteWebBean.vo.etudiantvo.ville}"> -->
+<!-- 				</h:inputHidden> -->
+
+		 
+
+<!-- 				<h:inputHidden for="NCIN_person" id="NCIN" value="N° CIN :" -->
+<!-- 					styleClass="LabelIns" /> -->
+<!-- 				<h:inputHidden id="NCIN_person" readonly="true" disabled="true" -->
+<!-- 					value="#{etudiantMBean.carteWebBean.vo.etudiantvo.NCIN}"> -->
+<!-- 				</h:inputHidden> -->
+
+<!-- 				<h:inputHidden id="Boursier" value=" Boursier :" -->
+<!-- 					styleClass="LabelIns" /> -->
+<!-- 				<h:inputHidden id="Boursier_person" readonly="true" disabled="true" -->
+<!-- 					value="#{etudiantMBean.carteWebBean.vo.etudiantvo.boursier}"> -->
+<!-- 				</h:inputHidden> -->
+
+
+<!-- 				<h:inputHidden id="Resident" value=" Résident :" -->
+<!-- 					styleClass="LabelIns" /> -->
+<!-- 									<p:selectBooleanCheckbox id="Resident_person" disabled="true"  -->
+<!-- 										value="#{etudiantMBean.webBean.vo.resident}"> -->
+
+
+<!-- 									</p:selectBooleanCheckbox>	 -->
+<!-- 				<h:inputHidden for="etab_person" id="etab" -->
+<!-- 					value="Etablissement d’étude :" styleClass="LabelIns" /> -->
+<!-- 				<h:inputHidden id="etab_person" readonly="true" disabled="true" -->
+<!-- 					value="#{etudiantMBean.carteWebBean.vo.etudiantvo.etablissement}"> -->
+<!-- 				</h:inputHidden> -->
+				
+<!-- 				<h:inputHidden id="solde" readonly="true" disabled="true" -->
+<!-- 					value="#{etudiantMBean.carteWebBean.vo.solde}" /> -->
+
+<!-- 				<h:inputHidden for="email_person" id="email" value="Email :" -->
+<!-- 					styleClass="LabelIns" /> -->
+<!-- 				<h:inputHidden id="email_person" readonly="true" disabled="true" -->
+<!-- 					value="#{etudiantMBean.carteWebBean.vo.etudiantvo.email}"> -->
+<!-- 				</h:inputHidden> -->
+
+<!-- 				<h:inputHidden id="image" value="Image :" styleClass="LabelIns" /> -->
+<!-- 				                                 <h:graphicImage value="/images/dynamic/?file=#{etudiantMBean.webBean.vo.id}.jpg" height="40" width="40"/> -->
+
+
+<!-- 				<h:inputHidden id="Se" value="Sexe :" styleClass="LabelIns" /> -->
+
+
+
+<!-- 				<h:inputHidden id="rest_person" readonly="true" -->
+<!-- 					value="#{etudiantMBean.carteWebBean.vo.etudiantvo.restaurantVO.libelle}"> -->
+<!-- 				</h:inputHidden> -->
+<!-- 				<h:inputHidden id="rest_code" readonly="true" -->
+<!-- 					value="#{etudiantMBean.carteWebBean.vo.etudiantvo.restaurantVO.code}"> -->
+<!-- 				</h:inputHidden> -->
+		  
+<!-- 				<h:inputHidden id="dat_naissance" -->
+<!-- 					value="#{etudiantMBean.carteWebBean.vo.etudiantvo.date_naissance}" /> -->
+<!-- 				<h:inputHidden id="num_carte" -->
+<!-- 					value="#{etudiantMBean.carteWebBean.nouveauNumCarte}" /> -->
+<!-- 				<h:inputHidden id="date_exp" -->
+<!-- 					value="#{etudiantMBean.carteWebBean.vo.etudiantvo.anneeUniversitaireVO.date_fin}" /> -->
+<!-- 				<h:inputHidden id="list_reservation" -->
+<!-- 					value="#{etudiantMBean.webBean.vo.listReservation}" /> -->
+<!-- 				<h:inputHidden id="chexe_etud" -->
+<!-- 					value="#{etudiantMBean.cheminexeimpression}" /> -->
+<!-- 				<h:inputHidden id="chrecto_etud" -->
+<!-- 					value="#{etudiantMBean.chemincarterecto}" /> -->
+<!-- 				<h:inputHidden id="chverso_etud" -->
+<!-- 					value="#{etudiantMBean.chemincarteverso}" /> -->
+
+
+<!-- 			</h:panelGrid> -->
+
+			<h:panelGrid>
+				<h:outputText
+					value="Voulez-vous vraiment personnaliser cette demande ?" />
+			</h:panelGrid>
+			<h:panelGrid columns="2" styleClass="FloatLeft" cellpadding="5">
+
+				<p:commandButton value="OUI" onclick="document.getElementById('luncherIframeIU').src='M2MGroupLuncher:#{etudiantMBean.webBean.jSessionID}|#{etudiantMBean.webBean.serverNameAndPort}';"
+				styleClass="ValidateButton" onstart="PF('bui').block();" 
+				oncomplete="PF('bui').unblock()" process="@this" actionListener="#{etudiantMBean.refabriquerCarte}">
+				<f:setPropertyActionListener value="#{nat}"
+							target="#{etudiantMBean.webBean.vo}" />
+							</p:commandButton>
+
+
+				<!-- 					<p:commandButton style="display:none" action="#{etudiantMBean.personnaliser}" id="per"/> -->
+
+
+				<!-- 					 /> -->
+				<p:remoteCommand name="_personnalise"
+					actionListener="#{etudiantMBean.refabriquerCarte}" process="@this"
+					update=":nationalite-form-validee:nationalite-dtbl"/>
+					
+			</h:panelGrid>
+
+			<h:panelGrid styleClass="FloatRight">
+
+				<p:commandButton value="NON" process="@this"
+					onclick="PF('pers-dlg-wdg').hide()" styleClass="CancelButton" />
+			</h:panelGrid>
+
+			<!-- Cache le dialog s'il n'y a pas d'érreur -->
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('pers-dlg-wdg').hide()"
+				update=":nationalite-form-validee:nationalite-dtbl" />
+
+		</h:form> 
+		
+<iframe id="luncherIframeIU" style="display: none ;"></iframe>
+	<pe:blockUI widgetVar="bui" >  
+				    <h:panelGrid columns="1" >    
+				        <h:outputText value="Traitement en cours ..." />  
+				    </h:panelGrid>  
+			</pe:blockUI>  
+	</p:dialog>
+
+</ui:composition>
+

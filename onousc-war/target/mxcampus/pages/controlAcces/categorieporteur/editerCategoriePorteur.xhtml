@@ -1,0 +1,57 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+
+	<p:dialog id="edit-dlg" widgetVar="edit-dlg-wdg" closable="true"
+		closeOnEscape="true" header="Modifier catégorie porteur"
+		hideEffect="fade" showEffect="fade" modal="true" dynamic="true">
+
+
+		<h:form id="edit-form">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+			<h:panelGrid columns="2" styleClass="FormGrid">
+
+				<!--      CODE categoriePorteur     -->
+				<h:outputLabel value="#{prezmsg['CODE']}" />
+				<p:inputText id="univ_code" required="true"
+					value="#{categoriePorteurMBean.webBean.vo.code}" disabled="true" />
+
+				<!--      LIBELLE categoriePorteur     -->
+				<h:outputLabel value="#{prezmsg['LIBELLE']}" />
+				<p:inputText id="univ_libelle" required="true"
+					value="#{categoriePorteurMBean.webBean.vo.libelle}"
+					title="#{component.valid ? '' : categoriePorteurMBean.getErrorMessage(component.clientId)}" />
+
+			</h:panelGrid>
+
+			<p:toolbar>
+				<f:facet name="right">
+					<p:commandButton id="validate-edit" value="#{prezmsg['VALIDER']}" icon="ui-icon-custom-validerOsc"
+						process="@form" update="edit-form"
+						action="#{categoriePorteurMBean.modifier}"
+						styleClass="Valid" />
+					<p:commandButton value="#{prezmsg['ANNULER']}" global="false"
+						process="@none" onclick="PF('edit-dlg-wdg').hide()"
+						styleClass="Cancel" />
+				</f:facet>
+			</p:toolbar>
+
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('edit-dlg-wdg').hide()"
+				update=":categoriePorteur-form:categoriePorteur-dtbl" />
+		</h:form>
+	</p:dialog>
+
+</ui:composition>

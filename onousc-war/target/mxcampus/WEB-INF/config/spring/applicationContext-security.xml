@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans default-lazy-init="true"
+	xmlns="http://www.springframework.org/schema/beans"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:security="http://www.springframework.org/schema/security" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+			http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+			http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-2.5.xsd
+			http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+            http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-2.5.xsd
+            http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd"
+>
+	<description><![CDATA[
+		Spring Securty configuration
+	]]></description>
+	
+	<!--  user service -->
+	
+	<bean id="customUserDetailsService" class="com.m2m.technicalservices.security.impl.UserDetailsServiceImpl">
+    	<property name="securityDaoJpa" ref="securityDaoJpa" />
+	</bean>
+	
+	<bean id="securityDaoJpa" class="com.m2m.technicalservices.security.impl.SecurityDaoJpaImpl"/>
+	
+	<bean id="securityManager" class="com.m2m.technicalservices.security.impl.SecurityManagerImpl">
+    	<property name="authenticationManager" ref="authenticationManager" />
+	</bean>	
+ 	
+ 	
+	 <!--  BD  -->
+	<security:authentication-manager alias="authenticationManager">
+	  	<security:authentication-provider user-service-ref="customUserDetailsService" />
+	</security:authentication-manager>
+	 
+<!-- 	<security:global-method-security pre-post-annotations="enabled" />   -->   
+<!--     <security:http auto-config="true" use-expressions="true"> -->
+
+<!--         Page level Spring Security : Intercept access to resources in /pages/secure/** -->
+<!--         <security:intercept-url pattern="/pages/**" access="hasRole('ROLE_MODERATOR')" /> -->
+<!--         <security:intercept-url pattern="/pages/edition/**" access="hasRole('ROLE_MODERATOR')" /> -->
+<!--         <security:intercept-url pattern="/pages/administration/**" access="hasRole('ROLE_MODERATOR')" /> -->
+<!--         <security:intercept-url pattern="/pages/commun/**" access="hasRole('ROLE_MODERATOR')" /> -->
+<!--         <security:intercept-url pattern="/pages/cycleVie/**" access="hasRole('ROLE_MODERATOR')" /> -->
+<!--         <security:intercept-url pattern="/pages/usager/**" access="hasRole('ROLE_MODERATOR')" /> -->
+<!--         <security:intercept-url pattern="/pages/referentiel/**" access="hasRole('ROLE_MODERATOR')" /> -->
+<!--         <security:intercept-url pattern="/pages/reservation/**" access="hasRole('ROLE_MODERATOR')" /> -->
+
+<!--         Page level Spring Security : Permit access to resources in /pages/unsecure/** -->
+ <!--         <security:intercept-url pattern="/pages/unsecure/**" access="permitAll"/> --> 
+ 
+<!--         Page level Spring Security : Intercept access to resources in /** -->
+<!--         <security:intercept-url pattern="/**" access="hasRole('ROLE_MODERATOR')"/> -->
+
+<!--         Page level Spring Security : Enable Primefaces -->
+<!--         <security:intercept-url pattern="/javax.faces.resource/**" access="permitAll"/> -->
+  
+<!--         Define login page for Spring Security       -->
+<!--         <security:form-login login-page="/pages/login.xhtml"/> -->
+
+<!--         Define logout properties for Spring Security -->
+<!--         <security:logout invalidate-session="true" logout-success-url="/pages/logout.xhtml"></security:logout>  -->
+<!--     </security:http>  -->
+   
+	<bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+	 	<property name="userDetailsService" ref="customUserDetailsService"/>
+	</bean>
+	
+	<!-- <bean class="org.springframework.security.authentication.AnonymousAuthenticationProvider" id="anonymousProvider">
+		<property name="userDetailsService" ref="dummyUsersService" />
+	</bean> -->
+	
+	<!--  LDAP  
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider
+			ref="ldapAuthProvider"></security:authentication-provider>
+	</security:authentication-manager>
+
+	<bean id="ldapAuthProvider"
+		class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
+		<constructor-arg>
+			<bean
+				class="org.springframework.security.ldap.authentication.BindAuthenticator">
+				<constructor-arg ref="appLdapServer" />
+				<property name="userDnPatterns">
+					<list>
+						<value>uid={0},ou=People</value>
+					</list>
+				</property>
+			</bean>
+		</constructor-arg>
+		<constructor-arg>
+			<bean
+				class="com.riad.technicalservices.security.impl.MyAuthoritiesPopulator">
+			</bean>
+		</constructor-arg>
+	</bean> -->
+	
+	<security:ldap-server id="appLdapServer"
+		url="ldap://127.0.0.1:389/dc=example,dc=com" manager-dn="cn=Directory Manager"
+		manager-password="riad" /> 
+	
+ 
+</beans>

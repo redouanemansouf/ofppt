@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<p:dialog id="create-dlg" widgetVar="create-dlg-wdg"
+		header="#{prezmsg['AJOUTER_NATIONALITE']}" hideEffect="fade"
+		showEffect="fade" modal="true" dynamic="true" closeOnEscape="true">
+
+		<p:messages globalOnly="true" autoUpdate="true" />
+
+		<h:form>
+
+			<h:panelGrid columns="3" styleClass="FormGrid">
+
+
+				<!-- Libelle de la nationalite -->
+				<h:outputLabel value="#{prezmsg['LIBELLE']}" />
+				<p:inputText id="libelle-create"
+					value="#{nationaliteMBean.webBean.vo.libelle}" />
+				<p:message for="libelle-create" />
+
+
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" styleClass="FloatRight" cellpadding="5">
+				<p:commandButton value="#{prezmsg['VALIDER']}" process="@form"
+					action="#{nationaliteMBean.creer}" update="@form"
+					styleClass="ValidateButton" />
+				<p:commandButton value="#{prezmsg['ANNULER']}" global="false"
+					oncomplete="PF('create-dlg-wdg').hide()" styleClass="CancelButton" />
+			</h:panelGrid>
+
+			<!-- Cache le dialog s'il n'y a pas d'érreur -->
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('create-dlg-wdg').hide()"
+				update=":demande-menu:nationalite-form:nationalite-dtbl" />
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>

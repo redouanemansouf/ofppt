@@ -1,0 +1,81 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<p:dialog id="edit-dlg" widgetVar="edit-dlg-wdg" closable="true"
+		closeOnEscape="true" header="Modifier un repas" hideEffect="fade"
+		showEffect="fade" modal="true" dynamic="true">
+
+		<h:form id="edit-form">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+			<h:panelGrid columns="2" styleClass="FormGrid">
+
+				<!--      Code service     -->
+				<h:outputLabel value="#{prezmsg['CODE']}" />
+				<p:inputText id="service_code"
+					value="#{serviceMBean.webBean.vo.code}" disabled="true" />
+
+				<!--      Nom service     -->
+				<h:outputLabel value="#{prezmsg['NOM']}" />
+				<p:inputTextarea id="service_libelle" cols="50"
+					value="#{serviceMBean.webBean.vo.libelle}" required="true"
+					title="#{component.valid ? '' : serviceMBean.getErrorMessage(component.clientId)}" />
+
+				<h:outputLabel value="#{prezmsg['PRIX']}" />
+				<p:inputText id="update_prix"
+					value="#{serviceMBean.webBean.vo.prix}" required="true"
+					title="#{component.valid ? '' : serviceMBean.getErrorMessage(component.clientId)}" />
+					
+		  			<h:outputLabel value="#{prezmsg['JOUR']}" />
+				<h:selectOneMenu id="jour_update" value="#{serviceMBean.webBean.vo.jour}" style="width:200px;"
+				 >
+					<f:selectItem itemLabel="Choisissez"  />
+					<f:selectItem itemLabel="Lundi" itemValue="Lundi"/>
+					<f:selectItem itemLabel="Mardi" itemValue="Mardi" />
+					<f:selectItem itemLabel="Mercredi" itemValue="Mercredi" />
+					<f:selectItem itemLabel="Jeudi" itemValue="Jeudi" />
+					<f:selectItem itemLabel="Vendredi" itemValue="Vendredi" />
+					<f:selectItem itemLabel="Samedi" itemValue="Samedi" />
+					<f:selectItem itemLabel="Dimanche" itemValue="Dimanche" />
+					</h:selectOneMenu>
+					
+					<h:outputLabel value="#{prezmsg['TYPE']}" />
+				<p:selectOneMenu id="type_update" value="#{serviceMBean.webBean.vo.type}" style="width:200px;"
+				 >
+					<f:selectItem itemLabel="Choisissez"  />
+					<f:selectItem itemLabel="Plat principal" itemValue="pp"/>
+					<f:selectItem itemLabel="Dessert" itemValue="d" />
+					<f:selectItem itemLabel="Entrée" itemValue="e" />
+					</p:selectOneMenu>
+					
+
+			</h:panelGrid>
+
+			<p:toolbar>
+				<f:facet name="right">
+					<p:commandButton id="validate-edit" value="#{prezmsg['VALIDER']}"
+						process="@form" update="edit-form"
+						action="#{serviceMBean.modifier}" styleClass="ValidateButton" />
+					<p:commandButton value="#{prezmsg['ANNULER']}" global="false"
+						process="@none" onclick="PF('edit-dlg-wdg').hide()"
+						styleClass="CancelButton" />
+				</f:facet>
+			</p:toolbar>
+
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('edit-dlg-wdg').hide()"
+				update=":service-form:service-dtbl" />
+
+		</h:form>
+	</p:dialog>
+</ui:composition>

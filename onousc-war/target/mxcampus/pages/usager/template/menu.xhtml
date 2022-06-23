@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:b="http://bootsfaces.net/ui">
+
+	<div class="TopMenuContainer">
+		<ul class="TopMenu">
+			<li class="actif"><h:link>
+					<div class="RuneSlot">
+						<div class="RuneImg Menuitem_souscription active"
+							title="#{prezmsg['SOUSCRIPTION_CONTRAT_CLIENT_CAPS']}" />
+					</div>
+				</h:link></li>
+
+			<li><h:link>
+					<div class="RuneSlot">
+						<div class="RuneImg Menuitem_souscription-commercant"
+							title="#{prezmsg['SOUSCRIPTION_CONTRAT_COMMERCANT_CAPS']}" />
+					</div>
+				</h:link></li>
+
+			<li>
+				<div class="RuneSlot">
+					<div class="RuneImg Menuitem_service-client"
+						onclick="PF('idClient-wdg').show()"
+						title="#{prezmsg['SERVICE_CLIENT_CAPS']}" />
+				</div>
+			</li>
+			<li>
+				<div class="MenuSpacer TurquoiseBg" />
+			</li>
+
+			<li><h:link>
+					<div class="RuneSlot">
+						<div class="RuneImg Menuitem_vente-carte-prepayee"
+							title="#{prezmsg['VENTE_CARTE_PREPAYEE_CAPS']}" />
+					</div>
+				</h:link></li>
+			<li><h:link>
+					<div class="RuneSlot">
+						<div class="RuneImg Menuitem_affectation-token"
+							title="#{prezmsg['AFFECTATION_TOKEN_CAPS']}" />
+					</div>
+				</h:link></li>
+			<li><h:link>
+					<div class="RuneSlot">
+						<div class="RuneImg Menuitem_emission"
+							title="#{prezmsg['EMISSION_INSTANTANEE_CAPS']}" />
+					</div>
+				</h:link></li>
+
+			<li>
+				<div class="MenuSpacer TurquoiseBg" />
+			</li>
+
+			<li><h:link>
+					<div class="RuneSlot">
+						<div class="RuneImg Menuitem_tableau-bord"
+							title="#{prezmsg['TABLEAU_BORD_CAPS']}" />
+					</div>
+				</h:link></li>
+
+			<li><h:link>
+					<div class="RuneSlot">
+						<div class="RuneImg Menuitem_gestion-stock"
+							title="#{prezmsg['GESTION_STOCK_CAPS']}" />
+					</div>
+				</h:link></li>
+
+			<li><h:link>
+					<div class="RuneSlot">
+						<div class="RuneImg Menuitem_gestion-gab"
+							title="#{prezmsg['ARRETE_GAB_CAPS']}" />
+					</div>
+				</h:link></li>
+		</ul>
+	</div>
+
+</ui:composition>

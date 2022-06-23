@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layout.xhtml">
+
+	<ui:define name="content">
+
+		<h:form id="edit-form">
+			<h:panelGrid styleClass="MenuPrincipal" columns="5">
+				<p:link style="text-decoration:none" outcome="/pages/administration/userEntity/listerUserEntity.xhtml" rendered="#{authMbean.hasEcran('000015')}">
+					<div class="MenuImg MenuImg_E" />
+					<div class="label">
+						<center>
+							<h:outputText value="Gestion des Utilisateurs"
+								style="width: 106%;"></h:outputText>    
+						</center>
+					</div>
+				</p:link>
+				<p:link style="text-decoration:none" outcome="/pages/administration/winMenu/listerWinMenu.xhtml" rendered="#{authMbean.hasEcran('000025')}">      
+					<div class="MenuImg MenuImg_E" />
+					<div class="label">
+						<center>
+							<h:outputText value="Gestion des accès des utilisateurs"
+								style="width: 106%;"></h:outputText>
+						</center>
+					</div>
+				</p:link>
+				<p:link style="text-decoration:none" outcome="/pages/administration/winMenu/listerWinMenuG.xhtml" rendered="#{authMbean.hasEcran('000045')}">       
+					<div class="MenuImg MenuImg_E" />
+					<div class="label">
+						<center>
+							<h:outputText value="Gestion des accès des groupes"
+								style="width: 106%;"></h:outputText>
+						</center>
+					</div>
+				</p:link>
+				<p:link style="text-decoration:none" outcome="/pages/administration/trace/listerTrace.xhtml" rendered="#{authMbean.hasEcran('000007')}">        
+					<div class="MenuImg MenuImg_E" />  
+					<div class="label">
+						<center>
+							<h:outputText value="Log et Traçabilité"    
+								style="width: 106%;"></h:outputText>
+						</center>
+					</div>
+				</p:link>
+				<p:link style="text-decoration:none" outcome="/pages/administration/menu/listerMenu.xhtml" rendered="#{authMbean.hasEcran('000035')}">       
+					<div class="MenuImg MenuImg_E" />  
+					<div class="label">
+						<center>
+							<h:outputText value="Gestion des menus"  
+								style="width: 106%;"></h:outputText>
+						</center>
+					</div>
+				</p:link>
+			</h:panelGrid>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+

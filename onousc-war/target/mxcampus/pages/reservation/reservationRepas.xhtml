@@ -1,0 +1,178 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:b="http://bootsfaces.net/ui"
+	template="/pages/commun/layoutRes.xhtml">
+
+	<!-- JOURS DE LA SEMAINE EN COURS -->
+	
+	<ui:define name="content">
+	<h:form id="rese">
+	<div class="ui-fluid">
+	
+				<p:fieldset 
+					style="padding-left: 0px !important; padding-right: 0px !important;margin-left: 0;width:1500px;"
+					styleClass="fieldsetCategories">
+
+
+
+<h:link outcome="/pages/reservation/reservationRepas.xhtml">
+				<p:graphicImage library="images" name="addReservation.png" width="60" height="60"
+				 /> 
+			</h:link>
+			
+					<center>
+					
+				
+  
+					
+						
+						<p:messages autoUpdate="true" globalOnly="true" closable="true"
+							style="width:80%;" showIcon="false" />
+							<BR />
+							<h:outputLabel value="#{prezmsg['MATRICULE']}  :" style="font-size: 20px; font-weight: bold;" />
+
+						<p:inputText id="j_matr" value="#{serviceMBean.matricule}"
+							required="true" style="width:300px;font-size: 10px;height:100px"
+							title="#{component.valid ? '' : utilsMBean.getErrorMessage(component.clientId)}" />
+					</center>
+	
+	          	
+		<br/>
+		
+		
+			<h:panelGrid id="reservationRepas"  columns="4">
+			
+			<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;width:300px;float:left;overflow-y: auto;height: 900px;"
+					styleClass="fieldsetCategories">
+			<h:panelGrid columns="2"   >
+			<p:graphicImage library="images" name="entree.jpg" width="80" height="80"
+				 />
+				  <ui:repeat id="reservationEntree-pnl"  value="#{serviceMBean.webBean.list_entree}" var="entre"
+		styleClass="MarginAuto">
+		<p:commandButton value="#{entre.libelle}" process="@this" style="width:200px;font-size: 20px; font-weight: bold;height:100px"
+		action="#{serviceMBean.addReservation}" update="@form:reservationRepas"
+					
+					styleClass="AlignCenter StrongFont DateServiceButton">
+					<f:setPropertyActionListener
+						target="#{serviceMBean.webBean.vo}"
+						value="#{entre}" />
+				</p:commandButton>
+				<hr/>
+		
+				 </ui:repeat>
+			</h:panelGrid>
+			
+			</p:fieldset>
+				<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;width:300px;float:left;overflow-y: auto;height: 900px;"
+					styleClass="fieldsetCategories">
+			<h:panelGrid columns="2"  >
+			
+			<p:graphicImage library="images" name="platPrincipal.jpg" width="80" height="80" value="Repas Principal"
+				 />
+				 
+				 <ui:repeat id="reservationPrincipal-pnl"  value="#{serviceMBean.webBean.list_principal}" var="service"
+		styleClass="MarginAuto">
+		<p:commandButton value="#{service.libelle}" process="@this" style="width:200px;font-size: 20px; font-weight: bold;height:100px"
+		action="#{serviceMBean.addReservation}" update="@form:reservationRepas"
+					
+					styleClass="AlignCenter StrongFont DateServiceButton">
+					<f:setPropertyActionListener
+						target="#{serviceMBean.webBean.vo}"
+						value="#{service}" />
+				</p:commandButton>
+				<hr/>
+		
+				 </ui:repeat>
+				
+				
+			</h:panelGrid>
+			</p:fieldset>
+			
+				<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;width:300px;float:left;overflow-y: auto;height: 900px;"
+					styleClass="fieldsetCategories">
+			<h:panelGrid columns="2"  >
+			<p:graphicImage library="images" name="dessert.jpg" width="80" height="80"
+				 />
+				 <ui:repeat   value="#{serviceMBean.webBean.list_dessert}" var="dessert" 
+		styleClass="MarginAuto">
+		<p:commandButton value="#{dessert.libelle}" process="@this" style="width:200px;font-size: 20px; font-weight: bold;height:100px" update="@form:reservationRepas"
+					action="#{serviceMBean.addReservation}" 
+					styleClass="AlignCenter StrongFont DateServiceButton">
+					<f:setPropertyActionListener
+						target="#{serviceMBean.webBean.vo}"
+						value="#{dessert}" />
+				</p:commandButton>
+				<hr/>
+		
+				 </ui:repeat>
+			</h:panelGrid>
+			</p:fieldset>
+				
+		
+			
+			<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;width:300px;float:left;overflow-y: auto;height: 400px;"
+					styleClass="fieldsetCategories">
+					
+								
+								
+								<p:panel id="multiProdDetail"
+							>
+
+							<p:dataList value="#{serviceMBean.webBean.reservationVOs}" var="pro" emptyMessage="aucun produit séléctionner"
+								type="definition">
+								<f:facet name="header">
+            DETAIL RESERVATION
+        </f:facet>
+                #{pro.libelle}        :        #{pro.prix} DHS    
+          
+          <f:facet name="footer">
+          TOTAL   :        	<h:outputText id="mntantt" value="#{serviceMBean.montTotal}" />    DHS
+        </f:facet>
+        
+							</p:dataList>
+        
+							
+			</p:panel>
+			
+			</p:fieldset>
+			
+			
+			
+			
+			</h:panelGrid>
+		<br/>
+		<br/>
+		  <center>   <p:commandButton id="searchOk" styleClass="Val" action="#{serviceMBean.creerReservation}"
+					icon="ui-icon-custom-validerOsc" style="width:450px;font-size: 20px; font-weight: bold;height:100px" update="@form:reservationRepas"
+					widgetVar="searchOk-wdg" value="TERMINER LA RÉSERVATION"
+					
+					
+					 />  </center>
+		</p:fieldset>
+		</div>
+		
+		
+		
+        
+	
+
+	<!-- BLOCK UI -->
+<!-- 	<pe:blockUI widgetVar="blockUIWidget" centerX="true" centerY="true" -->
+<!-- 		timeout="5000"> -->
+<!-- 		<h:panelGrid columns="2"> -->
+<!-- 			<h:graphicImage library="images" name="ajax-loader.gif" -->
+<!-- 				style="margin-right: 12px; vertical-align: middle;" /> -->
+<!-- 		</h:panelGrid> -->
+<!-- 	</pe:blockUI> -->
+
+</h:form>
+</ui:define>
+</ui:composition>

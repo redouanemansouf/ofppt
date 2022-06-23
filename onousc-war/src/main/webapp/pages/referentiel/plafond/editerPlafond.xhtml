@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+	<p:dialog id="edit-dlg" widgetVar="edit-dlg-wdg" closable="true"
+		closeOnEscape="true" header="Modifier plafond" hideEffect="fade"
+		showEffect="fade" modal="true" dynamic="true">
+
+
+		<h:form id="edit-form">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+			<h:panelGrid columns="2" styleClass="FormGrid">
+
+				<!--      CODE plafond     -->
+				<h:outputLabel value="#{prezmsg['CODE']}" />
+				<p:inputText id="univ_code" value="#{plafondMBean.webBean.vo.code}"
+					disabled="true" />
+
+				<!--      LIBELLE plafond     -->
+				<h:outputLabel value="#{prezmsg['LIBELLE']}" />
+				<p:inputText id="univ_libelle"
+					value="#{plafondMBean.webBean.vo.libelle}" required="true"
+					title="#{component.valid ? '' : plafondMBean.getErrorMessage(component.clientId)}" />
+
+				<!--     plafond min     -->
+				<h:outputLabel value="#{prezmsg['MIN_RESERVATION']}" />
+				<p:inputText id="univ_min" value="#{plafondMBean.webBean.vo.min}"
+					required="true"
+					title="#{component.valid ? '' : plafondMBean.getErrorMessage(component.clientId)}" />
+
+				<!--     plafond max     -->
+				<h:outputLabel value="#{prezmsg['MAX_RESERVATION']}" />
+				<p:inputText id="univ_max" value="#{plafondMBean.webBean.vo.max}"
+					required="true"
+					title="#{component.valid ? '' : plafondMBean.getErrorMessage(component.clientId)}" />
+
+			</h:panelGrid>
+
+			<p:toolbar>
+				<f:facet name="right">
+					<p:commandButton id="validate-edit" value="#{prezmsg['VALIDER']}"
+						process="@form" update="edit-form"
+						action="#{plafondMBean.modifier}" styleClass="ValidateButton" />
+					<p:commandButton value="#{prezmsg['ANNULER']}" global="false"
+						process="@none" onclick="PF('edit-dlg-wdg').hide()"
+						styleClass="CancelButton" />
+				</f:facet>
+			</p:toolbar>
+
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('edit-dlg-wdg').hide()"
+				update=":plafond-form:plafond-dtbl" />
+
+		</h:form>
+	</p:dialog>
+</ui:composition>

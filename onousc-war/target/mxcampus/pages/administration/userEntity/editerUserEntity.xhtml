@@ -1,0 +1,150 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+	<p:dialog id="editer-anneeuniversitaire"
+		widgetVar="editer-anneeuniversitaire-profil"
+		header="Modifier utilisateur" hideEffect="fade"
+		styleClass="dialogclass" showEffect="fade" modal="true" dynamic="true"
+		closeOnEscape="true"
+		onHide="PF('editer-anneeuniversitaire').content.empty">
+
+
+
+		<h:form id="editeranneeUniversitaire-form">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+			<h:panelGrid columns="2" cellpadding="5">
+				<!--      Code anneeUniversitaire     -->
+
+				<p:column>
+					<h:outputLabel value="Type d'utilisateur" />
+				</p:column>
+
+				<p:selectOneRadio value="#{userEntityMBean.webBean.typeUser}"
+					unselectable="true" required="true">
+					<f:selectItem itemLabel="Site" itemValue="SITE" />
+					<f:selectItem itemLabel="Admin" itemValue="ADMIN" />
+					<p:ajax event="change" process="@this" update="@form site" />
+				</p:selectOneRadio>
+
+				<p:column>
+					<h:outputLabel value="#{prezmsg['USERNAME1']}" />
+				</p:column>
+
+				<p:column>
+					<p:inputText id="univ_code"
+						value="#{userEntityMBean.webBean.vo.username}" disabled="true" />
+				</p:column>
+
+
+				<!--      Nom     -->
+
+				<p:column>
+					<h:outputLabel value="#{prezmsg['FIRSTNAME']}" />
+				</p:column>
+
+				<p:column>
+					<p:inputText id="firstName"
+						value="#{userEntityMBean.webBean.vo.firstName}" required="true"
+						title="#{component.valid ? '' : userEntityMBean.getErrorMessage(component.clientId)}" />
+				</p:column>
+				<p:column>
+					<h:outputLabel value="#{prezmsg['LASTNAME']}" />
+				</p:column>
+
+				<p:column>
+					<p:inputText id="lastName"
+						value="#{userEntityMBean.webBean.vo.lastName}" required="true"
+						title="#{component.valid ? '' : userEntityMBean.getErrorMessage(component.clientId)}" />
+				</p:column>
+
+				<p:column>
+					<h:outputLabel value="#{prezmsg['GROUPE']}" />
+				</p:column>
+
+				<p:column>
+					<p:selectOneMenu id="user_groupe"
+						value="#{userEntityMBean.webBean.vo.groupname}" required="true"
+						title="#{component.valid ? '' : userEntityMBean.getErrorMessage(component.clientId)}">
+						<f:selectItem itemValue="" itemLabel="Choisir un Groupe" />
+						<f:selectItems value="#{userEntityMBean.webBean.groups}" />
+					</p:selectOneMenu>
+				</p:column>
+
+
+				<p:column>
+					<h:outputLabel value="#{prezmsg['EMAIL']}" />
+				</p:column>
+
+				<p:column>
+					<p:inputText id="user_email"
+						value="#{userEntityMBean.webBean.vo.email}" required="true"
+						title="#{component.valid ? '' : userEntityMBean.getErrorMessage(component.clientId)}" />
+				</p:column>
+
+				<p:column>
+					<h:outputLabel value="#{prezmsg['SITE']}"
+						rendered="#{userEntityMBean.webBean.typeUser eq 'SITE' }" />
+				</p:column>
+				<p:column>
+					<p:selectOneMenu id="site"
+						rendered="#{userEntityMBean.webBean.typeUser eq 'SITE' }"
+						value="#{userEntityMBean.webBean.vo.siteVO}"
+						converter="siteConverter" required="true" filter="true"
+						filterMatchMode="startsWith" style="width:100%;"
+						title="#{component.valid ? '' : baseMBean.getErrorMessage(component.clientId)}">
+						<f:selectItem itemLabel="#{prezmsg['SELECTIONNER']}"
+							itemDisabled="true" itemValue="#{null}" noSelectionOption="true" />
+						<f:selectItems value="#{userEntityMBean.webBean.listSite}"
+							var="eu" itemLabel="#{eu.libelle}" itemValue="#{eu}" />
+						<p:ajax event="change" process="@this" />
+
+					</p:selectOneMenu>
+					<p:message for="site" />
+				</p:column>
+
+				<p:column>
+					<h:outputLabel value="#{prezmsg['STATUT']}" />
+				</p:column>
+
+				<p:column>
+					<p:inputText id="user_statut"
+						value="#{userEntityMBean.webBean.vo.statut}" required="true"
+						title="#{component.valid ? '' : userEntityMBean.getErrorMessage(component.clientId)}" />
+				</p:column>
+
+
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" styleClass="FloatRight" cellpadding="5">
+				<p:commandButton value="#{prezmsg['VALIDER']}"
+					action="#{userEntityMBean.modifier}" process="@form" update="@form"
+					style="width:100%;" styleClass="Val"
+					onstart="block('create-dlg-wdg')"
+					oncomplete="unblock('create-dlg-wdg')" />
+				<p:commandButton value="#{prezmsg['ANNULER']}" global="false"
+					style="width:100%;"
+					oncomplete="PF('editer-anneeuniversitaire-profil').hide()"
+					styleClass="Val" />
+			</h:panelGrid>
+
+
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('editer-anneeuniversitaire-profil').hide()"
+				update=":userEntity-form:userEntity-dtbl" />
+
+		</h:form>
+	</p:dialog>
+
+</ui:composition>

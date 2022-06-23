@@ -1,0 +1,126 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:b="http://bootsfaces.net/ui">
+
+	<p:panel id="reservationParMois-pnl"
+		rendered="#{reservationMBean.typeReservation == 'MOIS'}"
+		styleClass="MarginAuto AlignCenter">
+		
+			<br />
+			<br />
+			<br />
+			<ui:repeat var="rm"
+				value="#{reservationMBean.webBean.reservationsParMois}">
+				<p:commandButton value="#{rm.mois}" process="@this" 
+					update="@form:validationReservationParMois-pnl @form:hidden-outputPanel"
+					oncomplete="toggle_visibility('reservationParMois-pnl','services-reservationParMois-pnl')"
+					styleClass="AlignCenter FloatLeft  StrongFont DateServiceButton" style="margin:10px;">
+					<f:setPropertyActionListener
+						target="#{reservationMBean.webBean.reservationParMoisVO}"
+						value="#{rm}" />
+					<f:setPropertyActionListener
+						target="#{reservationMBean.debutReservation}"
+						value="#{rm.dateDebut}" />
+					<f:setPropertyActionListener
+						target="#{reservationMBean.finReservation}" value="#{rm.dateFin}" />
+				</p:commandButton>
+				<p:spacer height="10" width="10" />
+					<p:spacer height="10" width="10" />
+			</ui:repeat>
+		
+	</p:panel>
+
+	<p:panel id="services-reservationParMois-pnl" visible="false"
+		styleClass="MarginAuto">
+		<center>
+			<ui:repeat var="service"
+				value="#{reservationMBean.webBean.serviceListForCombo}">
+				<br />
+				<p:commandButton value="#{service.libelle}" process="@this"
+					action="#{reservationMBean.reserverMois()}"
+					update="@form:validationReservationParMois-pnl @form:hidden-outputPanel"
+					oncomplete="toggle_visibility('validationReservationParMois-pnl','services-reservationParMois-pnl')"
+					styleClass="AlignCenter StrongFont DateServiceButton">
+					<f:setPropertyActionListener
+						target="#{reservationMBean.webBean.serviceVO}" value="#{service}" />
+					<f:setPropertyActionListener target="#{reservationMBean.service}"
+						value="#{service.code}" />
+				</p:commandButton>
+				<br />
+			</ui:repeat>
+
+			<br />
+
+			<!-- TOUS LES SERVICES	 -->
+			<p:commandButton value="TOUS LES SERVICES"
+				action="#{reservationMBean.reserverMois()}" process="@this"
+				update="validationReservationParMois-pnl @form:hidden-outputPanel"
+				oncomplete="toggle_visibility('validationReservationParMois-pnl','services-reservationParMois-pnl')"
+				styleClass="ServiceButton AlignCenter StrongFont">
+				<f:setPropertyActionListener
+					target="#{reservationMBean.webBean.serviceVO}" value="#{null}" />
+				<f:setPropertyActionListener target="#{reservationMBean.service}"
+					value="T" />
+			</p:commandButton>
+		</center>
+	</p:panel>
+
+
+	<!-- RÉCAPITULATIF DE LA RÉSERVATION AVANT LE MONTANT À PAYER-->
+	<p:panel id="validationReservationParMois-pnl" visible="false"
+		styleClass="MarginAuto AlignCenter">
+
+		<h:panelGrid columns="2" styleClass="FormGrid"
+			columnClasses="AlignRight,AlignLeft">
+
+			<!--  DATE RÉSERVATION -->
+			<h:outputText value="Date réservation "
+				styleClass="RecapReservation StrongFont" />
+			<h:outputText value="#{reservationMBean.webBean.vo.dateOperation}"
+				styleClass="RecapReservations StrongFont">
+				<f:convertDateTime pattern="dd/MM/YYYY" />
+			</h:outputText>
+
+			<!-- TYPE DE LA RÉSERVATION -->
+			<h:outputText value="Type réservation "
+				styleClass="RecapReservation StrongFont" />
+			<h:outputText
+				value="#{reservationMBean.webBean.vo.typeReservation.typeReservationCode}"
+				styleClass="RecapReservations StrongFont" />
+
+			<!-- MONTANT À DÉBITER -->
+			<h:outputText value="Montant          "
+				styleClass="RecapReservation StrongFont" />
+			<h:outputText value="#{reservationMBean.webBean.vo.montant} DH"
+				styleClass="RecapReservations StrongFont" />
+
+		</h:panelGrid>
+
+		<br />
+
+		<!-- TERMINER L'ACTION DE RÉSERVATION -->
+		<p:commandButton value="TERMINER LA RÉSERVATION"
+			action="#{reservationMBean.creer()}" process="@this"
+			update="reservation-outputPanel"
+			onstart="PF('blockUIWidget').block()"
+			oncomplete="terminerReservation();PF('blockUIWidget').unblock();"
+			styleClass="ServiceButton">
+			<f:setPropertyActionListener
+				target="#{reservationMBean.typeReservation}" value="null" />
+			<f:setPropertyActionListener target="#{reservationMBean.action}"
+				value="null" />
+		</p:commandButton>
+
+		<!-- BLOCK UI FOR WAIT -->
+		<pe:blockUI widgetVar="blockUIWidget" centerX="true" centerY="true">
+			<h:graphicImage library="images" name="ajax-loader.gif"
+				style="margin-right: 12px; vertical-align: middle;" />
+		</pe:blockUI>
+
+	</p:panel>
+
+</ui:composition>

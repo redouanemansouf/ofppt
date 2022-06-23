@@ -1,0 +1,87 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+	<p:dialog id="edit-dlg" widgetVar="edit-dlg-wdg" closable="true"
+		closeOnEscape="true" header="Modifier note critère" hideEffect="fade"
+		showEffect="fade" modal="true" dynamic="true">
+
+
+		<h:form id="edit-form">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+
+			<h:panelGrid columns="2" styleClass="FormGrid">
+
+				<!--      Code NoteCritere     -->
+				<h:outputLabel value="#{prezmsg['CODE']}" />
+
+				<p:inputText id="univ_code" value="#{noteCritereMBean.webBean.vo.code}"
+					disabled="true" />
+
+
+				<!--      Nom NoteCritere     -->
+				<h:outputLabel value="#{prezmsg['LIBELLE']}" />
+
+				<p:inputText id="univ_libelle"
+					value="#{noteCritereMBean.webBean.vo.libelle}" required="true"
+					title="#{component.valid ? '' : noteCritereMBean.getErrorMessage(component.clientId)}" />
+
+				<h:outputLabel value="#{prezmsg['MIN']}" />
+
+				<p:inputText id="min_valeur"
+					value="#{noteCritereMBean.webBean.vo.min}" required="true"
+					title="#{component.valid ? '' : noteCritereMBean.getErrorMessage(component.clientId)}" />
+				
+				<h:outputLabel value="#{prezmsg['MAX']}" />
+				<p:inputText id="max_valeur"
+					value="#{noteCritereMBean.webBean.vo.max}" required="true"
+					title="#{component.valid ? '' : noteCritereMBean.getErrorMessage(component.clientId)}" />
+					
+				<h:outputLabel value="#{prezmsg['NOTE']}" />
+				<p:inputText id="note_valeur"
+					value="#{noteCritereMBean.webBean.vo.note}" required="true"
+					title="#{component.valid ? '' : noteCritereMBean.getErrorMessage(component.clientId)}" />
+				
+				<!-- 	  Crietere       -->
+				<h:outputLabel value="#{prezmsg['CRITERE']}" />
+				<p:selectOneMenu id="criet_note"
+					value="#{noteCritereMBean.webBean.vo.critereVO}"
+					converter="critereConverter" style="width:125px"
+					required="true"
+					title="#{component.valid ? '' : noteCritereMBean.getErrorMessage(component.clientId)}">
+					<f:selectItem itemLabel="choisir un critère" />
+					<f:selectItems
+						value="#{noteCritereMBean.webBean.critereVOs}" var="u"
+						itemLabel="#{u.libelle}" itemValue="#{u}" />
+				</p:selectOneMenu>
+
+			</h:panelGrid>
+			<p:toolbar>
+				<f:facet name="right">
+					<p:commandButton id="validate-edit" value="#{prezmsg['VALIDER']}"
+						process="@form" update="edit-form :succes"
+						action="#{noteCritereMBean.modifier}" styleClass="ValidateButton" />
+					<p:commandButton value="#{prezmsg['ANNULER']}" global="false"
+						process="@none" onclick="PF('edit-dlg-wdg').hide()"
+						styleClass="CancelButton" />
+				</f:facet>
+			</p:toolbar>
+
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('edit-dlg-wdg').hide()"
+				update=":noteCritere-form:noteCritere-dtbl" />
+
+		</h:form>
+	</p:dialog>
+</ui:composition>

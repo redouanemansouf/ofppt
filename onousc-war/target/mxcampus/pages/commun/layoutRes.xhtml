@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<f:view locale="#{facesContext.externalContext.requestLocale}"
+	contentType="text/html">
+
+	<h:head>
+		<title>MXCAMPUS</title>
+		<h:outputScript id="idCommunJS" library="js" name="script.js" />
+		<h:outputStylesheet id="idCommunStyle" library="css" name="styleUcad.css" />
+		
+	</h:head>
+	<h:body>
+		<p:graphicImage styleClass="log1" library="images"
+			name="Logo-MX-Campus.png"></p:graphicImage>
+		<br />
+		
+		<p:graphicImage styleClass="log3" library="images" name="ofppt_logo.png" width="100" height="80"  ></p:graphicImage>
+		<br/>
+		<br/>
+		
+<!-- <applet id="appid" name="appid" permissions="all-permissions" -->
+<!-- 		scriptable="true" archive="AppletWeb.jar" -->
+<!-- 		code="applet_ucad.AppletWeb.class" width="0" height="0"> </applet> -->
+			
+		
+		<!-- 		<ui:include src="/pages/commun/header.xhtml" /> -->
+
+		<!-- 				<p:outputPanel id="block_container" style="height:50px;"> -->
+		<!-- 			<p:ajaxStatus styleClass="ref-ajaxloading"> -->
+		<!-- 				<f:facet name="start"> -->
+		<!-- 					<p:graphicImage library="images" name="loadingbar.gif" width="80" -->
+		<!-- 						height="10" /> -->
+		<!-- 				</f:facet> -->
+		<!-- 			</p:ajaxStatus> -->
+		<!-- 		<ui:include src="/pages/commun/menu.xhtml" /> -->
+		<!-- 				</p:outputPanel> -->
+
+		<!-- 		<div> -->
+
+		<!-- 		<ui:include src="/pages/commun/menuTree.xhtml"/>  -->
+
+
+		<!-- 		<ui:include src="/pages/commun/SideMenu.xhtml"/>  -->
+		<!-- 		</div> -->
+		
+		
+		<!-- 		<ui:include src="/pages/commun/menuTree.xhtml"/> -->
+<br/>
+		<p:outputPanel styleClass="MainContainer">
+<!-- 			<p:outputPanel styleClass="fieldset0"> -->
+			
+			<p:outputPanel id="block_content">
+				<p:outputLabel id="success" />
+				<ui:insert name="content" />
+				<!-- 				<ui:include src="#{webMenu.selectedPage}" />  -->
+			</p:outputPanel>
+
+			<!--  Global toolTip -->
+			<pe:tooltip global="true" myPosition="left center" showEvent="focus"
+				hideEvent="blur" atPosition="right center" />
+
+			<!-- Dialog de confirmation  -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+				closeOnEscape="true" widgetVar="confirm-wdg">
+				<h:panelGrid columns="2" styleClass="AlignCenter Width100pct">
+					<p:commandButton value="Oui" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-custom-check" />
+					<p:commandButton value="Non" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-custom-close" />
+				</h:panelGrid>
+			</p:confirmDialog>
+
+			<!--  Dialog d'erreur -->
+			<p:dialog id="error-dlg" widgetVar="error-dlg-wdg" header="Erreur"
+				modal="false">
+				<p:messages id="error-messages" globalOnly="true" />
+				<h:form>
+					<div class="AlignCenter">
+						<p:commandButton type="button" id="error-ok" value="OK"
+							styleClass="OpButton" onclick="PF('error-dlg-wdg').hide()" />
+					</div>
+				</h:form>
+			</p:dialog>
+
+			<!--  message de succes -->
+		</p:outputPanel>
+		
+	
+	</h:body>
+</f:view>
+</html>

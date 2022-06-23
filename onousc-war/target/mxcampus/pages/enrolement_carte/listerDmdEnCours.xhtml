@@ -1,0 +1,356 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+	<ui:define name="content">
+
+
+		<p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;">
+			<ul class="menuOpposition">
+				<li class="active"><h:link
+						outcome="/pages/enrolement_carte/listerDmdEnCours.xhtml">
+						<div>
+							<center>#{prezmsg['DMD_EN_COURS']}</center>
+						</div>
+					</h:link></li>
+				<li><h:link
+						outcome="/pages/enrolement_carte/listerDmdValidees.xhtml">
+						<div>
+							<center>#{prezmsg['DMD_VALIDEES']}</center>
+						</div>
+					</h:link></li>
+				<li><h:link
+						outcome="/pages/enrolement_carte/listerDmdAnnulees.xhtml">
+						<div>
+							<center>#{prezmsg['DMD_ANNULEES']}</center>
+						</div>
+					</h:link></li>
+				<li><h:link
+						outcome="/pages/enrolement_carte/listerDmdSupprimees.xhtml">
+						<div>
+							<center>#{prezmsg['MOD_SUPP']}</center>
+						</div>
+					</h:link></li>
+				<li><h:link
+						outcome="/pages/enrolement_carte/listerDmdLot.xhtml">
+						<div>
+							<center>#{prezmsg['IMPRESSION_LOT']}</center>
+						</div>
+					</h:link></li>
+			</ul>
+		</p:fieldset>
+
+		<p:ajaxStatus>
+			<f:facet name="start">
+				<p:graphicImage library="images" name="blueajax.gif"
+					styleClass="AjaxStatusLoader" />
+			</f:facet>
+		</p:ajaxStatus>
+
+
+
+		<h:form id="critere-form">
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+
+			<p:remoteCommand name="_updateCrudMenu" global="false"
+				update="crud-menu :search-overlay" />
+			<!--  -->
+
+
+
+			<center>
+				<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;"
+					styleClass="fieldsetCategories">
+					<script>
+						function showMessage() {
+
+							_showMessage();
+						}
+					</script>
+
+					<center>
+						<p:messages id="succes" globalOnly="true" closable="true"
+							styleClass="M2" />
+					</center>
+					
+					<!-- Remote commands -->
+					<p:remoteCommand name="_errorDialog"
+						onstart="PF('error-dlg-wdg').show()" />
+					<p:remoteCommand name="_showMessage"
+						actionListener="#{etudiantMBean.showMessage}" update="succes" />
+					<p:remoteCommand name="_updateCrudMenu" global="false"
+						update="crud-menu" />
+					<div class="RefCenter">
+
+	<p:messages globalOnly="true" autoUpdate="true" closable="true"
+				showIcon="false" />
+						<p:toolbar id="crud-menu">
+
+							<f:facet name="left">
+								<p:commandButton id="search" widgetVar="search-wdg"
+									styleClass="ToolbarButton" value="#{prezmsg['CHERCHER']}"
+									type="button" icon="ui-icon-custom-chercher" />
+							</f:facet>
+						</p:toolbar>
+
+					<p>
+						<h:outputLabel value="#{etudiantMBean.nbrDemande} Demande(s)"
+							style="text-align:left;" />
+					</p>	
+
+						<p:dataTable id="nationalite-dtbl" paginator="true"
+							value="#{etudiantSearchMBean}" var="nat" lazy="true" rows="50"
+							emptyMessage="#{prezmsg['label_no_records_found']}"
+							rowKey="#{nat.id}" paginatorPosition="bottom"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="50,100,200"
+							currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+
+
+							<!-- Libellé de la nationalité -->
+							<p:column headerText="#{prezmsg['NDEMANDE']}" sortBy="#{nat.id}">
+								<h:outputText value="#{nat.id}" id="tabl_id_person">
+									<f:convertNumber pattern="00000000" />
+								</h:outputText>
+							</p:column>
+
+						
+							<p:column headerText="#{prezmsg['NOM_PRENOM']}"
+								sortBy="#{nat.Nom}">
+								<h:outputText id="tabl_idnom" value="#{nat.nom}" />
+								<h:outputText id="tabl_idesp" value=" " />
+								<h:outputText id="tabl_idprenom" value="#{nat.prenom}" />
+							</p:column>
+							<p:column id="tabl_date" headerText="#{prezmsg['DATENAISSANCE']}"
+								sortBy="#{nat.Date_naissance}">
+								<h:outputText value="#{nat.date_naissance}">
+									<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Code Profil" sortBy="#{nat.codeProfil}">
+								<h:outputText value="#{nat.codeProfil}" />
+							</p:column>
+							<p:column headerText="#{prezmsg['CIN']}" id="tabl_ncin"
+								sortBy="#{nat.NCIN}">
+								<h:outputText value="#{nat.NCIN}" />
+								</p:column>  
+									<p:column headerText="Matricule"
+								sortBy="#{nat.codeMassar}">
+								<h:outputText
+									value="#{nat.codeMassar}" />
+		 						</p:column>
+									<p:column headerText="Téléphone"
+								sortBy="#{nat.tele}">
+								<h:outputText value="#{nat.tele}" />
+								
+								
+								
+ 			</p:column>
+ 							
+														<p:column headerText="Catégorie "
+															id="tabl_codeMassar" sortBy="#{nat.typePersonelle}">
+															<h:outputText value="#{nat.typePersonelle=='S'?'sttaf':'Etudiant' }" />
+														</p:column>
+<p:column headerText="Type Carte"
+								style="text-align: center" sortBy="#{nat.typeCarte}">
+								<h:outputText value="Privative" rendered="#{nat.typeCarte == 'P'}" />
+								<h:outputText value="NAPS" rendered="#{nat.typeCarte == 'N'}" />
+								 
+							</p:column>
+							<p:column headerText="Etablissement"
+								sortBy="#{nat.etablissement}">
+								<h:outputText value="#{nat.etablissement}" />
+							</p:column>
+							
+							
+<p:column headerText="#{prezmsg['SITE']}"
+								sortBy="#{nat.siteVO.libelle}">
+								<h:outputText value="#{nat.siteVO.libelle}" />
+
+							</p:column>
+
+<!-- 							BOURSIER -->
+<!-- 							<p:column headerText="#{prezmsg['BOURSIER']}" -->
+<!-- 								style="text-align: center" sortBy="#{nat.Boursier}"> -->
+<!-- 								<h:outputText value="#{nat.boursier}" /> -->
+<!-- 															<p:graphicImage library="images" name="icons/c-icon.png" -->
+<!-- 																rendered="#{nat.boursier}" /> -->
+<!-- 															<p:graphicImage library="images" name="icons/x-icon.png" -->
+<!-- 																rendered="#{!nat.boursier}" /> -->
+<!-- 							</p:column> -->
+
+<!-- 							RÉSEIDENT -->
+							
+
+<!-- 							<p:column headerText="#{prezmsg['NOTE']}" sortBy="#{nat.note}"> -->
+<!-- 								<h:outputText value="#{nat.note}" /> -->
+<!-- 								<h:inputHidden id="tab_libCit_person" -->
+<!-- 									value="#{nat.citovo.libelle}" /> -->
+<!-- 								<h:inputHidden id="tabl_dat_exp" -->
+<!-- 									value="#{nat.anneeUniversitaireVO.datefinExp}" /> -->
+<!-- 								<h:inputHidden id="tabl_rest_code" -->
+<!-- 									value="#{nat.restaurantVO.id}" /> -->
+
+<!-- 								<h:inputHidden id="tabl_rest_person" -->
+<!-- 									value="#{nat.restaurantVO.libelle}" /> -->
+
+<!-- 								<h:inputHidden id="tabl_codCit_person" value="#{nat.citovo.id}" /> -->
+<!-- 								<h:inputHidden id="tabl_num_carte" value="#{nat.numCarte}" /> -->
+<!-- 								<h:inputHidden id="tabl_email_etud" value="#{nat.email}" /> -->
+
+
+
+<!-- 							</p:column> -->
+
+
+							<p:column styleClass="AlignCenter Width10" headerText="Action">
+							<p:commandButton icon="ui-icon-custom-printOsc"
+									rendered="#{nat.statut.statusCode =='ENABLED' and (nat.image == null or nat.image =='')}"
+									action="#{etudiantMBean.prepareCarte}"
+									title="Prise de la photo" styleClass="CrudButton"
+									update="nationalite-dtbl"
+									oncomplete="PF('photo-dlg-wdg').show();"
+									 >
+									<f:setPropertyActionListener value="#{nat}"
+										target="#{etudiantMBean.webBean.vo}" />
+								</p:commandButton>
+							
+<!-- 								<p:commandButton icon="ui-icon-custom-cameraOsc" -->
+<!-- 									rendered="#{nat.statut.statusCode =='ENABLED' and (nat.image == null or nat.image =='') }" -->
+<!-- 									title="Prise de la photo" styleClass="CrudButton" -->
+<!-- 									update="nationalite-dtbl"   -->
+<!-- 									actionListener="#{etudiantMBean.updatePhoto}" -->
+<!-- 									onclick="document.getElementById('luncherIframeIU').src='M2MGroupLuncher:#{etudiantMBean.webBean.jSessionID}|#{etudiantMBean.webBean.serverNameAndPort}';"> -->
+<!-- 									<f:setPropertyActionListener value="#{nat}" -->
+<!-- 										target="#{etudiantMBean.webBean.vo}" /> -->
+<!-- 								</p:commandButton> -->
+
+								<p:commandButton icon="ui-icon-custom-modifierOsc"
+									title="Visualiser/Modifier la Demande" styleClass="CrudButton"
+									update=":edit-dlg" oncomplete="PF('edit-dlg-wdg').show();">
+									<f:setPropertyActionListener value="#{nat}"
+										target="#{etudiantMBean.webBean.vo}" />
+								</p:commandButton>
+
+								<p:commandButton icon="ui-icon-custom-printOsc"
+									rendered="#{nat.statut.statusCode =='VALIDATED'}"
+									action="#{etudiantMBean.prepareCarte}"
+									title="Personnaliser la carte" styleClass="CrudButton"
+									update="nationalite-dtbl"
+									oncomplete="PF('pers-dlg-wdg').show();">
+									<f:setPropertyActionListener value="#{nat}"
+										target="#{etudiantMBean.webBean.vo}" />
+								</p:commandButton>
+
+								<p:commandButton icon="ui-icon-custom-validerOsc"
+									action="#{etudiantMBean.valider}" title="Valider la demande"
+									styleClass="CrudButton" update="nationalite-dtbl"
+									rendered="#{nat.statut.statusCode =='ENABLED'}">
+									<f:setPropertyActionListener value="#{nat}"
+										target="#{etudiantMBean.webBean.vo}" />
+									<p:confirm header="#{prezmsg['CONFIRMATION_VALIDATION']}"
+										icon="ui-icon-alert"
+										message="#{prezmsg['CONFIRMATION_VALIDER_MESSAGE']}" />
+								</p:commandButton>
+
+								<p:commandButton icon="ui-icon-custom-annulerOsc"
+									action="#{etudiantMBean.annuler}" title="Annuler la demande"
+									rendered="#{nat.statut.statusCode =='ENABLED'}"
+									styleClass="CrudButton" update="nationalite-dtbl">
+									<f:setPropertyActionListener value="#{nat}"
+										target="#{etudiantMBean.webBean.vo}" />
+									<p:confirm header="#{prezmsg['CONFIRMATION_ANNULATION']}"
+										icon="ui-icon-alert"
+										message="#{prezmsg['CONFIRMATION_ANNULER_MESSAGE']}" />
+								</p:commandButton>
+							</p:column>
+
+						</p:dataTable>
+
+					</div>
+				</p:fieldset>
+			</center>
+		</h:form>
+
+		<p:overlayPanel id="search-overlay" for=":critere-form:search"
+			style="width:600px;" hideEffect="slide" showEffect="slide"
+			widgetVar="searchOverlay" dismissable="false" appendToBody="true">
+
+			<h:form id="search-form">
+
+			<h:panelGrid columns="4" styleClass="FormGrid">
+			
+				<p:outputLabel id="anne" value="#{prezmsg['ANNEE_ACADEM']}" />
+				<p:inputText id="anneee_create" style="width:80px;"
+					value="#{etudiantSearchMBean.etudiantCriteria.ann_universitaire}">
+				</p:inputText>
+
+				<p:outputLabel id="nom" value="#{prezmsg['NOM']}" />
+				<p:inputText id="nom_create"
+					value="#{etudiantSearchMBean.etudiantCriteria.nom}">
+
+				</p:inputText>
+				<p:outputLabel id="prenom" value="#{prezmsg['PRENOM']}" />
+				<p:inputText id="prenom_create" styleClass="InscrInput"
+					value="#{etudiantSearchMBean.etudiantCriteria.prenom}">
+				</p:inputText>
+
+
+
+
+				<p:outputLabel id="NCIN" value="#{prezmsg['CIN']}" />
+				<p:inputText id="NCIN_create"
+					value="#{etudiantSearchMBean.etudiantCriteria.NCIN}">
+				</p:inputText>
+
+				<p:outputLabel id="email" value="#{prezmsg['EMAIL']}" />
+				<p:inputText id="email_create"
+					value="#{etudiantSearchMBean.etudiantCriteria.email}">
+				</p:inputText>
+			</h:panelGrid>
+
+
+				<!-- 	Lance la recherche, revien toujours à la premiere page: backToFirstPage()  -->
+				<p:commandButton id="searchOk" styleClass="Val"
+					icon="ui-icon-custom-validerOsc" style="width:10%"
+					widgetVar="searchOk-wdg" value="#{prezmsg['OK']}"
+					action="#{etudiantSearchMBean.run}"
+					onstart="backToFirstPage(); block()"
+					oncomplete="PF('searchOverlay').hide(); unblock(); initCrudMenu();" />
+
+				<p:commandButton id="searchReset" styleClass="Val" style="width:25%"
+					widgetVar="searchReset-wdg" icon="ui-icon-custom-cancelOsc"
+					value="#{prezmsg['RESET']}"
+					action="#{etudiantSearchMBean.resetSearchCriteria}"
+					update="search-form" tabindex="-1">
+					<p:resetInput target="search-form" />
+				</p:commandButton>
+
+
+
+
+			</h:form>
+
+		</p:overlayPanel>
+			 
+		<ui:include src="/pages/enrolement_carte/creerDemande.xhtml"></ui:include>
+		<ui:include src="/pages/enrolement_carte/editerDemande.xhtml"></ui:include>
+		<ui:include src="/pages/enrolement_carte/changerImage.xhtml"></ui:include>
+		<ui:include src="/pages/enrolement_carte/editerDemandeModifSupp.xhtml"></ui:include>
+		<ui:include src="/pages/enrolement_carte/updatePhotoDemande.xhtml"></ui:include>
+		<ui:include src="/pages/enrolement_carte/PersonnaliserLot.xhtml"></ui:include>
+
+	</ui:define>
+</ui:composition>
+

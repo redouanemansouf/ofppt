@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<REF_CLIENT CLT_ID="1" CLT_LIBELLE="CLT 1"
+		 CLT_STATUT="ENABLED" />
+
+	<REF_CLIENT CLT_ID="2" CLT_LIBELLE="CLT 2"
+		 CLT_STATUT="DISABLED" />
+
+	<REF_CLIENT CLT_ID="3" CLT_LIBELLE="CLT 3"
+		 CLT_STATUT="DISABLED" />
+
+</dataset>

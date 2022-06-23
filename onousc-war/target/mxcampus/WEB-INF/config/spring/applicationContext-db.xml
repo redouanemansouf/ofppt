@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:lang="http://www.springframework.org/schema/lang" xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+	   http://www.springframework.org/schema/tx 
+	   http://www.springframework.org/schema/tx/spring-tx-3.0.xsd   
+	   http://www.springframework.org/schema/context 
+	   http://www.springframework.org/schema/context/spring-context-3.0.xsd   
+	   http://www.springframework.org/schema/jee 
+	   http://www.springframework.org/schema/jee/spring-jee-3.0.xsd	   
+	   http://www.springframework.org/schema/lang
+	   http://www.springframework.org/schema/lang/spring-lang-3.0.xsd
+	   http://www.springframework.org/schema/security 
+	   http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+	<!-- entityManagerFactory initialisation -->
+	<bean id="pocEntityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceProviderClass">
+			<value>org.hibernate.ejb.HibernatePersistence</value>
+		</property>
+		<property name="persistenceXmlLocation">
+			<value>classpath:META-INF/persistence.xml</value>
+
+		</property>
+		<property name="persistenceProvider">
+			<bean
+				class="com.m2m.technicalservices.audit.impl.ConfigurableHibernatePersistence">
+				<property name="interceptor">
+					<ref bean="auditInterceptor" />
+				</property>
+			</bean>
+		</property>
+		<!-- <property name="packagesToScan"> -->
+		<!-- <list> -->
+		<!-- <value>com.m2m.technicalservices.audit.impl</value> -->
+		<!-- </list> -->
+		<!-- </property> -->
+
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.connection.datasource">${hibernate.connection.datasource}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.ddl.auto}</prop>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<prop key="hibernate.generate_statistics">${hibernate.generate_statistics}</prop>
+				<prop key="hibernate.connection.release_mode">${hibernate.connection.release_mode}</prop>
+				<prop key="hibernate.default_schema">${hibernate.default_schema}</prop>
+
+			</props>
+		</property>
+
+	</bean>
+
+	<!-- inject an EntityManager in subclasses of GenericDao, which includes 
+		² @PersistenceContext annotation -->
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<!-- convert database exception to Spring DataAccessException for every 
+		class with @Repository annotation -->
+	<bean
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+
+
+	<!-- Publishing session factory -->
+	<bean id="sessionFactory" factory-bean="pocEntityManagerFactory"
+		factory-method="getSessionFactory" />
+
+
+	<!-- inject an EntityManager in subclasses of GenericDao, which includes 
+		@PersistenceContext annotation -->
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<bean id="auditInterceptor" class="com.m2m.technicalservices.audit.impl.AuditInterceptor">
+		<!-- <property name="dao"> <ref bean="auditDAO" /> </property> -->
+	</bean>
+
+	<bean id="auditDAO" class="com.m2m.technicalservices.audit.impl.AuditDaoJpaImpl" />
+
+
+	<context:component-scan base-package="com.m2m.technicalservices" />
+
+</beans>

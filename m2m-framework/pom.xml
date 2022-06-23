@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.m2m</groupId>
+		<artifactId>onousc</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../onousc/pom.xml</relativePath>
+	</parent>
+
+	<artifactId>m2m-framework</artifactId>
+	<packaging>jar</packaging>
+	<name>${project.artifactId}(${project.packaging})</name>
+	<repositories>
+		<repository>
+			<id>java.net</id>
+			<url>https://maven.java.net/content/repositories/public/</url>
+		</repository>
+
+		<repository>
+			<id>jboss</id>
+			<url>http://repository.jboss.com/maven2</url>
+		</repository>
+
+		<repository>
+			<id>JBoss repository</id>
+			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
+		</repository>
+
+		<repository>
+			<id>primefaces-repository</id>
+			<name>Primefaces repository</name>
+			<url>http://repository.primefaces.org</url>
+		</repository>
+		<repository>
+			<id>sonatype-oss-repo</id>
+			<name>Sonatype Open Source maven snapshot repo</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			</dependency>
+
+
+		<!-- Spring 2.5.x -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>ejb3-persistence</artifactId>
+					<groupId>org.hibernate</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Hibernate -->
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.ldap</groupId>
+			<artifactId>spring-ldap-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.ldap</groupId>
+			<artifactId>spring-ldap-core-tiger</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>com.sun.xml.bind</groupId>
+					<artifactId>jaxb-impl</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-ldap</artifactId>
+			<!-- <version>3.0.4.RELEASE</version> -->
+		</dependency>
+
+		<!-- for persistent model annotations -->
+		<!-- <dependency> <groupId>org.apache.geronimo.specs</groupId> <artifactId>geronimo-jpa_3.0_spec</artifactId> 
+			</dependency> -->
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+		</dependency>
+		<!-- cache dependencies -->
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>aopalliance</groupId>
+			<artifactId>aopalliance</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+<!-- 			<version>6.1.0</version> -->
+		</dependency>
+		
+		<dependency>
+    <groupId>joda-time</groupId>
+    <artifactId>joda-time</artifactId>
+    <version>2.3</version>
+</dependency>
+
+<!-- 	<dependency> -->
+<!-- 		<groupId>com.microsoft.sqlserver</groupId> -->
+<!-- 		<artifactId>sqljdbc4</artifactId> -->
+<!-- 		<version>4.0</version> -->
+<!-- 	</dependency> -->
+		<!-- workflow -->
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.0.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springmodules</groupId>
+			<artifactId>spring-modules-jbpm31</artifactId>
+			<version>0.8</version>
+			<exclusions>
+				<exclusion>  <!-- declare the exclusion here -->
+					<groupId>jboss</groupId>
+					<artifactId>jbpm</artifactId>
+				</exclusion>
+				<exclusion>  <!-- declare the exclusion here -->
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate</artifactId>
+				</exclusion>
+				<exclusion>  <!-- declare the exclusion here -->
+					<groupId>ehcache</groupId>
+					<artifactId>ehcache</artifactId>
+				</exclusion>
+
+			</exclusions>
+		</dependency>
+		<!-- <dependency> <groupId>jboss</groupId> <artifactId>jbpm</artifactId> 
+			<version>3.2.2</version> </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.jbpm.jbpm3</groupId> -->
+		<!-- <artifactId>jbpm-jpdl</artifactId> -->
+		<!-- <version>3.2.6.SP1</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.jbpm.jbpm3</groupId> -->
+		<!-- <artifactId>jbpm-identity</artifactId> -->
+		<!-- <version>3.2.6.SP1</version> -->
+		<!-- </dependency> -->
+
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.genericdao</groupId>
+			<artifactId>dao-hibernate</artifactId>
+			<version>1.0.0</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>persistence-api</artifactId>
+					<groupId>javax.persistence</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+<!-- 		<dependency> -->
+<!-- 			<groupId>mysql</groupId> -->
+<!-- 			<artifactId>mysql-connector-java</artifactId> -->
+<!-- 		</dependency> -->
+		
+		<!-- <dependency> -->
+		<!-- <groupId>com.oracle</groupId> -->
+		<!-- <artifactId>oracle</artifactId> -->
+		<!-- </dependency> -->
+	<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+		</dependency>
+<!-- 				<dependency> -->
+<!-- 			<groupId>mysql</groupId> -->
+<!-- 			<artifactId>mysql-connector-java</artifactId> -->
+<!-- 		</dependency> -->
+		<!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-core -->
+		
+		 <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.2.9</version>
+        </dependency>
+	 
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+		</dependency>
+
+		<!-- dozer dependencies -->
+		<dependency>
+			<groupId>net.sf.dozer</groupId>
+			<artifactId>dozer</artifactId>
+		</dependency>
+		<!--/ End dozer dependencies -->
+
+	</dependencies>
+	<build>
+		<!-- <plugins> -->
+		<!-- <plugin> -->
+		<!-- <groupId>org.apache.maven.plugins</groupId> -->
+		<!-- <artifactId>maven-surefire-plugin</artifactId> -->
+		<!-- <version>2.17</version> -->
+		<!-- <configuration> -->
+		<!-- <skipTests>true</skipTests> -->
+		<!-- </configuration> -->
+		<!-- </plugin> -->
+		<!-- </plugins> -->
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.17</version>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+		<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<filtering>true</filtering>
+				<directory>src/test/resources</directory>
+			</testResource>
+		</testResources>
+	</build>
+
+</project>

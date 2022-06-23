@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+<!-- <link rel="shortcut icon" href="../../resources/images/olerp/mx.png" type="../../resources/images/olerp/mx.png"  /> -->
+ <!-- <link rel="stylesheet" type="text/css" href="../../resources/css/PageStyle.css" /> --> 
+ <link rel="stylesheet" type="text/css" href="../../resources/css/style.css" />
+
+
+<!-- <link type="text/css" href="../../resources/css/jquery.jscrollpane.css" rel="stylesheet" media="all" /> -->
+
+
+<body bgcolor="#FFFFFF" >
+     <h:form>
+
+
+    <div id="LeMenu" class="sidemenu">
+
+        <table width="326" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td colspan="19">
+<!--                     <h:graphicImage library="images/olerp" name="olerp-menu_02.png" /> -->
+                   </td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="1" height="106" /></td>
+            </tr>
+            <tr>
+                <td colspan="16" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_03.png" /></td>
+                <td colspan="3" rowspan="4">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_04.png" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" /></td>
+            </tr>
+            <tr>
+                <td colspan="8" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_05.png" width="172" height="3" /></td>
+                <td colspan="2" rowspan="2" align="left" valign="top">
+                    <a href="menu3"  >
+                    <h:graphicImage library="images/olerp" name="olerp-menu_06.png" width="32" height="41" border="0"  title="Gestion Administrative du Personnel" /></a></td>
+                <td colspan="6" rowspan="2" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_07.png" width="105" height="41" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="1" height="3" /></td>
+            </tr>
+            <tr>
+                <td colspan="5" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_08.png" width="116" height="38" /></td>
+                <td colspan="2" align="left" valign="top">
+                    <a href="#">
+                    <h:graphicImage library="images/olerp" name="olerp-menu_09.png" width="37" height="38" border="0"  title="Intranet" /></a></td>
+                <td rowspan="3" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_10.png" width="19" height="54" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="1" height="38" /></td>
+            </tr>
+            <tr>
+                <td colspan="2" rowspan="14" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_11.png" width="73" height="122" /></td>
+                <td rowspan="5" align="left" valign="top">
+                    <a href="menu5">
+                    <h:graphicImage library="images/olerp" name="olerp-menu_12.png" width="36" height="41" border="0"  title="Gestion des Ressources Humaine" /></a></td>
+                <td colspan="4" rowspan="2" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_13.png" width="44" height="16" /></td>
+                <td colspan="4" rowspan="2" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_14.png" width="42" height="16" /></td>
+                <td rowspan="6" align="left" valign="top" style="background: URL(images/olerp/olerp-menu_43.png) repeat-y;text-align:center">
+                    <a href="menu">
+                    <h:graphicImage library="images/olerp" name="olerp-menu-ne-_15.png" width="32" height="42" border="0"  title="Gestion de l'Agent" /></a></td>
+                <td colspan="3" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_16.png" width="63" height="4" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="1" height="4" /></td>
+            </tr>
+            <tr>
+                <td rowspan="13" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_17.png" width="44" height="118" /></td>
+                <td colspan="3" rowspan="2" align="left" valign="top">
+                    <a href="#"><h:graphicImage library="images/olerp" name="olerp-menu_18.png" width="21" height="18"  title="Ecrans favoris" border="0"/></a></td>
+                <td colspan="2" rowspan="3">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_19.png" width="15" height="34" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="1" height="12" /></td>
+            </tr>
+            <tr>
+                <td colspan="3" rowspan="5" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_20.png" width="20" height="38" /></td>
+                <td colspan="3" rowspan="9" align="left" valign="top">
+                   <h:graphicImage library="images/olerp" name="olerp-menu_21.png" width="60" height="61"  border="0"/></td>
+                <td colspan="3" rowspan="7" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_22.png" width="25" height="47" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="1" height="6" /></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_23.png" width="19" height="16" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="olerp-menu_24.png" width="1" height="16" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="1" height="16" /></td>
+            </tr>
+            <tr>
+                <td rowspan="6" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_25.png" width="6" height="36" /></td>
+                <td colspan="3" rowspan="4" align="left" valign="top">
+                    <a href="Action_ChangementSociete.action" target="collapse"><h:graphicImage library="images/olerp" name="olerp-menu_26.png" width="18" height="21"  title="Changement de société" border="0"/></a></td>
+                <td rowspan="11">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_27.png" width="11" height="132" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="1" height="3" /></td>
+            </tr>
+            <tr>
+                <td rowspan="2" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_28.png" width="36" height="13" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="1" height="1" /></td>
+            </tr>
+            <tr>
+                <td rowspan="3" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_29.png" width="32" height="21" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="1" height="12" /></td>
+            </tr>
+            <tr>
+                <td colspan="2" rowspan="5" align="left" valign="top">
+                    <a href="menu2"><h:graphicImage library="images/olerp" name="olerp-menu_30.png" width="40" height="35" border="0"  title="Administration Système" /></a></td>
+                <td colspan="2" rowspan="7" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_31.png" width="16" height="68" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="1" height="5" /></td>
+            </tr>
+            <tr>
+                <td rowspan="2" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_32.png" width="13" height="15" /></td>
+                <td colspan="2" rowspan="7">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_33.png" width="5" height="111" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="1" height="4" /></td>
+            </tr>
+            <tr>
+                <td colspan="2" rowspan="5" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_34_1.png" width="19" height="59" /></td>
+                <td colspan="2" rowspan="3" align="left" valign="top">
+                    <a href="menu6"><h:graphicImage library="images/olerp" name="olerp-menu_35.png" width="38" height="26" border="0"  title="Gestion de Paie" /></a></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="1" height="11" /></td>
+            </tr>
+            <tr>
+                <td colspan="2" rowspan="3" align="left" valign="top">
+                    <a href="#"><h:graphicImage library="images/olerp" name="olerp-menu_36.png" width="19" height="18"  title="Alertes" border="0"/></a></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="1" height="3" /></td>
+            </tr>
+            <tr>
+                <td colspan="3" rowspan="3" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_37.png" width="60" height="45" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="1" height="12" /></td>
+            </tr>
+            <tr>
+                <td colspan="2" rowspan="2" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_38.png" width="40" height="33" /></td>
+                <td colspan="2" rowspan="2" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_39.png" width="38" height="33" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="1" height="3" /></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="left" style="margin-left:30px" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_40.png" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" /></td>
+            </tr>
+            <tr>
+                <td colspan="16">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_41.png" width="309" height="48" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="1" height="48" /></td>
+            </tr>
+             <tr>
+             <td></td>
+                <td colspan="18" align="left"  valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_45.png" width="306" height="6" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="1" height="6" /></td>
+            </tr>
+            <tr >
+            
+                <td rowspan="4" class="menu42">
+                    </td>
+                <td colspan="18" align="left" valign="top" class="menu43">
+               
+<!--                 <h4 id="titre">MX Core</h4> -->
+
+		
+              <!-- Début Sous-menu -->
+
+		<div class="pMenuFor">
+		<div class="scroll-pane" style="width:267px;margin-left:0px;" >
+		
+		
+		 <p:outputPanel styleClass="treeStyle">
+			<p:tree value="#{webMenu.root}" var="node" dynamic="true" selectionMode="single" >
+	                 <p:ajax event="select" listener="#{webMenu.onNodeSelect}" />
+	        <p:treeNode 
+	                     >
+	            <h:outputText value="#{node}" />
+	        </p:treeNode>
+	       </p:tree>
+	       
+	       <h:outputText id="currentDir" value="#{directoryTreeBuilder.selected}" />
+
+	     </p:outputPanel>
+			
+			<!-- fin menu-->
+
+		
+		</div>
+              </div>  
+                
+              </td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="1" height="15" /></td>
+            </tr>
+            <tr>
+                <td colspan="18" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_45.png" width="305" height="6" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="1" height="6" /></td>
+            </tr>
+            <tr>
+                <td colspan="18" class="menu_footer">
+                    <div id="menu_footer"> 
+                        <p><strong><font color="#000000">MX Campus Version 1.0</font></strong><br/>
+                        © Copyright 1993-2015 M2M Group, All reserved</p>
+                        
+                        <p><strong><font color="#000000">AVERTISSEMENT !</font></strong><br/>
+                        MX Campus est protégé par la loi sur la propriété intellectuelle et par les conventions internationales sur le droit d'auteur.</p>
+                    </div>
+              </td>
+                <td>
+                    <h:graphicImage library="images/olerp" name="espaceur.gif" width="1" height="59" /></td>
+            </tr>
+            <tr>
+                <td colspan="18" align="left" valign="top">
+                  <h:graphicImage library="images/olerp" name="olerp-menu_47.png" width="305" height="12" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="1" height="12" /></td>
+            </tr>
+            <tr>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="20" height="1" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="53" height="1" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="36" height="1" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="4" height="1" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="3" height="1" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="13" height="1" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="24" height="1" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="19" height="1" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="17" height="1" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="15" height="1" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="4" height="1" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="6" height="1" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="32" height="1" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="44" height="1" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="6" height="1" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" width="13" height="1" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif" /></td>
+                <td>
+                  <h:graphicImage library="images/olerp" name="espaceur.gif"/></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+         </h:form>
+</body>
+</ui:composition>

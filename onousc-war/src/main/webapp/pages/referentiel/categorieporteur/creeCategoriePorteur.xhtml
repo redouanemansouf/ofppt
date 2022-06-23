@@ -1,0 +1,79 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+
+	<p:dialog id="create-dlg" widgetVar="create-dlg-wdg" closable="true"
+		closeOnEscape="true" header="Ajouter catégorie porteur"
+		hideEffect="fade" showEffect="fade" modal="true" dynamic="true" width="20%">
+
+
+		<h:form id="create-form">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+			<h:panelGrid columns="2" styleClass="FormGrid">
+
+				<!--      CODE categoriePorteur     -->
+				<h:outputLabel value="#{prezmsg['CODE']}" />
+				<p:inputText id="univ_code" required="true"
+					value="#{categoriePorteurMBean.webBean.vo.code}"
+					title="#{component.valid ? '' : categoriePorteurMBean.getErrorMessage(component.clientId)}" />
+
+				<!--      LIBELLE categoriePorteur     -->
+				<h:outputLabel value="#{prezmsg['LIBELLE']}" />
+				<p:inputText id="univ_libelle" required="true"
+					value="#{categoriePorteurMBean.webBean.vo.libelle}"
+					title="#{component.valid ? '' : categoriePorteurMBean.getErrorMessage(component.clientId)}" />
+
+			</h:panelGrid>
+
+			<p:toolbar>
+				<f:facet name="left">
+
+					<!-- Annuler la saisie -->
+					<p:commandButton styleClass="OpButton" value="#{prezmsg['RESET']}"
+						icon="ui-icon-custom-undo"
+						actionListener="#{categoriePorteurMBean.resetWebBeanVO()}"
+						process="@this" update="create-form" tabindex="-1">
+						<p:resetInput target="create-form" />
+					</p:commandButton>
+				</f:facet>
+
+				<f:facet name="right">
+
+					<!-- Valider le form -->
+					<p:commandButton id="validate-create" styleClass="ValidateButton"
+						value="#{prezmsg['VALIDER']}"
+						action="#{categoriePorteurMBean.creer}" process=" @form"
+						update=":succes create-form" onstart="block('create-dlg-wdg')"
+						oncomplete="unblock('create-dlg-wdg')" />
+					<!-- Annule le useCase-->
+					<p:commandButton id="cancel-create" styleClass="CancelButton"
+						value="#{prezmsg['ANNULER']}" type="button"
+						onclick="PF('create-dlg-wdg').hide()" global="false" />
+				</f:facet>
+			</p:toolbar>
+
+			<p:defaultCommand target="validate-create" />
+
+			<!-- Focus automatique  -->
+			<p:focus context="create-form" />
+
+			<p:remoteCommand name="_hideDialog" action="#{categoriePorteurSearchMBean.run}"
+				oncomplete="PF('create-dlg-wdg').hide()"
+				update=":categoriePorteur-form:categoriePorteur-dtbl" />
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>

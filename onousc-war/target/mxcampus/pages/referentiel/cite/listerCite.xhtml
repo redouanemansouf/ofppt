@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layout.xhtml">
+
+
+	<ui:define name="content">
+
+
+
+		<h:form id="cite-form">
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+
+			<p:remoteCommand name="_updateCrudMenu" global="false"
+				update="crud-menu :search-overlay" />
+			<!--  -->
+			<div class="BreadCrumbCust">
+
+				<h:panelGrid columns="5" cellpadding="5">
+
+					<h:outputLabel value="Referentiel" style="color:#419edd"
+						styleClass="LabelEnr" />
+
+					<span class="ui-icon ui-icon-carat-1-e"
+						style="float: left; margin-top: 3px;"></span>
+
+					<h:outputLabel value="cités" styleClass="LabelEnr" />
+				</h:panelGrid>
+
+			</div>
+
+
+			<div class="BackgroundGray">
+
+				<!-- Breadcrumb -->
+				<div class="BreadCrumbCust">
+					<h:panelGrid columns="5" cellpadding="3">
+						<h:outputLabel value="Référentiel" style="color:#419edd" />
+						<span class="ui-icon ui-icon-carat-1-e"></span>
+						<h:outputLabel value="Cité" />
+					</h:panelGrid>
+				</div>
+
+				<div class="RefCenter">
+					<p:toolbar id="crud-menu">
+
+						<f:facet name="left">
+
+							<p:commandButton id="create" widgetVar="create-wdg"
+								styleClass="ToolbarButton" value="#{prezmsg['NOUVEAU']}"
+								action="#{citeMBean.resetWebBeanVO}" process="@this"
+								update=":create-form" oncomplete="PF('create-dlg-wdg').show();"
+								icon="ui-icon-custom-nouveau"
+								rendered="#{authMbean.hasCreate('000311')}">
+								<p:resetInput target=":create-form" />
+							</p:commandButton>
+							<p:commandButton id="search" widgetVar="search-wdg"
+								styleClass="ToolbarButton" value="#{prezmsg['CHERCHER']}"
+								type="button" icon="ui-icon-custom-chercher"
+								rendered="#{authMbean.hasSelect('000311')}" />
+						</f:facet>
+					</p:toolbar>
+
+					<p:dataTable id="cite-dtbl" paginator="true"
+						emptyMessage="#{prezmsg['label_no_records_found']}"
+						rowStyleClass="#{cite.statut == 'DISABLED' ? 'is-disabled' :null }"
+						value="#{citeSearchMBean}" var="cite" lazy="true" rows="5"
+						selection="#{citeMBean.webBean.selectedVOs}" rowKey="#{cite.id}"
+						paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="10,20,30"
+						currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      				{totalRecords}, Page: {currentPage}/{totalPages}">
+
+						<ui:include src="/pages/commun/datatableEvents.xhtml" />
+
+						<!-- 						<p:column selectionMode="multiple" styleClass="tableChkbox" -->
+						<!-- 							style="width:16px;text-align:center" /> -->
+
+						<!-- Identifiant de l'cite  -->
+						<p:column headerText="#{prezmsg['CODE']}">
+							<center>
+								<h:outputText value="#{cite.code}" />
+							</center>
+						</p:column>
+
+						<!-- Libellé de la nationalité -->
+						<p:column headerText="#{prezmsg['CITE']}">
+							<center>
+								<h:outputText value="#{cite.libelle}" />
+							</center>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['UNIVERSITE']}">
+							<center>
+								<h:outputText value="#{cite.universiteVO.libelle}" />
+							</center>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['ADRESSE']}">
+							<center>
+								<h:outputText value="#{cite.adresseCite}" />
+							</center>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['RESPONSABLE']}">
+							<center>
+								<h:outputText
+									value="#{cite.nomResponsableCite} #{cite.prenomResponsableCite}" />
+							</center>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['VILLE']}">
+							<center>
+								<h:outputText value="#{cite.villeVO.libelle}" />
+							</center>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['TEL']}">
+							<center>
+								<h:outputText value="#{cite.numTeleCite}" />
+							</center>
+						</p:column>
+
+						<p:column headerText="#{prezmsg['EMAIL']}">
+							<center>
+								<h:outputText value="#{cite.adresseEmailCite}" />
+							</center>
+						</p:column>
+
+						<p:column exportable="false" style="width:10%;text-align:center;"
+							headerText="">
+
+							<p:commandButton icon="ui-icon-custom-modifier"
+								title="Modifier cité" styleClass="CrudButton"
+								update=":edit-form" oncomplete="PF('edit-dlg-wdg').show();"
+								rendered="#{authMbean.hasUpdate('000311')}">
+								<f:setPropertyActionListener value="#{cite}"
+									target="#{citeMBean.webBean.vo}" />
+							</p:commandButton>
+
+							<p:commandButton icon="ui-icon-custom-supprimer"
+								title="Supprimer cité" styleClass="CrudButton"
+								actionListener="#{citeSearchMBean.run}"
+								action="#{citeMBean.supprimer}"
+								update="cite-dtbl :error-messages :succes"
+								rendered="#{authMbean.hasDelete('000311')}">
+								<p:confirm header="#{prezmsg['CONFIRMATION_DELETE']}"
+									message="#{prezmsg['MESSAGE_CONFIRMATION_DELETE']}"
+									icon="ui-icon-alert" />
+								<f:setPropertyActionListener value="#{cite}" 
+									target="#{citeMBean.webBean.vo}"></f:setPropertyActionListener>
+							</p:commandButton>
+
+						</p:column>
+
+					</p:dataTable>
+				</div>
+
+			</div>
+		</h:form>
+		<p:overlayPanel id="search-overlay" for=":cite-form:search"
+			hideEffect="slide" showEffect="slide" widgetVar="searchOverlay"
+			dismissable="false" appendToBody="true">
+
+			<h:form id="search-form">
+
+				<h:panelGrid columns="4" styleClass="FormGrid">
+
+					<!-- Code   -->
+					<h:outputLabel value="#{prezmsg['CODE']}" />
+					<p:inputText id="code-search"
+						value="#{citeSearchMBean.citeCriteria.code}" />
+
+					<!-- Libellé   -->
+					<h:outputLabel value="#{prezmsg['LIBELLE']}" />
+					<p:inputText id="lib-search"
+						value="#{citeSearchMBean.citeCriteria.libelle}" />
+
+					<!-- adresse -->
+					<h:outputLabel value="#{prezmsg['ADRESSE']}" />
+					<p:inputText id="adr-search"
+						value="#{citeSearchMBean.citeCriteria.adresseCite}" />
+
+					<!-- nom responsable -->
+					<h:outputLabel value="#{prezmsg['NOM_RESPONSABLE']}" />
+					<p:inputText id="nom-search"
+						value="#{citeSearchMBean.citeCriteria.nomResponsableCite}" />
+
+					<!-- prenom responsable -->
+					<h:outputLabel value="#{prezmsg['PRENOM_RESPONSABLE']}" />
+					<p:inputText id="pre-search"
+						value="#{citeSearchMBean.citeCriteria.prenomResponsableCite}" />
+
+					<!-- n° tele -->
+					<h:outputLabel value="#{prezmsg['TEL']}" />
+					<p:inputText id="tel-search"
+						value="#{citeSearchMBean.citeCriteria.numTeleCite}" />
+
+					<!-- email -->
+					<h:outputLabel value="#{prezmsg['EMAIL']}" />
+					<p:inputText id="email-search"
+						value="#{citeSearchMBean.citeCriteria.adresseEmailCite}" />
+
+					<!-- universite -->
+					<h:outputLabel value="#{prezmsg['UNIVERSITE']}" />
+					<p:selectOneMenu id="cite_univ"
+						value="#{citeSearchMBean.citeCriteria.libuniv}"
+						style="width:125px">
+						<f:selectItem itemLabel="choisir une université" itemValue="" />
+						<f:selectItems value="#{citeMBean.webBean.universiteVOs}" var="u"
+							itemLabel="#{u.libelle}" itemValue="#{u.libelle}" />
+					</p:selectOneMenu>
+
+					<!-- ville -->
+					<h:outputLabel value="#{prezmsg['VILLE']}" />
+					<p:selectOneMenu id="ville_search"
+						value="#{citeSearchMBean.citeCriteria.libelleville}"
+						style="width:125px">
+						<f:selectItem itemLabel="choisir une ville" itemValue="" />
+						<f:selectItems value="#{citeMBean.webBean.villeVOs}" var="u"
+							itemLabel="#{u.libelle}" itemValue="#{u.libelle}" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+
+				<p:toolbar>
+					<f:facet name="right">
+
+						<p:commandButton id="searchOk" styleClass="OpButton"
+							widgetVar="searchOk-wdg" value="#{prezmsg['OK']}"
+							action="#{citeSearchMBean.run}" update=":cite-form:cite-dtbl"
+							onstart="backToFirstPage(); block()"
+							oncomplete="PF('searchOverlay').hide(); unblock(); initCrudMenu();" />
+
+						<!-- clear du formulaire  -->
+						<p:commandButton id="searchReset" styleClass="OpButton"
+							widgetVar="searchReset-wdg" icon="ui-icon-custom-undo"
+							value="#{prezmsg['RESET']}"
+							action="#{citeSearchMBean.resetSearchCriteria()}"
+							update="search-form" tabindex="-1">
+							<p:resetInput target="search-form" />
+						</p:commandButton>
+					</f:facet>
+				</p:toolbar>
+			</h:form>
+
+		</p:overlayPanel>
+
+
+		<ui:include src="editerCite.xhtml"></ui:include>
+		<ui:include src="creeCite.xhtml"></ui:include>
+
+	</ui:define>
+</ui:composition>
+

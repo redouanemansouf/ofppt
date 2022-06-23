@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<p:dialog id="changer-image" widgetVar="changer-image-wdg"
+		header="Changer image" hideEffect="fade" showEffect="fade"
+		modal="true" dynamic="true" closeOnEscape="true">
+
+		<p:messages globalOnly="true" autoUpdate="true" />
+
+		<h:form id="changerImage-form">
+
+
+				<p:outputPanel>
+					<p:outputLabel id="Photo" value="Image :" styleClass="LabelIns" />
+					<p:fileUpload fileUploadListener="#{etudiantMBean.upload}"
+						cancelLabel="annuler" uploadLabel="télécharger" label="parcourir"
+						allowTypes="/(\.|\/)(gif|jpe?g|png)$/" description="Select Images"
+						styleClass="inputField" sizeLimit="1000000" 
+						 fileLimit="1"
+					  fileLimitMessage="Le nombre maximum de photo à charger est 1"/>
+
+				</p:outputPanel>
+
+			
+					<p:column>
+						<br />
+					</p:column>
+					<p:column>
+						<p:outputLabel
+							value="    N.B: La taille maximale de la photo est 1MB" />
+					</p:column>
+			
+
+			<h:panelGrid columns="2" styleClass="FloatRight" cellpadding="5">
+				<p:commandButton value="#{prezmsg['VALIDER']}" process="@form"
+					action="#{etudiantMBean.modifierImage}" update="@form"
+					styleClass="ValidateButton" />
+				<p:commandButton value="#{prezmsg['ANNULER']}" global="false"
+					oncomplete="PF('changer-image-wdg').hide()"
+					styleClass="CancelButton" />
+			</h:panelGrid>
+
+			<!-- Cache le dialog s'il n'y a pas d'érreur -->
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('changer-image-wdg').hide()"
+				update=":demande-menu:nationalite-form-validee:nationalite-dtbl" />
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>

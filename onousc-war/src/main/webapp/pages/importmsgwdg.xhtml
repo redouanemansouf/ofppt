@@ -1,0 +1,50 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<p:dialog id="create-dlg" widgetVar="create-dlg-wdg"
+		header="Modifier Profils" hideEffect="fade" showEffect="fade"
+		modal="true" dynamic="true" styleClass="dialogclass"
+		onHide="PF('create-dlg').content.empty" closeOnEscape="true">
+
+
+		<p:messages globalOnly="true" autoUpdate="true" />
+
+		<h:form id="create-form">
+
+			<h:panelGrid columns="3">
+
+				<h:panelGrid columns="2" styleClass="FormGrid">
+
+					<h:outputLabel value="Profil" />
+					<!-- 					<p:selectOneMenu id="statut_univ" -->
+					<!-- 						value="#{personnelMBean.webBean.selectedVOs}" filter="true"> -->
+					<!-- 						<f:selectItem itemLabel="Sélectionner" /> -->
+					<!-- 						<f:selectItems value="#{personnelMBean.webBean.categorievos}" -->
+					<!-- 							var="u" itemLabel="#{u.libelle}" itemValue="#{u.libelle}" /> -->
+					<!-- 					</p:selectOneMenu> -->
+					<p:selectOneMenu id="statut_univ"
+						value="#{personnelMBean.webBean.vo.categorie}" converter="categoriePorteurConverter">
+						<f:selectItems value="#{personnelMBean.webBean.categorievos}"
+							var="u" itemLabel="#{u.libelle}" itemValue="#{u}" />
+							<p:ajax event="change" process="@this" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+				<p:commandButton id="validate-create" styleClass="ValidateButton"
+					value="#{prezmsg['VALIDER']}" action="#{personnelMBean.modifiermass}"
+					 update="@form"  process="@form" onclick="PF('create-dlg').hide();"
+					 oncomplete=""
+					/>
+
+			</h:panelGrid>
+			<br />
+
+
+		</h:form>
+
+	</p:dialog>
+
+</ui:composition>

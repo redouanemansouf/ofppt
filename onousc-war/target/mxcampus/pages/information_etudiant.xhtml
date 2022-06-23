@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	>
+
+	<ui:define name="content">
+
+	  <h:form id="verification">
+	     <h:panelGrid columns="2" cellpadding="10">
+	       <h:outputLabel value="#{prezmsg['CODE']}">  
+	       </h:outputLabel>
+	       
+	        <h:inputText id="j_code" required="true" value="#{etudiantsMBean.webBean.vo.idEtudiant}">
+	          </h:inputText>
+	          
+	          <h:outputLabel value="Nom de naissance">  
+	       </h:outputLabel>
+	       
+	        <h:inputText id="j_nom" required="true" value="#{etudiantsMBean.webBean.vo.nomNaissEtudiant}">
+	          </h:inputText>
+	          
+	            <h:outputLabel value="Prénom ">  
+	       </h:outputLabel>
+	       
+	        <h:inputText id="j_prenom" required="true" value="#{etudiantsMBean.webBean.vo.prenomEtudiant}">
+	          </h:inputText>
+	          
+	            <h:outputLabel value="Sexe">  
+	       </h:outputLabel>
+	       
+	        <h:inputText id="j_sexe" required="true" value="#{etudiantsMBean.webBean.vo.sexeEtudiant}">
+	          </h:inputText>
+	          
+	            <h:outputLabel value="Date naissance">  
+	       </h:outputLabel>
+	       
+	        <h:inputText id="j_date" required="true" value="#{etudiantsMBean.webBean.vo.dateNaissEtudiant}">
+	          </h:inputText>
+	          
+	            <h:outputLabel value="Lieu naissance">  
+	       </h:outputLabel>
+	       
+	        <h:inputText id="j_lieu" required="true" value="#{etudiantsMBean.webBean.vo.lieuNaissEtudiant}">
+	          </h:inputText>
+	          
+	            <h:outputLabel value="Nationalité">  
+	       </h:outputLabel>
+	       
+	        <h:inputText id="j_nationalite" required="true" value="#{etudiantsMBean.webBean.vo.nationaliteEtudiant}">
+	          </h:inputText>
+	          
+	           <h:outputLabel value="Adresse email">  
+	       </h:outputLabel>
+	       
+	        <h:inputText id="j_email" required="true" value="#{etudiantsMBean.webBean.vo.adreEmailEtudiant}">
+	          </h:inputText>
+	          
+	            <h:outputLabel value="Etablissement 1">  
+	       </h:outputLabel>
+	       
+	        <h:inputText id="j_etab1" required="true" value="#{etudiantsMBean.webBean.vo.etab1Etudiant}">
+	          </h:inputText>
+	          
+	            <h:outputLabel value="Etablissement 2">  
+	       </h:outputLabel>
+	       
+	        <h:inputText id="j_etab2" required="true" value="#{etudiantsMBean.webBean.vo.etab2Etudiant}">
+	          </h:inputText>
+	          
+	            <h:outputLabel value="Bourse">  
+	       </h:outputLabel>
+	       
+	        <h:inputText id="j_bourse" required="true" value="#{etudiantsMBean.webBean.vo.bourseEtudiant}">
+	          </h:inputText>
+
+             <h:outputLabel value="Niveau section 1">  
+	       </h:outputLabel>
+	       
+	        <h:inputText id="j_nivsec1" required="true" value="#{etudiantsMBean.webBean.vo.nivSect1Etudiant}">
+	          </h:inputText>
+	          
+	          
+	           <h:outputLabel value="Niveau section 2">  
+	       </h:outputLabel>
+	       
+	        <h:inputText id="j_nivsec2" required="true" value="#{etudiantsMBean.webBean.vo.nivSect2Etudiant}">
+	          </h:inputText>
+	          
+	          
+	           <h:outputLabel value="Année académique">  
+	       </h:outputLabel>
+	       
+	        <h:inputText id="j_ann_acad" required="true" value="#{etudiantsMBean.webBean.vo.annAcademiqueEtudiant}">
+	          </h:inputText>
+	          
+	          
+	           <h:outputLabel value="Info Bu">  
+	       </h:outputLabel>
+	       
+	        <h:inputText id="j_info_bu" required="true" value="#{etudiantsMBean.webBean.vo.infoBuEtudiant}">
+	          </h:inputText>
+	          
+	           <h:outputLabel value="Info coud">  
+	       </h:outputLabel>
+	       
+	        <h:inputText id="j_coud" required="true" value="#{etudiantsMBean.webBean.vo.infoCoudEtudiant}">
+	          </h:inputText>
+	          
+	           <h:outputLabel value="Code abarre">  
+	       </h:outputLabel>
+	       
+	        <h:inputText id="j_code_abarre" required="true" value="#{etudiantsMBean.webBean.vo.codeBarreEtudiant}">
+	          </h:inputText>
+					
+			<p:growl id="messages" showDetail="false" autoUpdate="true" closable="true" />
+	     
+	        </h:panelGrid>
+	     
+	     	<p:commandButton ajax="false" id="login"
+					styleClass="LoginButton" action="#{etudiantsMBean.validerInfosEtudiant}"
+					value="#{prezmsg['VALIDER_INFO']}" />
+	  </h:form>
+	</ui:define>
+</ui:composition>
+

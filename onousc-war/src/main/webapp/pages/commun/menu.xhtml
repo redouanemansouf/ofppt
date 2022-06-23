@@ -1,0 +1,255 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<ui:composition>
+	<h:form>
+
+		<div id="top-menu">
+			<ul class="top-mainContainer">
+
+				<!-- Réferentiels -->
+				<c:if test="#{authMbean.hasEcran('000001')}">
+					<li
+						class="has-subMenu #{view.viewId.contains('/pages/referentiel/') ? 'active' : ''}"><h:link
+							value="#{prezmsg['REFERENTIEL']}" />
+						<ul>
+							<li class="has-subMenu"><h:link
+									value="#{prezmsg['REFERENTIEL_UNIVERSITAIRE']}"
+									rendered="#{authMbean.hasEcran('000211')}" />
+								<ul>
+									<li><h:link
+											value="#{prezmsg['GESTION_ANNEE_UNIVERSITAIRE']}"
+											outcome="/pages/referentiel/anneeuniversitaire/listerAnneeUniversitaire.xhtml"
+											rendered="#{authMbean.hasEcran('000111')}" /></li>
+									<li><h:link value="#{prezmsg['GESTION_UNIVERSITE']}"
+											outcome="/pages/referentiel/universite/listerUniversite.xhtml"
+											rendered="#{authMbean.hasEcran('000011')}" /></li>
+									<li><h:link value="#{prezmsg['GESTION_CITE']}"
+											outcome="/pages/referentiel/cite/listerCite.xhtml"
+											rendered="#{authMbean.hasEcran('000311')}" /></li>
+									<li><h:link value="#{prezmsg['GESTION_RESTAURANT']}"
+											outcome="/pages/referentiel/restaurant/listerRestaurant.xhtml"
+											rendered="#{authMbean.hasEcran('000411')}" /></li>
+									<li><h:link value="#{prezmsg['GESTION_CAISSE']}"
+											outcome="/pages/referentiel/caisse/listerCaisse.xhtml"
+											rendered="#{authMbean.hasEcran('000511')}" /></li>
+									<li><h:link value="#{prezmsg['GESTION_CAISSIER']}"
+											outcome="/pages/referentiel/caissier/listerCaissier.xhtml"
+											rendered="#{authMbean.hasEcran('000711')}" /></li>
+									<li><h:link value="#{prezmsg['GESTION_JOURS_FERIE']}"
+											outcome="/pages/referentiel/joursferie/listerJoursFerie.xhtml"
+											rendered="#{authMbean.hasEcran('000611')}" /></li>
+								</ul></li>
+							<li class="has-subMenu"><h:link
+									value="#{prezmsg['REFERENTIEL_SERVICE']}"
+									rendered="#{authMbean.hasEcran('000221')}" />
+								<ul>
+									<li><h:link value="#{prezmsg['GESTION_PLAFOND']}"
+											outcome="/pages/referentiel/plafond/listerPlafond.xhtml"
+											rendered="#{authMbean.hasEcran('000121')}" /></li>
+									<li><h:link value="#{prezmsg['GESTION_SERVICE']}"
+											outcome="/pages/referentiel/service/listerService.xhtml"
+											rendered="#{authMbean.hasEcran('000021')}" /></li>
+									<li><h:link value="#{prezmsg['GESTION_TARIF']}"
+											outcome="/pages/referentiel/tarif/listerTarif.xhtml"
+											rendered="#{authMbean.hasEcran('000321')}" /></li>
+								</ul></li>
+
+							<li><h:link value="#{prezmsg['GESTION_MOTIF_OPPOSITION']}"
+									outcome="/pages/referentiel/motifopposition/listerMotifOpposition.xhtml"
+									rendered="#{authMbean.hasEcran('000031')}" /></li>
+							<li><h:link value="#{prezmsg['GESTION_MOTIF_MAIN_LEVEE']}"
+									outcome="/pages/referentiel/motifmainlevee/listerMotifMainLevee.xhtml"
+									rendered="#{authMbean.hasEcran('000041')}" /></li>
+							<li><h:link value="#{prezmsg['GESTION_CATEGORIE_PORTEUR']}"
+									outcome="/pages/referentiel/categorieporteur/listerCategoriePorteur.xhtml"
+									rendered="#{authMbean.hasEcran('000051')}" /></li>
+							<li><h:link value="#{prezmsg['GESTION_PARAMETRE_GENERAL']}"
+									outcome="/pages/referentiel/parametregeneral/listerParametreGeneral.xhtml"
+									rendered="#{authMbean.hasEcran('000061')}" /></li>
+							<li><h:link value="#{prezmsg['GESTION_TOURNIQUET']}"
+									outcome="/pages/referentiel/tourniquet/listerTourniquet.xhtml"
+									rendered="#{authMbean.hasEcran('000071')}" /></li>
+							<li><h:link value="#{prezmsg['GESTION_EQUIPEMENT']}"
+									outcome="/pages/referentiel/equipement/listerEquipement.xhtml"
+									rendered="#{authMbean.hasEcran('000081')}" /></li>
+							<li><h:link value="#{prezmsg['GESTION_BORNE']}"
+									outcome="/pages/referentiel/borne/listerBorne.xhtml"
+									rendered="#{authMbean.hasEcran('000101')}" /></li>
+
+							<li class="has-subMenu"><h:link
+									value="#{prezmsg['CRITERE_MERETE']}"
+									rendered="#{authMbean.hasEcran('000091')}" />
+								<ul>
+									<li><h:link value="#{prezmsg['CRITERE']}"
+											outcome="/pages/referentiel/critere/listerCritere.xhtml"
+											rendered="#{authMbean.hasEcran('000191')}" /></li>
+									<li><h:link value="#{prezmsg['NOTE']}"
+											outcome="/pages/referentiel/notecritere/listerNoteCritere.xhtml"
+											rendered="#{authMbean.hasEcran('000291')}" /></li>
+								</ul></li>
+
+						</ul></li>
+				</c:if>
+				<c:if test="#{authMbean.hasEcran('000002')}">
+					<li
+						class="has-subMenu #{view.viewId.contains('/pages/enrolement/') ? 'active' : ''}">
+						<h:link value="#{prezmsg['ENROLEMENT_MENU']}"
+							rendered="#{authMbean.hasEcran('000002')}" />
+						<ul>
+
+
+
+							<li><h:link value="#{prezmsg['ENROLEMENT_ETUDIANT']}"
+									rendered="#{authMbean.hasEcran('000012')}"
+									outcome="/pages/enrolement/listerDemande.xhtml" /></li>
+
+							<li><h:link value="#{prezmsg['OPPOSITION']}"
+									rendered="#{authMbean.hasEcran('000022')}"
+									outcome="/pages/cycleVie/listerCycle.xhtml" /></li>
+									
+									<li class="has-subMenu"><h:link value="Délivrance"
+									rendered="#{authMbean.hasEcran('000022')}"
+									 />
+									
+									<ul>
+									<li><h:link value="Délivrance des lots"
+											outcome="/pages/cycleVie/listerDelivLot.xhtml"
+											rendered="#{authMbean.hasEcran('000121')}" /></li>
+											
+									<li><h:link value="Gestion délivrance"
+											outcome="/pages/cycleVie/listerDeliv.xhtml"
+											rendered="#{authMbean.hasEcran('000121')}" /></li>
+											
+									<li><h:link value="Consultation"
+											outcome="/pages/cycleVie/listerCartDeliv.xhtml"
+											rendered="#{authMbean.hasEcran('000021')}" /></li>
+									
+								</ul>
+									
+									</li>
+
+							
+									
+									<li><h:link value="#{prezmsg['CYCLE_VIE']}"
+									rendered="#{authMbean.hasEcran('000022')}"
+									outcome="/pages/cycleVie/listerCycleVie.xhtml" /></li>
+									
+									
+							<!-- 						<li><h:link value="#{prezmsg['GESTION_LOT']}" -->
+							<!-- 								outcome="/pages/edition/listeDemandes.xhtml" /></li> -->
+							
+							
+<li><h:link value="#{prezmsg['ENROLEMENT_CAISSIER']}"
+									rendered="#{authMbean.hasEcran('000022')}"
+									outcome="/pages/enrolement/EnroCaissier.xhtml" /></li>
+
+
+						</ul>
+					</li>
+				</c:if>
+
+				<!-- GESTION DES RÉSERVATIONS -->
+				<c:if test="#{authMbean.hasEcran('000003')}">
+					<li><h:link value="Reservation"
+							outcome="/pages/reservation/reservationForm.xhtml" /></li>
+
+				</c:if>
+				<c:if test="#{authMbean.hasEcran('000004')}">
+					<li
+						class="has-subMenu #{view.viewId.contains('/pages/statistique/') ? 'active' : ''}">
+						<h:link value="#{prezmsg['SUIVI_ACTIVITE']}" />
+						<ul>
+
+
+
+							<li><h:link value="#{prezmsg['TABLEAU_BORD_RESERVATION']}"
+									outcome="/pages/statistique/statistique.xhtml"
+									rendered="#{authMbean.hasEcran('000074')}" /></li>
+							<li><h:link value="#{prezmsg['TABLEAU_BORD_TRANSACTION']}"
+									outcome="/pages/statistique/statistiqueTransaction.xhtml"
+									rendered="#{authMbean.hasEcran('000084')}" /></li>
+							<li><h:link value="#{prezmsg['TRANSACTION']}"
+									outcome="/pages/statistique/transaction.xhtml"
+									rendered="#{authMbean.hasEcran('000084')}" /></li>
+									<li><h:link value="#{prezmsg['CLOTURE_CAISSE']}"
+									outcome="/pages/statistique/listerCloture.xhtml"
+									rendered="#{authMbean.hasEcran('000084')}" /></li>
+
+						</ul>
+					</li>
+				</c:if>
+				<c:if test="#{authMbean.hasEcran('000008')}">
+					<li
+						class="has-subMenu #{view.viewId.contains('/pages/edition/') ? 'active' : ''}">
+						<h:link value="#{prezmsg['EDITION']}" />
+						<ul>
+
+							<li><h:link value="#{prezmsg['CARTES_FABRIQUEES']}"
+									rendered="#{authMbean.hasEcran('000018')}"
+									outcome="/pages/edition/listeCarteFabrique.xhtml" /></li>
+							<li><h:link value="#{prezmsg['RESERVATIONS']}"
+									rendered="#{authMbean.hasEcran('000038')}"
+									outcome="/pages/edition/listeReservations.xhtml" /></li>
+							<li><h:link value="#{prezmsg['DEMANDES']}"
+									rendered="#{authMbean.hasEcran('000048')}"
+									outcome="/pages/edition/listeDemandes.xhtml" /></li>
+
+						</ul>
+					</li>
+				</c:if>
+				<c:if test="#{authMbean.hasEcran('000005')}">
+					<li
+						class="has-subMenu #{view.viewId.contains('/pages/administration/') ? 'active' : ''}">
+						<h:link value="#{prezmsg['ADMINISTRATION']}"
+							rendered="#{authMbean.hasEcran('000005')}" />
+						<ul>
+
+
+							<li><h:link value="Utilisateurs"
+									rendered="#{authMbean.hasEcran('000015')}"
+									outcome="/pages/administration/userEntity/listerUserEntity.xhtml" /></li>
+							<li><h:link rendered="#{authMbean.hasEcran('000025')}"
+									value="Droits d'accès des utilisateurs"
+									outcome="/pages/administration/winMenu/listerWinMenu.xhtml" /></li>
+							<li><h:link value="Droits d'accès des groupes"
+									rendered="#{authMbean.hasEcran('000045')}"
+									outcome="/pages/administration/winMenu/listerWinMenuG.xhtml" /></li>
+							<li><h:link value="#{prezmsg['LOG_TRACABILITE']}"
+									rendered="#{authMbean.hasEcran('000007')}"
+									outcome="/pages/administration/trace/listerTrace.xhtml" /></li>
+
+						</ul>
+					</li>
+				</c:if>
+
+
+
+
+			</ul>
+
+			<div class="StatusDiv_BG FloatRight">
+
+				<h:panelGrid columns="4" styleClass="StatusGrid">
+					<h:outputLabel value="#{sessionScope.userSession.userConecte.code}" />
+					<!-- 					<p:graphicImage library="images" name="icons/compte.png" -->
+					<!-- 						height="18" width="15" /> -->
+					<p:commandLink action="#{loginMBean.doLogout}">
+						<p:graphicImage library="images" name="icons/deconnexion.png"
+							height="22" width="20" />
+					</p:commandLink>
+
+					<!-- 					<p:graphicImage library="images" name="icons/settings-icon.png"  -->
+					<!-- 						height="20" width="20" /> -->
+				</h:panelGrid>
+			</div>
+		</div>
+	</h:form>
+</ui:composition>
+</html>

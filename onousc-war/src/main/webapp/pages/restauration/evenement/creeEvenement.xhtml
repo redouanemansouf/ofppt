@@ -1,0 +1,103 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+	<p:dialog id="create-dlg" widgetVar="create-dlg-wdg" closable="true"
+		closeOnEscape="true" header="Ajouter Evénement" hideEffect="fade"
+		showEffect="fade" modal="true" dynamic="true">
+
+
+		<h:form id="create-form">
+
+			<!-- Message d'erreur metier -->
+			<p:messages id="create-fail" globalOnly="true" severity="error" />
+
+			<!-- 	Tooltip  pour les messages d'erreur -->
+			<pe:tooltip for="@(.ui-state-error)" showEvent="focus"
+				hideEvent="blur" myPosition="left center" atPosition="right center" />
+
+
+
+
+
+			<h:panelGrid columns="2" styleClass="FormGrid">
+
+				<!--      Code critere     -->
+				<h:outputLabel value="#{prezmsg['CODE']}" />
+
+				<p:inputText id="create_code"
+					value="#{evenementMBean.webBean.vo.code}" required="true"
+					title="#{component.valid ? '' : evenementMBean.getErrorMessage(component.clientId)}" />
+
+
+				<!--      Nom critere     -->
+
+
+				<h:outputLabel value="#{prezmsg['DESCRIPTION']}" />
+
+				<p:inputTextarea id="create_desc"
+					value="#{evenementMBean.webBean.vo.description}" required="true"
+					title="#{component.valid ? '' : evenementMBean.getErrorMessage(component.clientId)}" />
+
+				<h:outputLabel value="#{prezmsg['ETAT']}" />
+				<p:selectOneMenu id="create_etat"
+					value="#{evenementMBean.webBean.vo.etat}">
+					<f:selectItem itemLabel="Choisissez" />
+					<f:selectItem itemLabel="Actif" itemValue="A" />
+					<f:selectItem itemLabel="Non Actif" itemValue="N" />
+
+				</p:selectOneMenu>
+
+				<h:outputLabel value="#{prezmsg['DATE-DEB']}" />
+				<p:calendar id="create_date_deb"
+					value="#{evenementMBean.webBean.vo.dateDebut}"
+					pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true" />
+
+				<h:outputLabel value="#{prezmsg['DATE_FIN']}" />
+				<p:calendar id="create_date_Fin"
+					value="#{evenementMBean.webBean.vo.dateFin}"
+					pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true" />
+					
+					<h:outputLabel value="#{prezmsg['PRIORITE']}" />
+				<p:selectOneMenu id="create_priorite"
+					value="#{evenementMBean.webBean.vo.priorite}">
+					<f:selectItem itemLabel="Choisissez" />
+					<f:selectItem itemLabel="Oui" itemValue="Oui" />
+					<f:selectItem itemLabel="Non" itemValue="Non" />
+					</p:selectOneMenu>
+
+			</h:panelGrid>
+
+			<p:toolbar>
+
+				<f:facet name="right">
+					<p:commandButton id="validate-create" value="#{prezmsg['VALIDER']}"
+						icon="ui-icon-custom-validerOsc" process="@form"
+						update="create-form" action="#{evenementMBean.creer}"
+						style="width:50%;" styleClass="Val" />
+					<!-- Annule le useCase-->
+					<p:commandButton id="cancel-create" styleClass="Val"
+						icon="ui-icon-custom-cancelOsc" value="#{prezmsg['ANNULER']}"
+						type="button" style="width:48%;"
+						onclick="PF('create-dlg-wdg').hide()" global="false" />
+				</f:facet>
+			</p:toolbar>
+
+
+			<p:defaultCommand target="validate-create" />
+
+			<!-- Focus automatique  -->
+			<p:focus context="create-form" />
+
+			<p:remoteCommand name="_hideDialog"
+				action="#{evenementSearchMBean.run}"
+				oncomplete="PF('create-dlg-wdg').hide()"
+				update=":critere-form:critere-dtbl" />
+
+		</h:form>
+	</p:dialog>
+</ui:composition>

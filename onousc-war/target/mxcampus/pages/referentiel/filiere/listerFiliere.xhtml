@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/pages/commun/layoutOcp.xhtml">
+
+	<ui:define name="content">
+
+
+		<p:fieldset
+			style="border-style: none; padding-left: 0px !important; padding-right: 1% !important;">
+			<ul class="menuCycleDeVie">
+<!-- 				<li class="active"><h:link -->
+<!-- 						outcome="/pages/parametrage/listerSite.xhtml"> -->
+<!-- 						<div> -->
+<!-- 							<center>#{prezmsg['GESTION_SITE']}</center> -->
+<!-- 						</div> -->
+<!-- 					</h:link></li> -->
+				<li class="active" ><h:link
+						outcome="/pages/referentiel/filiere/listerFiliere.xhtml">
+						<div>
+							<center>#{prezmsg['GESTION_FILIERE']}</center>
+						</div>
+					</h:link></li>
+			</ul>
+		</p:fieldset>
+
+		<p:ajaxStatus>
+			<f:facet name="start">
+				<p:graphicImage library="images" name="blueajax.gif"
+					styleClass="AjaxStatusLoader" />
+			</f:facet>
+		</p:ajaxStatus>
+
+
+
+		<h:form id="critere-form">
+
+			<!-- Remote commands -->
+			<p:remoteCommand name="_errorDialog"
+				onstart="PF('error-dlg-wdg').show()" />
+
+			<p:remoteCommand name="_updateCrudMenu" global="false"
+				update="crud-menu :search-overlay" />
+			<!--  -->
+
+
+
+			<center>
+				<p:fieldset
+					style="padding-left: 0px !important; padding-right: 0% !important;"
+					styleClass="fieldsetCategories">
+
+					<!-- 					<center> -->
+					<!-- 				<p:messages autoUpdate="true" globalOnly="true" closable="true" style="width:60%;" -->
+					<!-- 					showIcon="false" /> -->
+					<!-- 			</center> -->
+
+					<script>
+						function showMessage() {
+
+							_showMessage();
+						}
+					</script>
+					<center>
+						<p:messages id="succes" globalOnly="true" closable="true"
+							styleClass="M2" />
+					</center>
+					<!-- Remote commands -->
+					<p:remoteCommand name="_errorDialog"
+						onstart="PF('error-dlg-wdg').show()" />
+					<p:remoteCommand name="_showMessage"
+						actionListener="#{filiereMBean.showMessage}" update="succes" />
+					<p:remoteCommand name="_updateCrudMenu" global="false"
+						update="crud-menu" />
+
+					<!-- Breadcrumb -->
+					<!-- 				<div class="BreadCrumbCust"> -->
+					<!-- 					<h:panelGrid columns="5" cellpadding="3"> -->
+					<!-- 						<h:outputLabel value="Référentiel" style="color:#419edd" /> -->
+					<!-- 						<span class="ui-icon ui-icon-carat-1-e"></span> -->
+					<!-- 						<h:outputLabel value="Critère" /> -->
+					<!-- 					</h:panelGrid> -->
+					<!-- 				</div> -->
+
+					<div class="RefCenter">
+						<p:toolbar id="crud-menu">
+
+							<f:facet name="left">
+
+								<p:commandButton id="create" widgetVar="create-wdg"
+									styleClass="ToolbarButton" value="#{prezmsg['NOUVEAU']}"
+									process="@this" action="#{filiereMBean.resetWebBeanVO}"
+									update=":create-form" oncomplete="PF('create-dlg-wdg').show();"
+									icon="ui-icon-custom-nouveau"
+									rendered="#{authMbean.hasCreate('000008')}">
+									<!-- 								<f:setPropertyActionListener value="#{famp.code}" -->
+									<!-- 										target="#{canalventeMBean.webBean.restaurantVOs}" /> -->
+									<p:resetInput target=":create-form" />
+								</p:commandButton>
+
+								<!-- 	Lié au formulaire de la recherche, type boutton car ne fait aucune action/actionListener ni update, utiliser just pour pop le searchOverlay -->
+								<p:commandButton id="search" widgetVar="search-wdg"
+									styleClass="ToolbarButton" value="#{prezmsg['CHERCHER']}"
+									type="button" icon="ui-icon-custom-chercher" />
+
+							</f:facet>
+
+						</p:toolbar>
+
+						<p:dataTable id="critere-dtbl" paginator="true"
+							emptyMessage="#{prezmsg['label_no_records_found']}"
+							rowStyleClass="#{univ.statut == 'DISABLED' ? 'is-disabled' :null }"
+							value="#{filiereSearchMBean}" var="famp" lazy="true" rows="10"
+							selection="#{filiereMBean.webBean.selectedVOs}"
+							actionListener="#{filiereMBean.resetWebBeanVO}"
+							selectionMode="single" rowKey="#{univ.id}"
+							paginatorPosition="bottom"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="10,20,30"
+							currentPageReportTemplate="Affichant {startRecord} - {endRecord} de 
+      													{totalRecords}, Page: {currentPage}/{totalPages}">
+
+							<ui:include src="/pages/commun/datatableEvents.xhtml" />
+
+							<!-- 						<p:column selectionMode="multiple" styleClass="tableChkbox" -->
+							<!-- 							style="width:16px;text-align:center" /> -->
+
+							<!-- Identifiant du'critere  -->
+							<p:column headerText="#{prezmsg['CODE']}" style="width:18%"
+								sortBy="#{famp.code}">
+								<center>
+									<h:outputText value="#{famp.code}" />
+								</center>
+							</p:column>
+
+							<!-- Libellé -->
+							<p:column headerText="#{prezmsg['LIBELLE']}"
+								sortBy="#{famp.libelle}">
+								<center>
+									<h:outputText value="#{famp.libelle}" />
+								</center>
+							</p:column>
+
+							<!-- Libellé -->
+							<p:column headerText="#{prezmsg['SITE']}"
+								sortBy="#{famp.siteVO.libelle}">
+								<center>
+									<h:outputText value="#{famp.siteVO.libelle}" />
+								</center>
+							</p:column>
+
+							<p:column exportable="false" style="width:10%;text-align:center;"
+								headerText="Actions">
+
+								<p:commandButton icon="ui-icon-custom-modifier"
+									styleClass="CrudButton" update=":edit-form"
+									oncomplete="PF('edit-dlg-wdg').show();"
+									title="Modifier filiere"
+									rendered="#{authMbean.hasUpdate('000008')}">
+									<f:setPropertyActionListener value="#{famp}"
+										target="#{filiereMBean.webBean.vo}" />
+								</p:commandButton>
+
+								<p:commandButton icon="ui-icon-custom-supprimer"
+									actionListener="#{critereSearchMBean.run}"
+									title="Supprimer profil" styleClass="CrudButton"
+									action="#{filiereMBean.supprimer}" update=" critere-dtbl "
+									rendered="#{authMbean.hasDelete('000008')}">
+									<p:confirm header="#{prezmsg['CONFIRMATION_DELETE']}"
+										message="#{prezmsg['MESSAGE_CONFIRMATION_DELETE']}"
+										icon="ui-icon-alert" />
+									<f:setPropertyActionListener value="#{famp}"
+										target="#{filiereMBean.webBean.vo}"></f:setPropertyActionListener>
+								</p:commandButton>
+							</p:column>
+
+						</p:dataTable>
+
+					</div>
+
+				</p:fieldset>
+			</center>
+		</h:form>
+
+		<p:overlayPanel id="search-overlay" for=":critere-form:search"
+			style="width:600px;" hideEffect="slide" showEffect="slide"
+			widgetVar="searchOverlay" dismissable="false" appendToBody="true">
+
+			<h:form id="search-form">
+
+				<h:panelGrid columns="4" styleClass="FormGrid">
+					<!-- Code   -->
+					<!-- 					<h:outputLabel value="#{prezmsg['CLIENT']}" /> -->
+					<!-- 					<p:inputText id="code-search" -->
+					<!-- 						value="#{filiereSearchMBean.filiereCriteria.description}" /> -->
+
+					<!-- 						<p:selectOneMenu id="famp_search" -->
+					<!-- 							value="#{filiereSearchMBean.filiereCriteria.description}"  -->
+					<!-- 							> -->
+					<!-- 							<f:selectItem itemLabel="Choisissez" /> -->
+					<!-- 							<f:selectItem itemLabel="Portail Web " itemValue="W" /> -->
+					<!-- 							<f:selectItem itemLabel="Mini Caisse " itemValue="C" /> -->
+					<!-- 						</p:selectOneMenu> -->
+
+					<!-- Libellé   -->
+					<h:outputLabel value="Libelle Produit" />
+					<p:inputText id="lib-search"
+						value="#{filiereSearchMBean.filiereCriteria.libelle}" />
+
+					<!-- coefficient   -->
+
+				</h:panelGrid>
+
+
+				<!-- 	Lance la recherche, revien toujours à la premiere page: backToFirstPage()  -->
+				<p:commandButton id="searchOk" styleClass="Val"
+					icon="ui-icon-custom-validerOsc" style="width:10%"
+					widgetVar="searchOk-wdg" value="#{prezmsg['OK']}"
+					action="#{filiereSearchMBean.run}"
+					update=":critere-form:critere-dtbl"
+					onstart="backToFirstPage(); block()"
+					oncomplete="PF('searchOverlay').hide(); unblock(); initCrudMenu();" />
+
+				<p:commandButton id="searchReset" styleClass="Val" style="width:25%"
+					widgetVar="searchReset-wdg" icon="ui-icon-custom-cancelOsc"
+					value="#{prezmsg['RESET']}"
+					action="#{filiereSearchMBean.resetSearchCriteria}"
+					update="search-form" tabindex="-1">
+					<p:resetInput target="search-form" />
+				</p:commandButton>
+
+
+
+
+			</h:form>
+
+		</p:overlayPanel>
+
+		<ui:include src="creerFiliere.xhtml"></ui:include>
+		<ui:include src="editerFiliere.xhtml"></ui:include>
+		<!-- 		<ui:include src="listrestaurant.xhtml"></ui:include> -->
+
+	</ui:define>
+</ui:composition>
+

@@ -1,0 +1,64 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:b="http://bootsfaces.net/ui"
+	template="/pages/commun/layoutRes.xhtml">
+
+	<!-- JOURS DE LA SEMAINE EN COURS -->
+	
+	<ui:define name="content">
+	<br/>
+	<h:form id="rese">
+				<p:fieldset 
+					style="padding-left: 0px !important; padding-right: 0px !important;margin-left: 0;width:1500px;"
+					styleClass="fieldsetCategories">
+
+					<center>
+						<p:messages autoUpdate="true" globalOnly="true" closable="true"
+							style="width:80%;" showIcon="false" />
+					</center>
+	<center>
+		<p:accordionPanel id="resers" value="#{reservationMBean.webBean.vos}" var="car" style="width:70%" >
+		  <p:tab title="Reservation N°: #{car.id}  -  Matricule : #{car.libelle}      montant  : #{car.montant} " >
+		    <p:dataList value="#{car.reservationDetail}" var="reserv" type="definition">
+        <f:facet name="header">
+            Détail Reservation
+        </f:facet>
+        *   #{reserv.service.libelle}             : #{reserv.service.prix}
+       
+    </p:dataList>
+    <br/>
+    
+    <p:commandButton value="Valider" styleClass="Val" action="#{reservationMBean.modifer}" update="resers">
+    <f:setPropertyActionListener value="#{car}"
+									target="#{reservationMBean.webBean.vo}"></f:setPropertyActionListener>
+    </p:commandButton>
+		  
+		    </p:tab>
+		
+		</p:accordionPanel>
+		
+		</center>
+			
+		</p:fieldset>
+		
+		
+		
+        
+	
+
+	<!-- BLOCK UI -->
+<!-- 	<pe:blockUI widgetVar="blockUIWidget" centerX="true" centerY="true" -->
+<!-- 		timeout="5000"> -->
+<!-- 		<h:panelGrid columns="2"> -->
+<!-- 			<h:graphicImage library="images" name="ajax-loader.gif" -->
+<!-- 				style="margin-right: 12px; vertical-align: middle;" /> -->
+<!-- 		</h:panelGrid> -->
+<!-- 	</pe:blockUI> -->
+
+</h:form>
+</ui:define>
+</ui:composition>

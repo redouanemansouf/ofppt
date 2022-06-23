@@ -1,0 +1,327 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+ 
+  <meta http-equiv="pragma" content="no-cache" />
+  <meta http-equiv="cache-control" content="no-cache" />
+  <meta http-equiv="expires" content="0" />
+	<p:dialog id="edit-dlg" widgetVar="edit-dlg-wdg"
+		header="Détail de la demande" hideEffect="fade" showEffect="fade"
+		modal="true" dynamic="true" 
+		closeOnEscape="true" width="1180px" height="600px" >
+
+		<p:messages globalOnly="true" autoUpdate="true" />
+		
+		<style>
+		
+
+.ui-radiobutton .ui-state-active {
+	background: url("#{resource['images/icons/check-icon_Layer.png']}")
+		no-repeat 10% 40% !important;
+}
+		</style>
+<h:body>
+		<h:form prependId="false">
+
+			<h:panelGrid columns="4" styleClass="FormGrid" >
+
+			<p:outputLabel   id="id_ed" value="Id étudiant :"   styleClass="LabelIns" />
+					<p:inputText id="id_person_ed"   
+						value="#{etudiantMBean.webBean.vo.id}" readonly="true"
+						disabled="true">
+					</p:inputText>
+					
+					
+				<p:outputLabel id="anne_ed" value="Année Universitaire :"
+					styleClass="LabelIns" />
+				<p:inputText id="anneee_create" 
+					value="#{etudiantMBean.webBean.vo.ann_universitaire-1} - #{etudiantMBean.webBean.vo.ann_universitaire}" 
+					disabled="true" >
+				</p:inputText>
+
+
+
+
+
+				<p:outputLabel for="nom_create" id="nom_ed" value="Nom :"
+					styleClass="LabelIns" />
+				<p:inputText id="nom_create"
+					readonly="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}"
+					value="#{etudiantMBean.webBean.vo.nom}" 
+					disabled="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}">
+					
+				</p:inputText>
+<p:outputLabel for="prenom_create" id="prenom_ed" value="Prénom :"
+					styleClass="LabelIns" />
+				<p:inputText id="prenom_create" styleClass="InscrInput"
+					value="#{etudiantMBean.webBean.vo.prenom}"
+					readonly="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}"
+					disabled="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}">
+				</p:inputText>
+
+				<p:outputLabel for="tel_create" id="tel_ed" value="Téléphone :"
+					styleClass="LabelIns" />
+				<p:inputText id="tel_create"
+					readonly="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}"
+					value="#{etudiantMBean.webBean.vo.tele}" 
+					disabled="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}">
+					
+				</p:inputText>
+
+ 
+
+				
+
+
+
+				<p:outputLabel id="dat_nais_ed" value="Date de naissance :"
+					styleClass="LabelIns" />
+				<c:if
+					test="#{etudiantMBean.webBean.vo.statut.statusCode =='ENABLED'}">
+
+					<p:calendar id="dat_nais_create" styleClass="InscrInput"
+						value="#{etudiantMBean.webBean.vo.date_naissance}"
+						pattern="dd/MM/yyyy" pages="2" navigator="true" mask="true"
+						locale="fr"></p:calendar>
+
+				</c:if>
+				<c:if
+					test="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}">
+
+					<p:inputText id="dat_nais_cre" styleClass="InscrInput"
+						readonly="true" value="#{etudiantMBean.webBean.vo.date_naissance}"
+						disabled="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}">
+						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+					</p:inputText>
+
+				</c:if>
+
+
+
+<!-- 				<p:outputLabel value="Ville de restaurant" styleClass="LabelIns" /> -->
+<!-- 				<c:if -->
+<!-- 					test="#{etudiantMBean.webBean.vo.statut.statusCode =='ENABLED'}"> -->
+<!-- 					<p:inputText id="ville-creat" styleClass="InscrInput" -->
+<!-- 						 value="#{etudiantMBean.webBean.vo.ville}" /> -->
+<!-- 				</c:if> -->
+<!-- 				<c:if -->
+<!-- 					test="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}"> -->
+
+<!-- 					<p:inputText id="ville-creat" styleClass="InscrInput" -->
+<!-- 						readonly="true" disabled="true" value="#{etudiantMBean.webBean.vo.ville}" /> -->
+<!-- 				</c:if> -->
+
+
+<p:outputLabel value="Code Profil :" styleClass="LabelIns" />
+				<c:if
+					test="#{etudiantMBean.webBean.vo.statut.statusCode =='ENABLED'}">
+
+					<p:selectOneMenu id="codeProfil-creat" filter="true"
+						 filterMatchMode="startsWith"
+						value="#{etudiantMBean.webBean.vo.codeProfil}">
+						<f:selectItem itemLabel="Code Profil "
+							noSelectionOption="true" />
+						<f:selectItems value="#{etudiantMBean.webBean.listCategoriePorteurForCombo}"
+							var="r" itemLabel="#{r.libelle} /  #{r.code}"
+							itemValue="#{r.code}" />
+					</p:selectOneMenu>
+				</c:if>
+				<c:if
+					test="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}">
+
+					<p:inputText id="codeProfil-creat" styleClass="InscrInput"
+						readonly="true"
+						disabled="true"
+						value="#{etudiantMBean.webBean.vo.codeProfil}" />
+				</c:if>
+				
+				
+
+<!-- 				<p:outputLabel value="Cite :" styleClass="LabelIns" /> -->
+<!-- 				<c:if -->
+<!-- 					test="#{etudiantMBean.webBean.vo.statut.statusCode =='ENABLED'}"> -->
+<!-- 					<p:selectOneMenu id="cite-create" filter="true" -->
+<!-- 						converter="citeConverter" filterMatchMode="startsWith" -->
+<!-- 						value="#{etudiantMBean.webBean.vo.citovo}"> -->
+<!-- 						<f:selectItem itemLabel="Cité....." noSelectionOption="true" /> -->
+<!-- 						<f:selectItems value="#{etudiantMBean.webBean.citeVOs}" var="c" -->
+<!-- 							itemLabel="#{c.libelle}" itemValue="#{c}" /> -->
+<!-- 					</p:selectOneMenu> -->
+<!-- 				</c:if> -->
+<!-- 				<c:if -->
+<!-- 					test="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}"> -->
+
+<!-- 					<p:inputText id="cite-creat" styleClass="InscrInput" -->
+<!-- 						readonly="true" value="#{etudiantMBean.webBean.vo.citovo.libelle}"  -->
+<!-- 						disabled="true"/> -->
+<!-- 				</c:if> -->
+
+				<p:outputLabel value="Restaurant :" styleClass="LabelIns" />
+				<c:if
+					test="#{etudiantMBean.webBean.vo.statut.statusCode =='ENABLED'}">
+
+					<p:selectOneMenu id="res-create" filter="true"
+						converter="restaurantConverter" filterMatchMode="startsWith"
+						value="#{etudiantMBean.webBean.vo.restaurantVO}">
+						<f:selectItem itemLabel="Ville/Restaurant"
+							noSelectionOption="true" />
+						<f:selectItems value="#{etudiantMBean.webBean.restaurantVOs}"
+							var="r" itemLabel="#{r.villeVO.libelle} /  #{r.libelle}"
+							itemValue="#{r}" />
+					</p:selectOneMenu>
+				</c:if>
+				<c:if
+					test="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}">
+
+					<p:inputText id="ress-creat" styleClass="InscrInput"
+						readonly="true"
+						disabled="true"
+						value="#{etudiantMBean.webBean.vo.restaurantVO.libelle}" />
+				</c:if>
+
+<p:outputLabel for="Etablissement_create" id="Etablissement_ed" value="Etablissement :"
+					styleClass="LabelIns" />
+				<p:inputText id="Etablissement_create"  		 
+					readonly="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}"
+					disabled="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}"
+					value="#{etudiantMBean.webBean.vo.etablissement}"> 
+				</p:inputText>
+				
+				<p:outputLabel for="NCIN_create" id="NCIN_ed" value="N° CIN :"
+					styleClass="LabelIns" />
+				<p:inputText id="NCIN_create"  		onchange="this.value = trimES(this.value);"
+					readonly="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}"
+					disabled="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}"
+					value="#{etudiantMBean.webBean.vo.NCIN}"> 
+				</p:inputText>
+				
+				
+				<p:outputLabel for="codeMassar_create" id="codeMassar_ed" value="Matricule :"
+					styleClass="LabelIns" />
+				<p:inputText id="codeMassar_create"
+					readonly="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}"
+					disabled="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}"
+					value="#{etudiantMBean.webBean.vo.codeMassar}">
+				</p:inputText>
+				
+		<!-- 		<p:outputLabel id="Categorie" value="Catégorie :" styleClass="LabelIns" />
+				<p:selectOneRadio id="Categorie" disabled="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}"
+					value="#{etudiantMBean.webBean.vo.typePersonelle}"
+					>
+					<f:selectItem itemLabel="Etudiant" itemValue="O" />
+					<f:selectItem itemLabel="sttaf" itemValue="N" />
+				</p:selectOneRadio>
+ -->
+
+
+
+
+				<p:outputLabel id="Boursier_ed" value=" Categorie :"
+					styleClass="LabelIns" />
+ 
+				<p:selectOneRadio id="Boursier_create"
+					value="#{etudiantMBean.webBean.vo.typePersonelle}"
+					disabled="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}" >
+					<f:selectItem itemLabel="Etudiant" itemValue="E" />
+					<f:selectItem itemLabel="sttaf" itemValue="S" />
+				</p:selectOneRadio>
+ 
+			
+			 
+	<p:outputLabel id="typeCarte_ed" value=" Type Carte :"
+					styleClass="LabelIns" />
+ 
+				<p:selectOneRadio id="typeCarte_create"
+					value="#{etudiantMBean.webBean.vo.typeCarte}"
+					disabled="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}" >
+					<f:selectItem itemLabel="NAPS" itemValue="N" />
+					<f:selectItem itemLabel="Privative" itemValue="P" />
+				</p:selectOneRadio>
+
+<!-- 				<p:outputLabel for="etab_create" id="etab_ed" -->
+<!-- 					value="Etablissement d’étude :" styleClass="LabelIns" /> -->
+<!-- 				<p:inputText id="etab_create" -->
+<!-- 					readonly="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}" -->
+<!-- 					disabled="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}" -->
+<!-- 					value="#{etudiantMBean.webBean.vo.etablissement}"> -->
+<!-- 				</p:inputText> -->
+
+
+
+
+
+				<p:outputLabel for="email_create" id="email_ed" value="Email :"
+					styleClass="LabelIns" />
+				<p:inputText id="email_create"
+					value="#{etudiantMBean.webBean.vo.email}"
+					disabled="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}">
+				</p:inputText>
+
+				<p:outputLabel id="image_ed" value="Image :" styleClass="LabelIns" />
+
+				<h:graphicImage
+					value="/images/dynamic/?file=#{etudiantMBean.webBean.vo.id}.jpg"
+					height="40" width="40" cache="false" 
+					style="height:100px; width:100px; -webkit-box-shadow : 4px 4px 12px #555;-moz-box-shadow : 4px 4px 12px #555;box-shadow : 4px 4px 12px #555"/>
+						 
+	
+
+				<p:outputLabel id="Se_ed" value="Sexe :" styleClass="LabelIns" />
+				<p:selectOneRadio id="sexe_create"
+					value="#{etudiantMBean.webBean.vo.sexe}"
+					disabled="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED'}">
+					<f:selectItem itemLabel="Masculin" itemValue="M" />
+					<f:selectItem itemLabel="Féminin" itemValue="F" />
+				</p:selectOneRadio>
+
+<p:outputLabel id="Se_edem" value="" styleClass="LabelIns" />
+				<p:fileUpload fileUploadListener="#{etudiantMBean.upload}"
+						cancelLabel="annuler" uploadLabel="télécharger" label="parcourir"
+						allowTypes="/(\.|\/)(gif|jpe?g|png)$/" description="Select Images"
+						styleClass="inputField" sizeLimit="1000000" 
+						 fileLimit="1"
+					  fileLimitMessage="Le nombre maximum de photo à charger est 1"
+					 rendered="#{etudiantMBean.webBean.vo.statut.statusCode =='ENABLED'}"/>
+
+				<!-- 				<p:outputLabel id="image" value="Image  :" styleClass="LabelIns" /> -->
+				<!-- 				<img src="C:/image#{etudiantMBean.webBean.vo.image}" alt=""/> -->
+
+<!-- 					<h:inputHidden id="chexe_etud_ed" value="#{etudiantMBean.cheminexeimpression}" />	 -->
+<!-- 							<h:inputHidden id="chrecto_etud_ed" value="#{etudiantMBean.chemincarterecto}" />	 -->
+<!-- 							<h:inputHidden id="chverso_etud_ed" value="#{etudiantMBean.chemincarteverso}" /> -->
+							 
+						
+<!--  <h:inputHidden id="Boursier_ed" value="#{etudiantMBean.webBean.vo.boursier}"   />	 -->
+ 			<h:panelGrid columns="3" styleClass="FloatRight" cellpadding="5">
+<!-- 			<p:commandButton value="Visualiser" process="@form"  -->
+<!-- 					 styleClass="CancelButton" action="#{etudiantMBean.visualiser}" -->
+<!-- 					onclick="document.getElementById('luncherIframeIU').src='M2MGroupLuncher:#{etudiantMBean.webBean.jSessionID}|#{etudiantMBean.webBean.serverNameAndPort}';" -->
+<!-- 					rendered="#{etudiantMBean.webBean.vo.statut.statusCode !='ENABLED' and etudiantMBean.webBean.vo.statut.statusCode !='CLOSED'}"/> -->
+					
+				<p:commandButton value="Enregistrer les modifications" process="@form"
+					rendered="#{etudiantMBean.webBean.vo.statut.statusCode =='ENABLED'}"
+					action="#{etudiantMBean.modifier}" update="@form"
+					styleClass="ValidateButton" />
+				<p:commandButton value="Fermer" global="false"
+					oncomplete="PF('edit-dlg-wdg').hide()" styleClass="CancelButton" update=":critere-form:nationalite-dtbl" />
+			</h:panelGrid>
+			</h:panelGrid>
+
+
+<!-- onclick="visualisationcarte()" -->
+
+
+			<!-- Cache le dialog s'il n'y a pas d'érreur -->
+			<p:remoteCommand name="_hideDialog"
+				oncomplete="PF('edit-dlg-wdg').hide()"
+				update=":critere-form:nationalite-dtbl" />
+
+		</h:form>
+</h:body>
+	</p:dialog>
+
+</ui:composition>

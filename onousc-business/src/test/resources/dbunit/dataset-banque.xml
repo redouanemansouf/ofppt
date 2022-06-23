@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+
+	<REF_BANQUE BQ_ID="1" BQ_LIBELLE="Attijari Wafa Banque"
+		BQ_ABREVIATION="AWB" BQ_DESCRIPTION="Attijari Wafa Banque" BQ_STATUT="ENABLED" />
+
+	<REF_BANQUE BQ_ID="2" BQ_LIBELLE="BMCE Bank" BQ_ABREVIATION="BMCE"
+		BQ_DESCRIPTION="BMCE Bank" BQ_STATUT="ENABLED" />
+
+	<REF_BANQUE BQ_ID="3" BQ_LIBELLE="Banque populaire"
+		BQ_ABREVIATION="BCP" BQ_DESCRIPTION="Banque populaire" BQ_STATUT="ENABLED" />
+
+
+</dataset>

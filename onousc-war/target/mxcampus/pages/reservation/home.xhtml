@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:b="http://bootsfaces.net/ui"
+	template="/pages/usager/template/layout.xhtml">
+
+	<ui:define name="content">
+
+		<applet id="appid" name="appid" permissions="all-permissions"
+			scriptable="true" archive="AppletWeb_.jar"
+			code="applet_ucad.AppletWeb.class" width="0" height="0" />
+
+
+		<p:graphicImage styleClass="ReservationHomeBackground"
+			library="images" name="home_res.PNG" width="100%" height="100%" />
+
+		<!-- 		 java script -->
+
+		<script type="text/javascript">
+
+	$(document).ready(function() {
+		var a = setInterval(process(),2000);
+		/*setTimeout(process(), 2000);*/
+		});
+
+		function process() {	
+		try {
+			/*alert("in process");*/
+			var x = getUsager();
+			if (x) {
+				var host = window.location.host;
+				var nomUsager = appid.nomUsager;
+				var prenomUsager =appid.prenomUsager;
+				var soldeUsager = appid.soldeUsager;
+				var numeroCarte = appid.numeroCarte;
+				var dateDerniereConnexion = appid.dateDerniereConnexion;
+				var url ="?nomUsager="+nomUsager;
+				url =url+"&amp;prenomUsager="+prenomUsager;
+				url = url+"&amp;soldeUsager="+soldeUsager;
+				url = url+"&amp;numeroCarte="+numeroCarte;
+				url = url+"&amp;dateDerniereConnexion="+dateDerniereConnexion;
+				url = "http://"+host+"/onousc/pages/reservation/reservationForm.xhtml"+url;
+				alert(url);
+				window.location=url;
+			} else {
+				window.clearInterval(a);
+				/*setTimeout(process(), 2000);*/
+			}
+			}catch (err) {
+				alert("Error Process function  : " + err + "\nresultat catch : ");
+				/*console.log(err);*/
+			}
+		}
+
+		function getUsager() {
+			var x = false;
+			try {
+				x = appid.getUsager();
+			/*	$("#nomUsager").text(nomUsager);*/
+			/*	$("#prenomUsager").text(prenomUsager);*/
+			/*	$("#soldeUsager").text(soldeUsager);*/
+			
+		/*		document.getElementById("nomUsager").value = nomUsager;*/
+		/*		document.getElementById("prenomUsager").value = prenomUsager;*/
+			/*	document.getElementById("soldeUsager").value = soldeUsager;*/
+				
+				/*alert(document.getElementById("nomUsager").value);*/
+				/* alert("resultat:"+appid.resultat); */
+			} catch (err) {
+				/*alert("Error JS Etudiant  : " + err + "\nresultat catch : "
+						+ appid.resultat);*/
+				console.log(err);
+			}
+			return x;
+		}
+
+		</script>
+
+	</ui:define>
+
+</ui:composition>

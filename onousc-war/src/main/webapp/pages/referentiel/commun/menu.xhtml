@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<ui:composition>
+	<h:form>
+
+
+		<div class="MainMenu">
+			<div class="MainMenu_list">
+				<ul>
+
+					<li
+						class="#{view.viewId.contains('/pages/referentiel/') ? 'active' : ''}"><a>Referentiel
+							<span class="ui-icon ui-icon-triangle-1-s"
+							style="float: right; margin-top: 3px;" />
+					</a>
+						<div class="dropdown">
+							<div class="triangle" />
+							<ul class="menu">
+								<li><p:link
+										outcome="/pages/referentiel/universite/listerUniversite.xhtml">Universite</p:link></li>
+								<li><p:link
+										outcome="/pages/referentiel/cite/listerCite.xhtml">Cite</p:link></li>
+							</ul>
+						
+						</div></li>
+
+				</ul>
+			</div>
+
+
+		</div>
+
+	</h:form>
+</ui:composition>
+</html>
